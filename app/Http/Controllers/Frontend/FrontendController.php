@@ -1,0 +1,74 @@
+<?php
+
+namespace App\Http\Controllers\Frontend;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use App\Models\Config;
+use App\Models\Currency;
+use App\Models\PaymentPlatform;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Contacto;
+use Session;
+use DB;
+use Agent;
+
+class FrontendController extends Controller
+{
+    public function index()
+    {
+        $config = Config::first();
+
+        return view('frontend.index', compact('config'));
+    }
+
+    public function about()
+    {
+        return view('frontend.about');
+    }
+
+    public function teachers()
+    {
+        $teachers = Instructor::all();
+        return view('frontend.teachers', compact('teachers'));
+    }
+
+
+
+    public function contact()
+    {
+        $config = Config::first();
+        return view('frontend.contact', compact('config'));
+    }
+
+    public function sendcontact(Request $request)
+    {
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $subject = $request->input('subject');
+        $mensaje = $request->input('mensaje');
+
+        $config = Config::first();
+        $mail_to = $config->email;
+
+        Mail::to($mail_to)->send(new Contacto($name,$email,$subject,$mensaje,$mail_to,$config));
+
+        Session::flash('message', 'Gracias por contactarte, pronto nos comunicaremos contigo.');
+        Session::flash('alert-class', 'alert-success');
+
+        return view('frontend.contact', compact('config'))->with('status',"Mensaje enviado.");
+    }
+
+    public function checkout()
+    {
+        $currencies = Currency::all();
+        $paymentPlatforms = PaymentPlatform::all();
+        return view('frontend.checkout', compact('currencies','paymentPlatforms'));
+    }
+
+
+
+
+}
