@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 use App\Http\Requests\UserFormRequest;
-use App\Http\Requests\UserCreateFormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Models\Config;
+use Carbon\Carbon;
 use PDF;
 use DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserMail;
 
 class DashboardController extends Controller
 {
@@ -20,23 +23,26 @@ class DashboardController extends Controller
         if ($request)
         {
             $queryUser=$request->input('fuser');
-            $users=DB::table('users')
-            ->where('status','=',1)
-            // ->where('name','LIKE','%'.$queryUser.'%')
-            // ->orWhere('phone','LIKE','%'.$queryUser.'%')
-            ->where('name','LIKE','%'.$queryUser.'%')
-            ->orWhere('email','LIKE','%'.$queryUser.'%')
-            ->where('status','=',1)
+            $users = DB::table('users')
+            ->where('estado', '=', 1)
+            ->where('role_as', '=', 0)
+            ->where(function ($query) use ($queryUser) {
+            $query->where('name', 'LIKE', '%' . $queryUser . '%')
+                ->orWhere('email', 'LIKE', '%' . $queryUser . '%')
+                ->orWhere('telefono', 'LIKE', '%' . $queryUser . '%')
+                ->orWhere('celular', 'LIKE', '%' . $queryUser . '%');
+            })
             ->orderBy('name','asc')
-            ->paginate(25);
+            ->paginate(20);
             $filterUsers = User::all();
             return view('admin.user.index', compact('users','queryUser','filterUsers'));
         }
     }
 
-    public function showuser($id)
+    public function showuser(Request $request, $id)
     {
         $user = User::find($id);
+
         return view('admin.user.show', compact('user'));
     }
 
@@ -45,32 +51,32 @@ class DashboardController extends Controller
         return view('admin.user.add');
     }
 
-    public function insertuser(UserCreateFormRequest $request)
+    public function insertuser(UserFormRequest $request)
     {
         $user = new User();
-        // if($request->hasFile('image'))
-        // {
-        //     $file = $request->file('image');
-        //     $ext = $file->getClientOriginalExtension();
-        //     $filename = time().'.'.$ext;
-        //     $file->move('assets/uploads/user',$filename);
-        //     $user->image = $filename;
-        // }
-        $user->role_as = $request->input('role_as');
+        $user->empresa_id = 1;
+        if($request->hasFile('fotografia'))
+        {
+            $file = $request->file('fotografia');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $file->move('assets/uploads/users',$filename);
+            $user->fotografia = $filename;
+        }
+        $user->role_as = 0;
+        $user->estado = 1;
+        $user->principal = 0;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
-        $user->password = 'BURO'.rand(1111,9999);
-        // $user->phone = $request->input('phone');
-        // $user->address1 = $request->input('address1');
-        // $user->address2 = $request->input('address2');
-        // $user->city = $request->input('city');
-        // $user->state = $request->input('state');
-        // $user->country = $request->input('country');
-        // $user->zipcode = $request->input('zipcode');
-        // $user->timezone = $request->input('timezone');
+        $user->password = 'Flebo'.rand(1111,9999);
+        $user->telefono = $request->input('telefono');
+        $user->celular = $request->input('celular');
+        $user->direccion = $request->input('direccion');
         $user->save();
 
-        return redirect('users')->with('status', __('Usuario agregado correctamente'));
+        // Mail::to($user->email)->send(new UserMail($user));
+
+        return redirect('show-user/'.$user->id)->with('status',__('Usuario agregado correctamente!'));
     }
 
     public function edituser($id)
@@ -82,97 +88,44 @@ class DashboardController extends Controller
     public function updateuser(UserFormRequest $request, $id)
     {
         $user = User::find($id);
-        // if($request->hasFile('image'))
-        // {
-        //     $path = 'assets/uploads/category/'.$user->image;
-        //     if(File::exists($path))
-        //     {
-        //         File::delete($path);
-        //     }
-        //     $file = $request->file('image');
-        //     $ext = $file->getClientOriginalExtension();
-        //     $filename = time().'.'.$ext;
-        //     $file->move('assets/uploads/category',$filename);
-        //     $user->image = $filename;
-        // }
+        if($request->hasFile('fotografia'))
+        {
+            $path = 'assets/uploads/users/'.$user->fotografia;
+            if(File::exists($path))
+            {
+                File::delete($path);
+            }
+            $file = $request->file('fotografia');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $file->move('assets/uploads/users',$filename);
+            $user->fotografia = $filename;
+        }
         $user->name = $request->input('name');
-        // $user->phone = $request->input('phone');
-        // $user->address1 = $request->input('address1');
-        // $user->address2 = $request->input('address2');
-        // $user->city = $request->input('city');
-        // $user->state = $request->input('state');
-        // $user->country = $request->input('country');
-        // $user->zipcode = $request->input('zipcode');
-        // $user->timezone = $request->input('timezone');
+        $user->email = $request->input('email');
+        $user->telefono = $request->input('telefono');
+        $user->celular = $request->input('celular');
+        $user->direccion = $request->input('direccion');
         $user->update();
 
-        if (Auth::id() == $id) {
-            return redirect('show-user/'.$id)->with('status',__('Usuario actualizado correctamente'));
-        }else{
-            return redirect('users')->with('status',__('Usuario actualizado correctamente'));
-        }
-
+        return redirect('show-user/'.$id)->with('status',__('Usuario actualizado correctamente!'));
     }
 
     public function destroyuser($id)
     {
         $user = User::find($id);
-        // if ($user->image)
-        // {
-        //     $path = 'assets/uploads/category/'.$user->image;
-        //     if (File::exists($path))
-        //     {
-        //         File::delete($path);
-
-        //     }
-        // }
-        $user = User::find($id);
-        $user->status = 0;
-        $user->email = $user->email.'-Deleted';
-        $user->update();
-        return redirect('users')->with('status',__('Usuario eliminado correctamente'));
-    }
-
-    public function pdf(Request $request)
-    {
-        if ($request)
+        if ($user->fotografia)
         {
-            $user = User::find($request->input('ruser'));
-
-            $verpdf = "Browser";
-            $nompdf = date('m/d/Y g:ia');
-            $path = public_path('assets/uploads/');
-
-            $config = Config::first();
-
-            $currency = $config->currency_simbol;
-
-            if ($config->logo == null)
+            $path = 'assets/img/users/'.$user->fotografia;
+            if (File::exists($path))
             {
-                $logo = null;
-                $imagen = null;
-            }
-            else
-            {
-                    $logo = $config->logo;
-                    $imagen = public_path('assets/uploads/logos/'.$logo);
-            }
+                File::delete($path);
 
-
-            $config = Config::first();
-
-            if ( $verpdf == "Download" )
-            {
-                $pdf = PDF::loadView('admin.user.pdf',['user'=>$user,'path'=>$path,'config'=>$config,'imagen'=>$imagen,'currency'=>$currency]);
-
-                return $pdf->download ('User: '.$user->name.$nompdf.'.pdf');
-            }
-            if ( $verpdf == "Browser" )
-            {
-                $pdf = PDF::loadView('admin.user.pdf',['user'=>$user,'path'=>$path,'config'=>$config,'imagen'=>$imagen,'currency'=>$currency]);
-
-                return $pdf->stream ('User: '.$user->name.$nompdf.'.pdf');
             }
         }
+        $user->estado = 0;
+        $user->email = $user->email.'-Deleted'.$user->id;
+        $user->update();
+        return redirect('users')->with('status',__('Usuario eliminado correctamente!'));
     }
 }

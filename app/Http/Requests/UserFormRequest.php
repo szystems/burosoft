@@ -30,7 +30,7 @@ class UserFormRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore($userId),
+                Rule::unique('users')->ignore($this->route('id')),
             ],
             'telefono' => 'nullable|string|max:20',
             'celular' => 'nullable|string|max:20',

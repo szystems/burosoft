@@ -40,7 +40,7 @@
                             <i class="bi bi-house-fill font-2x text-blue"></i>
                         </div>
                         <div class="sale-details">
-                            <h5 class="text-light">Panel de Control</h5>
+                            <h6 class="text-light">Panel de Control</h6>
                             {{-- <h3>296</h3> --}}
                         </div>
                         <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold blue">
@@ -58,7 +58,7 @@
                                 <i class="bi bi-globe font-2x text-blue"></i>
                             </div>
                             <div class="sale-details">
-                                <h5 class="text-light">Sitio Web</h5>
+                                <h6 class="text-light">Sitio Web</h6>
                                 {{-- <h3>368</h3> --}}
                             </div>
                             <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold blue">
@@ -70,13 +70,13 @@
                 </div>
                 <hr>
                 <div class="col-xxl-3 col-sm-6 col-12">
-                    <a href="{{ url('/') }}">
+                    <a href="{{ url('users') }}">
                         <div class="stats-tile d-flex align-items-center position-relative tile-red">
                             <div class="sale-icon icon-box xl rounded-5 me-3">
                                 <i class="bi bi-shield font-2x text-red"></i>
                             </div>
                             <div class="sale-details">
-                                <h5 class="text-light">Administradores</h5>
+                                <h6 class="text-light">Administradores</h6>
                                 {{-- <h3>368</h3> --}}
                             </div>
                             <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold red">
@@ -93,7 +93,7 @@
                                 <i class="bi bi-building font-2x text-red"></i>
                             </div>
                             <div class="sale-details">
-                                <h5 class="text-light">Empresas</h5>
+                                <h6 class="text-light">Empresas</h6>
                                 <a href="#" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-people-fill"></i> Usuarios</a>
                                 <br>
                                 <a href="{{ url('empresas') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-building"></i> Empresas</a>

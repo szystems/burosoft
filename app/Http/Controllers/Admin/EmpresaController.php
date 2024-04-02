@@ -24,6 +24,7 @@ class EmpresaController extends Controller
                 ->orWhere('telefono', 'LIKE', '%' . $queryEmpresa . '%')
                 ->orWhere('celular', 'LIKE', '%' . $queryEmpresa . '%');
             })
+            ->orderBy('fecha_vencimiento','asc')
             ->paginate(20);
             $filterEmpresas = Empresa::all();
             return view('admin.empresa.index', compact('empresas','queryEmpresa','filterEmpresas'));

@@ -175,12 +175,12 @@
 
                             @if ($config->logo)
                             <div class="col-md-12 mb-3">
-                                <label for="">{{ __('Logo Imagen') }}</label>
+                                <label for="">{{ __('Logo Imágen') }}</label>
                                 <img class="border-radius-md w-25" src="{{ asset('assets/uploads/logos/'.$config->logo) }}" alt="Logo Imagen">
                             </div>
                             @endif
                             <div class="col-md-12 mb-3">
-                                <label for="">{{ __('Cambiar Imagen') }}</label>
+                                <label for="">{{ __('Cambiar Imágen') }}</label>
                                 <input type="file" name="logo" class="form-control border">
                             </div>
                             <div class="col-md-12 mb-3" >

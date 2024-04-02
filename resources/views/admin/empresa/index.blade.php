@@ -77,9 +77,9 @@
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     @if ($empresa->fotografia != null)
-                                                        <img src="{{ asset('assets/uploads/empresas/'.$empresa->fotografia) }}" class="img-4x rounded-5 me-3" alt="Empresas" />
+                                                        <img src="{{ asset('assets/uploads/empresas/'.$empresa->fotografia) }}" class="img-4x square-5 me-3" alt="Empresas" />
                                                     @else
-                                                        <img src="{{ asset('assets/uploads/empresas/empresadefault.png') }}" class="img-4x rounded-5 me-3" alt="Empresas" />
+                                                        <img src="{{ asset('assets/uploads/empresas/empresadefault.png') }}" class="img-4x square-5 me-3" alt="Empresas" />
                                                     @endif
 
                                                     <p class="m-0">

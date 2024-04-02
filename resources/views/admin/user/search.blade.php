@@ -1,28 +1,30 @@
-
+<!-- Row start -->
+<div class="row gx-3">
+    <div class="col-xl-12">
+        <div class="card card-background-mask-info">
+            {{-- <div class="card-header">
+                <div class="card-title"><u>Doctores</u></div>
+            </div> --}}
+            <div class="card-body">
                 <form action="{{ url('users') }}" method="GET">
                     @csrf
-                    <div class="row">
-
-                        <div class="col-md-12 mb-0">
-                            <label for=""><strong>{{ __('Buscar') }} {{ __('Usuario') }}:</strong></label>
-
-                        </div>
-                        <div class="col-md-6 mb-3">
-
-                            <input class="form-select px-2" list="userListOptions" placeholder="{{ __('Buscar por Nombre/Teléfono/Email...') }}" name="fuser" value="{{ $queryUser }}">
-                            <datalist id="userListOptions">
-                                <option value="">{{ __('Todos') }}</option>
-                                @if ($queryUser != null)
-                                    <option selected value="{{ $queryUser }}" >{{ $queryUser }}</option>
-                                @endif
-                                @foreach ($filterUsers as $item)
-                                    <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                @endforeach
-                            </datalist>
-                            {{-- </select> --}}
-                        </div>
-                        <div class="col-md-2 mb-3" >
-                            <button type="submit" class="btn btn-info"><i class="material-icons">search</i> {{ __('Buscar') }}</button>
-                        </div>
+                    <div class="input-group">
+                        <input class="form-control" list="exampleDataList" id="exampleDataList" placeholder="Buscar Administrador ..." name="fuser" value="{{ $queryUser }}"/>
+                        <datalist id="exampleDataList">
+                            @if ($queryUser != null)
+                                <option selected value="{{ $queryUser }}" >{{ $queryUser }}</option>
+                            @endif
+                            @foreach ($filterUsers as $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
+                            @endforeach
+                        </datalist>
+                        <button class="btn btn-outline-secondary" type="button">
+                            Buscar
+                        </button>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Row end -->

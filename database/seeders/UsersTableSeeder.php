@@ -34,5 +34,7 @@ class UsersTableSeeder extends Seeder
             'estado' => 1,
             'principal' => 0,
         ]);
+
+        User::factory()->count(20)->create();
     }
 }

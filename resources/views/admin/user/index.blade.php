@@ -1,86 +1,132 @@
 @extends('layouts.admin')
 
 @section('content')
-    <div class="row">
+    <!-- Content wrapper scroll start -->
+    <div class="content-wrapper-scroll">
 
-        <div class="col-xl-12 col-sm-12 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-header p-3 pt-2">
-                    <div
-                        class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                        <i class="material-icons opacity-10">people_alt</i>
-                    </div>
-                    <div class="text-center pt-1">
-                        {{-- <p class="text-sm mb-0 text-capitalize">Today's Money</p> --}}
-                        <h4 class="mb-0">{{ __('Usuarios') }}</h4>
-                    </div>
-                    <hr class="dark horizontal my-0">
+        <!-- Main header starts -->
+        <div class="main-header d-flex align-items-center justify-content-between position-relative">
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="page-icon">
+                    <i class="bi bi-shield"></i>
                 </div>
-                <div class="card-body p-3 pt-2">
-                    <div class="row">
-                        <div class="col-md-12 mb-3">
-                            <a href="{{ url('add-user') }}" class="btn btn-success">
-                                <i class="material-icons opacity-10">add</i> {{ __('Agregar') }} {{ __('Usuario') }}
-                            </a>
+                <div class="page-title d-none d-md-block">
+                    <h5>Administradores</h5>
+                </div>
+            </div>
+            <!-- Date range start -->
+            <div class="d-flex align-items-end">
+                <h6 class="float-end text-light" id="reloj"></h6>
+            </div>
+        </div>
+        <!-- Main header ends -->
+
+        <!-- Content wrapper start -->
+        <div class="content-wrapper">
+
+            @include('admin.user.search')
+
+            <!-- Row start -->
+            <div class="row gx-3">
+                <div class="col-sm-12 col-12">
+                    <div class="card">
+
+                        <div class="card-header">
+                            <div class="card-title">
+                                Listado de Administradores
+                                <a href="{{ url('add-user') }}" type="button" class="btn btn-success float-end">
+                                    <i class="bi bi-plus-square"></i> Agregar
+                                </a>
+                            </div>
 
                         </div>
-                        @include('admin.user.search')
-                        <div class="row">
+                        <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-sm align-products-center mb-0 table-striped table-bordered">
+                                <table class="table align-middle table-striped flex-column">
                                     <thead>
                                         <tr>
-                                            <th class="align-left text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ __('Nombre') }}</th>
-                                            {{-- <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ __('Phone') }}</th> --}}
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">{{ __('Rol') }}</th>
-                                            <th class=" text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"><i class="material-icons">format_list_bulleted</i></th>
+                                            <td align="center"><i class="bi bi-list-task"></i></td>
+                                            <td>Administrador</td>
+                                            <td>Dirección</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($users as $user)
                                         <tr>
                                             <td>
-                                                <div class="d-flex px-2 py-1">
-                                                  {{-- <div>
-                                                    <img src="https://demos.creative-tim.com/test/material-dashboard-pro/assets/img/team-2.jpg" class="avatar avatar-sm me-3">
-                                                  </div> --}}
-                                                  <div class="d-flex flex-column justify-content-center">
-                                                    <h6 class="mb-0 text-xs"><a href="{{ url('show-user/'.$user->id) }}">{{ $user->name }}</a></h6>
-                                                    <p class="text-xs text-secondary mb-0">{{ $user->email }}</p>
-                                                  </div>
+                                                <div class="btn-group dropend">
+                                                    <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                        <i class="bi bi-list-task"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                        <li>
+                                                            <a class="dropdown-item" href="{{ url('show-user/'.$user->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item" href="{{ url('edit-user/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
+                                                        </li>
+                                                        <li>
+
+                                                                @if ($user->principal == "1")
+                                                                    <a disabled type="button" class="btn bg-gradient-danger disabled" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
+                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                    </a>
+                                                                @else
+                                                                    <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
+                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                    </a>
+                                                                @endif
+
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </td>
-                                            {{-- <td class="align-middle text-center text-sm"><strong>{{ $user->phone }}</strong></td> --}}
-                                            <td class="align-middle text-center text-sm"><strong>{{ $user->role_as == '0' ?'User' : 'Admin' }} @if ($user->principal == "1") (Principal) @endif</strong></td>
-                                            <td class="align-middle  text-sm">
-                                                <a href="{{ url('show-user/'.$user->id) }}" type="button" class="btn btn-info"><i class="material-icons">visibility</i></a>
-                                                <a href="{{ url('edit-user/'.$user->id) }}" type="button" class="btn btn-warning"><i class="material-icons">edit</i></a>
-                                                @if ($user->principal == "1")
-                                                    <button disabled type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                                        <i class="material-icons">delete</i>
-                                                    </button>
-                                                @else
-                                                    <button type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                                        <i class="material-icons">delete</i>
-                                                    </button>
-                                                @endif
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    @if ($user->fotografia != null)
+                                                        <img src="{{ asset('assets/uploads/users/'.$user->fotografia) }}" class="img-4x rounded-5 me-3" alt="Doctores" />
+                                                    @else
+                                                        <img src="{{ asset('assets/uploads/users/userdefault.png') }}" class="img-4x rounded-5 me-3" alt="Doctores" />
+                                                    @endif
 
+                                                    <p class="m-0">
+                                                        <a class="text-primary" href="{{ url('show-user/'.$user->id) }}"><b>{{ $user->name }}</b></a>
+
+                                                        <br>
+                                                        <small>
+                                                            <a class="text-info" href="mailto:{{ $user->email }}">{{ $user->email }}</a>
+                                                            <br>
+                                                            <a class="text-light" href="tel:+502{{ $user->telefono }}">{{ $user->telefono }}</a>
+                                                            @if ($user->celular != null)
+                                                            / <a class="text-light" href="tel:+502{{ $user->celular }}">{{ $user->celular }}</a>
+
+                                                            / <a class="text-success" href="https://wa.me/502{{ $user->celular }}" target="_blank"><i class="bi bi-whatsapp"></i></a>
+                                                            @endif
+                                                        </small>
+
+                                                    </p>
+
+                                                </div>
                                             </td>
+                                            <td><small>{{ $user->direccion }}</small></td>
+
                                         </tr>
                                         @include('admin.user.deletemodal')
                                         @endforeach
                                     </tbody>
                                 </table>
+                                {{ $users->links() }}
                             </div>
                         </div>
                     </div>
                 </div>
-                <hr class="dark horizontal my-0">
-                <div class="card-footer p-3">
-                    {{-- <p class="mb-0"><span class="text-success text-sm font-weight-bolder">+55% </span>than last week</p> --}}
-                </div>
             </div>
+            <!-- Row end -->
+
         </div>
+        <!-- Content wrapper end -->
 
     </div>
+    <!-- Content wrapper scroll end -->
 @endsection
+

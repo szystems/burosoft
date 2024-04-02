@@ -17,7 +17,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{ url('/') }}">
+                    <a href="{{ url('users') }}">
                         <i class="bi bi-shield"></i>
                         <span class="menu-text">Administradores</span>
                     </a>

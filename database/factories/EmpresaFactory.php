@@ -4,6 +4,8 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+
 
 class EmpresaFactory extends Factory
 {
@@ -21,7 +23,7 @@ class EmpresaFactory extends Factory
             'telefono'=> $this->faker->numberBetween($min = 10000000, $max = 99999999),
             'celular'=> $this->faker->numberBetween($min = 10000000, $max = 99999999),
             'descripcion' => $this->faker->text(300),
-            'fecha_vencimiento' => $this->faker->date($format = 'Y-m-d', $min = 'now'),
+            'fecha_vencimiento' => Carbon::createFromFormat('Y-m-d', $this->faker->dateTimeBetween('-6 months', '+6 months')->format('Y-m-d')),
             'estado' => '1',
         ];
     }
