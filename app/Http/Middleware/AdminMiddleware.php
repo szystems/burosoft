@@ -19,13 +19,13 @@ class AdminMiddleware
     {
         if(Auth::check())
         {
-            if(Auth::user()->role_as >= '0')
+            if(Auth::user()->role_as == '0')
             {
                 return $next($request);
             }
             else
             {
-                return redirect('home')->with('status','¡Acceso denegado! ya que no eres administrador');
+                return redirect('empresa-dashboard')->with('status','¡Acceso denegado! ya que no eres administrador');
             }
         }
         else

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\SubsController;
 use App\Http\Controllers\Admin\EmpresaController;
 
 //user
+use App\Http\Controllers\Empresa\EmpresaDashboardController;
 use App\Http\Controllers\Frontend\FrontendController;
 use App\Http\Controllers\Frontend\UserController;
 use App\Http\Controllers\Frontend\PaymentController;
@@ -46,44 +47,38 @@ Auth::routes();
  Route::get('/home', [FrontendController::class, 'index'])->name('home');
 
 //User Dashbord
-Route::middleware(['auth'])->group(function () {\
+Route::middleware(['auth'])->group(function () {
+    //dashboard
+    Route::get('empresa-dashboard',[EmpresaDashboardController::class, 'index']);
 
-    //User Dashboard
-    Route::get('my-account', [UserController::class, 'indexuser']);
-    Route::get('user-details/{id}', [UserController::class, 'showuser']);
-    Route::get('user-edit/{id}', [UserController::class, 'edituser']);
-    Route::put('user-update/{id}', [UserController::class, 'updateuser']);
-    Route::get('user-subscription/{id}', [UserController::class, 'showsubscription']);
 
-    //Empresas
-    Route::get('empresas', [EmpresaController::class, 'index']);
-    Route::get('show-empresa/{id}', [EmpresaController::class, 'show']);
-    Route::get('add-empresa', [EmpresaController::class, 'add']);
-    Route::post('insert-empresa',[EmpresaController::class,'insert']);
-    Route::get('edit-empresa/{id}',[EmpresaController::class,'edit']);
-    Route::put('update-empresa/{id}', [EmpresaController::class, 'update']);
-    Route::get('delete-empresa/{id}', [EmpresaController::class, 'destroy']);
+    //User FrontEnd
+    // Route::get('my-account', [UserController::class, 'indexuser']);
+    // Route::get('user-details/{id}', [UserController::class, 'showuser']);
+    // Route::get('user-edit/{id}', [UserController::class, 'edituser']);
+    // Route::put('user-update/{id}', [UserController::class, 'updateuser']);
+    // Route::get('user-subscription/{id}', [UserController::class, 'showsubscription']);
 
-    //Payments
-    Route::get('checkout', [FrontendController::class, 'checkout'])->name('checkout');
-    Route::post('/payments/pay', [PaymentController::class, 'pay'])->name('pay');
-    Route::get('/payments/approval', [PaymentController::class, 'approval'])->name('approval');
-    Route::get('/payments/cancelled', [PaymentController::class, 'cancelled'])->name('cancelled');
+    // //Payments
+    // Route::get('checkout', [FrontendController::class, 'checkout'])->name('checkout');
+    // Route::post('/payments/pay', [PaymentController::class, 'pay'])->name('pay');
+    // Route::get('/payments/approval', [PaymentController::class, 'approval'])->name('approval');
+    // Route::get('/payments/cancelled', [PaymentController::class, 'cancelled'])->name('cancelled');
 
-    //suscripciones
-    Route::post('update-status', [PaymentController::class, 'updatestatussub']);
-    Route::post('cancel-subscription', [PaymentController::class, 'cancelsub']);
-    Route::post('cancel-subscription-gratis', [PaymentController::class, 'cancelsubgratis']);
+    // //suscripciones
+    // Route::post('update-status', [PaymentController::class, 'updatestatussub']);
+    // Route::post('cancel-subscription', [PaymentController::class, 'cancelsub']);
+    // Route::post('cancel-subscription-gratis', [PaymentController::class, 'cancelsubgratis']);
 
-    Route::prefix('subscribe')
-    ->name('subscribe.')
-    ->group(function() {
-        Route::get('/', [SubscriptionController::class, 'show'])->name('show');
-        Route::post('/', [SubscriptionController::class, 'store'])->name('store');
-        Route::get('/approval', [SubscriptionController::class, 'approval'])->name('approval');
-        Route::get('/cancelled', [SubscriptionController::class, 'cancelled'])->name('cancelled');
+    // Route::prefix('subscribe')
+    // ->name('subscribe.')
+    // ->group(function() {
+    //     Route::get('/', [SubscriptionController::class, 'show'])->name('show');
+    //     Route::post('/', [SubscriptionController::class, 'store'])->name('store');
+    //     Route::get('/approval', [SubscriptionController::class, 'approval'])->name('approval');
+    //     Route::get('/cancelled', [SubscriptionController::class, 'cancelled'])->name('cancelled');
 
-    });
+    // });
 
 });
 
@@ -101,6 +96,15 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('delete-user/{id}', [DashboardController::class, 'destroyuser']);
     Route::get('pdf-user', [DashboardController::class, 'pdf']);
 
+    //Empresas
+    Route::get('empresas', [EmpresaController::class, 'index']);
+    Route::get('show-empresa/{id}', [EmpresaController::class, 'show']);
+    Route::get('add-empresa', [EmpresaController::class, 'add']);
+    Route::post('insert-empresa',[EmpresaController::class,'insert']);
+    Route::get('edit-empresa/{id}',[EmpresaController::class,'edit']);
+    Route::put('update-empresa/{id}', [EmpresaController::class, 'update']);
+    Route::get('delete-empresa/{id}', [EmpresaController::class, 'destroy']);
+
     //Empresas Users
     Route::get('usuarios', [UsuarioEmpresaController::class, 'usuarios']);
     Route::get('show-usuario/{id}', [UsuarioEmpresaController::class, 'showusuario']);
@@ -111,11 +115,11 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('delete-usuario/{id}', [UsuarioEmpresaController::class, 'destroyusuario']);
     Route::get('pdf-usuario', [UsuarioEmpresaController::class, 'pdf']);
 
-    //Subscriptions
-    Route::get('index-subscriptions', [SubsController::class, 'index']);
-    Route::post('insert-subscription', [SubsController::class, 'insert']);
-    Route::put('update-subscription/{id}', [SubsController::class, 'update']);
-    Route::get('delete-subscription/{id}', [SubsController::class, 'destroy']);
+    // //Subscriptions
+    // Route::get('index-subscriptions', [SubsController::class, 'index']);
+    // Route::post('insert-subscription', [SubsController::class, 'insert']);
+    // Route::put('update-subscription/{id}', [SubsController::class, 'update']);
+    // Route::get('delete-subscription/{id}', [SubsController::class, 'destroy']);
 
     //config
     Route::get('config', [ConfigController::class, 'index']);

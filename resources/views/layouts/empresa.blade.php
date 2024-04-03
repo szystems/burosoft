@@ -74,17 +74,16 @@
             @php
                 $empresa = \App\Models\Empresa::find(Auth::user()->id);
             @endphp
-
-			@include('layouts.incadmin.nav')
+			@include('layouts.incempresa.nav')
 
 			<!-- Main container start -->
 			<div class="main-container">
 
-				@include('layouts.incadmin.sidebar')
+				@include('layouts.incempresa.sidebar')
 
 				@yield('content')
 
-				@include('layouts.incadmin.footer')
+				@include('layouts.incempresa.footer')
 
 			</div>
 			<!-- Main container end -->

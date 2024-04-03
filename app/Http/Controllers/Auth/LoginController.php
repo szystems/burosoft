@@ -41,11 +41,11 @@ class LoginController extends Controller
         // }
         if(Auth::user()->role_as == '0') //1 = Admin Login
         {
-            return redirect('dashboard')->with('status','Bienvenido a tu panel de control');
+            return redirect('dashboard')->with('status','Bienvenido al panel de Administrador');
         }
         elseif(Auth::user()->role_as == '1') // Normal or Default User Login
         {
-            return redirect('dashboard')->with('status', 'Bienvenido a tu panel de control de empresa');
+            return redirect('empresa-dashboard')->with('status', 'Bienvenido al panel de empresa');
         }
     }
 

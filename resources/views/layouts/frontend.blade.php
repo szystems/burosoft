@@ -158,10 +158,19 @@
                                     <a href="{{ route('login') }}" class="dropdown-item">{{ __('Login') }}</a>
                                     {{-- <a href="{{ route('register') }}" class="dropdown-item">{{ __('Registrarse') }}</a> --}}
                                     <a href="{{ route('password.request') }}" class="dropdown-item">{{ __('¿Olvidaste tu contraseña?') }}</a>
-                                @else
+                                @elseif (Auth::user()->role_as == 0)
                                     {{-- <a href="{{ url('my-account') }}" class="dropdown-item">{{ __('Cuenta') }}</a> --}}
 
-                                    <a href="{{ url('dashboard') }}" class="dropdown-item">{{ __('Panel de Control') }}</a>
+                                    <a href="{{ url('dashboard') }}" class="dropdown-item">{{ __('Panel de Administración') }}</a>
+
+                                    <a href="javascript:; {{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item bg-secondary"><font color="red">{{ __('Cerrar Sesión') }}</font>  </a>
+                                    <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                @elseif (Auth::user()->role_as == 1)
+                                    {{-- <a href="{{ url('my-account') }}" class="dropdown-item">{{ __('Cuenta') }}</a> --}}
+
+                                    <a href="{{ url('dashboard') }}" class="dropdown-item">Panel de Empresa</a>
 
                                     <a href="javascript:; {{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item bg-secondary"><font color="red">{{ __('Cerrar Sesión') }}</font>  </a>
                                     <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">

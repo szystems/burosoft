@@ -34,11 +34,11 @@ class RegisterController extends Controller
     {
         if(Auth::user()->role_as == '0') //1 = Admin Login
         {
-            return redirect('dashboard')->with('status',__('Bienvenido a tu panel de control'));
+            return redirect('dashboard')->with('status',__('Bienvenido al panel de Administrador'));
         }
         elseif(Auth::user()->role_as == '1') // Normal or Default User Login
         {
-            return redirect('/')->with('status',__('Bienvenido, as iniciado sesión'));
+            return redirect('empresa-dashboard')->with('status',__('Bienvenido, al panel de Empresa'));
         }
     }
 
