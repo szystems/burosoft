@@ -10,12 +10,12 @@
                 <div class="page-icon">
                     <i class="bi bi-people-fill"></i>
                 </div>
-                <div class="page-title d-none d-md-block">
+                <div class="page-title">
                     <h5>Usuarios de Empresas</h5>
                 </div>
             </div>
             <!-- Date range start -->
-            <div class="d-flex align-items-end">
+            <div class="d-flex align-items-end d-none d-sm-block">
                 <h6 class="float-end text-light" id="reloj"></h6>
             </div>
         </div>
@@ -191,7 +191,7 @@
 
                                                         </div>
                                                         <div class="d-flex gap-2 justify-content-center">
-                                                            <a href="{{ url('users') }}" type="button" class="btn btn-danger">
+                                                            <a href="{{ url('usuarios') }}" type="button" class="btn btn-danger">
                                                                 <i class="bi bi-x-circle"></i> Cancelar
                                                             </a>
                                                             <button type="submit" class="btn btn-success">

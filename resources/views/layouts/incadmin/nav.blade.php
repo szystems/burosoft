@@ -1,18 +1,20 @@
 <!-- Page header starts -->
 <div class="page-header">
 
+    <div class="toggle-sidebar m-3" id="toggle-sidebar">
+        <i class="bi bi-list"></i>
+    </div>
+
     <!-- Sidebar brand starts -->
     <div class="brand">
-        <a href="index.html" class="logo">
+        <a href="{{ url('dashboard') }}" class="logo">
             <img src="{{ asset('frontendtemplate/img/logo/logohorizontal.png') }}" class="d-none d-md-block me-4" alt="Buro" />
             <img src="{{ asset('frontendtemplate/img/logo/logo.png') }}" class="d-block d-md-none me-4" alt="Buro" />
         </a>
     </div>
     <!-- Sidebar brand ends -->
 
-    <div class="toggle-sidebar" id="toggle-sidebar">
-        <i class="bi bi-list"></i>
-    </div>
+
 
     <!-- Header actions ccontainer start -->
     <div class="header-actions-container">
@@ -69,7 +71,7 @@
                     </div>
                 </div>
             </div> --}}
-            <a href="account-settings.html" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            <a href="{{ url('config') }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                 data-bs-custom-class="custom-tooltip-blue" data-bs-title="Settings">
                 <i class="bi bi-gear fs-5"></i>
             </a>

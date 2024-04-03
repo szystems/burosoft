@@ -10,13 +10,13 @@
                 <div class="page-icon">
                     <i class="bi bi-building"></i>
                 </div>
-                <div class="page-title d-none d-md-block">
+                <div class="page-title">
                     <h5>Empresas</h5>
                 </div>
             </div>
             <!-- Date range start -->
             <div class="d-flex align-items-end">
-                <h6 class="float-end text-light" id="reloj"></h6>
+                <h6 class="float-end text-light d-none d-sm-block" id="reloj"></h6>
             </div>
         </div>
         <!-- Main header ends -->
