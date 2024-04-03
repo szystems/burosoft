@@ -94,9 +94,9 @@
                             </div>
                             <div class="sale-details">
                                 <h6 class="text-light">Empresas</h6>
-                                <a href="#" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-people-fill"></i> Usuarios</a>
+                                <a href="{{ url('usuarios') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-people-fill"></i> <u>Usuarios</u></a>
                                 <br>
-                                <a href="{{ url('empresas') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-building"></i> Empresas</a>
+                                <a href="{{ url('empresas') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-building"></i> <u>Empresas</u></a>
                                 {{-- <h3>95%</h3> --}}
                             </div>
                             <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold red">

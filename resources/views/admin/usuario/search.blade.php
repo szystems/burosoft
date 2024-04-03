@@ -6,16 +6,16 @@
                 <div class="card-title"><u>Doctores</u></div>
             </div> --}}
             <div class="card-body">
-                <form action="{{ url('empresas') }}" method="GET">
+                <form action="{{ url('usuarios') }}" method="GET">
                     @csrf
                     <div class="input-group">
-                        <input class="form-control" list="exampleDataList" id="exampleDataList" placeholder="Buscar Empresa ..." name="fempresa" value="{{ $queryEmpresa }}"/>
+                        <input class="form-control" list="exampleDataList" id="exampleDataList" placeholder="Buscar Usuario ..." name="fuser" value="{{ $queryUser }}"/>
                         <datalist id="exampleDataList">
-                            @if ($queryEmpresa != null)
-                                <option selected value="{{ $queryEmpresa }}" >{{ $queryEmpresa }}</option>
+                            @if ($queryUser != null)
+                                <option selected value="{{ $queryUser }}" >{{ $queryUser }}</option>
                             @endif
-                            @foreach ($filterEmpresas as $item)
-                                <option value="{{ $item->nombre }}">{{ $item->nombre }}</option>
+                            @foreach ($filterUsers as $item)
+                                <option value="{{ $item->name }}">{{ $item->name }}</option>
                             @endforeach
                         </datalist>
                         <button class="btn btn-outline-secondary" type="submit">

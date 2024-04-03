@@ -16,7 +16,7 @@
                         <span class="menu-text">Sitio Web</span>
                     </a>
                 </li>
-                <li>
+                <li class="{{ Request::is('users','show-user/*','add-user','edit-user/*') ? 'active-page-link':''  }}">
                     <a href="{{ url('users') }}">
                         <i class="bi bi-shield"></i>
                         <span class="menu-text">Administradores</span>
@@ -31,7 +31,7 @@
                     <div class="sidebar-submenu">
                         <ul>
                             <li>
-                                <a href="#"><i class="bi bi-people-fill"></i> Usuarios</a>
+                                <a href="{{ url('usuarios') }}"><i class="bi bi-people-fill"></i> Usuarios</a>
                             </li>
                         </ul>
                         <ul>

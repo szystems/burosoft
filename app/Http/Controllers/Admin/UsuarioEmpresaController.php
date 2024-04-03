@@ -1,0 +1,135 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+
+use App\Models\Empresa;
+use App\Models\User;
+use App\Http\Requests\UserFormRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use App\Models\Config;
+use Carbon\Carbon;
+use PDF;
+use DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\UserMail;
+
+class UsuarioEmpresaController extends Controller
+{
+    public function usuarios(Request $request)
+    {
+        if ($request)
+        {
+            $queryUser=$request->input('fuser');
+            $users = DB::table('users')
+            ->where('estado', '=', 1)
+            ->where('role_as', '=', 1)
+            ->where(function ($query) use ($queryUser) {
+            $query->where('name', 'LIKE', '%' . $queryUser . '%')
+                ->orWhere('email', 'LIKE', '%' . $queryUser . '%')
+                ->orWhere('telefono', 'LIKE', '%' . $queryUser . '%')
+                ->orWhere('celular', 'LIKE', '%' . $queryUser . '%');
+            })
+            ->orderBy('empresa_id','asc')
+            ->paginate(20);
+            $filterUsers = User::all();
+            return view('admin.usuario.index', compact('users','queryUser','filterUsers'));
+        }
+    }
+
+    public function showusuario(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        return view('admin.usuario.show', compact('user'));
+    }
+
+    public function addusuario()
+    {
+        $empresas = Empresa::where('estado', '=', 1)->orderBy('nombre')->get();
+        return view('admin.usuario.add', compact( 'empresas'));
+    }
+
+    public function insertusuario(UserFormRequest $request)
+    {
+        $user = new User();
+        $user->empresa_id = $request->input('empresa_id');
+        if($request->hasFile('fotografia'))
+        {
+            $file = $request->file('fotografia');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $file->move('assets/uploads/users',$filename);
+            $user->fotografia = $filename;
+        }
+        $user->role_as = 1;
+        $user->estado = 1;
+        $user->principal = 0;
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->password = 'Flebo'.rand(1111,9999);
+        $user->telefono = $request->input('telefono');
+        $user->celular = $request->input('celular');
+        $user->direccion = $request->input('direccion');
+        $user->save();
+
+        // Mail::to($user->email)->send(new UserMail($user));
+
+        return redirect('show-usuario/'.$user->id)->with('status',__('Usuario agregado correctamente!'));
+    }
+
+    public function editusuario($id)
+    {
+        $user = User::find($id);
+        $empresas = Empresa::where('estado', '=', 1)->orderBy('nombre')->get();
+        return view('admin.usuario.edit', \compact('user', 'empresas'));
+    }
+
+    public function updateusuario(UserFormRequest $request, $id)
+    {
+        $user = User::find($id);
+        $user->empresa_id = $request->input('empresa_id');
+        if($request->hasFile('fotografia'))
+        {
+            $path = 'assets/uploads/users/'.$user->fotografia;
+            if(File::exists($path))
+            {
+                File::delete($path);
+            }
+            $file = $request->file('fotografia');
+            $ext = $file->getClientOriginalExtension();
+            $filename = time().'.'.$ext;
+            $file->move('assets/uploads/users',$filename);
+            $user->fotografia = $filename;
+        }
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->telefono = $request->input('telefono');
+        $user->celular = $request->input('celular');
+        $user->direccion = $request->input('direccion');
+        $user->update();
+
+        return redirect('show-usuario/'.$id)->with('status',__('Usuario actualizado correctamente!'));
+    }
+
+    public function destroyusuario($id)
+    {
+        $user = User::find($id);
+        if ($user->fotografia)
+        {
+            $path = 'assets/uploads/users/'.$user->fotografia;
+            if (File::exists($path))
+            {
+                File::delete($path);
+
+            }
+        }
+        $user->estado = 0;
+        $user->email = $user->email.'-Deleted'.$user->id;
+        $user->update();
+        return redirect('usuarios')->with('status',__('Usuario eliminado correctamente!'));
+    }
+}

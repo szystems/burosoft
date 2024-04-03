@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 //admin
 use App\Http\Controllers\Admin\BackendController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\UsuarioEmpresaController;
 use App\Http\Controllers\Admin\ConfigController;
 use App\Http\Controllers\Admin\SubsController;
 use App\Http\Controllers\Admin\EmpresaController;
@@ -100,7 +101,17 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('delete-user/{id}', [DashboardController::class, 'destroyuser']);
     Route::get('pdf-user', [DashboardController::class, 'pdf']);
 
-    //Admin Users
+    //Empresas Users
+    Route::get('usuarios', [UsuarioEmpresaController::class, 'usuarios']);
+    Route::get('show-usuario/{id}', [UsuarioEmpresaController::class, 'showusuario']);
+    Route::get('add-usuario', [UsuarioEmpresaController::class, 'addusuario']);
+    Route::post('insert-usuario', [UsuarioEmpresaController::class, 'insertusuario']);
+    Route::get('edit-usuario/{id}',[UsuarioEmpresaController::class,'editusuario']);
+    Route::put('update-usuario/{id}', [UsuarioEmpresaController::class, 'updateusuario']);
+    Route::get('delete-usuario/{id}', [UsuarioEmpresaController::class, 'destroyusuario']);
+    Route::get('pdf-usuario', [UsuarioEmpresaController::class, 'pdf']);
+
+    //Subscriptions
     Route::get('index-subscriptions', [SubsController::class, 'index']);
     Route::post('insert-subscription', [SubsController::class, 'insert']);
     Route::put('update-subscription/{id}', [SubsController::class, 'update']);
