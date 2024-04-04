@@ -19,4 +19,9 @@ class Empresa extends Model
         'fotografia',
         'estado',
     ];
+
+    public function config()
+    {
+        return $this->hasOne(Config::class);
+    }
 }

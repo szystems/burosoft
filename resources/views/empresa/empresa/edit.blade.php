@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.empresa')
 @section('content')
 
     <!-- Content wrapper scroll start -->
@@ -11,7 +11,7 @@
                     <i class="bi bi-building"></i>
                 </div>
                 <div class="page-title">
-                    <h5>Empresas</h5>
+                    <h5>{{ Auth::user()->empresa->nombre }}</h5>
                 </div>
             </div>
             <!-- Date range start -->
@@ -52,10 +52,15 @@
                                                     </div>
 
                                                 @endif
-                                                <form action="{{ url('update-empresa/'.$empresa->id) }}" method="POST" enctype="multipart/form-data">
+                                                <form action="{{ url('update-empresa-info/'.$empresa->id) }}" method="POST" enctype="multipart/form-data">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="row gx-3">
+
+                                                        @php
+                                                            $fecha_vencimiento = date("d-m-Y", strtotime($empresa->fecha_vencimiento));
+                                                        @endphp
+                                                        <input type="hidden" name="fecha_vencimiento"  value="{{ $fecha_vencimiento }}"/>
 
                                                         <div class="col-md-3 mb-3">
                                                             <!-- Form Field Start -->
@@ -162,29 +167,6 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-4 mb-3">
-                                                            <!-- Form Field Start -->
-                                                            <div class="mb-2">
-                                                                <label for="fecha_cita" class="form-label">Vencimiento de Licencia</label>
-                                                                @php
-                                                                    $fecha_vencimiento = date("d-m-Y", strtotime($empresa->fecha_vencimiento));
-                                                                @endphp
-                                                                <div class="input-group">
-                                                                    <input type="text" name="fecha_vencimiento" class="form-control datepicker text-center" id="fecha_vencimiento" value="{{ old('fecha_vencimiento') }}"/>
-                                                                    <span class="input-group-text">
-                                                                        <i class="bi bi-calendar4"></i>
-                                                                    </span>
-                                                                </div>
-                                                                @if ($errors->has('fecha_vencimiento'))
-                                                                    <span class="help-block opacity-7">
-                                                                            <strong>
-                                                                                <font color="red">{{ $errors->first('fecha_vencimiento') }}</font>
-                                                                            </strong>
-                                                                    </span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
-
                                                     </div>
                                                     <div class="d-flex gap-2 justify-content-center">
                                                         <a href="{{ url('empresas') }}" type="button" class="btn btn-danger">
@@ -219,24 +201,5 @@
         <!-- Content wrapper end -->
     </div>
     <!-- Content wrapper scroll end -->
-
-    <script>
-        var date = new Date();
-        var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-
-        var optSimple = {
-            language: "es",
-            format: "dd-mm-yyyy",
-            autoclose: true,
-            todayHighlight: true,
-            todayBtn: "linked",
-            orientation: "bottom auto",
-            startDate: "01-01-1900",
-
-
-        };
-        $( '#fecha_vencimiento' ).datepicker( optSimple );
-        $( '#fecha_vencimiento').datepicker( 'setDate', '{{ $fecha_vencimiento }}' );
-    </script>
 
 @endsection

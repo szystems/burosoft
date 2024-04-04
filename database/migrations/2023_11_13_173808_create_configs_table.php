@@ -15,15 +15,11 @@ class CreateConfigsTable extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('empresa_id');
             $table->string('logo')->nullable();
-            $table->string('currency');
-            $table->string('currency_iso');
-            $table->string('currency_simbol');
-            $table->tinyInteger('paypal')->default('0');
-            $table->tinyInteger('dbt')->default('0');
-            $table->decimal('shipping', $precision = 11, $scale = 2)->default('0.00');
-            $table->mediumText('shipping_description')->nullable();
-            $table->string('email')->nullable();
+            $table->string('currency')->default('GTQ Q');
+            $table->string('currency_iso')->default('GTQ');
+            $table->string('currency_simbol')->default('Q');
             $table->timestamps();
         });
     }

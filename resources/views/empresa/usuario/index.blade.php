@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.empresa')
 
 @section('content')
     <!-- Content wrapper scroll start -->
@@ -11,7 +11,7 @@
                     <i class="bi bi-people-fill"></i>
                 </div>
                 <div class="page-title">
-                    <h5>Usuarios de Empresas</h5>
+                    <h5>Usuarios de {{ Auth::user()->empresa->nombre }}</h5>
                 </div>
             </div>
             <!-- Date range start -->
@@ -24,7 +24,7 @@
         <!-- Content wrapper start -->
         <div class="content-wrapper">
 
-            @include('admin.usuario.search')
+            @include('empresa.usuario.search')
 
             <!-- Row start -->
             <div class="row gx-3">
@@ -34,9 +34,9 @@
                         <div class="card-header">
                             <div class="card-title">
                                 Listado de Usuarios
-                                <a href="{{ url('add-usuario') }}" type="button" class="btn btn-success float-end">
+                                {{-- <a href="{{ url('add-usuario') }}" type="button" class="btn btn-success float-end">
                                     <i class="bi bi-plus-square"></i> Agregar
-                                </a>
+                                </a> --}}
                             </div>
 
                         </div>
@@ -46,7 +46,6 @@
                                     <thead>
                                         <tr>
                                             <td align="center"><i class="bi bi-list-task"></i></td>
-                                            <td>Empresa</td>
                                             <td>Usuario</td>
                                             <td>Dirección</td>
                                         </tr>
@@ -61,12 +60,12 @@
                                                     </button>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ url('show-usuario/'.$user->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
+                                                            <a class="dropdown-item" href="{{ url('show-empresa-usuario/'.$user->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ url('edit-usuario/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
+                                                            <a class="dropdown-item" href="{{ url('edit-empresa-usuario/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                         </li>
-                                                        <li>
+                                                        {{-- <li>
 
                                                                 @if ($user->principal == "1")
                                                                     <a disabled type="button" class="btn bg-gradient-danger disabled" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
@@ -78,7 +77,7 @@
                                                                     </a>
                                                                 @endif
 
-                                                        </li>
+                                                        </li> --}}
                                                     </ul>
                                                 </div>
                                             </td>
@@ -86,7 +85,7 @@
                                                 @php
                                                     $empresa = \App\Models\Empresa::find($user->empresa_id);
                                                 @endphp
-                                                <a class="text-primary" href="{{ url('show-empresa/'.$user->empresa_id) }}">{{ $empresa->nombre }}</a>
+                                                <a class="text-primary" href="{{ url('show-empresa-usuario/'.$user->empresa_id) }}">{{ $empresa->nombre }}</a>
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
@@ -97,7 +96,7 @@
                                                     @endif
 
                                                     <p class="m-0">
-                                                        <a class="text-primary" href="{{ url('show-usuario/'.$user->id) }}"><b>{{ $user->name }}</b></a>
+                                                        <a class="text-primary" href="{{ url('show-empresa-usuario/'.$user->id) }}"><b>{{ $user->name }}</b></a>
 
                                                         <br>
                                                         <small>
@@ -115,10 +114,9 @@
 
                                                 </div>
                                             </td>
-                                            <td><small>{{ $user->direccion }}</small></td>
 
                                         </tr>
-                                        @include('admin.usuario.deletemodal')
+                                        {{-- @include('admin.usuario.deletemodal') --}}
                                         @endforeach
                                     </tbody>
                                 </table>

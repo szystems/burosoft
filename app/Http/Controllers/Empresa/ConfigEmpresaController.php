@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Empresa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,12 +9,12 @@ use App\Models\Config;
 use Illuminate\Support\Facades\File;
 use DB;
 
-class ConfigController extends Controller
+class ConfigEmpresaController extends Controller
 {
     public function index()
     {
         $config = Config::where('empresa_id', 1)->first();
-        return view('admin.config.index', \compact('config'));
+        return view('empresa.config.index', \compact('config'));
     }
 
     public function update(Request $request)
@@ -43,6 +43,6 @@ class ConfigController extends Controller
         $config->currency_simbol = $currency_simbol;
         $config->update();
 
-        return redirect('config')->with('status',__('Configuración actualizada Correctamente!'));
+        return redirect('empresa-config')->with('status',__('Configuración actualizada Correctamente!'));
     }
 }

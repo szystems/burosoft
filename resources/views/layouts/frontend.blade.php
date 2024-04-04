@@ -169,8 +169,12 @@
                                     </form>
                                 @elseif (Auth::user()->role_as == 1)
                                     {{-- <a href="{{ url('my-account') }}" class="dropdown-item">{{ __('Cuenta') }}</a> --}}
-
-                                    <a href="{{ url('dashboard') }}" class="dropdown-item">Panel de Empresa</a>
+                                    @if (Auth::user()->role_as == 0)
+                                        <a href="{{ url('dashboard') }}" class="dropdown-item">Panel de Administrador</a>
+                                        <a href="{{ url('empresa-dashboard') }}" class="dropdown-item">Panel de {{ Auth::user()->empresa->nombre }}</a>
+                                    @else
+                                        <a href="{{ url('empresa-dashboard') }}" class="dropdown-item">Panel de {{ Auth::user()->empresa->nombre }}</a>
+                                    @endif
 
                                     <a href="javascript:; {{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="dropdown-item bg-secondary"><font color="red">{{ __('Cerrar Sesión') }}</font>  </a>
                                     <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">

@@ -19,9 +19,9 @@ class FrontendController extends Controller
 {
     public function index()
     {
-        $config = Config::first();
 
-        return view('frontend.index', compact('config'));
+
+        return view('frontend.index');
     }
 
     public function about()
@@ -39,8 +39,7 @@ class FrontendController extends Controller
 
     public function contact()
     {
-        $config = Config::first();
-        return view('frontend.contact', compact('config'));
+        return view('frontend.contact');
     }
 
     public function sendcontact(Request $request)
@@ -50,7 +49,7 @@ class FrontendController extends Controller
         $subject = $request->input('subject');
         $mensaje = $request->input('mensaje');
 
-        $config = Config::first();
+        $config = Config::where('empresa_id', 1)->first();
         $mail_to = $config->email;
 
         Mail::to($mail_to)->send(new Contacto($name,$email,$subject,$mensaje,$mail_to,$config));

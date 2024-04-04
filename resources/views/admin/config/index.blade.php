@@ -53,7 +53,7 @@
                                 <div class="tab-content" id="customTabContent">
 
                                     <div class="tab-pane fade show active" id="config" role="tabpanel">
-                                        <div class="p-5 text-left">
+                                        <div class="p-0 text-left">
                                             {{-- <h1 class="display-5 fw-bold text-green">
                                                 General
                                             </h1> --}}
@@ -75,7 +75,7 @@
                                                     @method('PUT')
                                                     <div class="row gx-3">
 
-                                                        <div class="col-md-6 mb-3">
+                                                        <div class="col-md-12 mb-3">
                                                             <!-- Form Field Start -->
                                                             <div class="mb-3">
                                                                 <label for="moneda" class="form-label">Moneda</label>
@@ -94,33 +94,14 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-6 mb-3">
-                                                            <!-- Form Field Start -->
-                                                            <div class="mb-3">
-                                                                <label for="email" class="form-label">Email</label>
-                                                                <input name="email" type="text" class="form-control" placeholder="Correo electronico..." value="{{ $config->email }}" />
-                                                                @if ($errors->has('email'))
-                                                                    <span class="help-block opacity-7">
-                                                                            <strong>
-                                                                                <font color="red">{{ $errors->first('email') }}</font>
-                                                                            </strong>
-                                                                    </span>
-                                                                @endif
-                                                            </div>
-                                                        </div>
 
-                                                        @if ($config->logo)
-                                                        <div class="col-md-6 mb-3">
-                                                            <!-- Form Field Start -->
-                                                            <div class="mb-3">
-                                                                <label class="form-label">Imágen</label>
-                                                                <img src="{{ asset('assets/uploads/logos/'.$config->logo) }}" class="img-fluid mb-2" alt="Logo" />
-                                                            </div>
-                                                        </div>
-                                                        @endif
 
-                                                        <div class="col-md-6 mb-3">
-                                                            <!-- Form Field Start -->
+                                                        <div class="col-md-12 mb-3">
+                                                            @if ($config->logo)
+                                                                <div align="center" class="brand">
+                                                                    <img src="{{ asset('assets/uploads/logos/'.$config->logo) }}" class="img-thumbnail" style="height: 100px;" alt="Logo" />
+                                                                </div>
+                                                            @endif
                                                             <div class="mb-3">
                                                                 <label class="form-label">Cambiar Imágen</label>
                                                                 <input type="file" name="logo" class="form-control border">

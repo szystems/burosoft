@@ -19,26 +19,26 @@ class UserController extends Controller
     {
         $orders = Order::where('user_id', Auth::id())->orderBy('created_at','desc')->get();
         $cartProducts = Cart::where('user_id', Auth::id())->get();
-        $config = Config::first();
+        $config = Config::where('empresa_id', 1)->first();
         return view('frontend.orders.index', compact('orders','cartProducts','config'));
     }
 
     public function indexuser()
     {
-        $config = Config::first();
+        $config = Config::where('empresa_id', 1)->first();
         return view('frontend.user.index', compact('config'));
     }
 
     public function showuser($id)
     {
-        $config = Config::first();
+        $config = Config::where('empresa_id', 1)->first();
         $user = User::where('id', $id)->first();
         return view('frontend.user.show', compact('user','config'));
     }
 
     public function edituser($id)
     {
-        $config = Config::first();
+        $config = Config::where('empresa_id', 1)->first();
         $user = User::where('id', $id)->first();
         return view('frontend.user.edit', compact('user','config'));
     }
@@ -75,7 +75,7 @@ class UserController extends Controller
 
     public function showsubscription($id)
     {
-        $config = Config::first();
+        $config = Config::where('empresa_id', 1)->first();
         $user = User::where('id', $id)->first();
         $subscription = Subscription::where('user_id',$id)->first();
         return view('frontend.user.subscription', compact('user','config','subscription'));

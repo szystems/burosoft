@@ -3,6 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+//frontend
+use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\PaymentController;
+use App\Http\Controllers\Frontend\SubscriptionController;
+
 //admin
 use App\Http\Controllers\Admin\BackendController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -11,12 +17,12 @@ use App\Http\Controllers\Admin\ConfigController;
 use App\Http\Controllers\Admin\SubsController;
 use App\Http\Controllers\Admin\EmpresaController;
 
-//user
+
+//empresa
+use App\Http\Controllers\Empresa\ConfigEmpresaController;
 use App\Http\Controllers\Empresa\EmpresaDashboardController;
-use App\Http\Controllers\Frontend\FrontendController;
-use App\Http\Controllers\Frontend\UserController;
-use App\Http\Controllers\Frontend\PaymentController;
-use App\Http\Controllers\Frontend\SubscriptionController;
+use App\Http\Controllers\Empresa\EmpresaInfoController;
+use App\Http\Controllers\Empresa\EmpresaUsuarioController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,8 +54,24 @@ Auth::routes();
 
 //User Dashbord
 Route::middleware(['auth'])->group(function () {
+
     //dashboard
     Route::get('empresa-dashboard',[EmpresaDashboardController::class, 'index']);
+
+    //Empresa Info
+    Route::get('show-empresa-info/{id}', [EmpresaInfoController::class, 'show']);
+    Route::get('edit-empresa-info/{id}',[EmpresaInfoController::class,'edit']);
+    Route::put('update-empresa-info/{id}', [EmpresaInfoController::class, 'update']);
+
+    //Usuarios Empresa
+    Route::get('empresa-usuarios', [EmpresaUsuarioController::class, 'usuarios']);
+    Route::get('show-empresa-usuario/{id}', [EmpresaUsuarioController::class, 'showusuario']);
+    Route::get('edit-empresa-usuario/{id}',[EmpresaUsuarioController::class,'editusuario']);
+    Route::put('update-empresa-usuario/{id}', [EmpresaUsuarioController::class, 'updateusuario']);
+
+    //config Empresa
+    Route::get('empresa-config', [ConfigEmpresaController::class, 'index']);
+    Route::put('empresa-update-config', [ConfigEmpresaController::class, 'update']);
 
 
     //User FrontEnd

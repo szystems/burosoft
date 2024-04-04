@@ -14,7 +14,7 @@ class BackendController extends Controller
 {
     public function index()
     {
-        $config = Config::first();
+        $config = Config::where('empresa_id', 1)->first();
         return view('admin.index', compact('config'));
     }
 }

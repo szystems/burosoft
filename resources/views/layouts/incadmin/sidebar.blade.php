@@ -47,7 +47,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="{{ Request::is('users','show-user/*','add-user','edit-user/*') ? 'active-page-link':''  }}">
+                <li class="{{ Request::is('config') ? 'active-page-link':''  }}">
                     <a href="{{ url('config') }}">
                         <i class="bi bi-gear"></i>
                         <span class="menu-text">Configuración</span>

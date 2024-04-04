@@ -12,24 +12,8 @@ class Config extends Model
     protected $table = 'configs';
     protected $fillable = [
         'logo',
-        'time_zone',
         'currency',
         'currency_iso',
         'currency_simbol',
-        'tax_status',
-        'tax',
-        'paypal',
-        'dbt',
-        'shipping_description',
-        'shipping',
-        'email',
-        'store',
-        'shopify',
-        'shopify_link',
-        'amazon',
-        'amazon_link',
-        'advertisement',
-        'advertisement_link',
-        'advertisement_image',
     ];
 }
