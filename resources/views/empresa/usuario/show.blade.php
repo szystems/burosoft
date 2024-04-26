@@ -43,21 +43,29 @@
                                 <h4 class="m-0">{{ $user->name }}</h4>
                                 <p><small>{{ $user->empresa->nombre }}</small></p>
                             </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="btn-group-sm m-3">
-                                    <a href="{{ url('edit-empresa-usuario/'.$user->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                    {{-- @if ($user->principal == "1")
-										<button disabled type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                            <i class="bi bi-trash"></i> Eliminar
-                                        </button>
-                                    @else
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                            <i class="bi bi-trash"></i> Eliminar
-                                        </button>
-                                    @endif
-                                    @include('admin.usuario.deletemodal') --}}
+                            @php
+                                $today = now();
+                                $fecha_vencimiento = Auth::user()->empresa->fecha_vencimiento;
+                                $fecha_gracia = date("Y-m-d", strtotime("+".$config->gracia." months", strtotime($fecha_vencimiento)));
+                            @endphp
+                            @if ($fecha_gracia >= $today)
+                                <div class="col-12 col-md-auto">
+                                    <div class="btn-group-sm m-3">
+                                        <a href="{{ url('edit-empresa-usuario/'.$user->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
+                                        @if ($user->principal == "1")
+                                            <button disabled type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </button>
+                                        @else
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </button>
+                                        @endif
+                                        @include('admin.usuario.deletemodal')
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
+
                         </div>
                         <!-- Row end -->
                     </div>

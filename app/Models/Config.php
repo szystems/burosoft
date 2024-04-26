@@ -15,5 +15,6 @@ class Config extends Model
         'currency',
         'currency_iso',
         'currency_simbol',
+        'gracia'
     ];
 }

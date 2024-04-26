@@ -1,7 +1,11 @@
 @extends('layouts.empresa')
 
 @section('content')
-
+    @php
+        $today = now();
+        $fecha_vencimiento = Auth::user()->empresa->fecha_vencimiento;
+        $fecha_gracia = date("Y-m-d", strtotime("+".$config->gracia." months", strtotime($fecha_vencimiento)));
+    @endphp
 
     <!-- Content wrapper scroll start -->
     <div class="content-wrapper-scroll">
@@ -118,14 +122,17 @@
 
 
                                                     </div>
-                                                    <div class="d-flex gap-2 justify-content-center">
-                                                        <a href="{{ url('config') }}" type="button" class="btn btn-danger">
-                                                            <i class="bi bi-x-circle"></i> Cancelar
-                                                        </a>
-                                                        <button type="submit" class="btn btn-success">
-                                                            <i class="bi bi-check2-square"></i> Grabar
-                                                        </button>
-                                                    </div>
+                                                    @if ($fecha_gracia >= $today)
+                                                        <div class="d-flex gap-2 justify-content-center">
+                                                            <a href="{{ url('empresa-config') }}" type="button" class="btn btn-danger">
+                                                                <i class="bi bi-x-circle"></i> Cancelar
+                                                            </a>
+                                                            <button type="submit" class="btn btn-success">
+                                                                <i class="bi bi-check2-square"></i> Grabar
+                                                            </button>
+                                                        </div>
+                                                    @endif
+
                                                 </form>
 
                                             </div>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Support\Facades\Auth;
+use App\Models\Empresa;
+use App\Models\Config;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -39,6 +41,18 @@ class LoginController extends Controller
         //     $subscription = Subscription::where('user_id', Auth::user()->id)->first();
         //     $subscription->delete();
         // }
+        $empresa = Empresa::where('id',  Auth::user()->empresa_id)->first();
+        $config = Config::where('empresa_id', $empresa->id)->first();
+
+        $today = now();
+        $fecha_vencimiento = $empresa->fecha_vencimiento;
+        $fecha_gracia = date("Y-m-d", strtotime("+".$config->gracia." months", strtotime($fecha_vencimiento)));
+
+        if (($fecha_gracia < $today) and ($empresa->id != 1))  {
+            Auth::logout();
+            return redirect()->back()->withErrors(['license_expired' => 'Tu licencia y periodo de gracia expiro, porfavor ponte en contacto con el personal de Buro para renovar tu licencia.']);
+        }
+
         if(Auth::user()->role_as == '0') //1 = Admin Login
         {
             return redirect('dashboard')->with('status','Bienvenido al panel de Administrador');

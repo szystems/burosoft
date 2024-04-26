@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Empresa;
+use App\Models\Config;
 use App\Http\Requests\EmpresaFormRequest;
 use Illuminate\Support\Facades\File;
 use DB;
+use Auth;
 
 class EmpresaInfoController extends Controller
 {
     public function show($id)
     {
+        $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
         $empresa = Empresa::find($id);
-        return view('empresa.empresa.show', compact('empresa'));
+        return view('empresa.empresa.show', compact('empresa', 'config'));
     }
 
     public function edit($id)

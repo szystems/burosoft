@@ -33,15 +33,11 @@
                         <!-- Row start -->
                         <div class="row align-items-end">
                             <div class="col-auto">
-                                @if ($user->fotografia != null)
-                                    <img src="{{ asset('assets/uploads/users/'.$user->fotografia) }}" class="img-7xx rounded-circle" />
-                                @else
                                     <img src="{{ asset('assets/uploads/users/userdefault.png') }}" class="img-7xx rounded-circle" />
-                                @endif
                             </div>
                             <div class="col">
                                 <h6>Usuario</h6>
-                                <h4 class="m-0">{{ $user->name }}</h4>
+                                {{-- <h4 class="m-0">{{ $user->name }}</h4> --}}
                             </div>
 
                         </div>
@@ -59,7 +55,7 @@
                                     <ul class="nav nav-tabs" id="customTab2" role="tablist">
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#oneA" role="tab"
-                                                aria-controls="oneA" aria-selected="true">Editar Información</a>
+                                                aria-controls="oneA" aria-selected="true">Crear Usuario de Empresa</a>
                                         </li>
 
                                     </ul>
@@ -79,20 +75,37 @@
                                                         </div>
 
                                                     @endif
-                                                    <form action="{{ url('update-empresa-usuario/'.$user->id) }}" method="POST" enctype="multipart/form-data">
+                                                    <form action="{{ url('insert-empresa-usuario') }}" method="POST" enctype="multipart/form-data">
                                                         @csrf
-                                                        @method('PUT')
                                                         <div class="row gx-3">
 
-                                                            <input type="hidden" name="empresa_id" value="{{ $user->empresa_id }}"/>
+                                                            <input type="hidden" name="empresa_id" value="{{ Auth::user()->empresa_id }}">
 
+                                                            {{-- <div class="col-md-3 mb-3">
+                                                                <!-- Form Field Start -->
+                                                                <div class="mb-3">
+                                                                    <label for="empresa" class="form-label">Empresa</label>
+                                                                    <select name="empresa_id" class="form-select">
+                                                                        <option value="">Seleccione Empresa</option>
+                                                                        @foreach($empresas as $empresa)
+                                                                            <option value="{{ $empresa->id }}"{{ old('empresa_id') == $empresa->id ? ' selected' : '' }}>{{ $empresa->nombre }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    @if ($errors->has('empresa_id'))
+                                                                        <span class="help-block opacity-7">
+                                                                                <strong>
+                                                                                    <font color="red">{{ $errors->first('empresa_id') }}</font>
+                                                                                </strong>
+                                                                        </span>
+                                                                    @endif
+                                                                </div>
+                                                            </div> --}}
 
-
-                                                            <div class="col-md-6 mb-3">
+                                                            <div class="col-md-3 mb-3">
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
                                                                     <label for="name" class="form-label">Nombre</label>
-                                                                    <input name="name" type="text" class="form-control" placeholder="Nombre Completo..." value="{{ $user->name }}" />
+                                                                    <input name="name" type="text" class="form-control" placeholder="Nombre Completo..." value="{{ old('name') }}" />
                                                                     @if ($errors->has('name'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>
@@ -103,11 +116,11 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="col-md-6 mb-3">
+                                                            <div class="col-md-3 mb-3">
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
                                                                     <label for="email" class="form-label">Email</label>
-                                                                    <input name="email" type="text" class="form-control" placeholder="Correo electronico..." value="{{ $user->email }}" />
+                                                                    <input name="email" type="text" class="form-control" placeholder="Correo electronico..." value="{{ old('email') }}" />
                                                                     @if ($errors->has('email'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>
@@ -122,7 +135,7 @@
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
                                                                     <label for="telefono" class="form-label">Teléfono</label>
-                                                                    <input name="telefono" type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" placeholder="Telefono..." value="{{ $user->telefono }}" />
+                                                                    <input name="telefono" type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" placeholder="Teléfono..." value="{{ old('telefono') }}" />
                                                                     @if ($errors->has('telefono'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>
@@ -137,7 +150,7 @@
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
                                                                     <label for="celular" class="form-label">Celular</label>
-                                                                    <input name="celular" type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" placeholder="Celular..." value="{{ $user->celular }}"/>
+                                                                    <input name="celular" type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" placeholder="Celular..." value="{{ old('celular') }}"/>
                                                                     @if ($errors->has('telefono'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>
@@ -151,8 +164,8 @@
                                                             <div class="col-md-4 mb-3">
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
-                                                                    <label class="form-label">Cambiar Imágen</label>
-                                                                    <input type="file" name="fotografia" class="form-control border">
+                                                                    <label class="form-label">Imágen</label>
+                                                                    <input type="file" name="fotografia" class="form-control border" value="{{ old('fotografia') }}">
                                                                     @if ($errors->has('fotografia'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>
@@ -167,7 +180,7 @@
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Dirección</label>
-                                                                    <textarea name="direccion" class="form-control" rows="3" placeholder="Direccion de la persona...">{{ $user->direccion }}</textarea>
+                                                                    <textarea name="direccion" class="form-control" rows="3" placeholder="Dirección del Doctor...">{{ old('direccion') }}</textarea>
                                                                     @if ($errors->has('direccion'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>
@@ -180,7 +193,7 @@
 
                                                         </div>
                                                         <div class="d-flex gap-2 justify-content-center">
-                                                            <a href="{{ url('show-empresa-usuario/'.$user->id) }}" type="button" class="btn btn-danger">
+                                                            <a href="{{ url('usuarios') }}" type="button" class="btn btn-danger">
                                                                 <i class="bi bi-x-circle"></i> Cancelar
                                                             </a>
                                                             <button type="submit" class="btn btn-success">
@@ -213,6 +226,5 @@
         <!-- Content wrapper end -->
     </div>
     <!-- Content wrapper scroll end -->
-
 
 @endsection

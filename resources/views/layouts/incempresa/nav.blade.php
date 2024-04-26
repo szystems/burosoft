@@ -98,7 +98,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userSettings">
                     <div class="header-profile-actions">
-                        <a href="{{ url('show-user/' . Auth::id()) }}"><i class="bi bi-person-lines-fill"></i>&ensp;Perfil</a>
+                        <a href="{{ url('show-empresa-usuario/' . Auth::id()) }}"><i class="bi bi-person-lines-fill"></i>&ensp;Perfil</a>
                         {{-- <a href="account-settings.html">Settings</a> --}}
                         <a class="nav-link text-danger" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="bi bi-box-arrow-right"></i>&ensp;Salir

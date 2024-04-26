@@ -169,7 +169,7 @@
 
                                                     </div>
                                                     <div class="d-flex gap-2 justify-content-center">
-                                                        <a href="{{ url('empresas') }}" type="button" class="btn btn-danger">
+                                                        <a href="{{ url('show-empresa-info/'.$empresa->id) }}" type="button" class="btn btn-danger">
                                                             <i class="bi bi-x-circle"></i> Cancelar
                                                         </a>
                                                         <button type="submit" class="btn btn-success">

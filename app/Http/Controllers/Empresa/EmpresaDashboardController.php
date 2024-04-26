@@ -13,7 +13,7 @@ class EmpresaDashboardController extends Controller
 {
     public function index()
     {
-        $config = Config::where('empresa_id', 1)->first();
+        $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
         return view('empresa.index', compact('config'));
     }
 }

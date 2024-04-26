@@ -25,21 +25,29 @@
         <div class="content-wrapper">
 
             @include('empresa.usuario.search')
+            @php
+                $today = now();
+                $fecha_vencimiento = Auth::user()->empresa->fecha_vencimiento;
+                $fecha_gracia = date("Y-m-d", strtotime("+".$config->gracia." months", strtotime($fecha_vencimiento)));
 
+            @endphp
             <!-- Row start -->
             <div class="row gx-3">
                 <div class="col-sm-12 col-12">
                     <div class="card">
+                        {{ $fecha_gracia }} {{ $today }}
+                        @if ($fecha_gracia >= $today)
+                            <div class="card-header">
+                                <div class="card-title">
+                                    Listado de Usuarios
+                                    <a href="{{ url('add-empresa-usuario') }}" type="button" class="btn btn-success float-end">
+                                        <i class="bi bi-plus-square"></i> Agregar
+                                    </a>
+                                </div>
 
-                        <div class="card-header">
-                            <div class="card-title">
-                                Listado de Usuarios
-                                {{-- <a href="{{ url('add-usuario') }}" type="button" class="btn btn-success float-end">
-                                    <i class="bi bi-plus-square"></i> Agregar
-                                </a> --}}
                             </div>
+                        @endif
 
-                        </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table align-middle table-striped flex-column">
@@ -62,30 +70,27 @@
                                                         <li>
                                                             <a class="dropdown-item" href="{{ url('show-empresa-usuario/'.$user->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                         </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="{{ url('edit-empresa-usuario/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
-                                                        </li>
-                                                        {{-- <li>
+                                                        @if ($fecha_gracia >= $today)
+                                                            <li>
+                                                                <a class="dropdown-item" href="{{ url('edit-empresa-usuario/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
+                                                            </li>
+                                                            <li>
 
-                                                                @if ($user->principal == "1")
-                                                                    <a disabled type="button" class="btn bg-gradient-danger disabled" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                    </a>
-                                                                @else
-                                                                    <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                    </a>
-                                                                @endif
+                                                                    @if ($user->principal == "1")
+                                                                        <a disabled type="button" class="btn bg-gradient-danger disabled" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
+                                                                            <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                        </a>
+                                                                    @else
+                                                                        <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
+                                                                            <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                        </a>
+                                                                    @endif
 
-                                                        </li> --}}
+                                                            </li>
+                                                        @endif
+
                                                     </ul>
                                                 </div>
-                                            </td>
-                                            <td>
-                                                @php
-                                                    $empresa = \App\Models\Empresa::find($user->empresa_id);
-                                                @endphp
-                                                <a class="text-primary" href="{{ url('show-empresa-usuario/'.$user->empresa_id) }}">{{ $empresa->nombre }}</a>
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
@@ -114,9 +119,10 @@
 
                                                 </div>
                                             </td>
+                                            <td><small>{{ $user->direccion }}</small></td>
 
                                         </tr>
-                                        {{-- @include('admin.usuario.deletemodal') --}}
+                                        @include('empresa.usuario.deletemodal')
                                         @endforeach
                                     </tbody>
                                 </table>

@@ -68,6 +68,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('show-empresa-usuario/{id}', [EmpresaUsuarioController::class, 'showusuario']);
     Route::get('edit-empresa-usuario/{id}',[EmpresaUsuarioController::class,'editusuario']);
     Route::put('update-empresa-usuario/{id}', [EmpresaUsuarioController::class, 'updateusuario']);
+    Route::get('add-empresa-usuario', [EmpresaUsuarioController::class, 'addusuario']);
+    Route::post('insert-empresa-usuario', [EmpresaUsuarioController::class, 'insertusuario']);
+    Route::get('delete-empresa-usuario/{id}', [EmpresaUsuarioController::class, 'destroyusuario']);
 
     //config Empresa
     Route::get('empresa-config', [ConfigEmpresaController::class, 'index']);
@@ -146,6 +149,7 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     //config
     Route::get('config', [ConfigController::class, 'index']);
     Route::put('update-config', [ConfigController::class, 'update']);
+    Route::put('update-licencias', [ConfigController::class, 'updatelicencias']);
 
  });
 

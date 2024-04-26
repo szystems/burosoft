@@ -4,11 +4,16 @@
     <div class="sidebar-menu">
         @if(Auth::user()->empresa->fotografia != '')
             <div align="center" class="brand">
-                <img src="{{ asset('assets/uploads/empresas/'.Auth::user()->empresa->fotografia) }}" class="img-thumbnail" style="height: 50px;" alt="Logo" />
+                <a href="{{ url('show-empresa-info/'.Auth::user()->empresa_id) }}">
+                    <img src="{{ asset('assets/uploads/empresas/'.Auth::user()->empresa->fotografia) }}" class="img-thumbnail" style="height: 50px;" alt="Logo" />
+                </a>
+
             </div>
         @else
         <div align="center" class="brand">
-            <label class=" text-white">Empresa: <u>{{ Auth::user()->empresa->nombre }}</u></label><br>
+            <a href="{{ url('show-empresa-info/'.Auth::user()->empresa_id) }}">
+                <label class=" text-white">Empresa: <u>{{ Auth::user()->empresa->nombre }}</u></label><br>
+            </a>
         </div>
         @endif
         <div class="sidebarMenuScroll">

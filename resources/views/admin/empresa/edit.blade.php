@@ -132,7 +132,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-3">
+                                                        <div class="col-md-4 mb-3">
                                                             <!-- Form Field Start -->
                                                             <div class="mb-3">
                                                                 <label class="form-label">Descripción</label>
@@ -147,7 +147,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-6 mb-3">
+                                                        <div class="col-md-4 mb-3">
                                                             <!-- Form Field Start -->
                                                             <div class="mb-3">
                                                                 <label class="form-label">Cambiar Imágen</label>
@@ -162,7 +162,19 @@
                                                             </div>
                                                         </div>
 
+                                                        @if ($empresa->fotografia)
                                                         <div class="col-md-4 mb-3">
+                                                            <!-- Form Field Start -->
+                                                            <div class="mb-3">
+                                                                <label class="form-label">Imágen</label>
+                                                                <div align="left" class="brand">
+                                                                    <img src="{{ asset('assets/uploads/empresas/'.$empresa->fotografia) }}" class="img-thumbnail" style="height: 100px;" alt="Logo" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @endif
+
+                                                        <div class="col-md-6 mb-3">
                                                             <!-- Form Field Start -->
                                                             <div class="mb-2">
                                                                 <label for="fecha_cita" class="form-label">Vencimiento de Licencia</label>
@@ -182,6 +194,41 @@
                                                                             </strong>
                                                                     </span>
                                                                 @endif
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 mb-3">
+                                                            <div class="mb-3">
+                                                                <label for="gracia" class="form-label">Periodo de gracia</label>
+                                                                <select name="gracia" class="form-select">
+                                                                    <option selected value="{{ $config->gracia }}">{{ $config->gracia }}</option>
+                                                                    <option value="0">0 Meses</option>
+                                                                    <option value="1">1 Meses</option>
+                                                                    <option value="2">2 Meses</option>
+                                                                    <option value="3">3 Meses</option>
+                                                                    <option value="4">4 Meses</option>
+                                                                    <option value="5">5 Meses</option>
+                                                                    <option value="6">6 Meses</option>
+                                                                    <option value="7">7 Meses</option>
+                                                                    <option value="8">8 Meses</option>
+                                                                    <option value="9">9 Meses</option>
+                                                                    <option value="10">10 Meses</option>
+                                                                    <option value="11">11 Meses</option>
+                                                                    <option value="12">12 Meses</option>
+                                                                </select>
+                                                                <span class="help-block opacity-7">
+                                                                    <strong class="text-warning">
+                                                                        Periodo despues de vencer la licencia y poder acceder a sus datos
+                                                                    </strong>
+                                                                </span>
+                                                                @if ($errors->has('gracia'))
+                                                                    <span class="help-block opacity-7">
+                                                                            <strong>
+                                                                                <font color="red">{{ $errors->first('gracia') }}</font>
+                                                                            </strong>
+                                                                    </span>
+                                                                @endif
+
                                                             </div>
                                                         </div>
 

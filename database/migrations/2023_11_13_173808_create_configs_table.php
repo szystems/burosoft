@@ -20,6 +20,7 @@ class CreateConfigsTable extends Migration
             $table->string('currency')->default('GTQ Q');
             $table->string('currency_iso')->default('GTQ');
             $table->string('currency_simbol')->default('Q');
+            $table->integer('gracia')->default('0');
             $table->timestamps();
         });
     }

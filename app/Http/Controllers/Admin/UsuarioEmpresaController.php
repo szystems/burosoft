@@ -26,6 +26,7 @@ class UsuarioEmpresaController extends Controller
             $queryUser=$request->input('fuser');
             $users = DB::table('users')
             ->where('estado', '=', 1)
+            ->where('principal', '=', 1)
             ->where('role_as', '=', 1)
             ->where(function ($query) use ($queryUser) {
             $query->where('name', 'LIKE', '%' . $queryUser . '%')
@@ -67,7 +68,7 @@ class UsuarioEmpresaController extends Controller
         }
         $user->role_as = 1;
         $user->estado = 1;
-        $user->principal = 0;
+        $user->principal = 1;
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = 'Flebo'.rand(1111,9999);

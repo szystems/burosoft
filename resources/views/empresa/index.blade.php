@@ -37,6 +37,19 @@
                         <span>Licencia Hasta: {{ $fecha_vencimiento }}</span>
                     </a>
                 </li>
+                @if (Auth::user()->empresa->fecha_vencimiento <= $today)
+                    <li>
+                        <a href="javascript:void(3)">
+                            @php
+                                    $fecha_vencimiento = Auth::user()->empresa->fecha_vencimiento;
+                                    $fecha_gracia = date("d/m/Y", strtotime("+".$config->gracia." months", strtotime($fecha_vencimiento)));
+                            @endphp
+                            <i class="bi bi-patch-exclamation-fill text-warning font-1x me-2"></i>
+
+                            <span>Podras ver tus registros Hasta: {{ $fecha_gracia }}  </span>
+                        </a>
+                    </li>
+                @endif
                 {{-- <li>
                     <a href="javascript:void(0)">
                         <i class="bi bi-folder-check text-yellow font-1x me-2"></i>
@@ -59,7 +72,7 @@
             <div class="row gx-3">
 
                 <div class="col-xxl-3 col-sm-6 col-12">
-                    <a href="{{ url('/dashboard') }}">
+                    <a href="{{ url('empresa-dashboard') }}">
                     <div class="stats-tile d-flex align-items-center position-relative tile-blue">
                         <div class="sale-icon icon-box xl rounded-5 me-3">
                             <i class="bi bi-layout-text-window-reverse font-2x text-blue"></i>

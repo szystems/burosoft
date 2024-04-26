@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Empresa;
+use App\Models\Config;
 use App\Http\Requests\EmpresaFormRequest;
 use Illuminate\Support\Facades\File;
 use DB;
@@ -34,7 +35,8 @@ class EmpresaController extends Controller
     public function show($id)
     {
         $empresa = Empresa::find($id);
-        return view('admin.empresa.show', compact('empresa'));
+        $config = Config::where('empresa_id', $empresa->id)->first();
+        return view('admin.empresa.show', compact('empresa', 'config'));
     }
 
     public function add()
@@ -65,14 +67,23 @@ class EmpresaController extends Controller
         $empresa->estado = 1;
         $empresa->save();
 
+        $config = new Config();
+        $config->empresa_id = $empresa->id;
+        $config->currency = 'GTQ Q';
+        $config->currency_iso = 'GTQ';
+        $config->currency_simbol = 'Q';
+        $config->gracia = $request->input('gracia');
+        $config->save();
+
         // return redirect('empresas')->with('status', __('Empresa agregada exitosamente.'));
         return redirect('show-empresa/'.$empresa->id)->with('status',__('Empresa agregada exitosamente.'));
     }
 
     public function edit($id)
     {
+        $config = Config::where('empresa_id', $id)->first();
         $empresa = Empresa::find($id);
-        return view('admin.empresa.edit', \compact('empresa'));
+        return view('admin.empresa.edit', \compact('empresa', 'config'));
     }
 
     public function update(EmpresaFormRequest $request, $id)
@@ -101,6 +112,11 @@ class EmpresaController extends Controller
         $empresa->descripcion = $request->input('descripcion');
         $empresa->fecha_vencimiento = $fecha_vencimiento;
         $empresa->update();
+
+        $config = Config::where('empresa_id', $empresa->id)->first();
+        $config->gracia = $request->input('gracia');
+        $config->update();
+
         return redirect('show-empresa/'.$id)->with('status',__('Empresa actualizada correctamente.'));
 
     }

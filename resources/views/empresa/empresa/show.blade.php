@@ -1,5 +1,10 @@
 @extends('layouts.empresa')
 @section('content')
+    @php
+        $today = now();
+        $fecha_vencimiento = Auth::user()->empresa->fecha_vencimiento;
+        $fecha_gracia = date("Y-m-d", strtotime("+".$config->gracia." months", strtotime($fecha_vencimiento)));
+    @endphp
     <!-- Content wrapper scroll start -->
     <div class="content-wrapper-scroll">
 
@@ -30,15 +35,18 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="custom-tabs-container">
-                                <div class="col-12 col-md-auto float-end">
-                                    <div class="btn-group-sm m-3">
-                                        <a href="{{ url('edit-empresa-info/'.$empresa->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                        {{-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $empresa->id }}">
-                                            <i class="bi bi-trash"></i> Eliminar
-                                        </button>
-                                        @include('admin.empresa.deletemodal') --}}
+                                @if ($fecha_gracia >= $today)
+                                    <div class="col-12 col-md-auto float-end">
+                                        <div class="btn-group-sm m-3">
+                                            <a href="{{ url('edit-empresa-info/'.$empresa->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
+                                            {{-- <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $empresa->id }}">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </button>
+                                            @include('admin.empresa.deletemodal') --}}
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
+
                                 <ul class="nav nav-tabs" id="customTab2" role="tablist">
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#oneA" role="tab"
@@ -51,6 +59,47 @@
                                         <div class="row gx-3">
                                             <div class="col-sm-12 col-12">
                                                 <div class="row gx-3">
+
+                                                    <div class="col-md-3 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="emailId" class="form-label">Licencia</label>
+                                                            <p>
+                                                                @php
+                                                                    $today = now();
+                                                                    $fecha_vencimiento = date("d/m/Y", strtotime($empresa->fecha_vencimiento));
+                                                                @endphp
+                                                                <small>
+                                                                    <span class="badge shade-light-{{ $empresa->fecha_vencimiento >= $today ? "green" : "yellow" }}">
+                                                                        {{ $fecha_vencimiento }}
+                                                                    </span>
+
+                                                                </small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    @if($empresa->fecha_vencimiento <= $today)
+                                                        <div class="col-md-2 mb-3">
+                                                            <!-- Form Field Start -->
+                                                            <div class="mb-3">
+                                                                <label for="emailId" class="form-label">Periodo de Gracia</label>
+                                                                <p>
+                                                                    @php
+                                                                        $fecha_gracia = date("d/m/Y", strtotime("+".$config->gracia." months", strtotime($empresa->fecha_vencimiento)));
+                                                                    @endphp
+                                                                    <small>
+                                                                        <span class="badge shade-light-yellow">
+                                                                            {{ $fecha_gracia }} ({{ $config->gracia }} Meses)
+                                                                        </span>
+
+                                                                    </small>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+
+                                                    <hr>
 
                                                     <div class="col-md-3 mb-3">
                                                         <!-- Form Field Start -->
@@ -85,25 +134,6 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-3 mb-3">
-                                                        <!-- Form Field Start -->
-                                                        <div class="mb-3">
-                                                            <label for="emailId" class="form-label">Licencia</label>
-                                                            <p>
-                                                                @php
-                                                                    $today = now();
-                                                                    $fecha_vencimiento = date("d/m/Y", strtotime($empresa->fecha_vencimiento));
-                                                                @endphp
-                                                                <small>
-                                                                    <span class="badge shade-light-{{ $empresa->fecha_vencimiento >= $today ? "green" : "yellow" }}">
-                                                                        {{ $fecha_vencimiento }}
-                                                                    </span>
-
-                                                                </small>
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
 
                                                     <div class="col-md-3 mb-3">
                                                         <!-- Form Field Start -->
@@ -126,7 +156,7 @@
                                                         <div class="mb-3">
                                                             <label class="form-label">Imágen</label>
                                                             <div class="brand">
-                                                                <img src="{{ asset('assets/uploads/empresas/'.$empresa->fotografia) }}" class="img-thumbnail" style="height: 100px;" alt="Logo" />
+                                                                <img src="{{ asset('assets/uploads/empresas/'.$empresa->fotografia) }}" class="img-thumbnail" style="height: 200px;" alt="Logo" />
                                                             </div>
                                                         </div>
                                                     </div>

@@ -30,6 +30,7 @@ class EmpresaTableSeeder extends Seeder
             'currency' => 'GTQ Q', // Reemplaza con los valores reales
             'currency_iso' => 'GTQ',
             'currency_simbol' => 'Q',
+            'gracia' => '12',
         ]);
         $empresa->config()->save($config);
 
@@ -41,6 +42,7 @@ class EmpresaTableSeeder extends Seeder
                 'currency' => 'GTQ Q', // Reemplaza con los valores reales
                 'currency_iso' => 'GTQ',
                 'currency_simbol' => 'Q',
+                'gracia' => '3',
             ]);
 
             // Asociar la configuración con la empresa

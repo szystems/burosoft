@@ -46,8 +46,8 @@
                                             aria-controls="config" aria-selected="true">General</a>
                                     </li>
                                     {{-- <li class="nav-item" role="presentation">
-                                        <a class="nav-link" id="tab-two" data-bs-toggle="tab" href="#two" role="tab"
-                                            aria-controls="two" aria-selected="false">Tab Two</a>
+                                        <a class="nav-link" id="tab-licencias" data-bs-toggle="tab" href="#licencias" role="tab"
+                                            aria-controls="licencias" aria-selected="false">Licencias</a>
                                     </li> --}}
                                 </ul>
                                 <div class="tab-content" id="customTabContent">
@@ -130,28 +130,73 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="tab-pane fade" id="two" role="tabpanel">
-                                        <div class="p-5">
-                                            <h1 class="display-5 fw-bold text-green">
-                                                Tab Two
-                                            </h1>
-                                            <div class="col-lg-6">
-                                                <p class="lead mb-4">
-                                                    Quickly design and customize responsive
-                                                    mobile-first sites with Bootstrap, the world’s
-                                                    most popular front-end open source toolkit,
-                                                    featuring Sass variables and mixins, responsive
-                                                    grid system, extensive prebuilt components, and
-                                                    powerful JavaScript plugins.
-                                                </p>
-                                                <div class="d-grid gap-2 d-sm-flex">
-                                                    <button type="button" class="btn btn-success btn-lg">
-                                                        Button
-                                                    </button>
-                                                    <button type="button" class="btn btn-secondary btn-lg">
-                                                        Button
-                                                    </button>
-                                                </div>
+                                    {{-- <div class="tab-pane fade" id="licencias" role="tabpanel">
+                                        <div class="p-0 text-left">
+
+                                            <p class="text-yellow">Cambia los valores generales de licencias:</p>
+                                            <div class="col-lg-12 mx-auto">
+
+                                                @if (count($errors)>0)
+                                                    <div class="alert alert-danger text-white" role="alert">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                                <li>{{$error}}</li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+
+                                                @endif
+                                                <form action="{{ url('update-licencias')}}" method="POST" enctype="multipart/form-data">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <div class="row gx-3">
+
+                                                        <div class="col-md-4 mb-3">
+                                                            <div class="mb-3">
+                                                                <label for="gracia" class="form-label">Periodo de gracia</label>
+                                                                <select name="gracia" class="form-select">
+                                                                    <option selected value="{{ $config->gracia }}">{{ $config->gracia }}</option>
+                                                                    <option value="0">0 Meses</option>
+                                                                    <option value="1">1 Meses</option>
+                                                                    <option value="2">2 Meses</option>
+                                                                    <option value="3">3 Meses</option>
+                                                                    <option value="4">4 Meses</option>
+                                                                    <option value="5">5 Meses</option>
+                                                                    <option value="6">6 Meses</option>
+                                                                    <option value="7">7 Meses</option>
+                                                                    <option value="8">8 Meses</option>
+                                                                    <option value="9">9 Meses</option>
+                                                                    <option value="10">10 Meses</option>
+                                                                    <option value="11">11 Meses</option>
+                                                                    <option value="12">12 Meses</option>
+                                                                </select>
+                                                                <span class="help-block opacity-7">
+                                                                    <strong class="text-warning">
+                                                                        Periodo despues de vencer la licencia y poder acceder a sus datos
+                                                                    </strong>
+                                                                </span>
+                                                                @if ($errors->has('gracia'))
+                                                                    <span class="help-block opacity-7">
+                                                                            <strong>
+                                                                                <font color="red">{{ $errors->first('gracia') }}</font>
+                                                                            </strong>
+                                                                    </span>
+                                                                @endif
+
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="d-flex gap-2 justify-content-center">
+                                                        <a href="{{ url('config') }}" type="button" class="btn btn-danger">
+                                                            <i class="bi bi-x-circle"></i> Cancelar
+                                                        </a>
+                                                        <button type="submit" class="btn btn-success">
+                                                            <i class="bi bi-check2-square"></i> Grabar
+                                                        </button>
+                                                    </div>
+                                                </form>
+
                                             </div>
                                         </div>
                                     </div> --}}

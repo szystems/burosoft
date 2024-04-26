@@ -67,17 +67,9 @@
                                                             <a class="dropdown-item" href="{{ url('edit-usuario/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                         </li>
                                                         <li>
-
-                                                                @if ($user->principal == "1")
-                                                                    <a disabled type="button" class="btn bg-gradient-danger disabled" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                    </a>
-                                                                @else
-                                                                    <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                    </a>
-                                                                @endif
-
+                                                            <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
+                                                                <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                            </a>
                                                         </li>
                                                     </ul>
                                                 </div>

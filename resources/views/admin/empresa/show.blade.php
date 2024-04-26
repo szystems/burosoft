@@ -52,40 +52,7 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row gx-3">
 
-                                                    <div class="col-md-3 mb-3">
-                                                        <!-- Form Field Start -->
-                                                        <div class="mb-3">
-                                                            <label for="fullName" class="form-label">Nombre</label>
-                                                            <p>
-                                                                {{ $empresa->nombre }}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-md-3 mb-3">
-                                                        <!-- Form Field Start -->
-                                                        <div class="mb-3">
-                                                            <label for="emailId" class="form-label">Email</label>
-                                                            <p><a class="link-info" href="mailto:{{ $empresa->email }}">{{ $empresa->email }}</a></p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-3 mb-3">
-                                                        <!-- Form Field Start -->
-                                                        <div class="mb-3">
-                                                            <label for="contactNumber" class="form-label">Teléfono / Celular / Whatsapp</label>
-                                                            <p>
-                                                                <a class="text-info" href="tel:+502{{ $empresa->telefono }}">{{ $empresa->telefono }}</a>
-                                                                @if ($empresa->celular != null)
-                                                                    <a class="text-info" href="tel:+502{{ $empresa->celular }}">/ {{ $empresa->celular }}</a>
-                                                                    <a class="text-success" href="https://wa.me/502{{ $empresa->celular }}" target="_blank">/ <i class="bi bi-whatsapp"></i></a>
-                                                                @endif
-                                                            </p>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-3 mb-3">
+                                                    <div class="col-md-2 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label for="emailId" class="form-label">Licencia</label>
@@ -104,8 +71,60 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="col-md-2 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="emailId" class="form-label">Periodo de Gracia</label>
+                                                            <p>
+                                                                @php
+                                                                     $fecha_gracia = date("d/m/Y", strtotime("+".$config->gracia." months", strtotime($empresa->fecha_vencimiento)));
+                                                                @endphp
+                                                                <small>
+                                                                    <span class="badge shade-light-yellow">
+                                                                        {{ $fecha_gracia }} ({{ $config->gracia }} Meses)
+                                                                    </span>
 
-                                                    <div class="col-md-3 mb-3">
+                                                                </small>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <hr>
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="fullName" class="form-label">Nombre</label>
+                                                            <p>
+                                                                {{ $empresa->nombre }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="emailId" class="form-label">Email</label>
+                                                            <p><a class="link-info" href="mailto:{{ $empresa->email }}">{{ $empresa->email }}</a></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="contactNumber" class="form-label">Teléfono / Celular / Whatsapp</label>
+                                                            <p>
+                                                                <a class="text-info" href="tel:+502{{ $empresa->telefono }}">{{ $empresa->telefono }}</a>
+                                                                @if ($empresa->celular != null)
+                                                                    <a class="text-info" href="tel:+502{{ $empresa->celular }}">/ {{ $empresa->celular }}</a>
+                                                                    <a class="text-success" href="https://wa.me/502{{ $empresa->celular }}" target="_blank">/ <i class="bi bi-whatsapp"></i></a>
+                                                                @endif
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label class="form-label">Dirección</label>
@@ -113,7 +132,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-12 mb-3">
+                                                    <div class="col-md-6 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label class="form-label">Descripción</label>
@@ -125,9 +144,9 @@
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label class="form-label">Imágen</label>
-                                                            <p>
-                                                                <img src="{{ asset('assets/uploads/empresas/'.$empresa->fotografia) }}" class="img-fluid mb-2" alt="Empresa" />
-                                                            </p>
+                                                            <div align="left" class="brand">
+                                                                <img src="{{ asset('assets/uploads/empresas/'.$empresa->fotografia) }}" class="img-thumbnail" style="height: 200px;" alt="Logo" />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     @endif

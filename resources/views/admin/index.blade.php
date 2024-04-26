@@ -117,7 +117,7 @@
                                 <h6 class="text-light">Configuración</h6>
                                 {{-- <h3>368</h3> --}}
                             </div>
-                            <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold reyellowd">
+                            <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold yellow">
                                 {{-- <i class="bi bi-arrow-up-circle-fill font-1x"></i>
                                 <span>5%</span> --}}
                             </div>

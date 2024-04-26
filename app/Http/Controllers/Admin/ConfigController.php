@@ -45,4 +45,13 @@ class ConfigController extends Controller
 
         return redirect('config')->with('status',__('Configuración actualizada Correctamente!'));
     }
+
+    public function updatelicencias(Request $request)
+    {
+        $config = Config::where('empresa_id', 1)->first();
+        $config->gracia = $request->input('currency');
+        $config->update();
+
+        return redirect('config')->with('status',__('Configuración actualizada Correctamente!'));
+    }
 }
