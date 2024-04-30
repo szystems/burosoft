@@ -129,6 +129,8 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('edit-empresa/{id}',[EmpresaController::class,'edit']);
     Route::put('update-empresa/{id}', [EmpresaController::class, 'update']);
     Route::get('delete-empresa/{id}', [EmpresaController::class, 'destroy']);
+    Route::get('pdf-empresas', [EmpresaController::class, 'pdf']);
+    Route::get('exportempresas', [EmpresaController::class, 'exportexcel']);
 
     //Empresas Users
     Route::get('usuarios', [UsuarioEmpresaController::class, 'usuarios']);

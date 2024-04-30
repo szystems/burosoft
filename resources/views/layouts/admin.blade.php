@@ -15,7 +15,9 @@
 		<meta property="og:description" content="Software control financiero de empresas">
 		<meta property="og:type" content="Web App">
 		<meta property="og:site_name" content="https://www.burosoft.com">
-		<link rel="shortcut icon" href="assets/imgs/logos/favicon.ico" />
+		<link rel="shortcut icon" href="assets/uploads/logos/favicon.ico" />
+        <!-- Favicon -->
+        <link href="{{ asset('elearning/img/logos/favico.ico') }}" rel="icon">
 
 		<!-- Title -->
 		<title>{{ config('app.name', 'Laravel') }}</title>

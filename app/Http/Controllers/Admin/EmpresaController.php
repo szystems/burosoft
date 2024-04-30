@@ -9,7 +9,9 @@ use App\Models\Config;
 use App\Http\Requests\EmpresaFormRequest;
 use Illuminate\Support\Facades\File;
 use DB;
-
+use PDF;
+use App\Exports\EmpresasExport;
+use Maatwebsite\Excel\Facades\Excel;
 class EmpresaController extends Controller
 {
     public function index(Request $request)
@@ -127,5 +129,53 @@ class EmpresaController extends Controller
         $empresa->estado = 0;
         $empresa->update();
         return redirect('empresas')->with('status',__('Empresa eliminada correctamente.'));
+    }
+
+    public function pdf(Request $request)
+    {
+        if ($request)
+        {
+
+            $empresas = Empresa::where('estado',1)->orderBy('nombre','asc')->get();
+            $verpdf = "Browser";
+            $nompdf = date('m/d/Y g:ia');
+            $path = public_path('assets/uploads/');
+
+            $config = Config::first();
+
+            $currency = $config->currency_simbol;
+
+            if ($config->logo == null)
+            {
+                $logo = null;
+                $imagen = null;
+            }
+            else
+            {
+                    $logo = $config->logo;
+                    $imagen = public_path('assets/uploads/logos/'.$logo);
+            }
+
+
+            $config = Config::first();
+
+            if ( $verpdf == "Download" )
+            {
+                $pdf = PDF::loadView('admin.empresa.pdf',['empresas'=>$empresas,'path'=>$path,'config'=>$config,'imagen'=>$imagen,'currency'=>$currency]);
+
+                return $pdf->download ('Empresas: '.$nompdf.'.pdf');
+            }
+            if ( $verpdf == "Browser" )
+            {
+                $pdf = PDF::loadView('admin.empresa.pdf',['empresas'=>$empresas,'path'=>$path,'config'=>$config,'imagen'=>$imagen,'currency'=>$currency]);
+
+                return $pdf->stream ('Empresas: '.$nompdf.'.pdf');
+            }
+        }
+    }
+
+    public function exportexcel(Request $request)
+    {
+        return Excel::download(new EmpresasExport, 'users.xlsx');
     }
 }

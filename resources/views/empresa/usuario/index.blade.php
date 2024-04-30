@@ -35,7 +35,6 @@
             <div class="row gx-3">
                 <div class="col-sm-12 col-12">
                     <div class="card">
-                        {{ $fecha_gracia }} {{ $today }}
                         @if ($fecha_gracia >= $today)
                             <div class="card-header">
                                 <div class="card-title">

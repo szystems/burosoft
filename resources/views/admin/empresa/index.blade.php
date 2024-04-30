@@ -34,9 +34,18 @@
                         <div class="card-header">
                             <div class="card-title">
                                 Listado de Empresas
+                                <br>
+                                <a target="_blank" href="{{ url('pdf-empresas') }}" type="button" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-file-pdf-fill"></i> PDF
+                                </a>
+                                <a arget="_blank" href="{{ url('exportempresas') }}" type="button" class="btn btn-success btn-sm">
+                                    <i class="bi bi-file-earmark-excel-fill"></i> Excel
+                                </a>
+
                                 <a href="{{ url('add-empresa') }}" type="button" class="btn btn-success float-end">
                                     <i class="bi bi-plus-square"></i> Agregar
                                 </a>
+
                             </div>
 
                         </div>
