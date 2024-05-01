@@ -75,11 +75,14 @@
                                                         <li>
                                                             <a class="dropdown-item" href="{{ url('edit-empresa/'.$empresa->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                         </li>
-                                                        <li>
-                                                            <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $empresa->id }}">
-                                                                <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                            </a>
-                                                        </li>
+                                                        @if ($empresa->id != 1)
+                                                            <li>
+                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $empresa->id }}">
+                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                </a>
+                                                            </li>
+                                                        @endif
+
                                                     </ul>
                                                 </div>
                                             </td>

@@ -30,15 +30,20 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="custom-tabs-container">
+
                                 <div class="col-12 col-md-auto float-end">
                                     <div class="btn-group-sm m-3">
                                         <a href="{{ url('edit-empresa/'.$empresa->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $empresa->id }}">
-                                            <i class="bi bi-trash"></i> Eliminar
-                                        </button>
-                                        @include('admin.empresa.deletemodal')
+                                        @if ($empresa->id != 1)
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $empresa->id }}">
+                                                <i class="bi bi-trash"></i> Eliminar
+                                            </button>
+                                            @include('admin.empresa.deletemodal')
+                                        @endif
                                     </div>
                                 </div>
+
+
                                 <ul class="nav nav-tabs" id="customTab2" role="tablist">
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link active" id="tab-oneA" data-bs-toggle="tab" href="#oneA" role="tab"

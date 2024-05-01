@@ -54,6 +54,9 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
         {{-- Datepicker end --}}
+
+        {{-- CDEditor 5 --}}
+        <script src="assets/ckeditor5/ckeditor.js"></script>
 	</head>
 
 	<body>
