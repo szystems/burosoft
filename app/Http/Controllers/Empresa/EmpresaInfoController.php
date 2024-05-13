@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Empresa;
+use App\Models\Bitacora;
 use App\Models\Config;
 use App\Http\Requests\EmpresaFormRequest;
 use Illuminate\Support\Facades\File;
@@ -53,6 +54,15 @@ class EmpresaInfoController extends Controller
         $empresa->descripcion = $request->input('descripcion');
         $empresa->fecha_vencimiento = $fecha_vencimiento;
         $empresa->update();
+
+        Bitacora::create([
+            'empresa_id' => Auth::user()->empresa_id,
+            'usuario_id' => Auth::user()->id,
+            'fecha' => now(),
+            'tipo' => "Empresa",
+            'descripcion' => "Actualizó la información de su empresa."
+        ]);
+
         return redirect('show-empresa-info/'.$id)->with('status',__('Empresa actualizada correctamente.'));
 
     }

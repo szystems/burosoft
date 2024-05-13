@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Config;
+use App\Models\Bitacora;
 use Illuminate\Support\Facades\File;
 use DB;
 use Auth;
@@ -43,6 +44,14 @@ class ConfigEmpresaController extends Controller
         $config->currency_iso = $currency_iso;
         $config->currency_simbol = $currency_simbol;
         $config->update();
+
+        Bitacora::create([
+            'empresa_id' => Auth::user()->empresa_id,
+            'usuario_id' => Auth::user()->id,
+            'fecha' => now(),
+            'tipo' => "Configuración",
+            'descripcion' => "Actualizó la configuración de su empresa."
+        ]);
 
         return redirect('empresa-config')->with('status',__('Configuración actualizada Correctamente!'));
     }

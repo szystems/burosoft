@@ -23,6 +23,8 @@ use App\Http\Controllers\Empresa\ConfigEmpresaController;
 use App\Http\Controllers\Empresa\EmpresaDashboardController;
 use App\Http\Controllers\Empresa\EmpresaInfoController;
 use App\Http\Controllers\Empresa\EmpresaUsuarioController;
+use App\Http\Controllers\Empresa\CuentaController;
+use App\Http\Controllers\Empresa\BitacoraController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +73,21 @@ Route::middleware(['auth'])->group(function () {
     Route::get('add-empresa-usuario', [EmpresaUsuarioController::class, 'addusuario']);
     Route::post('insert-empresa-usuario', [EmpresaUsuarioController::class, 'insertusuario']);
     Route::get('delete-empresa-usuario/{id}', [EmpresaUsuarioController::class, 'destroyusuario']);
+
+    //Cuentas Empresa
+    Route::get('cuentas', [CuentaController::class, 'index']);
+    Route::get('show-cuenta/{id}', [CuentaController::class, 'show']);
+    Route::get('edit-cuenta/{id}',[CuentaController::class,'edit']);
+    Route::put('update-cuenta/{id}', [CuentaController::class, 'update']);
+    Route::get('add-cuenta', [CuentaController::class, 'add']);
+    Route::post('insert-cuenta', [CuentaController::class, 'insert']);
+    Route::get('delete-cuenta/{id}', [CuentaController::class, 'destroy']);
+    Route::get('pdf-cuentas', [CuentaController::class, 'pdf']);
+    Route::get('exportcuentas', [CuentaController::class, 'exportexcel']);
+
+    //Usuarios Empresa
+    Route::get('bitacoras', [BitacoraController::class, 'index']);
+    Route::get('show-bitacora/{id}', [BitacoraController::class, 'show']);
 
     //config Empresa
     Route::get('empresa-config', [ConfigEmpresaController::class, 'index']);

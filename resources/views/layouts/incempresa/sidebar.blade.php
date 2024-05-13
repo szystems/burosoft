@@ -57,7 +57,23 @@
                                 <a href="{{ url('show-empresa-info/'.Auth::user()->empresa_id) }}"><i class="bi bi-building"></i>Empresa</a>
                             </li>
                         </ul>
+                        <ul>
+                            <li class="{{ Request::is('cuentas','show-cuenta/*','add-cuenta','edit-cuenta/*') ? 'active-page-link':''  }}">
+                                <a href="{{ url('cuentas') }}"><i class="bi bi-journal-bookmark"></i>Cuentas</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="{{ Request::is('rubros','show-rubro/*','add-rubro','edit-rubro/*') ? 'active-page-link':''  }}">
+                                <a href="{{ url('rubros') }}"><i class="bi bi-coin"></i>Rubros</a>
+                            </li>
+                        </ul>
                     </div>
+                </li>
+                <li class="{{ Request::is('bitacoras','show-bitacora/*') ? 'active-page-link':''  }}">
+                    <a href="{{ url('bitacoras') }}">
+                        <i class="bi bi-fingerprint"></i>
+                        <span class="menu-text">Bitácora</span>
+                    </a>
                 </li>
                 <li class="{{ Request::is('empresa-config') ? 'active-page-link':''  }}">
                     <a href="{{ url('empresa-config') }}">

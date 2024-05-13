@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Empresa;
+use App\Models\Bitacora;
 use App\Models\User;
 use App\Http\Requests\UserFormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -77,7 +78,13 @@ class EmpresaUsuarioController extends Controller
         $user->direccion = $request->input('direccion');
         $user->save();
 
-        // Mail::to($user->email)->send(new UserMail($user));
+        Bitacora::create([
+            'empresa_id' => Auth::user()->empresa_id,
+            'usuario_id' => Auth::user()->id,
+            'fecha' => now(),
+            'tipo' => "Usuario",
+            'descripcion' => "Agregó un nuevo usuario de empresa: ".$user->name
+        ]);
 
         return redirect('show-empresa-usuario/'.$user->id)->with('status',__('Usuario agregado correctamente!'));
     }
@@ -113,6 +120,14 @@ class EmpresaUsuarioController extends Controller
         $user->direccion = $request->input('direccion');
         $user->update();
 
+        Bitacora::create([
+            'empresa_id' => Auth::user()->empresa_id,
+            'usuario_id' => Auth::user()->id,
+            'fecha' => now(),
+            'tipo' => "Usuario",
+            'descripcion' => "Actualizó un usuario de empresa: ".$user->name
+        ]);
+
         return redirect('show-empresa-usuario/'.$id)->with('status',__('Usuario actualizado correctamente!'));
     }
 
@@ -131,6 +146,15 @@ class EmpresaUsuarioController extends Controller
         $user->estado = 0;
         $user->email = $user->email.'-Deleted'.$user->id;
         $user->update();
+
+        Bitacora::create([
+            'empresa_id' => Auth::user()->empresa_id,
+            'usuario_id' => Auth::user()->id,
+            'fecha' => now(),
+            'tipo' => "Usuario",
+            'descripcion' => "Eliminó el usuario de empresa: ".$user->name
+        ]);
+
         return redirect('empresa-usuarios')->with('status',__('Usuario eliminado correctamente!'));
     }
 }
