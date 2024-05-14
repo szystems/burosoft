@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use App\Models\Cuenta;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Illuminate\Support\Facades\Auth;
 
 class CuentasExport implements FromCollection
 {
@@ -12,6 +13,6 @@ class CuentasExport implements FromCollection
     */
     public function collection()
     {
-        return Cuenta::orderBy('razon_social','asc')->get();
+        return Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
     }
 }

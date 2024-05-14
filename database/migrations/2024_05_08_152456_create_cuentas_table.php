@@ -15,6 +15,7 @@ class CreateCuentasTable extends Migration
     {
         Schema::create('cuentas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger('empresa_id');
             $table->string('nit');
             $table->string('dpi')->nullable();
             $table->string('razon_social');

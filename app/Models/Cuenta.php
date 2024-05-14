@@ -12,6 +12,7 @@ class Cuenta extends Model
     protected $table = 'cuentas';
 
     protected $fillable = [
+        'empresa_id',
         'nit',
         'dpi',
         'razon_social',

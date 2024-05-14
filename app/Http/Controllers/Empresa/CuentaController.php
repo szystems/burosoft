@@ -25,6 +25,7 @@ class CuentaController extends Controller
         {
             $queryCuenta=$request->input('fcuenta');
             $cuentas = DB::table('cuentas')
+            ->where('empresa_id', Auth::user()->empresa_id)
             ->where(function ($query) use ($queryCuenta) {
             $query->where('razon_social', 'LIKE', '%' . $queryCuenta . '%')
                 ->orWhere('correo', 'LIKE', '%' . $queryCuenta . '%')
@@ -34,7 +35,7 @@ class CuentaController extends Controller
             })
             ->orderBy('razon_social','asc')
             ->paginate(20);
-            $filterCuentas = Cuenta::all();
+            $filterCuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->get();
             return view('empresa.cuenta.index', compact('cuentas','queryCuenta','filterCuentas'));
         }
     }
@@ -54,6 +55,7 @@ class CuentaController extends Controller
     public function insert(CuentaFormRequest $request)
     {
         $cuenta = new Cuenta();
+        $cuenta->empresa_id = Auth::user()->empresa_id;
         $cuenta->nit = $request->input('nit');
         $cuenta->dpi = $request->input('dpi');
         $cuenta->razon_social = $request->input('razon_social');
@@ -139,7 +141,7 @@ class CuentaController extends Controller
         if ($request)
         {
 
-            $cuentas = Cuenta::orderBy('razon_social','asc')->get();
+            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
             $verpdf = "Browser";
             $nompdf = date('m/d/Y g:ia');
             $path = public_path('assets/uploads/');

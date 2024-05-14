@@ -72,7 +72,7 @@
                                         <div class="form-group">
                                             <p><button type="submit" class="btn btn-dark py-3 px-4 w-100"><font color="white"><strong>{{ __('Login') }}</strong></font></button></p>
                                         </div>
-                                        <a class="h6" href="{{ route('register') }}">{{ __('Crear una cuenta') }}</a><br>
+                                        {{-- <a class="h6" href="{{ route('register') }}">{{ __('Crear una cuenta') }}</a><br> --}}
                                         @if (Route::has('password.request'))
                                             <a class="h6" href="{{ route('password.request') }}">{{ __('¿Olvidaste tu contraseña?') }}</a>
                                         @endif

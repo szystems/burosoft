@@ -15,6 +15,7 @@ class CuentaFactory extends Factory
     public function definition()
     {
         return [
+            'empresa_id' => $this->faker->numberBetween(1, 20),
             'nit' => $this->faker->numerify('########'),
             'dpi' => $this->faker->optional()->numerify('#############'),
             'razon_social' => $this->faker->company,

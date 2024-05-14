@@ -178,7 +178,7 @@
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Dirección</label>
-                                                                    <textarea name="direccion" class="form-control" rows="3" placeholder="Dirección del Doctor...">{{ old('direccion') }}</textarea>
+                                                                    <textarea name="direccion" class="form-control" rows="3" placeholder="Dirección del Usuario...">{{ old('direccion') }}</textarea>
                                                                     @if ($errors->has('direccion'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>

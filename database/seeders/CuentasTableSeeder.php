@@ -14,6 +14,6 @@ class CuentasTableSeeder extends Seeder
      */
     public function run()
     {
-        Cuenta::factory(10)->create();
+        Cuenta::factory(50)->create();
     }
 }
