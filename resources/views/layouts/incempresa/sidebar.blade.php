@@ -54,17 +54,30 @@
                         </ul>
                         <ul>
                             <li class="{{ Request::is('show-empresa-info/*','edit-empresa-info/*') ? 'active-page-link':''  }}">
-                                <a href="{{ url('show-empresa-info/'.Auth::user()->empresa_id) }}"><i class="bi bi-building"></i>Empresa</a>
+                                <a href="{{ url('show-empresa-info/'.Auth::user()->empresa_id) }}"><i class="bi bi-building"></i> Empresa</a>
                             </li>
                         </ul>
                         <ul>
                             <li class="{{ Request::is('cuentas','show-cuenta/*','add-cuenta','edit-cuenta/*') ? 'active-page-link':''  }}">
-                                <a href="{{ url('cuentas') }}"><i class="bi bi-journal-bookmark"></i>Cuentas</a>
+                                <a href="{{ url('cuentas') }}"><i class="bi bi-journal-bookmark"></i> Cuentas</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="sidebar-dropdown">
+                    <a href="#">
+                        <i class="bi bi-cash-coin"></i>
+                        <span class="menu-text">Financiero</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li class="{{ Request::is('rubros','show-rubro/*','add-rubro','edit-rubro/*') ? 'active-page-link':''  }}">
+                                <a href="{{ url('rubros') }}"><i class="bi bi-coin"></i> Rubros</a>
                             </li>
                         </ul>
                         <ul>
-                            <li class="{{ Request::is('rubros','show-rubro/*','add-rubro','edit-rubro/*') ? 'active-page-link':''  }}">
-                                <a href="{{ url('rubros') }}"><i class="bi bi-coin"></i>Rubros</a>
+                            <li class="{{ Request::is('movimientos','show-movimiento/*','edit-movimiento/*') ? 'active-page-link':''  }}">
+                                <a href="{{ url('movimientos') }}"><i class="bi bi-cash-stack"></i> Movimientos</a>
                             </li>
                         </ul>
                     </div>

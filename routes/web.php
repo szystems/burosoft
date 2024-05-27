@@ -24,6 +24,7 @@ use App\Http\Controllers\Empresa\EmpresaDashboardController;
 use App\Http\Controllers\Empresa\EmpresaInfoController;
 use App\Http\Controllers\Empresa\EmpresaUsuarioController;
 use App\Http\Controllers\Empresa\CuentaController;
+use App\Http\Controllers\Empresa\RubroController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
 /*
@@ -88,6 +89,15 @@ Route::middleware(['auth'])->group(function () {
     //Usuarios Empresa
     Route::get('bitacoras', [BitacoraController::class, 'index']);
     Route::get('show-bitacora/{id}', [BitacoraController::class, 'show']);
+
+    //Financiero Rubros
+    Route::get('rubros', [RubroController::class, 'index']);
+    Route::get('show-rubro/{id}', [RubroController::class, 'show']);
+    Route::get('edit-rubro/{id}',[RubroController::class,'edit']);
+    Route::put('update-rubro/{id}', [RubroController::class, 'update']);
+    Route::get('add-rubro', [RubroController::class, 'add']);
+    Route::post('insert-rubro', [RubroController::class, 'insert']);
+    Route::get('delete-rubro/{id}', [RubroController::class, 'destroy']);
 
     //config Empresa
     Route::get('empresa-config', [ConfigEmpresaController::class, 'index']);
