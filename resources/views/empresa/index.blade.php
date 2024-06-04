@@ -137,10 +137,10 @@
                                 <br>
                                 <a href="{{ url('movimientos') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-cash-stack"></i> <u>Movimientos</u></a>
                             </div>
-                            <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold green">
-                                {{-- <i class="bi bi-arrow-up-circle-fill font-1x"></i>
-                                <span>5%</span> --}}
-                            </div>
+                            {{-- <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold green">
+                                <i class="bi bi-arrow-up-circle-fill font-1x"></i>
+                                <span>5%</span>
+                            </div> --}}
                         </div>
                     </a>
                 </div>

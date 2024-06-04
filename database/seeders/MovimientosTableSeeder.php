@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Rubro;
+use App\Models\Movimiento;
 use Illuminate\Database\Seeder;
 
-class RubrosTableSeeder extends Seeder
+class MovimientosTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +14,6 @@ class RubrosTableSeeder extends Seeder
      */
     public function run()
     {
-        Rubro::factory()->count(20)->create();
+        Movimiento::factory()->count(100)->create();
     }
 }

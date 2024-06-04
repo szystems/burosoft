@@ -25,6 +25,9 @@ use App\Http\Controllers\Empresa\EmpresaInfoController;
 use App\Http\Controllers\Empresa\EmpresaUsuarioController;
 use App\Http\Controllers\Empresa\CuentaController;
 use App\Http\Controllers\Empresa\RubroController;
+use App\Http\Controllers\Empresa\MovimientoController;
+use App\Http\Controllers\Empresa\MovimientoDocumentoController;
+use App\Http\Controllers\Empresa\MovimientoPagoController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
 /*
@@ -85,6 +88,27 @@ Route::middleware(['auth'])->group(function () {
     Route::get('delete-cuenta/{id}', [CuentaController::class, 'destroy']);
     Route::get('pdf-cuentas', [CuentaController::class, 'pdf']);
     Route::get('exportcuentas', [CuentaController::class, 'exportexcel']);
+
+    //Movimientos Empresa
+    Route::get('movimientos', [MovimientoController::class, 'index']);
+    Route::get('show-movimiento/{id}', [MovimientoController::class, 'show']);
+    Route::get('edit-movimiento/{id}',[MovimientoController::class,'edit']);
+    Route::put('update-movimiento/{id}', [MovimientoController::class, 'update']);
+    Route::get('add-movimiento', [MovimientoController::class, 'add']);
+    Route::post('insert-movimiento', [MovimientoController::class, 'insert']);
+    Route::get('delete-movimiento/{id}', [MovimientoController::class, 'destroy']);
+    Route::get('pdf-movimientos', [MovimientoController::class, 'pdf']);
+    Route::get('exportmovimientos', [MovimientoController::class, 'exportexcel']);
+
+    //Movimiento Documentos
+    Route::post('insert-documento', [MovimientoDocumentoController::class, 'insert']);
+    Route::put('update-documento/{id}', [MovimientoDocumentoController::class, 'update']);
+    Route::get('delete-documento/{id}', [MovimientoDocumentoController::class, 'destroy']);
+
+    //Movimiento Pagos
+    Route::post('insert-pago', [MovimientoPagoController::class, 'insert']);
+    Route::put('update-pago/{id}', [MovimientoPagoController::class, 'update']);
+    Route::get('delete-pago/{id}', [MovimientoPagoController::class, 'destroy']);
 
     //Usuarios Empresa
     Route::get('bitacoras', [BitacoraController::class, 'index']);
