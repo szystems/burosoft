@@ -35,6 +35,26 @@ class UsersTableSeeder extends Seeder
             'principal' => 0,
         ]);
 
+        User::create([
+            'empresa_id' => "1",
+            'name' => 'Administrador Buro',
+            'email' => 'buroadmin@burotributario.com',
+            'password' => Hash::make('1234ABcd'),
+            'role_as' => 0,
+            'estado' => 1,
+            'principal' => 1,
+        ]);
+
+        User::create([
+            'empresa_id' => "1",
+            'name' => 'User Buro',
+            'email' => 'burouser@burotributario.com',
+            'password' => Hash::make('1234ABcd'),
+            'role_as' => 1,
+            'estado' => 1,
+            'principal' => 0,
+        ]);
+
         User::factory()->count(100)->create();
     }
 }

@@ -20,6 +20,7 @@ class MovimientoPagoController extends Controller
 {
     public function insert(MovimientoPagoFormRequest $request)
     {
+        $fecha_documento = date("Y-m-d", strtotime($request->fecha_documento));
         $pago = new MovimientoPago();
         if($request->hasFile('imagen'))
         {
@@ -35,6 +36,10 @@ class MovimientoPagoController extends Controller
         $pago->usuario_id = $request->input('usuario_id');
         $pago->monto_q = $request->input('monto_q');
         $pago->monto_d = $request->input('monto_d');
+        $pago->numero_documento = $request->input('numero_documento');
+        $pago->banco = $request->input('banco');
+        $pago->numero_cuenta = $request->input('numero_cuenta');
+        $pago->fecha_documento = $fecha_documento;
         $pago->save();
 
         $movimiento = Movimiento::find($pago->movimiento_id);
@@ -44,7 +49,7 @@ class MovimientoPagoController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Movimiento",
-            'descripcion' => "Agrego un nuevo Pago: Q.".number_format($movimiento->monto_q,2, '.', ',') .", Movimiento: ".$movimiento->id."Forma Pago: ".$movimiento->forma_pago,
+            'descripcion' => "Agrego un nuevo Pago: Q.".number_format($movimiento->monto_q,2, '.', ',') .", Movimiento: ".$movimiento->id.", Forma Pago: ".$movimiento->forma_pago,
         ]);
 
         return redirect('show-movimiento/'.$movimiento->id)->with('status',__('Pago agregado exitosamente.'));
@@ -52,6 +57,7 @@ class MovimientoPagoController extends Controller
 
     public function update(MovimientoPagoFormRequest $request, $id)
     {
+        $fecha_documento = date("Y-m-d", strtotime($request->fecha_documento));
         $pago = MovimientoPago::find($id);
         if($request->hasFile('imagen'))
         {
@@ -71,6 +77,10 @@ class MovimientoPagoController extends Controller
         $pago->usuario_id = $request->input('usuario_id');
         $pago->monto_q = $request->input('monto_q');
         $pago->monto_d = $request->input('monto_d');
+        $pago->numero_documento = $request->input('numero_documento');
+        $pago->banco = $request->input('banco');
+        $pago->numero_cuenta = $request->input('numero_cuenta');
+        $pago->fecha_documento = $fecha_documento;
         $pago->update();
 
         $movimiento = Movimiento::find($pago->movimiento_id);
@@ -80,7 +90,7 @@ class MovimientoPagoController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Movimiento",
-            'descripcion' => "Actualizo un Pago: Q.".number_format($movimiento->monto_q,2, '.', ',') .", Movimiento: ".$movimiento->id."Forma Pago: ".$movimiento->forma_pago,
+            'descripcion' => "Actualizo un Pago: Q.".number_format($movimiento->monto_q,2, '.', ',') .", Movimiento: ".$movimiento->id.", Forma Pago: ".$movimiento->forma_pago,
         ]);
 
         return redirect('show-movimiento/'.$movimiento->id)->with('status',__('Pago actualizado exitosamente.'));
@@ -95,8 +105,8 @@ class MovimientoPagoController extends Controller
             'empresa_id' => Auth::user()->empresa_id,
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
-            'tipo' => "Cuenta",
-            'descripcion' => "Eliminó un pago: Q.".number_format($movimiento->monto_q,2, '.', ',') .", Movimiento: ".$movimiento->id."Forma Pago: ".$movimiento->forma_pago,
+            'tipo' => "Movimiento",
+            'descripcion' => "Eliminó un pago: Q.".number_format($movimiento->monto_q,2, '.', ',') .", Movimiento: ".$movimiento->id.", Forma Pago: ".$movimiento->forma_pago,
         ]);
         $pago->delete();
         return redirect('show-movimiento/'.$movimiento->id)->with('status',__('Pago eliminado exitosamente.'));

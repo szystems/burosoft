@@ -77,7 +77,8 @@
 		<!-- Page wrapper start -->
 		<div class="page-wrapper">
             @php
-                $empresa = \App\Models\Empresa::find(Auth::user()->id);
+                $config = \App\Models\Config::find(1);
+                $empresa = \App\Models\Empresa::find($config->empresa_id);
             @endphp
 
 			@include('layouts.incadmin.nav')

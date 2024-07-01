@@ -97,7 +97,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('add-movimiento', [MovimientoController::class, 'add']);
     Route::post('insert-movimiento', [MovimientoController::class, 'insert']);
     Route::get('delete-movimiento/{id}', [MovimientoController::class, 'destroy']);
-    Route::get('pdf-movimientos', [MovimientoController::class, 'pdf']);
+    Route::get('pdf-movimientos', [MovimientoController::class, 'pdfmovimientos']);
+    Route::get('pdf-movimiento', [MovimientoController::class, 'pdfmovimiento']);
     Route::get('exportmovimientos', [MovimientoController::class, 'exportexcel']);
 
     //Movimiento Documentos

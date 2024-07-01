@@ -22,7 +22,7 @@ class CreateMovimientosTable extends Migration
             $table->unsignedInteger('rubro_id');
             $table->decimal('monto_q', 8, 2)->default(0.00);
             $table->decimal('monto_d', 8, 2)->default(0.00);
-            $table->string('descripcion');
+            $table->text('descripcion');
             $table->timestamps();
         });
     }

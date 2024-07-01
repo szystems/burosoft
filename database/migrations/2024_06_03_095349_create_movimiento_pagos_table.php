@@ -16,8 +16,12 @@ class CreateMovimientoPagosTable extends Migration
         Schema::create('movimiento_pagos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('movimiento_id');
-            $table->string('descripcion');
+            $table->text('descripcion');
             $table->string('forma_pago');
+            $table->string('numero_documento')->nullable();
+            $table->string('banco')->nullable();
+            $table->string('numero_cuenta')->nullable();
+            $table->date('fecha_documento')->nullable();
             $table->string('imagen')->nullable();
             $table->unsignedBigInteger('usuario_id');
             $table->decimal('monto_q', 8, 2)->default(0.00);

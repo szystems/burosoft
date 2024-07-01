@@ -30,7 +30,7 @@ aria-labelledby="addPagoModal" aria-hidden="true">
                         <label class="form-label">Monto (Quetzales)</label>
                         <div class="input-group">
                             <span class="input-group-text">Q.</span>
-                            <input name="monto_q" type="number" class="form-control" id="monto_q" placeholder="0.00"  value="{{ old('monto_q') }}" required>
+                            <input name="monto_q" type="number" step="0.01" class="form-control" id="monto_q" placeholder="0.00"  value="{{ number_format($saldo_q,2, '.', '') }}" required>
                         </div>
                         @if ($errors->has('monto_q'))
                             <span class="help-block opacity-7">
@@ -45,7 +45,7 @@ aria-labelledby="addPagoModal" aria-hidden="true">
                         <label class="form-label">Monto (Dolares)</label>
                         <div class="input-group">
                             <span class="input-group-text">$.</span>
-                            <input name="monto_d" type="number" class="form-control" id="monto_d" placeholder="0.00"  value="{{ old('monto_d') }}" required>
+                            <input name="monto_d" type="number" step="0.01" class="form-control" id="monto_d" placeholder="0.00"  value="{{ number_format($saldo_d,2, '.', '') }}" required>
                         </div>
                         @if ($errors->has('monto_d'))
                             <span class="help-block opacity-7">
@@ -94,6 +94,93 @@ aria-labelledby="addPagoModal" aria-hidden="true">
                                         </strong>
                                 </span>
                             @endif
+                        </div>
+                    </div>
+
+                    <div class="accordion" id="accordionSpecialTitle">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSpecialTitleOne">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseSpecialTitleOne" aria-expanded="true"
+                                    aria-controls="collapseSpecialTitleOne">
+                                    <div class="d-flex align-items-center">
+                                        <i class="bi bi-filter text-info"></i>
+                                        <div class="ms-3">
+                                            <h5 class="text-yellow">Otros Datos:</h5>
+                                            {{-- <p class="m-0 fw-normal">Leader</p> --}}
+
+                                        </div>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="collapseSpecialTitleOne" class="accordion-collapse collapse"
+                                aria-labelledby="headingSpecialTitleOne" data-bs-parent="#accordionSpecialTitle">
+                                <div class="accordion-body">
+                                    <div class="row gx-3">
+
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label">No. Documento</label>
+                                            <input name="numero_documento" type="text" class="form-control" placeholder="Número de Documento">
+                                            @if ($errors->has('numero_documento'))
+                                                <span class="help-block opacity-7">
+                                                        <strong>
+                                                            <font color="red">{{ $errors->first('numero_documento') }}</font>
+                                                        </strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label">Banco</label>
+                                            <input name="banco" type="text" class="form-control" placeholder="Nombre del Banco">
+                                            @if ($errors->has('banco'))
+                                                <span class="help-block opacity-7">
+                                                        <strong>
+                                                            <font color="red">{{ $errors->first('banco') }}</font>
+                                                        </strong>
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <label class="form-label">No. de Cuenta</label>
+                                            <input name="numero_cuenta" type="text" class="form-control" placeholder="Número de cuenta">
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <!-- Form Field Start -->
+                                            <div class="mb-2">
+                                                <label for="fecha_documento" class="form-label">Fecha</label>
+                                                <div class="input-group">
+                                                    <input type="text" name="fecha_documento" class="form-control datepicker text-center" id="fecha_documento" value=""/>
+                                                    <span class="input-group-text">
+                                                        <i class="bi bi-calendar4"></i>
+                                                    </span>
+                                                </div>
+                                                <script>
+                                                    var date = new Date();
+                                                    var today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+                                                    var optSimple = {
+                                                        language: "es",
+                                                        format: "dd-mm-yyyy",
+                                                        autoclose: true,
+                                                        todayHighlight: true,
+                                                        todayBtn: "linked",
+                                                        orientation: "bottom auto",
+                                                        startDate: "01-01-1900",
+
+
+                                                    };
+                                                    $( '#fecha_documento' ).datepicker( optSimple );
+                                                    $( '#fecha_documento').datepicker( 'setDate', today );
+                                                </script>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

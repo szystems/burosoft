@@ -25,7 +25,7 @@ class MovimientoPagoFormRequest extends FormRequest
     {
         return [
             'movimiento_id' => 'required|integer',
-            'descripcion' => 'required|string',
+            'descripcion' => 'required',
             'forma_pago' => 'required|string',
             'imagen' => 'nullable|image|mimes:jpeg,png|max:3048',
             'usuario_id' => 'required|exists:users,id',

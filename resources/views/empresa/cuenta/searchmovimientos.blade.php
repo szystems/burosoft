@@ -56,27 +56,16 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2 mb-3">
-                                            <!-- Form Field Start -->
-                                            <div class="mb-3">
-                                                <label for="cuenta" class="form-label">Cuenta</label>
-                                                <select name="cuenta_id" class="form-select" aria-label="Default select example">
-                                                    <option value=""{{ request('cuenta_id') == '' ? ' selected' : '' }}>Todos</option>
-                                                    @foreach($cuentas as $cuenta)
-                                                        <option value="{{ $cuenta->id }}"{{ old('cuenta_id', request('cuenta_id')) == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->razon_social }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <input type="hidden" name="cuenta_id" value="{{ $cuenta->id }}">
 
                                         <div class="col-md-2 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-3">
                                                 <label for="saldo" class="form-label">Saldo</label>
                                                 <select name="saldo" class="form-select" aria-label="Default select example">
-                                                    <option value=""{{ request('saldo') == '' ? ' selected' : '' }}>Todos</option>
-                                                    <option value="Pagado"{{ request('saldo') == 'Pagado' ? ' selected' : '' }}>Pagado</option>
-                                                    <option value="Pendiente"{{ request('saldo') == 'Pendiente' ? ' selected' : '' }}>Pendiente</option>
+                                                    <option value="" selected>Todos</option>
+                                                    <option value="Pagado">Pagado</option>
+                                                    <option value="Pendiente">Pendiente</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -86,9 +75,9 @@
                                             <div class="mb-3">
                                                 <label for="rubro" class="form-label">Rubro</label>
                                                 <select name="rubro_id" class="form-select" aria-label="Default select example">
-                                                    <option value=""{{ request('rubro_id') == '' ? ' selected' : '' }}>Todos</option>
+                                                    <option value="" selected>Todos</option>
                                                     @foreach($rubros as $rubro)
-                                                        <option value="{{ $rubro->id }}"{{ old('rubro_id', request('rubro_id')) == $rubro->id ? ' selected' : '' }}>{{ $rubro->nombre }}</option>
+                                                        <option value="{{ $rubro->id }}">{{ $rubro->nombre }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -100,7 +89,7 @@
                                             <div class="mb-3">
                                                 <label for="usuario" class="form-label">Usuario</label>
                                                 <select name="usuario_id" class="form-select" aria-label="Default select example">
-                                                    <option value="" <option value="" {{ request('usuario_id') == '' ? ' selected' : '' }}>Todos</option>>Todos</option>
+                                                    <option value="" {{ request('usuario_id') == '' ? ' selected' : '' }}>Todos</option>
                                                     @foreach($usuarios as $usuario)
                                                         <option value="{{ $usuario->id }}"{{ old('usuario_id', request('usuario_id')) == $usuario->id ? ' selected' : '' }}>{{ $usuario->name }}</option>
                                                     @endforeach
@@ -110,8 +99,8 @@
 
                                         <div class="col-md-2 mb-3">
                                             <!-- Form Field Start -->
-                                            <div class="mb-3 ">
-                                                <button type="submit" class="btn btn-info">
+                                            <div class="mb-3 mb-4">
+                                                <button type="submit" class="btn btn-info mt-4">
                                                     <i class="bi bi-filter"></i> Filtrar
                                                 </button>
                                             </div>

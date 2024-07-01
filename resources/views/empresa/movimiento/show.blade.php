@@ -54,6 +54,7 @@
                                                     @endif
 
                                                     <h4>Movimiento</h4>
+                                                    @include('empresa.movimiento.printmovimiento')
                                                     <hr>
 
                                                     <div class="col-md-12 mb-3">
@@ -121,7 +122,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6 mb-3">
+                                                    <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label for="monto_q" class="form-label">Monto (Quetzaltes)</label>
@@ -129,7 +130,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6 mb-3">
+                                                    <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label for="monto_q" class="form-label">Abonado/Saldo (Quetzaltes)</label>
@@ -140,7 +141,32 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6 mb-3">
+                                                    @php
+                                                        $monto_pagado_q = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                                                        ->sum('monto_q');
+                                                        $saldo_q = $movimiento->monto_q - $monto_pagado_q;
+
+                                                        $monto_pagado_d = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                                                        ->sum('monto_d');
+                                                        $saldo_d = $movimiento->monto_d - $monto_pagado_d;
+                                                    @endphp
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="saldo" class="form-label">Estado Saldo</label>
+                                                            <p>
+                                                                @if($movimiento->monto_q > $monto_pagado_q)
+                                                                    <span class="badge shade-light-yellow">Pendiente</span>
+
+                                                                @elseif ($movimiento->monto_q <= $monto_pagado_q)
+                                                                    <span class="badge shade-light-green">Pagado</span>
+                                                                @endif
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label for="monto_d" class="form-label">Monto (Dolares)</label>
@@ -148,7 +174,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6 mb-3">
+                                                    <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label for="monto_d" class="form-label">Abonado/Saldo (Dolares)</label>
@@ -156,6 +182,21 @@
                                                                 $saldoD = $movimiento->monto_d - $totalAbonadoD;
                                                             @endphp
                                                             <p class=" text-success">$.{{ number_format($totalAbonadoD,2, '.', ',') }} / <font class="text-danger">$.{{ number_format($saldoD,2, '.', ',') }}</font></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="saldo" class="form-label">Estado Saldo</label>
+                                                            <p>
+                                                                @if($movimiento->monto_d > $monto_pagado_d)
+                                                                    <span class="badge shade-light-yellow">Pendiente</span>
+
+                                                                @elseif ($movimiento->monto_d <= $monto_pagado_d)
+                                                                    <span class="badge shade-light-green">Pagado</span>
+                                                                @endif
+                                                            </p>
                                                         </div>
                                                     </div>
 
@@ -258,6 +299,7 @@
                                                                     <td align="center">Descripcion</td>
                                                                     <td align="center">Forma Pago</td>
                                                                     <td align="center">Imagen</td>
+                                                                    <td align="center">Otros Datos</td>
                                                                     <td align="center">Usuario</td>
                                                                 </tr>
                                                             </thead>
@@ -304,6 +346,29 @@
                                                                         @endif
                                                                     </td>
                                                                     <td align="center">
+                                                                        <p>
+                                                                            @if ($pago->numero_documento)
+                                                                                <strong>No. Documento:</strong> {{ $pago->numero_documento }}
+                                                                                <br>
+                                                                            @endif
+                                                                            @if ($pago->banco)
+                                                                                <strong>Banco:</strong> {{ $pago->banco }}
+                                                                                <br>
+                                                                            @endif
+                                                                            @if ($pago->numero_cuenta)
+                                                                                <strong>Numero Cuenta:</strong> {{ $pago->numero_cuenta }}
+                                                                                <br>
+                                                                            @endif
+                                                                            @if ($pago->fecha_documento)
+                                                                                @php
+                                                                                    $fecha_documento = date("d-m-Y", strtotime($pago->fecha_documento));
+                                                                                @endphp
+                                                                                <strong>Fecha:</strong> {{ $fecha_documento }}
+                                                                                <br>
+                                                                            @endif
+                                                                        </p>
+                                                                    </td>
+                                                                    <td align="center">
                                                                         <p>{{ $pago->usuario->name }}</p>
                                                                     </td>
 
@@ -314,7 +379,7 @@
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
-                                                        @if ($documentos->count() == 0)
+                                                        @if ($pagos->count() == 0)
                                                             <div class="alert alert-warning text-white" role="alert">
                                                                 <ul align="center">
                                                                     <p>No se han ingresado documentos.</p>

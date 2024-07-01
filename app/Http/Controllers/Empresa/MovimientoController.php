@@ -24,6 +24,7 @@ class MovimientoController extends Controller
 {
     public function index(Request $request)
     {
+        // dd($request);
         if ($request) {
             //obtengo datos
             if ($request->input('fecha_desde') != "") {
@@ -50,24 +51,33 @@ class MovimientoController extends Controller
             $cuentaID = $request->input('cuenta_id');
             $rubroID = $request->input('rubro_id');
             $usuarioID = $request->input('usuario_id');
+            $saldo = $request->input('saldo');
 
 
             $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
-                                        ->where('fecha', '<=', $fechaHasta)
-                                        ->where('empresa_id', Auth::user()->empresa_id);
-
+            ->where('fecha', '<=', $fechaHasta)
+            ->where('empresa_id', Auth::user()->empresa_id);
             if (!empty($usuarioID)) {
                 $Consultafiltros->where('usuario_id', '=', $usuarioID);
             }
-
             if (!empty($cuentaID)) {
                 $Consultafiltros->where('cuenta_id', '=', $cuentaID);
             }
-
             if (!empty($rubroID)) {
                 $Consultafiltros->where('rubro_id', '=', $rubroID);
             }
-
+            if (!empty($saldo)){
+                if ($saldo == "Pendiente") {
+                    $Consultafiltros->where(function ($query) {
+                        $query->whereRaw('monto_q > (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
+                    });
+                }
+                if ($saldo == "Pagado") {
+                    $Consultafiltros->where(function ($query) {
+                        $query->whereRaw('monto_q <= (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
+                    });
+                }
+            }
             $Consultafiltros->orderBy('fecha','desc');
             $movimientos = $Consultafiltros->get();
 
@@ -76,7 +86,7 @@ class MovimientoController extends Controller
             $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
             $config = Config::first();
             //dd($request);
-            return view('empresa.movimiento.index', compact('movimientos','usuarios','cuentas','rubros','config','fechaDesdeVista','fechaHastaVista'));
+            return view('empresa.movimiento.index', compact('movimientos','usuarios','cuentas','rubros','config','fechaDesdeVista','fechaHastaVista','request'));
         }
     }
 
@@ -172,5 +182,164 @@ class MovimientoController extends Controller
         ]);
 
         return redirect('movimientos')->with('status',__('Movimiento eliminado correctamente.'));
+    }
+
+    public function pdfmovimientos(Request $request)
+    {
+        // dd($request);
+        if ($request)
+        {
+            $config = Config::first();
+
+            //arreglo de fechas
+            if ($request->input('ffechadesde') != "") {
+                $fechaDesdeVista = date("d-m-Y", strtotime($request->input('ffechadesde')));
+                $fechaDesde = date("Y-m-d", strtotime($request->input('ffechadesde')));
+            }else
+            {
+                $hoy = Carbon::now('America/Guatemala');
+                $fechaDesdeVista = $hoy->subDays(30);
+                $fechaDesdeVista = $hoy->format('d-m-Y');
+                $fechaDesde = date("Y-m-d", strtotime($fechaDesdeVista));
+            }
+
+            if ($request->input('ffechahasta') != "") {
+                $fechaHastaVista = date("d-m-Y", strtotime($request->input('ffechahasta')));
+                $fechaHasta = date("Y-m-d", strtotime($request->input('ffechahasta')));
+            }else
+            {
+                $hoy = Carbon::now('America/Guatemala');
+                $fechaHastaVista = $hoy->format('d-m-Y');
+                $fechaHasta = date("Y-m-d", strtotime($fechaHastaVista));
+            }
+
+            //recibir datos de filtro para consulta
+            $cuentaID = $request->input('ffcuenta');
+            $rubroID = $request->input('ffrubro');
+            $usuarioID = $request->input('ffusuario');
+            $saldo = $request->input('ffsaldo');
+
+            //recibir detalles de la impresion
+            $pdftamaño = $request->input('pdftamaño');
+            $pdfhorientacion = $request->input('pdfhorientacion');
+            $pdfarchivo = $request->input('pdfarchivo');
+
+            //recibir las columnas a mostrar
+            // $fid = $request->has('fid');
+            // $ffecha = $request->has('ffecha');
+            // $fcuenta = $request->has('fcuenta');
+            // $frubro = $request->has('frubro');
+            // $fcargo = $request->has('fcargo');
+            // $festadosaldo = $request->has('festadosaldo');
+            // $fpagadosaldo = $request->has('fpagadosaldo');
+            // $fusuario = $request->has('fusuario');
+            // $fpagos = $request->has('fpagos');
+
+
+            $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
+            ->where('fecha', '<=', $fechaHasta)
+            ->where('empresa_id', Auth::user()->empresa_id);
+            if (!empty($usuarioID)) {
+                $Consultafiltros->where('usuario_id', '=', $usuarioID);
+            }
+            if (!empty($cuentaID)) {
+                $Consultafiltros->where('cuenta_id', '=', $cuentaID);
+            }
+            if (!empty($rubroID)) {
+                $Consultafiltros->where('rubro_id', '=', $rubroID);
+            }
+            if (!empty($saldo)){
+                if ($saldo == "Pendiente") {
+                    $Consultafiltros->where(function ($query) {
+                        $query->whereRaw('monto_q > (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
+                    });
+                }
+                if ($saldo == "Pagado") {
+                    $Consultafiltros->where(function ($query) {
+                        $query->whereRaw('monto_q <= (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
+                    });
+                }
+            }
+            $Consultafiltros->orderBy('fecha','desc');
+            $movimientos = $Consultafiltros->get();
+
+
+            $nompdf = date('m/d/Y g:ia');
+            $path = public_path('assets/uploads/');
+
+            $currency = $config->currency_simbol;
+
+            if ($config->logo == null)
+            {
+                $logo = null;
+                $imagen = null;
+            }
+            else
+            {
+                    $logo = $config->logo;
+                    $imagen = public_path('assets/uploads/logos/'.$logo);
+            }
+
+            if ( $pdfarchivo == "download" )
+            {
+                $pdf = PDF::loadView('empresa.movimiento.pdfmovimientos', compact('imagen','movimientos','config','request','fechaDesdeVista','fechaHastaVista'));
+                $pdf->setPaper($pdftamaño, $pdfhorientacion);
+                return $pdf->download ('Reporte Movimientos: '.$nompdf.'.pdf');
+            }
+            if ( $pdfarchivo == "stream" )
+            {
+                $pdf = PDF::loadView('empresa.movimiento.pdfmovimientos', compact('imagen','movimientos','config','request','fechaDesdeVista','fechaHastaVista'));
+                $pdf->setPaper($pdftamaño, $pdfhorientacion);
+                return $pdf->stream ('Reporte Movimientos: '.$nompdf.'.pdf');
+            }
+        }
+    }
+
+    public function pdfmovimiento(Request $request)
+    {
+        // dd($request);
+        if ($request)
+        {
+            $config = Config::first();
+            $movimiento = Movimiento::find($request->input('fmovimiento_id'));
+            $documentos = MovimientoDocumento::where('movimiento_id', $request->input('fmovimiento_id'))->get();
+            $pagos = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->get();
+            $totalAbonadoQ = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->sum('monto_q');
+            $totalAbonadoD = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->sum('monto_d');
+
+            $nompdf = date('m/d/Y g:ia');
+            $path = public_path('assets/uploads/');
+
+            $currency = $config->currency_simbol;
+
+            if ($config->logo == null)
+            {
+                $logo = null;
+                $imagen = null;
+            }
+            else
+            {
+                    $logo = $config->logo;
+                    $imagen = public_path('assets/uploads/logos/'.$logo);
+            }
+
+            //recibir detalles de la impresion
+            $pdftamaño = $request->input('pdftamaño');
+            $pdfhorientacion = $request->input('pdfhorientacion');
+            $pdfarchivo = $request->input('pdfarchivo');
+
+            if ( $pdfarchivo == "download" )
+            {
+                $pdf = PDF::loadView('empresa.movimiento.pdfmovimiento', compact('imagen','movimiento','config','documentos','pagos','totalAbonadoQ','totalAbonadoD'));
+                $pdf->setPaper($pdftamaño, $pdfhorientacion);
+                return $pdf->download ('Reporte Movimiento: '.$movimiento->id.'-'.$nompdf.'.pdf');
+            }
+            if ( $pdfarchivo == "stream" )
+            {
+                $pdf = PDF::loadView('empresa.movimiento.pdfmovimiento', compact('imagen','movimiento','config','documentos','pagos','totalAbonadoQ','totalAbonadoD'));
+                $pdf->setPaper($pdftamaño, $pdfhorientacion);
+                return $pdf->stream ('Reporte Movimiento ID: '.$movimiento->id.'-'.$nompdf.'.pdf');
+            }
+        }
     }
 }

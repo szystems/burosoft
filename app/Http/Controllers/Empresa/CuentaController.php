@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use App\Models\Cuenta;
+use App\Models\Rubro;
+use App\Models\Movimiento;
 use App\Http\Requests\CuentaFormRequest;
 use App\Models\Config;
 use App\Models\User;
@@ -35,6 +37,7 @@ class CuentaController extends Controller
             })
             ->orderBy('razon_social','asc')
             ->paginate(20);
+
             $filterCuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->get();
             return view('empresa.cuenta.index', compact('cuentas','queryCuenta','filterCuentas'));
         }
@@ -43,8 +46,27 @@ class CuentaController extends Controller
     public function show($id)
     {
         $cuenta = Cuenta::find($id);
+
+        $fechas = DB::table('movimientos')
+        ->where('cuenta_id', $id)
+        ->selectRaw('MAX(fecha) as fecha_max, MIN(fecha) as fecha_min')
+        ->get();
+        $fecha_min = Carbon::parse($fechas->first()->fecha_min);
+        $fecha_max = Carbon::parse($fechas->first()->fecha_max);
+        $fechaDesdeVista = $fecha_min->format('d-m-Y');
+        $fechaHastaVista = $fecha_max->format('d-m-Y');
+
+        $movimientos = Movimiento::where('empresa_id', Auth::user()->empresa_id)
+        ->where('cuenta_id', $cuenta->id)
+        ->orderBy('fecha','desc')
+        ->get();
+
+        $usuarios = User::where('empresa_id', Auth::user()->empresa_id)->orderBy('name','asc')->get();
+            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
+            $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
+
         $config = Config::where('empresa_id', $cuenta->id)->first();
-        return view('empresa.cuenta.show', compact('cuenta', 'config'));
+        return view('empresa.cuenta.show', compact('cuenta','movimientos','usuarios','cuentas','rubros','config','fechaDesdeVista','fechaHastaVista','fecha_min','fecha_max'));
     }
 
     public function add()

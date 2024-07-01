@@ -39,4 +39,9 @@ class Movimiento extends Model
     {
         return $this->belongsTo(Rubro::class, 'rubro_id');
     }
+
+    public function pagos()
+{
+    return $this->hasMany(MovimientoPago::class, 'movimiento_id');
+}
 }

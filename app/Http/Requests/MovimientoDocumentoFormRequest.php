@@ -26,7 +26,7 @@ class MovimientoDocumentoFormRequest extends FormRequest
         return [
             'movimiento_id' => 'required|integer',
             'nombre' => 'required|string',
-            'descripcion' => 'required|string',
+            'descripcion' => 'required',
             'usuario_id' => 'required|integer',
         ];
     }

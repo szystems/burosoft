@@ -75,6 +75,7 @@
                                                                             </strong>
                                                                     </span>
                                                                 @endif
+                                                                <a href="{{ url('add-cuenta') }}" class="text-primary"><i class="bi bi-plus-square"></i> Agregar Cuenta</a>
                                                             </div>
                                                         </div>
 
@@ -95,6 +96,7 @@
                                                                             </strong>
                                                                     </span>
                                                                 @endif
+                                                                <a href="{{ url('add-rubro') }}" class="text-primary"><i class="bi bi-plus-square"></i> Agregar Rubro</a>
                                                             </div>
                                                         </div>
 
@@ -102,7 +104,7 @@
                                                             <label class="form-label">Monto (Quetzales)</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text">Q.</span>
-                                                                <input name="monto_q" type="number" class="form-control" id="monto_q" placeholder="0.00"  value="{{ old('monto_q') }}">
+                                                                <input name="monto_q" type="number" step="0.01" class="form-control" id="monto_q" placeholder="0.00"  value="{{ old('monto_q') }}">
                                                             </div>
                                                             @if ($errors->has('monto_q'))
                                                                 <span class="help-block opacity-7">
@@ -117,7 +119,7 @@
                                                             <label class="form-label">Monto (Dolares)</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text">$.</span>
-                                                                <input name="monto_d" type="number" class="form-control" id="monto_d" placeholder="0.00"  value="{{ old('monto_d') }}">
+                                                                <input name="monto_d" type="number" step="0.01" class="form-control" id="monto_d" placeholder="0.00"  value="{{ old('monto_d') }}">
                                                             </div>
                                                             @if ($errors->has('monto_d'))
                                                                 <span class="help-block opacity-7">

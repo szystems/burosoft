@@ -84,9 +84,9 @@
                                                 aria-controls="adminInfo" aria-selected="true">Información</a>
                                         </li>
                                         {{-- <li class="nav-item" role="presentation">
-                                            <a class="nav-link" id="tab-adminTab2" data-bs-toggle="tab" href="#adminTab2" role="tab"
-                                                aria-controls="adminTab2" aria-selected="false">
-                                                Otro tab
+                                            <a class="nav-link" id="tab-movimientos" data-bs-toggle="tab" href="#movimientos" role="tab"
+                                                aria-controls="movimientos" aria-selected="false">
+                                                Movimientos
                                                 <span class="badge rounded-pill green ms-2">Hoy ({{ $citas->count() }})</span></a>
                                         </li> --}}
                                     </ul>
@@ -151,7 +151,7 @@
                                             <!-- Row end -->
                                         </div>
 
-                                        {{-- <div class="tab-pane fade" id="adminTab2" role="tabpanel">
+                                        {{-- <div class="tab-pane fade" id="movimientos" role="tabpanel">
                                             <div class="card-body">
                                                 <!-- Row start -->
                                                 <div class="row gx-3">

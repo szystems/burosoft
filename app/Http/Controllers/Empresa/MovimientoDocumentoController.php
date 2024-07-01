@@ -95,7 +95,7 @@ class MovimientoDocumentoController extends Controller
             'empresa_id' => Auth::user()->empresa_id,
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
-            'tipo' => "Cuenta",
+            'tipo' => "Movimiento",
             'descripcion' => "Eliminó un documento: ".$documento->nombre.", Movimiento: ".$movimiento->id,
         ]);
         $documento->delete();
