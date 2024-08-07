@@ -30,7 +30,7 @@
                                     @csrf
                                     <div class="row gx-3">
 
-                                        <div class="col-md-2 mb-3">
+                                        <div class="col-md-4 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-2">
                                                 <label for="fecha_desde" class="form-label">Fecha Desde</label>
@@ -43,7 +43,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2 mb-3">
+                                        <div class="col-md-4 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-2">
                                                 <label for="fecha_hasta" class="form-label">Fecha Hasta</label>
@@ -56,7 +56,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2 mb-3">
+                                        <div class="col-md-4 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-3">
                                                 <label for="cuenta" class="form-label">Cuenta</label>
@@ -69,7 +69,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-3">
                                                 <label for="saldo" class="form-label">Saldo</label>
@@ -81,7 +81,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-2 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-3">
                                                 <label for="rubro" class="form-label">Rubro</label>
@@ -95,15 +95,27 @@
                                         </div>
 
 
-                                        <div class="col-md-2 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-3">
                                                 <label for="usuario" class="form-label">Usuario</label>
                                                 <select name="usuario_id" class="form-select" aria-label="Default select example">
-                                                    <option value="" <option value="" {{ request('usuario_id') == '' ? ' selected' : '' }}>Todos</option>>Todos</option>
+                                                    <option value="" {{ request('usuario_id') == '' ? ' selected' : '' }}>Todos</option>
                                                     @foreach($usuarios as $usuario)
                                                         <option value="{{ $usuario->id }}"{{ old('usuario_id', request('usuario_id')) == $usuario->id ? ' selected' : '' }}>{{ $usuario->name }}</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
+                                            <!-- Form Field Start -->
+                                            <div class="mb-3">
+                                                <label for="ordenar" class="form-label">Ordenar:</label>
+                                                <select name="ordenar" class="form-select" aria-label="Default select example">
+                                                    <option value="fecha" {{ request('ordenar') == 'fecha' ? ' selected' : '' }}>fecha</option>
+                                                    <option value="cuenta_id" {{ request('ordenar') == 'cuenta_id' ? ' selected' : '' }}>cuenta_id</option>
+
                                                 </select>
                                             </div>
                                         </div>

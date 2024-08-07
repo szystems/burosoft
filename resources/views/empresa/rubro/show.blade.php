@@ -35,9 +35,11 @@
                                     <div class="btn-group-sm m-3">
                                         <a href="{{ url('edit-rubro/'.$rubro->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
                                         @if ($rubro->id != 1)
-                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $rubro->id }}">
-                                                <i class="bi bi-trash"></i> Eliminar
-                                            </button>
+                                            @if (Auth::user()->principal == 1)
+                                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $rubro->id }}">
+                                                    <i class="bi bi-trash"></i> Eliminar
+                                                </button>
+                                            @endif
                                             @include('empresa.rubro.deletemodal')
                                         @endif
                                     </div>

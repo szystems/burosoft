@@ -28,6 +28,10 @@ use App\Http\Controllers\Empresa\RubroController;
 use App\Http\Controllers\Empresa\MovimientoController;
 use App\Http\Controllers\Empresa\MovimientoDocumentoController;
 use App\Http\Controllers\Empresa\MovimientoPagoController;
+use App\Http\Controllers\Empresa\RsiController;
+use App\Http\Controllers\Empresa\ExpcasoController;
+use App\Http\Controllers\Empresa\PatController;
+use App\Http\Controllers\Empresa\PatNombramientoController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
 /*
@@ -110,6 +114,25 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-pago', [MovimientoPagoController::class, 'insert']);
     Route::put('update-pago/{id}', [MovimientoPagoController::class, 'update']);
     Route::get('delete-pago/{id}', [MovimientoPagoController::class, 'destroy']);
+    Route::get('delete-img-pago/{id}', [MovimientoPagoController::class, 'destroyimg']);
+
+    //RSI
+    Route::get('rsi', [RsiController::class, 'index']);
+    Route::get('pdf-rsi', [RsiController::class, 'pdfrsi']);
+
+    //Exp/Caso
+    Route::get('expcaso', [ExpcasoController::class, 'index']);
+    Route::get('show-expcaso/{id}', [ExpcasoController::class, 'show']);
+    //PAT
+    Route::get('index-pat/{id}', [PatController::class, 'index']);
+    Route::get('show-pat/{id}', [PatController::class, 'show']);
+    Route::post('insert-pat', [PatController::class, 'insert']);
+    Route::put('update-pat/{id}', [PatController::class, 'update']);
+    Route::get('delete-pat/{id}', [PatController::class, 'destroy']);
+    //PAT Nombramiento
+    Route::post('insert-pat-nombramiento', [PatNombramientoController::class, 'insert']);
+    Route::put('update-pat-nombramiento/{id}', [PatNombramientoController::class, 'update']);
+    Route::get('delete-pat-nombramiento/{id}', [PatNombramientoController::class, 'destroy']);
 
     //Usuarios Empresa
     Route::get('bitacoras', [BitacoraController::class, 'index']);
@@ -207,9 +230,9 @@ Route::middleware(['auth', 'isAdmin'])->group(function () {
 
  });
 
- Route::fallback(function () {
-    return response()->view('frontend.404');
-});
+//  Route::fallback(function () {
+//     return response()->view('frontend.404');
+// });
 
 
 

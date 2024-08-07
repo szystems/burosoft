@@ -41,7 +41,7 @@ class Movimiento extends Model
     }
 
     public function pagos()
-{
-    return $this->hasMany(MovimientoPago::class, 'movimiento_id');
-}
+    {
+        return $this->hasMany(MovimientoPago::class, 'movimiento_id');
+    }
 }

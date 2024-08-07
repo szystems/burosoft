@@ -111,4 +111,28 @@ class MovimientoPagoController extends Controller
         $pago->delete();
         return redirect('show-movimiento/'.$movimiento->id)->with('status',__('Pago eliminado exitosamente.'));
     }
+
+    public function destroyimg($id)
+    {
+        $pago = MovimientoPago::find($id);
+        $movimiento = Movimiento::find($pago->movimiento_id);
+
+            $path = 'assets/uploads/pagos/'.$pago->imagen;
+            if(File::exists($path))
+            {
+                File::delete($path);
+            }
+        $pago->imagen = null;
+        $pago->update();
+
+        Bitacora::create([
+            'empresa_id' => Auth::user()->empresa_id,
+            'usuario_id' => Auth::user()->id,
+            'fecha' => now(),
+            'tipo' => "Movimiento",
+            'descripcion' => "Eliminó la imagen de un pago: Q.".number_format($movimiento->monto_q,2, '.', ',') .", Movimiento: ".$movimiento->id.", Forma Pago: ".$movimiento->forma_pago,
+        ]);
+
+        return redirect('show-movimiento/'.$movimiento->id)->with('status',__('Imagen de pago eliminada exitosamente.'));
+    }
 }

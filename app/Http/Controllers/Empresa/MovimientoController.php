@@ -52,6 +52,7 @@ class MovimientoController extends Controller
             $rubroID = $request->input('rubro_id');
             $usuarioID = $request->input('usuario_id');
             $saldo = $request->input('saldo');
+            $ordenar = $request->input('ordenar');
 
 
             $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
@@ -77,6 +78,13 @@ class MovimientoController extends Controller
                         $query->whereRaw('monto_q <= (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
                     });
                 }
+            }
+            if ($ordenar == "fecha") {
+                $Consultafiltros->orderBy('fecha','desc');
+                $Consultafiltros->orderBy('cuenta_id','desc');
+            }else{
+                $Consultafiltros->orderBy('cuenta_id','desc');
+                $Consultafiltros->orderBy('fecha','desc');
             }
             $Consultafiltros->orderBy('fecha','desc');
             $movimientos = $Consultafiltros->get();
@@ -218,6 +226,7 @@ class MovimientoController extends Controller
             $rubroID = $request->input('ffrubro');
             $usuarioID = $request->input('ffusuario');
             $saldo = $request->input('ffsaldo');
+            $ordenar = $request->input('ordenar');
 
             //recibir detalles de la impresion
             $pdftamaño = $request->input('pdftamaño');
@@ -260,7 +269,13 @@ class MovimientoController extends Controller
                     });
                 }
             }
-            $Consultafiltros->orderBy('fecha','desc');
+            if ($ordenar == "fecha") {
+                $Consultafiltros->orderBy('fecha','desc');
+                $Consultafiltros->orderBy('cuenta_id','desc');
+            }else{
+                $Consultafiltros->orderBy('cuenta_id','desc');
+                $Consultafiltros->orderBy('fecha','desc');
+            }
             $movimientos = $Consultafiltros->get();
 
 

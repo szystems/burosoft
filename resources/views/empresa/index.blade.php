@@ -136,6 +136,29 @@
                                 <a href="{{ url('rubros') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-coin"></i> <u>Rubros</u></a>
                                 <br>
                                 <a href="{{ url('movimientos') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-cash-stack"></i> <u>Movimientos</u></a>
+                                <br>
+                                <a href="{{ url('rsi') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-file-text"></i> <u>RSI</u></a>
+                            </div>
+                            {{-- <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold green">
+                                <i class="bi bi-arrow-up-circle-fill font-1x"></i>
+                                <span>5%</span>
+                            </div> --}}
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xxl-3 col-sm-6 col-12">
+                    <a href="{{ url('financieros') }}">
+                        <div class="stats-tile d-flex align-items-center position-relative tile-green">
+                            <div class="sale-icon icon-box xl rounded-5 me-3">
+                                <i class="bi bi-archive font-2x text-green"></i>
+                            </div>
+                            <div class="sale-details">
+                                <h6 class="text-light">Jurídico</h6>
+                                <a href="{{ url('expcaso') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-folder2-open"></i> <u>Exp/Caso</u></a>
+                                {{-- <br>
+                                <a href="{{ url('movimientos') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-cash-stack"></i> <u>Movimientos</u></a>
+                                <br>
+                                <a href="{{ url('rsi') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-file-text"></i> <u>RSI</u></a> --}}
                             </div>
                             {{-- <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold green">
                                 <i class="bi bi-arrow-up-circle-fill font-1x"></i>

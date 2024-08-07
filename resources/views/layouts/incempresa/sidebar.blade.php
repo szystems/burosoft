@@ -80,6 +80,34 @@
                                 <a href="{{ url('movimientos') }}"><i class="bi bi-cash-stack"></i> Movimientos</a>
                             </li>
                         </ul>
+                        <ul>
+                            <li class="{{ Request::is('rsi') ? 'active-page-link':''  }}">
+                                <a href="{{ url('rsi') }}"><i class="bi bi-file-text"></i> RSI</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="sidebar-dropdown">
+                    <a href="#">
+                        <i class="bi bi-archive"></i>
+                        <span class="menu-text">Jurídico</span>
+                    </a>
+                    <div class="sidebar-submenu">
+                        <ul>
+                            <li class="{{ Request::is('expcaso','show-expcaso/*','add-expcaso','edit-expcaso/*') ? 'active-page-link':''  }}">
+                                <a href="{{ url('expcaso') }}"><i class="bi bi-folder2-open"></i> Exp/Caso</a>
+                            </li>
+                        </ul>
+                        {{-- <ul>
+                            <li class="{{ Request::is('movimientos','show-movimiento/*','edit-movimiento/*') ? 'active-page-link':''  }}">
+                                <a href="{{ url('movimientos') }}"><i class="bi bi-cash-stack"></i> Movimientos</a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="{{ Request::is('rsi') ? 'active-page-link':''  }}">
+                                <a href="{{ url('rsi') }}"><i class="bi bi-file-text"></i> RSI</a>
+                            </li>
+                        </ul> --}}
                     </div>
                 </li>
                 <li class="{{ Request::is('bitacoras','show-bitacora/*') ? 'active-page-link':''  }}">

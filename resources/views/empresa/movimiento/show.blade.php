@@ -61,9 +61,11 @@
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <a href="{{ url('edit-movimiento/'.$movimiento->id) }}" class="btn btn-warning float-end m-1" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                                            <button type="button" class="btn btn-danger float-end m-1" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
-                                                                <i class="bi bi-trash"></i> Eliminar
-                                                            </button>
+                                                            @if (Auth::user()->principal == 1)
+                                                                <button type="button" class="btn btn-danger float-end m-1" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
+                                                                    <i class="bi bi-trash"></i> Eliminar
+                                                                </button>
+                                                            @endif
                                                             @include('empresa.movimiento.deletemodal')
                                                         </div>
                                                     </div>
@@ -343,6 +345,11 @@
                                                                     <td align="center">
                                                                         @if ($pago->imagen)
                                                                             <a href="{{ asset('assets/uploads/pagos/'.$pago->imagen) }}" target="_blank" rel="Imagen pago"><img src="{{ asset('assets/uploads/pagos/'.$pago->imagen) }}" class="img-thumbnail" style="height: 100px;" alt="Imagen pago" /></a>
+                                                                            @if (Auth::user()->principal == 1)
+                                                                                <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deletePagoImgModal-{{ $pago->id }}">
+                                                                                    <i class="bi bi-trash-fill"></i>
+                                                                                </button>
+                                                                            @endif
                                                                         @endif
                                                                     </td>
                                                                     <td align="center">
@@ -376,6 +383,7 @@
                                                                 </tr>
                                                                 @include('empresa.movimiento.editpagomodal')
                                                                 @include('empresa.movimiento.deletepagomodal')
+                                                                @include('empresa.movimiento.deletepagoimgmodal')
                                                                 @endforeach
                                                             </tbody>
                                                         </table>
