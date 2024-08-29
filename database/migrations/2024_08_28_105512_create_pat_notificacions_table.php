@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePatNombramientosTable extends Migration
+class CreatePatNotificacionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,15 @@ class CreatePatNombramientosTable extends Migration
      */
     public function up()
     {
-        Schema::create('pat_nombramientos', function (Blueprint $table) {
+        Schema::create('pat_notificacions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pat_id');
-            $table->string('no');
-            $table->string('nombrado_1');
-            $table->string('nombrado_2')->nullable();
-            $table->string('nombrado_3')->nullable();
-            $table->string('nombrado_4')->nullable();
-            $table->string('nombrado_5')->nullable();
-            $table->string('periodo');
+            $table->string('tipo_notificacion');
+            $table->string('recibio');
+            $table->string('domicilio_notificacion');
+            $table->string('acto_notificado');
+            $table->string('plazo_atencion');
+            $table->date('vencimiento_plazo');
             $table->string('archivo');
             $table->string('tipo');
             $table->unsignedBigInteger('usuario_id');
@@ -37,6 +36,6 @@ class CreatePatNombramientosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pat_nombramientos');
+        Schema::dropIfExists('pat_notificacions');
     }
 }

@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use App\Models\Pat;
 use App\Http\Requests\PatFormRequest;
 use App\Models\PatNombramiento;
+use App\Models\PatNotificacion;
+use App\Models\PatRequerimiento;
+use App\Models\PatExpediente;
 use App\Models\Cuenta;
 use App\Models\Config;
 use App\Models\User;
@@ -61,7 +64,11 @@ class PatController extends Controller
         $cuenta = Cuenta::find($pat->cuenta_id);
         $config = Config::first();
         $nombramientos = PatNombramiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
-        return view('empresa.expcaso.pat.show', compact('pat','cuenta','config','nombramientos'));
+        $notificaciones = PatNotificacion::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+        $requerimientos = PatRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+        $expedientes = PatExpediente::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+
+        return view('empresa.expcaso.pat.show', compact('pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes'));
     }
 
     public function insert(PatFormRequest $request)

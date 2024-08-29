@@ -31,6 +31,7 @@ class PatNombramientoController extends Controller
             $filename = time().'.'.$ext;
             $file->move('assets/uploads/pat/nombramientos',$filename);
             $nombramiento->archivo = $filename;
+            $nombramiento->tipo = $ext;
         }
         // dd($ext);
         $nombramiento->pat_id = $request->input('pat_id');
@@ -42,7 +43,6 @@ class PatNombramientoController extends Controller
         $nombramiento->nombrado_4 = $request->input('nombrado_4');
         $nombramiento->nombrado_5 = $request->input('nombrado_5');
         $nombramiento->periodo = $request->input('periodo');
-        $nombramiento->tipo = $ext;
         $nombramiento->save();
 
         $pat = Pat::find($nombramiento->pat_id);
@@ -52,7 +52,7 @@ class PatNombramientoController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Exp/Caso",
-            'descripcion' => "Agrego un nuevo nombramiento en el pat No.Expediente:".$pat->no_expediente.": Nombramiento No:".$nombramiento->no,
+            'descripcion' => "Agrego un nuevo nombramiento en el pat No.Expediente:".$pat->no_expediente.", Nombramiento No:".$nombramiento->no,
         ]);
 
         return redirect('show-pat/'.$pat->id)->with('status',__('Nombramiento agregado exitosamente.'));
@@ -92,7 +92,7 @@ class PatNombramientoController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Exp/Caso",
-            'descripcion' => "Actualizo un nombramiento en el pat No.Expediente:".$pat->no_expediente.": Nombramiento No:".$nombramiento->no,
+            'descripcion' => "Actualizo un nombramiento en el pat No.Expediente:".$pat->no_expediente.", Nombramiento No:".$nombramiento->no,
         ]);
 
         return redirect('show-pat/'.$pat->id)->with('status',__('Nombramiento actualizado exitosamente.'));
@@ -108,7 +108,7 @@ class PatNombramientoController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Exp/Caso",
-            'descripcion' => "Eliminó un nombramiento en el pat No.Expediente:".$pat->no_expediente.": Nombramiento No:".$nombramiento->no,
+            'descripcion' => "Eliminó un nombramiento en el pat No.Expediente:".$pat->no_expediente.", Nombramiento No:".$nombramiento->no,
         ]);
         $nombramiento->delete();
         return redirect('show-pat/'.$pat->id)->with('status',__('Nombramiento eliminado exitosamente.'));

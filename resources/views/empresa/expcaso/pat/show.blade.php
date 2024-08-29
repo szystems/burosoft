@@ -404,6 +404,280 @@
                                                         {{-- {{ $Movimientos->links() }} --}}
                                                     </div>
 
+                                                    <h4>Notificaciones</h4>
+                                                    <hr>
+
+                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                        data-bs-target="#addNotificacionModal">
+                                                        <i class="bi bi-plus-square"></i> Agregar Notificacion
+                                                    </button>
+
+                                                    @include('empresa.expcaso.pat.notificacion.addnotificacionmodal')
+
+                                                    <div class="table-responsive">
+                                                        <table class="table align-middle table-striped flex-column">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                    <td align="center">Fecha</td>
+                                                                    <td align="center">Tipo Notificación</td>
+                                                                    <td align="center">Recibió</td>
+                                                                    <td align="center">Domicilio Notificación</td>
+                                                                    <td align="center">Acto Notificado</td>
+                                                                    <td align="center">Plazo de Atención</td>
+                                                                    <td align="center">Vencimiento de Plazo</td>
+                                                                    <td align="center">Usuario</td>
+                                                                    <td align="center">Archivo</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($notificaciones as $notificacion)
+                                                                <tr>
+                                                                    <td align="center">
+
+                                                                        {{-- <a type="button" class="btn btn-info m-1" href="{{ asset('assets/uploads/pat/notificaciones'.$notificacion->archivo) }}" target="_blank"><i class="bi bi-eye-fill text-white"></i></a> --}}
+
+                                                                        <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
+                                                                            data-bs-target="#editarNotificacionModal{{ $notificacion->id }}">
+                                                                            <i class="bi bi-pencil"></i>
+                                                                        </button>
+
+                                                                        @if (Auth::user()->principal == 1)
+                                                                            <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteNotificacionModal-{{ $notificacion->id }}">
+                                                                                <i class="bi bi-trash-fill text-white"></i>
+                                                                            </button>
+                                                                        @endif
+
+                                                                        @include('empresa.expcaso.pat.notificacion.editnotificacionmodal')
+                                                                        @include('empresa.expcaso.pat.notificacion.deletenotificacionmodal')
+
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        @php
+                                                                            $fecha = date('d/m/Y', strtotime($notificacion->created_at));
+                                                                            $vencimiento_plazo = date('d/m/Y', strtotime($notificacion->vencimiento_plazo));
+                                                                        @endphp
+                                                                        <p>{{ $fecha }} </p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{ $notificacion->tipo_notificacion }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{ $notificacion->recibio }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{  $notificacion->domicilio_notificacion}}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{  $notificacion->acto_notificado}}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{  $notificacion->plazo_atencion}}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{  $vencimiento_plazo}}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        @php
+                                                                            $usuario = \App\Models\User::find( $notificacion->usuario_id );
+                                                                        @endphp
+                                                                        <p>{{ $pat->usuario->name }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <strong><a href="{{ asset('assets/uploads/pat/notificaciones/'.$notificacion->archivo) }}" target="_blank" class="text-blue">{{ $notificacion->tipo }}</a></strong>
+                                                                    </td>
+
+
+                                                                </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        @if ($notificaciones->count() == 0)
+                                                            <div class="alert alert-warning text-white" role="alert">
+                                                                <ul align="center">
+                                                                    <p>No se han ingresado notificaciones.</p>
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+                                                        {{-- {{ $Movimientos->links() }} --}}
+                                                    </div>
+
+                                                    <h4>Requerimientos</h4>
+                                                    <hr>
+
+                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                        data-bs-target="#addRequerimientoModal">
+                                                        <i class="bi bi-plus-square"></i> Agregar Requerimiento
+                                                    </button>
+
+                                                    @include('empresa.expcaso.pat.requerimiento.addrequerimientomodal')
+
+                                                    <div class="table-responsive">
+                                                        <table class="table align-middle table-striped flex-column">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                    <td align="center">Fecha</td>
+                                                                    <td align="center">No</td>
+                                                                    <td align="center">Tipo de Requerimiento</td>
+                                                                    <td align="center">Lugar Para Atender</td>
+                                                                    <td align="center">Plazo de Atención</td>
+                                                                    <td align="center">Tipo de Revision</td>
+                                                                    <td align="center">Usuario</td>
+                                                                    <td align="center">Archivo</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($requerimientos as $requerimiento)
+                                                                <tr>
+                                                                    <td align="center">
+
+                                                                        {{-- <a type="button" class="btn btn-info m-1" href="{{ asset('assets/uploads/pat/requerimientos'.$requerimiento->archivo) }}" target="_blank"><i class="bi bi-eye-fill text-white"></i></a> --}}
+
+                                                                        <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
+                                                                            data-bs-target="#editarRequerimientoModal{{ $requerimiento->id }}">
+                                                                            <i class="bi bi-pencil"></i>
+                                                                        </button>
+
+                                                                        @if (Auth::user()->principal == 1)
+                                                                            <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteRequerimientoModal-{{ $requerimiento->id }}">
+                                                                                <i class="bi bi-trash-fill text-white"></i>
+                                                                            </button>
+                                                                        @endif
+
+                                                                        @include('empresa.expcaso.pat.requerimiento.editrequerimientomodal')
+                                                                        @include('empresa.expcaso.pat.requerimiento.deleterequerimientomodal')
+
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        @php
+                                                                            $fecha = date('d/m/Y', strtotime($requerimiento->created_at));
+                                                                        @endphp
+                                                                        <p>{{ $fecha }} </p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{ $requerimiento->no }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{ $requerimiento->tipo_requerimiento }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{  $requerimiento->lugar_atender}}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{  $requerimiento->plazo_atencion}}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{  $requerimiento->tipo_revision}}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        @php
+                                                                            $usuario = \App\Models\User::find( $requerimiento->usuario_id );
+                                                                        @endphp
+                                                                        <p>{{ $pat->usuario->name }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <strong><a href="{{ asset('assets/uploads/pat/requerimientos/'.$requerimiento->archivo) }}" target="_blank" class="text-blue">{{ $requerimiento->tipo }}</a></strong>
+                                                                    </td>
+
+
+                                                                </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        @if ($requerimientos->count() == 0)
+                                                            <div class="alert alert-warning text-white" role="alert">
+                                                                <ul align="center">
+                                                                    <p>No se han ingresado requerimientos.</p>
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+                                                        {{-- {{ $Movimientos->links() }} --}}
+                                                    </div>
+
+
+                                                    <h4>Expediente Digital</h4>
+                                                    <hr>
+
+                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                        data-bs-target="#addExpedienteModal">
+                                                        <i class="bi bi-plus-square"></i> Agregar Expediente
+                                                    </button>
+
+                                                    @include('empresa.expcaso.pat.expediente.addexpedientemodal')
+
+                                                    <div class="table-responsive">
+                                                        <table class="table align-middle table-striped flex-column">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                    <td align="center">Fecha</td>
+                                                                    <td align="center">Nombre</td>
+                                                                    <td align="center">Descripción</td>
+                                                                    <td align="center">Usuario</td>
+                                                                    <td align="center">Archivo</td>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                @foreach ($expedientes as $expediente)
+                                                                <tr>
+                                                                    <td align="center">
+
+                                                                        {{-- <a type="button" class="btn btn-info m-1" href="{{ asset('assets/uploads/pat/requerimientos'.$requerimiento->archivo) }}" target="_blank"><i class="bi bi-eye-fill text-white"></i></a> --}}
+
+                                                                        <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
+                                                                            data-bs-target="#editarExpedienteModal{{ $expediente->id }}">
+                                                                            <i class="bi bi-pencil"></i>
+                                                                        </button>
+
+                                                                        @if (Auth::user()->principal == 1)
+                                                                            <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteExpedienteModal-{{ $expediente->id }}">
+                                                                                <i class="bi bi-trash-fill text-white"></i>
+                                                                            </button>
+                                                                        @endif
+
+                                                                        @include('empresa.expcaso.pat.expediente.editexpedientemodal')
+                                                                        @include('empresa.expcaso.pat.expediente.deleteexpedientemodal')
+
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        @php
+                                                                            $fecha = date('d/m/Y', strtotime($expediente->created_at));
+                                                                        @endphp
+                                                                        <p>{{ $fecha }} </p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{ $expediente->nombre }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p>{{ $expediente->descripcion }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        @php
+                                                                            $usuario = \App\Models\User::find( $expediente->usuario_id );
+                                                                        @endphp
+                                                                        <p>{{ $pat->usuario->name }}</p>
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <strong><a href="{{ asset('assets/uploads/pat/expedientes/'.$expediente->archivo) }}" target="_blank" class="text-blue">{{ $expediente->tipo }}</a></strong>
+                                                                    </td>
+
+
+                                                                </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        @if ($requerimientos->count() == 0)
+                                                            <div class="alert alert-warning text-white" role="alert">
+                                                                <ul align="center">
+                                                                    <p>No se han ingresado expedientes.</p>
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+                                                        {{-- {{ $Movimientos->links() }} --}}
+                                                    </div>
+
+
                                                 </div>
                                             </div>
                                         </div>

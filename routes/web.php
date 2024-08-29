@@ -32,6 +32,9 @@ use App\Http\Controllers\Empresa\RsiController;
 use App\Http\Controllers\Empresa\ExpcasoController;
 use App\Http\Controllers\Empresa\PatController;
 use App\Http\Controllers\Empresa\PatNombramientoController;
+use App\Http\Controllers\Empresa\PatNotificacionController;
+use App\Http\Controllers\Empresa\PatRequerimientoController;
+use App\Http\Controllers\Empresa\PatExpedienteController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
 /*
@@ -133,6 +136,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-pat-nombramiento', [PatNombramientoController::class, 'insert']);
     Route::put('update-pat-nombramiento/{id}', [PatNombramientoController::class, 'update']);
     Route::get('delete-pat-nombramiento/{id}', [PatNombramientoController::class, 'destroy']);
+    //PAT Notificacion
+    Route::post('insert-pat-notificacion', [PatNotificacionController::class, 'insert']);
+    Route::put('update-pat-notificacion/{id}', [PatNotificacionController::class, 'update']);
+    Route::get('delete-pat-notificacion/{id}', [PatNotificacionController::class, 'destroy']);
+    //PAT Requerimiento
+    Route::post('insert-pat-requerimiento', [PatRequerimientoController::class, 'insert']);
+    Route::put('update-pat-requerimiento/{id}', [PatRequerimientoController::class, 'update']);
+    Route::get('delete-pat-requerimiento/{id}', [PatRequerimientoController::class, 'destroy']);
+    //PAT Expediente
+    Route::post('insert-pat-expediente', [PatExpedienteController::class, 'insert']);
+    Route::put('update-pat-expediente/{id}', [PatExpedienteController::class, 'update']);
+    Route::get('delete-pat-expediente/{id}', [PatExpedienteController::class, 'destroy']);
 
     //Usuarios Empresa
     Route::get('bitacoras', [BitacoraController::class, 'index']);
