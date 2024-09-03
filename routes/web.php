@@ -132,6 +132,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-pat', [PatController::class, 'insert']);
     Route::put('update-pat/{id}', [PatController::class, 'update']);
     Route::get('delete-pat/{id}', [PatController::class, 'destroy']);
+    Route::get('pdf-pat', [PatController::class, 'pdf']);
     //PAT Nombramiento
     Route::post('insert-pat-nombramiento', [PatNombramientoController::class, 'insert']);
     Route::put('update-pat-nombramiento/{id}', [PatNombramientoController::class, 'update']);

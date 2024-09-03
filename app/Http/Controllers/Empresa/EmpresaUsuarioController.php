@@ -37,7 +37,7 @@ class EmpresaUsuarioController extends Controller
             ->orderBy('name','asc')
             ->paginate(20);
             $filterUsers = User::where('empresa_id', Auth::user()->empresa_id);
-            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+            $config = $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             return view('empresa.usuario.index', compact('users','queryUser','filterUsers','config'));
         }
     }
@@ -45,7 +45,7 @@ class EmpresaUsuarioController extends Controller
     public function showusuario(Request $request, $id)
     {
         $user = User::find($id);
-        $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+        $config = $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
         return view('empresa.usuario.show', compact('user', 'config'));
     }
 

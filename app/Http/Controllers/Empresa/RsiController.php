@@ -59,7 +59,7 @@ class RsiController extends Controller
             $usuarios = User::where('empresa_id', Auth::user()->empresa_id)->orderBy('name','asc')->get();
             $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
             $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
-            $config = Config::first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             //dd($request);
             return view('empresa.rsi.index', compact('movimientos','cuentas','config','request'));
         }
@@ -70,7 +70,7 @@ class RsiController extends Controller
         // dd($request);
         if ($request)
         {
-            $config = Config::first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
 
 
 

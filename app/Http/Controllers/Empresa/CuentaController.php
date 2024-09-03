@@ -168,7 +168,7 @@ class CuentaController extends Controller
             $nompdf = date('m/d/Y g:ia');
             $path = public_path('assets/uploads/');
 
-            $config = Config::first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
 
             $currency = $config->currency_simbol;
 
@@ -184,7 +184,7 @@ class CuentaController extends Controller
             }
 
 
-            $config = Config::first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
 
             if ( $verpdf == "Download" )
             {

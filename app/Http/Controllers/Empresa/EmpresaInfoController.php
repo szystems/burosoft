@@ -17,7 +17,7 @@ class EmpresaInfoController extends Controller
 {
     public function show($id)
     {
-        $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+        $config = $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
         $empresa = Empresa::find($id);
         return view('empresa.empresa.show', compact('empresa', 'config'));
     }

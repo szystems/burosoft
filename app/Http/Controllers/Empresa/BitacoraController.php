@@ -58,7 +58,7 @@ class BitacoraController extends Controller
             $bitacoras = $Consultafiltros->get();
 
             $usuarios = User::where('empresa_id', Auth::user()->empresa_id)->get();
-            $config = Config::first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             // dd($proveedores);
             return view('empresa.bitacora.index', compact('bitacoras','usuarios','config','fechaDesdeVista','fechaHastaVista'));
         }
@@ -67,7 +67,7 @@ class BitacoraController extends Controller
     public function show($id)
     {
         $bitacora = Bitacora::find($id);
-        $config = Config::first();
+        $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
         return view('empresa.bitacora.show', compact('bitacora','config'));
     }
 }

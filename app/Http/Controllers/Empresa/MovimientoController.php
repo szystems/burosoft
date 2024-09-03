@@ -92,7 +92,7 @@ class MovimientoController extends Controller
             $usuarios = User::where('empresa_id', Auth::user()->empresa_id)->orderBy('name','asc')->get();
             $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
             $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
-            $config = Config::first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             //dd($request);
             return view('empresa.movimiento.index', compact('movimientos','usuarios','cuentas','rubros','config','fechaDesdeVista','fechaHastaVista','request'));
         }
@@ -105,7 +105,7 @@ class MovimientoController extends Controller
         $pagos = MovimientoPago::where('movimiento_id', $id)->get();
         $totalAbonadoQ = MovimientoPago::where('movimiento_id', $id)->sum('monto_q');
         $totalAbonadoD = MovimientoPago::where('movimiento_id', $id)->sum('monto_d');
-        $config = Config::first();
+        $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
         return view('empresa.movimiento.show', compact('movimiento','documentos','pagos','config','totalAbonadoQ','totalAbonadoD'));
     }
 
@@ -179,6 +179,8 @@ class MovimientoController extends Controller
     {
         $movimiento = Movimiento::find($id);
         $razon_social = $movimiento->razon_social;
+        $documentos = MovimientoDocumento::where('movimiento_id', $movimiento->id)->delete();
+        $pagos = MovimientoPago::where('movimiento_id', $movimiento->id)->delete();
         $movimiento->delete();
 
         Bitacora::create([
@@ -197,7 +199,7 @@ class MovimientoController extends Controller
         // dd($request);
         if ($request)
         {
-            $config = Config::first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
 
             //arreglo de fechas
             if ($request->input('ffechadesde') != "") {
@@ -315,7 +317,7 @@ class MovimientoController extends Controller
         // dd($request);
         if ($request)
         {
-            $config = Config::first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             $movimiento = Movimiento::find($request->input('fmovimiento_id'));
             $documentos = MovimientoDocumento::where('movimiento_id', $request->input('fmovimiento_id'))->get();
             $pagos = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->get();

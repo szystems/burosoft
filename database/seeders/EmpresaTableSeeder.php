@@ -46,7 +46,7 @@ class EmpresaTableSeeder extends Seeder
             // ]);
 
             // Asociar la configuración con la empresa
-            // $empresa->config()->save($config);
+        //     $empresa->config()->save($config);
         // });
     }
 }

@@ -83,7 +83,12 @@
                                         <!-- Row start -->
                                         <div class="row gx-3">
 
-
+                                            <div class="col-md-12 mb-3">
+                                                <!-- Form Field Start -->
+                                                <div class="mb-3">
+                                                    @include('empresa.expcaso.pat.print')
+                                                </div>
+                                            </div>
 
                                             <div class="col-sm-12 col-12">
                                                 <div class="row gx-3">
@@ -241,8 +246,6 @@
 
                                                     <h3><u>PAT (Procedimiento de Administración Tributaria)</u></h3>
                                                     <hr>
-
-
 
                                                     <div class="col-md-12 mb-3">
                                                         <!-- Form Field Start -->

@@ -62,7 +62,7 @@ class PatController extends Controller
     {
         $pat = Pat::find($id);
         $cuenta = Cuenta::find($pat->cuenta_id);
-        $config = Config::first();
+        $config = Config::where('empresa_id', $pat->cuenta_id)->first();
         $nombramientos = PatNombramiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $notificaciones = PatNotificacion::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $requerimientos = PatRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
@@ -120,6 +120,10 @@ class PatController extends Controller
     {
         $pat = Pat::find($id);
         $cuenta = Cuenta::find($pat->cuenta_id);
+        $PatNombramientos = PatNombramiento::where('pat_id', $pat->id)->delete();
+        $PatNotificaciones = PatNotificacion::where('pat_id', $pat->id)->delete();
+        $PatRequerimientos = PatRequerimiento::where('pat_id', $pat->id)->delete();
+        $PatExpedientes = PatExpediente::where('pat_id', $pat->id)->delete();
 
         Bitacora::create([
             'empresa_id' => Auth::user()->empresa_id,
@@ -132,5 +136,58 @@ class PatController extends Controller
         $pat->delete();
 
         return redirect('index-pat/'.$cuenta->id)->with('status',__('PAT eliminado correctamente.'));
+    }
+
+    public function pdf(Request $request)
+    {
+        // dd($request);
+        if ($request)
+        {
+
+            //recibir detalles de la impresion
+            $pdftamaño = $request->input('pdftamaño');
+            $pdfhorientacion = $request->input('pdfhorientacion');
+            $pdfarchivo = $request->input('pdfarchivo');
+
+            //Consultas
+            $pat = Pat::find($request->input('ffpat_id'));
+            $cuenta = Cuenta::find($pat->cuenta_id);
+            $config = $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+            $nombramientos = PatNombramiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+            $notificaciones = PatNotificacion::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+            $requerimientos = PatRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+            $expedientes = PatExpediente::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+
+            // dd($request->input('ffpat_id'));
+
+            $nompdf = date('m/d/Y g:ia');
+            $path = public_path('assets/uploads/');
+
+            $currency = $config->currency_simbol;
+
+            if ($config->logo == null)
+            {
+                $logo = null;
+                $imagen = null;
+            }
+            else
+            {
+                    $logo = $config->logo;
+                    $imagen = public_path('assets/uploads/logos/'.$logo);
+            }
+
+            if ( $pdfarchivo == "download" )
+            {
+                $pdf = PDF::loadView('empresa.expcaso.pat.pdf', compact('imagen','pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes'));
+                $pdf->setPaper($pdftamaño, $pdfhorientacion);
+                return $pdf->download ('PAT No.Expediente: '.$pat->no_expediente.', No.Programa: '.$pat->no_programa.' '.$nompdf.'.pdf');
+            }
+            if ( $pdfarchivo == "stream" )
+            {
+                $pdf = PDF::loadView('empresa.expcaso.pat.pdf', compact('imagen','pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes'));
+                $pdf->setPaper($pdftamaño, $pdfhorientacion);
+                return $pdf->stream ('PAT No.Expediente: '.$pat->no_expediente.', No.Programa: '.$pat->no_programa.' '.$nompdf.'.pdf');
+            }
+        }
     }
 }
