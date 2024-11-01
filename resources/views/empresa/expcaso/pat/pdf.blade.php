@@ -142,7 +142,7 @@
             <tr>
                 <td align="center">
                     @php
-                        $fecha = date('d/m/Y', strtotime($nombramiento->created_at));
+                        $fecha = date('d/m/Y', strtotime($nombramiento->fecha));
                     @endphp
                     <font size="1">{{ $fecha }}</font>
                 </td>
@@ -179,7 +179,7 @@
         <thead>
             <tr>
                 <th>
-                    <font size="1">Fecha</font>
+                    <font size="1">Fecha/Hora</font>
                 </th>
                 <th>
                     <font size="1">Tipo Notificación</font>
@@ -209,22 +209,44 @@
             <tr>
                 <td align="center">
                     @php
-                        $fecha = date('d/m/Y', strtotime($notificacion->created_at));
+                        $fecha = date('d/m/Y', strtotime($notificacion->fecha));
                         $vencimiento_plazo = date('d/m/Y', strtotime($notificacion->vencimiento_plazo));
                     @endphp
-                    <font size="1">{{ $fecha }}</font>
+                    <font size="1">{{ $fecha }} {{ date('H:i', strtotime($notificacion->hora)) }}</font>
                 </td>
                 <td align="center">
-                    <font size="1">{{ $notificacion->tipo_notificacion }}</font>
+                    <font size="1" color="{{ in_array($notificacion->tipo_notificacion, ["Personalmente", "Por Otro Procedimiento Idóneo"]) ? "limegreen" : "red" }}">{{ $notificacion->tipo_notificacion }}</font>
                 </td>
                 <td align="center">
+                    @if ($notificacion->persona_idonea == "No")
+                        <font size="1" color="red">Solicitar Nulidad</font>
+                        <br>
+                    @endif
                     <font size="1">{{ $notificacion->recibio }}</font>
                 </td>
                 <td align="center">
-                    <font size="1">{{ $notificacion->domicilio_notificacion }}</font>
+                    <font size="1">
+                        @if ($notificacion->domicilio_notificacion_es)
+                            {{ $notificacion->domicilio_notificacion_es }}
+                            <br>
+                        @endif
+                        @if ($notificacion->domicilio_notificacion_es == "Otro")
+                            {{ $notificacion->domicilio_notificacion_otro }}
+                            <br>
+                        @endif
+                        @if ($notificacion->domicilio_notificacion)
+                            {{ $notificacion->domicilio_notificacion }}
+                        @endif
+                    </font>
                 </td>
                 <td align="center">
-                    <font size="1">{{ $notificacion->acto_notificado }}</font>
+                    <font size="1">
+                        {{  $notificacion->acto_notificado}}
+                        @if ($notificacion->folios_notificados != "0")
+                            <br>
+                            FN:{{ $notificacion->folios_notificados }}
+                        @endif
+                    </font>
                 </td>
                 <td align="center">
                     <font size="1">{{ $notificacion->plazo_atencion }}</font>
@@ -246,10 +268,10 @@
         <thead>
             <tr>
                 <th>
-                    <font size="1">Fecha</font>
+                    <font size="1">No</font>
                 </th>
                 <th>
-                    <font size="1">No</font>
+                    <font size="1">Fecha/Fecha Maxima</font>
                 </th>
                 <th>
                     <font size="1">Tipo de Requerimiento</font>
@@ -272,28 +294,171 @@
             @foreach ($requerimientos as $requerimiento)
             <tr>
                 <td align="center">
-                    @php
-                        $fecha = date('d/m/Y', strtotime($requerimiento->created_at));
-                    @endphp
-                    <font size="1">{{ $fecha }}</font>
-                </td>
-                <td align="center">
                     <font size="1">{{ $requerimiento->no }}</font>
                 </td>
                 <td align="center">
-                    <font size="1">{{ $requerimiento->tipo_requerimiento }}</font>
+                    @php
+                        $fecha = date('d/m/Y', strtotime($requerimiento->fecha));
+                        $fecha_maxima = date('d/m/Y', strtotime($requerimiento->fecha_maxima));
+                    @endphp
+                    <font size="1">{{ $fecha }}/{{ $fecha_maxima }}</font>
                 </td>
                 <td align="center">
-                    <font size="1">{{ $requerimiento->lugar_atender }}</font>
+                    <font size="1">
+                        {{ $requerimiento->tipo_requerimiento }}
+                        @if ($requerimiento->tipo_requerimiento == "Otro")
+                            <br>
+                            {{ $requerimiento->tipo_requerimiento_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">
+                        {{  $requerimiento->lugar_atender}}
+                        @if ($requerimiento->lugar_atender == "Otro")
+                            <br>
+                            {{ $requerimiento->lugar_atender_otro }}
+                        @endif
+                        <br>
+                        {{ $requerimiento->domicilio }}
+                    </font>
                 </td>
                 <td align="center">
                     <font size="1">{{ $requerimiento->plazo_atencion }}</font>
                 </td>
                 <td align="center">
-                    <font size="1">{{ $requerimiento->tipo_revision }}</font>
+                    <font size="1">
+                        {{  $requerimiento->tipo_revision}}
+                        @if ($requerimiento->tipo_revision == "Otro")
+                            <br>
+                            {{ $requerimiento->tipo_revision_otro }}
+                        @endif
+                    </font>
                 </td>
                 <td align="center">
                     <font size="1">{{ $requerimiento->usuario->name }}</font>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <br>
+    <h4><strong><u>Atención de Requerimientos</u></strong></h4>
+    <table class="pure-table pure-table-bordered" Width=100%>
+        <thead>
+            <tr>
+                <th>
+                    <font size="1">No</font>
+                </th>
+                <th>
+                    <font size="1">Fecha</font>
+                </th>
+                <th>
+                    <font size="1">Forma de Atención</font>
+                </th>
+                <th>
+                    <font size="1">Acta Administratíva</font>
+                </th>
+                <th>
+                    <font size="1">Atendio</font>
+                </th>
+                <th>
+                    <font size="1">Observaciones</font>
+                </th>
+                <th>
+                    <font size="1">Usuario</font>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($atencionrequerimientos as $atencion)
+            <tr>
+                <td align="center">
+                    <font size="1">{{ $atencion->no }}</font>
+                </td>
+                <td align="center">
+                    @php
+                        $fecha = date('d/m/Y', strtotime($atencion->fecha));
+                    @endphp
+                    <font size="1">{{ $fecha }}</font>
+                </td>
+
+                <td align="center">
+                    <font size="1">
+                        {{ $atencion->forma_atencion }}
+                        @if ($atencion->forma_atencion == "Otro")
+                            <br>
+                            {{ $atencion->forma_atencion_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">{{  $atencion->acta_administrativa}}</font>
+                </td>
+                <td align="center">
+                    <font size="1">{{  $atencion->quien_atendio}}</font>
+                </td>
+                <td align="center">
+                    <font size="1">{{  $atencion->observaciones}}</font>
+                </td>
+                <td align="center">
+                    <font size="1">{{ $atencion->usuario->name }}</font>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+
+    <br>
+    <h4><strong><u>Actas Administrativas</u></strong></h4>
+    <table class="pure-table pure-table-bordered" Width=100%>
+        <thead>
+            <tr>
+                <th>
+                    <font size="1">Fecha</font>
+                </th>
+                <th>
+                    <font size="1">¿Quiénes intervinieron?</font>
+                </th>
+                <th>
+                    <font size="1">Tipo Acta</font>
+                </th>
+                <th>
+                    <font size="1">Observaciones</font>
+                </th>
+                <th>
+                    <font size="1">Usuario</font>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($actasadministrativas as $acta)
+            <tr>
+                <td align="center">
+                    @php
+                        $fecha = date('d/m/Y', strtotime($acta->fecha));
+                    @endphp
+                    <font size="1">{{ $fecha }}</font>
+                </td>
+
+                <td align="center">
+                    <font size="1">{{  $acta->quienes_intervinieron}}</font>
+                </td>
+                <td align="center">
+                    <font size="1">
+                        {{ $acta->tipo_acta }}
+                        @if ($acta->tipo_acta_otro == "Otro")
+                            <br>
+                            {{ $acta->tipo_acta_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">{{  $acta->observaciones}}</font>
+                </td>
+                <td align="center">
+                    <font size="1">{{ $acta->usuario->name }}</font>
                 </td>
             </tr>
             @endforeach
@@ -324,7 +489,7 @@
             <tr>
                 <td align="center">
                     @php
-                        $fecha = date('d/m/Y', strtotime($requerimiento->created_at));
+                        $fecha = date('d/m/Y', strtotime($requerimiento->fecha));
                     @endphp
                     <font size="1">{{ $fecha }}</font>
                 </td>

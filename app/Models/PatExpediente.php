@@ -11,6 +11,7 @@ class PatExpediente extends Model
 
     protected $fillable = [
         'pat_id',
+        'fecha',
         'nombre',
         'descripcion',
         'archivo',

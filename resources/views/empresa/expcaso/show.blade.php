@@ -94,9 +94,11 @@
                                                     <div class="col-md-12 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            {{-- <h5 class="card-title"><u>Informacíon de Paciente</u></h5> --}}
-                                                            <a href="{{ url('edit-cuenta/'.$cuenta->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                                            @if ($cuenta->id != 1)
+                                                            @if ($cuenta->estado == 1)
+
+
+                                                                {{-- <h5 class="card-title"><u>Informacíon de Paciente</u></h5> --}}
+                                                                <a href="{{ url('edit-cuenta/'.$cuenta->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
                                                                 @if (Auth::user()->principal == 1)
                                                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $cuenta->id }}">
                                                                         <i class="bi bi-trash"></i> Eliminar
@@ -104,6 +106,16 @@
                                                                     @include('empresa.cuenta.deletemodal')
                                                                 @endif
                                                             @endif
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="fullName" class="form-label">Código</label>
+                                                            <p>
+                                                                <strong>{{ $cuenta->codigo }}</strong>
+                                                            </p>
                                                         </div>
                                                     </div>
 

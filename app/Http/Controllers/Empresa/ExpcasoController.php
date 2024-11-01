@@ -29,9 +29,10 @@ class ExpcasoController extends Controller
                 ->orWhere('correo', 'LIKE', '%' . $queryCuenta . '%')
                 ->orWhere('telefono', 'LIKE', '%' . $queryCuenta . '%')
                 ->orWhere('dpi', 'LIKE', '%' . $queryCuenta . '%')
-                ->orWhere('nit', 'LIKE', '%' . $queryCuenta . '%');
+                ->orWhere('nit', 'LIKE', '%' . $queryCuenta . '%')
+                ->orWhere('codigo', '=',  $queryCuenta );
             })
-            ->orderBy('razon_social','asc')
+            ->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")
             ->paginate(20);
 
             $filterCuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->get();

@@ -37,10 +37,16 @@ class PatRequerimientoController extends Controller
         $requerimiento->pat_id = $request->input('pat_id');
         $requerimiento->usuario_id = $request->input('usuario_id');
         $requerimiento->no = $request->input('no');
+        $requerimiento->fecha = $request->input('fecha');
+        $requerimiento->fecha_maxima = $request->input('fecha_maxima');
         $requerimiento->tipo_requerimiento = $request->input('tipo_requerimiento');
+        $requerimiento->tipo_requerimiento_otro = $request->input('tipo_requerimiento_otro');
         $requerimiento->lugar_atender = $request->input('lugar_atender');
+        $requerimiento->lugar_atender_otro = $request->input('lugar_atender_otro');
+        $requerimiento->domicilio = $request->input('domicilio');
         $requerimiento->plazo_atencion = $request->input('plazo_atencion');
         $requerimiento->tipo_revision = $request->input('tipo_revision');
+        $requerimiento->tipo_revision_otro = $request->input('tipo_revision_otro');
         $requerimiento->save();
 
         $pat = Pat::find($requerimiento->pat_id);
@@ -75,10 +81,16 @@ class PatRequerimientoController extends Controller
             $requerimiento->tipo = $ext;
         }
         $requerimiento->no = $request->input('no');
+        $requerimiento->fecha = $request->input('fecha');
+        $requerimiento->fecha_maxima = $request->input('fecha_maxima');
         $requerimiento->tipo_requerimiento = $request->input('tipo_requerimiento');
+        $requerimiento->tipo_requerimiento_otro = $request->input('tipo_requerimiento_otro');
         $requerimiento->lugar_atender = $request->input('lugar_atender');
+        $requerimiento->lugar_atender_otro = $request->input('lugar_atender_otro');
+        $requerimiento->domicilio = $request->input('domicilio');
         $requerimiento->plazo_atencion = $request->input('plazo_atencion');
         $requerimiento->tipo_revision = $request->input('tipo_revision');
+        $requerimiento->tipo_revision_otro = $request->input('tipo_revision_otro');
         $requerimiento->update();
 
         $pat = Pat::find($requerimiento->pat_id);

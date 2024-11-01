@@ -26,6 +26,8 @@ class CreateMovimientoPagosTable extends Migration
             $table->unsignedBigInteger('usuario_id');
             $table->decimal('monto_q', 8, 2)->default(0.00);
             $table->decimal('monto_d', 8, 2)->default(0.00);
+            $table->string('codigo');
+            $table->boolean('estado')->default(1);
             $table->timestamps();
         });
     }

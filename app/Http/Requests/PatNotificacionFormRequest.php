@@ -25,9 +25,9 @@ class PatNotificacionFormRequest extends FormRequest
     {
         return [
             'pat_id' => 'required|integer',
-            'tipo_notificacion' => 'required|string',
-            'recibio' => 'required|string',
-            'domicilio_notificacion' => 'required|string',
+            'fecha' => 'date',
+            'hora' => 'required',
+            'folios_notificados' => 'numeric|required',
             'acto_notificado' => 'required|string',
             'plazo_atencion' => 'required|string',
             'vencimiento_plazo' => 'required|date',

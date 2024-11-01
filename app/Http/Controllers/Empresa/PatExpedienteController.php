@@ -35,6 +35,7 @@ class PatExpedienteController extends Controller
         }
         // dd($ext);
         $expediente->pat_id = $request->input('pat_id');
+        $expediente->fecha = $request->input('fecha');
         $expediente->usuario_id = $request->input('usuario_id');
         $expediente->nombre = $request->input('nombre');
         $expediente->descripcion = $request->input('descripcion');
@@ -70,6 +71,7 @@ class PatExpedienteController extends Controller
             $expediente->archivo = $filename;
             $expediente->tipo = $ext;
         }
+        $expediente->fecha = $request->input('fecha');
         $expediente->nombre = $request->input('nombre');
         $expediente->descripcion = $request->input('descripcion');
         $expediente->update();

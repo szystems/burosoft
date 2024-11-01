@@ -55,6 +55,7 @@
                                     <thead>
                                         <tr>
                                             <td align="center"><i class="bi bi-list-task"></i></td>
+                                            <td align="center">Código</td>
                                             <td>Empresa</td>
                                             <td>Dirección</td>
                                             <td>Licencia Hasta</td>
@@ -86,6 +87,7 @@
                                                     </ul>
                                                 </div>
                                             </td>
+                                            <td><strong>{{ $empresa->id }}</strong></td>
                                             <td>
                                                 <div class="d-flex align-items-center">
                                                     @if ($empresa->fotografia != null)

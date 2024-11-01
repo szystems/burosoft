@@ -5,7 +5,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editarExpedienteModal{{ $expediente->id }}">
-                    <i class="bi bi-pencil text-warning"></i> Editar Expediente
+                    <i class="bi bi-pencil text-warning"></i> Editar Expediente/Antecedente
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -17,7 +17,22 @@
                 <div class="modal-body">
                     <div class="row gx-3">
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-3 mb-3">
+                            <!-- Form Field Start -->
+                            <div class="mb-3">
+                                <label for="fecha" class="form-label">Fecha</label>
+                                <input type="date" name="fecha" class="form-control text-center" value="{{ $expediente->fecha }}" required/>
+                                @if ($errors->has('fecha'))
+                                    <span class="help-block opacity-7">
+                                            <strong>
+                                                <font color="red">{{ $errors->first('fecha') }}</font>
+                                            </strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-md-9 mb-3">
                             <!-- Form Field Start -->
                             <div class="mb-3">
                                 <label for="nombre" class="form-label">Nombre</label>
@@ -32,7 +47,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-12 mb-3">
                             <!-- Form Field Start -->
                             <div class="mb-3">
                                 <label for="descripcion" class="form-label">Descripcion</label>
@@ -56,7 +71,6 @@
                             <!-- Form Field Start -->
                             <div class="mb-3">
                                 <label class="form-label">Cambiar Archivo</label>
-                                <p>{{ $expediente->nombre }}</p>
                                 <input type="file" name="archivo" class="form-control border" value="{{ $expediente->archivo }}">
                                 @if ($errors->has('archivo'))
                                     <span class="help-block opacity-7">

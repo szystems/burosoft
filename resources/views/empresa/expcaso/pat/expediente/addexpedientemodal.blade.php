@@ -6,27 +6,32 @@ aria-labelledby="addExpedienteModal" aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="addExpedienteModal">
-                <i class="bi bi-plus text-success"></i> Agregar Expediente
+                <i class="bi bi-plus text-success"></i> Agregar Expediente/Antecedente
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        @if (count($errors)>0)
-            <div class="alert alert-danger text-white" role="alert">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            </div>
-
-        @endif
         <form action="{{ url('insert-pat-expediente') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-body">
                 <div class="row gx-3">
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-3 mb-3">
+                        <!-- Form Field Start -->
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" name="fecha" class="form-control text-center" value="{{ old('fecha') }}" required/>
+                            @if ($errors->has('fecha'))
+                                <span class="help-block opacity-7">
+                                        <strong>
+                                            <font color="red">{{ $errors->first('fecha') }}</font>
+                                        </strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-md-9 mb-3">
                         <!-- Form Field Start -->
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre</label>
@@ -41,7 +46,7 @@ aria-labelledby="addExpedienteModal" aria-hidden="true">
                         </div>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <!-- Form Field Start -->
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripcion</label>

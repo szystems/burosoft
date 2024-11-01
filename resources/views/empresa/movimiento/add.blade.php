@@ -65,7 +65,9 @@
                                                                 <select name="cuenta_id" class="form-select" aria-label="Default select example">
                                                                     <option value="">Seleccione cuenta...</option>
                                                                     @foreach($cuentas as $cuenta)
-                                                                        <option value="{{ $cuenta->id }}"{{ old('cuenta_id') == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->razon_social }}</option>
+                                                                        @if ($cuenta->estado == 1)
+                                                                            <option value="{{ $cuenta->id }}"{{ old('cuenta_id') == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->codigo }} {{ $cuenta->razon_social }}</option>
+                                                                        @endif
                                                                     @endforeach
                                                                 </select>
                                                                 @if ($errors->has('cuenta_id'))

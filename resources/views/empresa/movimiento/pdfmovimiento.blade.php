@@ -35,10 +35,10 @@
         <thead>
             <tr>
                 <th align="right">
-                    <font size="1">ID:</font>
+                    <font size="1">Código:</font>
                 </th>
                 <td colspan="2">
-                    <font size="1">{{ $movimiento->id }}</font>
+                    <font size="1">{{ $movimiento->codigo }}</font>
                 </td>
                 <th align="right">
                     <font size="1">Creado / Actualizacion:</font>
@@ -86,6 +86,21 @@
                 </td>
             </tr>
             <tr>
+
+                <th align="right">
+                    <font size="1">Estado:</font>
+                </th>
+                <td colspan="5">
+                    <font size="1">
+                        @if( $movimiento->estado == 1 )
+                        <font color="green">Activo</font>
+                        @else
+                        <font color="red">Eliminado</font>
+                        @endif
+                    </font>
+                </td>
+            </tr>
+            <tr>
                 <th align="right">
                     <font size="1">Monto (Quetzaltes):</font>
                 </th>
@@ -103,10 +118,12 @@
                 </td>
                 @php
                     $monto_pagado_q = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                    ->where('estado', 1)
                     ->sum('monto_q');
                     $saldo_q = $movimiento->monto_q - $monto_pagado_q;
 
                     $monto_pagado_d = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                    ->where('estado', 1)
                     ->sum('monto_d');
                     $saldo_d = $movimiento->monto_d - $monto_pagado_d;
                 @endphp
@@ -169,6 +186,9 @@
         <thead>
             <tr>
                 <th>
+                    <font size="1">Código</font>
+                </th>
+                <th>
                     <font size="1">Fecha</font>
                 </th>
                 <th>
@@ -194,6 +214,13 @@
         <tbody>
             @foreach ($pagos as $pago)
             <tr>
+                <td align="center">
+                    <font size="1">{{ $pago->codigo }}</font>
+                    <br>
+                    @if ($pago->estado == 0)
+                        <font size="1" color="red">Eliminado</font>
+                    @endif
+                </td>
                 <td align="center">
                     @php
                         $fecha = date('d/m/Y', strtotime($pago->created_at));

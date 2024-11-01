@@ -29,7 +29,12 @@ class CreateCuentasTable extends Migration
             $table->string('datos_propietario_nombre')->nullable();
             $table->string('datos_propietario_telefono')->nullable();
             $table->string('datos_propietario_correo')->nullable();
+            $table->string('codigo');
+            $table->boolean('estado')->default(1);
             $table->timestamps();
+
+            // Crear un índice único que combine empresa_id y codigo
+            $table->unique(['empresa_id', 'codigo']);
         });
     }
 

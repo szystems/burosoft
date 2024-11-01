@@ -30,7 +30,9 @@
                                     @csrf
                                     <div class="row gx-3">
 
-                                        <div class="col-md-4 mb-3">
+                                        <input type="hidden" name="tipobusqueda" value="1">
+
+                                        <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-2">
                                                 <label for="fecha_desde" class="form-label">Fecha Desde</label>
@@ -43,7 +45,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-2">
                                                 <label for="fecha_hasta" class="form-label">Fecha Hasta</label>
@@ -56,14 +58,22 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-4 mb-3">
+                                        <div class="col-md-3 mb-3">
+                                            <!-- Form Field Start -->
+                                            <div class="mb-3">
+                                                <label for="codigo" class="form-label">Código</label>
+                                                <input type="text" name="codigo" class="form-control" value="{{ $codigo }}"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-3">
                                                 <label for="cuenta" class="form-label">Cuenta</label>
                                                 <select name="cuenta_id" class="form-select" aria-label="Default select example">
                                                     <option value=""{{ request('cuenta_id') == '' ? ' selected' : '' }}>Todos</option>
                                                     @foreach($cuentas as $cuenta)
-                                                        <option value="{{ $cuenta->id }}"{{ old('cuenta_id', request('cuenta_id')) == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->razon_social }}</option>
+                                                        <option value="{{ $cuenta->id }}"{{ old('cuenta_id', request('cuenta_id')) == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->codigo }} {{ $cuenta->razon_social }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

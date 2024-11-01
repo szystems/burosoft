@@ -25,6 +25,7 @@ class PatExpedienteFormRequest extends FormRequest
     {
         return [
             'pat_id' => 'required|integer',
+            'fecha' => 'date',
             'nombre' => 'required|string',
             'descripcion' => 'required|string',
         ];

@@ -99,7 +99,7 @@
             <tr>
                 @if ($request->has('fid'))
                     <th>
-                        <font size="1">ID</font>
+                        <font size="1">Código</font>
                     </th>
                 @endif
 
@@ -157,15 +157,29 @@
             @php
                 $monto_total_q = 0;
                 $monto_total_d = 0;
+                $monto_total_q_eliminado = 0;
+                $monto_total_d_eliminado = 0;
                 $pagado_total = 0;
                 $saldo_total = 0;
+                $pagado_total_eliminado = 0;
+                $saldo_total_eliminado = 0;
             @endphp
             @foreach ($movimientos as $movimiento)
                 <tr>
                     @if ($request->has('fid'))
                         <td align="center">
                             <font size="1">
-                                <b>{{ $movimiento->id }}</b>
+                                <b>{{ $movimiento->codigo }}</b>
+                            </font>
+                            <font size="1">
+                                <p>
+                                    @if ($movimiento->estado == 1)
+                                        <font color="limegreen">Activo</font>
+
+                                    @elseif ($movimiento->estado == 0)
+                                        <font color="red">Eliminado</font>
+                                    @endif
+                                </p>
                             </font>
                         </td>
                     @endif
@@ -323,11 +337,21 @@
 
                 </tr>
                 @php
-                    $monto_total_q = $monto_total_q + $movimiento->monto_q;
-                    $monto_total_d = $monto_total_d + $movimiento->monto_d;
+                    if ($movimiento->estado == 1) {
+                        $monto_total_q = $monto_total_q + $movimiento->monto_q;
+                        $monto_total_d = $monto_total_d + $movimiento->monto_d;
+                        $pagado_total = $pagado_total + $monto_pagado_q;
+                        $saldo_total = $saldo_total + $saldo;
+                    }else{
+                        $monto_total_q_eliminado = $monto_total_q_eliminado + $movimiento->monto_q;
+                        $monto_total_d_eliminado = $monto_total_d_eliminado + $movimiento->monto_d;
+                        $pagado_total_eliminado = $pagado_total_eliminado + $monto_pagado_q;
+                        $saldo_total_eliminado = $saldo_total_eliminado + $saldo;
+                    }
 
-                    $pagado_total = $pagado_total + $monto_pagado_q;
-                    $saldo_total = $saldo_total + $saldo;
+
+                    // $pagado_total = $pagado_total + $monto_pagado_q;
+                    // $saldo_total = $saldo_total + $saldo;
                 @endphp
             @endforeach
 
@@ -362,10 +386,18 @@
         <tbody>
             <tr>
                 <td align="center">
-                    <h2><font><strong><font color="blue">Q.{{ number_format($monto_total_q,2, '.', ',') }}</font></strong> / <font color="gray">$.{{ number_format($monto_total_d,2, '.', ',') }}</font></strong></font></h2>
+                    <h2>Total: <font><strong><font color="blue">Q.{{ number_format($monto_total_q,2, '.', ',') }}</font></strong> / <font color="gray">$.{{ number_format($monto_total_d,2, '.', ',') }}</font></strong></font></h2>
                 </td>
                 <td align="center">
                     <h2><font><strong><font color="limegreen">Q.{{ number_format($pagado_total,2, '.', ',') }}</font></strong> / <strong class="text-warning"><font color="orange">Q.{{ number_format($saldo_total,2, '.', ',') }}</font></strong></font></h2>
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <h2>Total Eliminado: <font><strong><font color="red">Q.{{ number_format($monto_total_q_eliminado,2, '.', ',') }}</font></strong> / <font color="gray">$.{{ number_format($monto_total_d_eliminado,2, '.', ',') }}</font></strong></font></h2>
+                </td>
+                <td align="center">
+                    <h2><font><strong><font color="limegreen">Q.{{ number_format($pagado_total_eliminado,2, '.', ',') }}</font></strong> / <strong class="text-warning"><font color="orange">Q.{{ number_format($saldo_total_eliminado,2, '.', ',') }}</font></strong></font></h2>
                 </td>
             </tr>
         </tbody>

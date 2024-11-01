@@ -11,6 +11,8 @@ use App\Models\PatNombramiento;
 use App\Models\PatNotificacion;
 use App\Models\PatRequerimiento;
 use App\Models\PatExpediente;
+use App\Models\PatAtencionRequerimiento;
+use App\Models\PatActaAdministrativa;
 use App\Models\Cuenta;
 use App\Models\Config;
 use App\Models\User;
@@ -67,8 +69,10 @@ class PatController extends Controller
         $notificaciones = PatNotificacion::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $requerimientos = PatRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $expedientes = PatExpediente::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+        $atencionrequerimientos = PatAtencionRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+        $actasadministrativas = PatActaAdministrativa::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
 
-        return view('empresa.expcaso.pat.show', compact('pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes'));
+        return view('empresa.expcaso.pat.show', compact('pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','actasadministrativas'));
     }
 
     public function insert(PatFormRequest $request)
@@ -124,6 +128,8 @@ class PatController extends Controller
         $PatNotificaciones = PatNotificacion::where('pat_id', $pat->id)->delete();
         $PatRequerimientos = PatRequerimiento::where('pat_id', $pat->id)->delete();
         $PatExpedientes = PatExpediente::where('pat_id', $pat->id)->delete();
+        $PatAtencionRequerimientos = PatAtencionRequerimiento::where('pat_id', $pat->id)->delete();
+        $PatactasAdministrativas = PatActaAdministrativa::where('pat_id', $pat->id)->delete();
 
         Bitacora::create([
             'empresa_id' => Auth::user()->empresa_id,
@@ -157,6 +163,8 @@ class PatController extends Controller
             $notificaciones = PatNotificacion::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
             $requerimientos = PatRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
             $expedientes = PatExpediente::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+            $atencionrequerimientos = PatAtencionRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+            $actasadministrativas = PatActaAdministrativa::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
 
             // dd($request->input('ffpat_id'));
 
@@ -178,13 +186,13 @@ class PatController extends Controller
 
             if ( $pdfarchivo == "download" )
             {
-                $pdf = PDF::loadView('empresa.expcaso.pat.pdf', compact('imagen','pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes'));
+                $pdf = PDF::loadView('empresa.expcaso.pat.pdf', compact('imagen','pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','actasadministrativas'));
                 $pdf->setPaper($pdftamaño, $pdfhorientacion);
                 return $pdf->download ('PAT No.Expediente: '.$pat->no_expediente.', No.Programa: '.$pat->no_programa.' '.$nompdf.'.pdf');
             }
             if ( $pdfarchivo == "stream" )
             {
-                $pdf = PDF::loadView('empresa.expcaso.pat.pdf', compact('imagen','pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes'));
+                $pdf = PDF::loadView('empresa.expcaso.pat.pdf', compact('imagen','pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','actasadministrativas'));
                 $pdf->setPaper($pdftamaño, $pdfhorientacion);
                 return $pdf->stream ('PAT No.Expediente: '.$pat->no_expediente.', No.Programa: '.$pat->no_programa.' '.$nompdf.'.pdf');
             }

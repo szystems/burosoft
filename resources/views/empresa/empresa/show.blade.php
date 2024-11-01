@@ -104,6 +104,16 @@
                                                     <div class="col-md-3 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
+                                                            <label for="fullName" class="form-label">Código de Empresa</label>
+                                                            <p>
+                                                                <strong>{{ $empresa->id }}</strong>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-3 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
                                                             <label for="fullName" class="form-label">Nombre</label>
                                                             <p>
                                                                 {{ $empresa->nombre }}

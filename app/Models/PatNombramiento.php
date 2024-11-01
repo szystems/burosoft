@@ -12,6 +12,7 @@ class PatNombramiento extends Model
     protected $fillable = [
         'pat_id',
         'no',
+        'fecha',
         'nombrado_1',
         'nombrado_2',
         'nombrado_3',

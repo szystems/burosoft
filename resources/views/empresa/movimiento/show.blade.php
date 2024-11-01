@@ -60,21 +60,32 @@
                                                     <div class="col-md-12 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <a href="{{ url('edit-movimiento/'.$movimiento->id) }}" class="btn btn-warning float-end m-1" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                                            @if (Auth::user()->principal == 1)
-                                                                <button type="button" class="btn btn-danger float-end m-1" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
-                                                                    <i class="bi bi-trash"></i> Eliminar
-                                                                </button>
+
+
+
+
+                                                            @if ($movimiento->cuenta->estado == 1)
+                                                                @if (Auth::user()->principal == 1)
+                                                                    <button type="button" class="btn btn-danger float-end m-1" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
+                                                                        <i class="bi bi-trash"></i> Eliminar
+                                                                    </button>
+                                                                @endif
+                                                                <a href="{{ url('edit-movimiento/'.$movimiento->id) }}" class="btn btn-warning float-end m-1" aria-current="page">
+                                                                    <i class="bi bi-pencil"></i> Editar
+                                                                </a>
+                                                                @include('empresa.movimiento.deletemodal')
                                                             @endif
-                                                            @include('empresa.movimiento.deletemodal')
+                                                            <a target="_blank" href="{{ url('pdf-movimiento-cabecera/'.$movimiento->id) }}" type="button" class="btn btn-info float-end m-1">
+                                                                <i class="bi bi-printer"></i> Imprimir Cabecera
+                                                            </a>
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-2 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="rubro" class="form-label">ID</label>
-                                                            <p><strong class=" text-info-emphasis">{{ $movimiento->id }}</strong></p>
+                                                            <label for="rubro" class="form-label">Código</label>
+                                                            <p><strong class=" text-blue">{{ $movimiento->codigo }}</strong></p>
                                                         </div>
                                                     </div>
 
@@ -116,11 +127,25 @@
                                                             <p><a href="{{ url('show-empresa-usuario/'.$movimiento->usuario_id) }}"></a>{{ $usuario->name }}</p>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-12 mb-3">
+                                                    <div class="col-md-8 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             <label for="proveedor" class="form-label">Descripción</label>
                                                             <p>{{ $movimiento->descripcion }}</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="proveedor" class="form-label">Estado</label>
+                                                            <p>
+                                                                @if($movimiento->estado == 0)
+                                                                    <span class="badge shade-light-red">Eliminado</span>
+                                                                @elseif ($movimiento->estado == 1)
+                                                                    <span class="badge shade-light-green">Activo</span>
+                                                                @endif
+                                                            </p>
                                                         </div>
                                                     </div>
 
@@ -145,10 +170,12 @@
 
                                                     @php
                                                         $monto_pagado_q = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                                                        ->where('estado', 1)
                                                         ->sum('monto_q');
                                                         $saldo_q = $movimiento->monto_q - $monto_pagado_q;
 
                                                         $monto_pagado_d = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                                                        ->where('estado', 1)
                                                         ->sum('monto_d');
                                                         $saldo_d = $movimiento->monto_d - $monto_pagado_d;
                                                     @endphp
@@ -207,10 +234,15 @@
                                                     <h4>Documentos</h4>
                                                     <hr>
 
-                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                        data-bs-target="#addDocModal">
-                                                        <i class="bi bi-plus-square"></i> Agregar Documento
-                                                    </button>
+                                                    @if ($movimiento->cuenta->estado == 1)
+                                                        @if ($movimiento->estado == 1)
+                                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#addDocModal">
+                                                                <i class="bi bi-plus-square"></i> Agregar Documento
+                                                            </button>
+                                                        @endif
+
+                                                    @endif
 
                                                     @include('empresa.movimiento.adddocmodal')
 
@@ -231,20 +263,23 @@
                                                                     <td align="center">
 
                                                                         <a type="button" class="btn btn-info m-1" href="{{ asset('assets/uploads/documentos/'.$doc->archivo) }}" target="_blank"><i class="bi bi-eye-fill text-white"></i></a>
+                                                                        @if ($movimiento->cuenta->estado == 1)
+                                                                            @if ($movimiento->estado == 1)
+                                                                                <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
+                                                                                    data-bs-target="#editarDocModal{{ $doc->id }}">
+                                                                                    <i class="bi bi-pencil"></i>
+                                                                                </button>
 
-                                                                        <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
-                                                                            data-bs-target="#editarDocModal{{ $doc->id }}">
-                                                                            <i class="bi bi-pencil"></i>
-                                                                        </button>
+                                                                                @if (Auth::user()->principal == 1)
+                                                                                    <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteDocModal-{{ $doc->id }}">
+                                                                                        <i class="bi bi-trash-fill text-white"></i>
+                                                                                    </button>
+                                                                                @endif
 
-                                                                        @if (Auth::user()->principal == 1)
-                                                                            <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteDocModal-{{ $doc->id }}">
-                                                                                <i class="bi bi-trash-fill text-white"></i>
-                                                                            </button>
+                                                                                @include('empresa.movimiento.editdocmodal')
+                                                                                @include('empresa.movimiento.deletedocmodal')
+                                                                            @endif
                                                                         @endif
-
-                                                                        @include('empresa.movimiento.editdocmodal')
-                                                                        @include('empresa.movimiento.deletedocmodal')
 
                                                                     </td>
                                                                     <td align="center">
@@ -284,10 +319,14 @@
                                                     <h4>Pagos</h4>
                                                     <hr>
 
-                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                        data-bs-target="#addPagoModal">
-                                                        <i class="bi bi-plus-square"></i> Agregar Pago
-                                                    </button>
+                                                    @if ($movimiento->cuenta->estado == 1)
+                                                        @if ($movimiento->estado == 1)
+                                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                                data-bs-target="#addPagoModal">
+                                                                <i class="bi bi-plus-square"></i> Agregar Pago
+                                                            </button>
+                                                        @endif
+                                                    @endif
 
                                                     @include('empresa.movimiento.addpagomodal')
 
@@ -296,6 +335,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                    <td align="center">Código</td>
                                                                     <td align="center">fecha</td>
                                                                     <td align="center">Monto Q/$</td>
                                                                     <td align="center">Descripcion</td>
@@ -311,21 +351,37 @@
                                                                     <td align="center">
 
                                                                         {{-- <a type="button" class="btn btn-info m-1" href="{{ asset('assets/uploads/pagos/'.$doc->archivo) }}" target="_blank"><i class="bi bi-eye-fill text-white"></i></a> --}}
+                                                                        <a target="_blank" href="{{ url('pdf-pago/'.$pago->id) }}" type="button" class="btn btn-info">
+                                                                            <i class="bi bi-printer"></i>
+                                                                        </a>
+                                                                        @if ($movimiento->cuenta->estado == 1)
+                                                                            @if ($movimiento->estado == 1)
+                                                                                @if ($pago->estado == 1)
+                                                                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                                                                        data-bs-target="#editarPagoModal{{ $pago->id }}">
+                                                                                        <i class="bi bi-pencil"></i>
+                                                                                    </button>
 
-                                                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                                            data-bs-target="#editarPagoModal{{ $pago->id }}">
-                                                                            <i class="bi bi-pencil"></i>
-                                                                        </button>
-
-                                                                        @if (Auth::user()->principal == 1)
-                                                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePagoModal-{{ $pago->id }}">
-                                                                                <i class="bi bi-trash-fill text-white"></i>
-                                                                            </button>
+                                                                                    @if (Auth::user()->principal == 1)
+                                                                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePagoModal-{{ $pago->id }}">
+                                                                                            <i class="bi bi-trash-fill text-white"></i>
+                                                                                        </button>
+                                                                                    @endif
+                                                                                @endif
+                                                                            @endif
                                                                         @endif
 
                                                                         {{-- @include('empresa.movimiento.editpagomodal')
                                                                         @include('empresa.movimiento.deletepagomodal') --}}
 
+                                                                    </td>
+                                                                    <td align="center">
+                                                                        <p class="text-blue"><small><strong>{{ $pago->codigo }}</strong></small></p>
+                                                                        <p>
+                                                                            @if($pago->estado == 0)
+                                                                                <span class="badge shade-light-red">Eliminado</span>
+                                                                            @endif
+                                                                        </p>
                                                                     </td>
                                                                     <td align="center">
                                                                         @php

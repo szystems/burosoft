@@ -34,6 +34,8 @@ use App\Http\Controllers\Empresa\PatController;
 use App\Http\Controllers\Empresa\PatNombramientoController;
 use App\Http\Controllers\Empresa\PatNotificacionController;
 use App\Http\Controllers\Empresa\PatRequerimientoController;
+use App\Http\Controllers\Empresa\PatAtencionRequerimientoController;
+use App\Http\Controllers\Empresa\PatActaAdministrativaController;
 use App\Http\Controllers\Empresa\PatExpedienteController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
@@ -93,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('add-cuenta', [CuentaController::class, 'add']);
     Route::post('insert-cuenta', [CuentaController::class, 'insert']);
     Route::get('delete-cuenta/{id}', [CuentaController::class, 'destroy']);
+    Route::get('activate-cuenta/{id}', [CuentaController::class, 'activate']);
     Route::get('pdf-cuentas', [CuentaController::class, 'pdf']);
     Route::get('exportcuentas', [CuentaController::class, 'exportexcel']);
 
@@ -106,6 +109,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('delete-movimiento/{id}', [MovimientoController::class, 'destroy']);
     Route::get('pdf-movimientos', [MovimientoController::class, 'pdfmovimientos']);
     Route::get('pdf-movimiento', [MovimientoController::class, 'pdfmovimiento']);
+    Route::get('pdf-movimiento-cabecera/{id}', [MovimientoController::class, 'pdfmovimientocabecera']);
     Route::get('exportmovimientos', [MovimientoController::class, 'exportexcel']);
 
     //Movimiento Documentos
@@ -118,6 +122,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('update-pago/{id}', [MovimientoPagoController::class, 'update']);
     Route::get('delete-pago/{id}', [MovimientoPagoController::class, 'destroy']);
     Route::get('delete-img-pago/{id}', [MovimientoPagoController::class, 'destroyimg']);
+    Route::get('pdf-pago/{id}', [MovimientoPagoController::class, 'pdfpago']);
 
     //RSI
     Route::get('rsi', [RsiController::class, 'index']);
@@ -145,6 +150,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-pat-requerimiento', [PatRequerimientoController::class, 'insert']);
     Route::put('update-pat-requerimiento/{id}', [PatRequerimientoController::class, 'update']);
     Route::get('delete-pat-requerimiento/{id}', [PatRequerimientoController::class, 'destroy']);
+    //PAT Atencion de Requerimiento
+    Route::post('insert-pat-atencionrequerimiento', [PatAtencionRequerimientoController::class, 'insert']);
+    Route::put('update-pat-atencionrequerimiento/{id}', [PatAtencionRequerimientoController::class, 'update']);
+    Route::get('delete-pat-atencionrequerimiento/{id}', [PatAtencionRequerimientoController::class, 'destroy']);
+    //PAT Acta Administrativa
+    Route::post('insert-pat-actaadministrativa', [PatActaAdministrativaController::class, 'insert']);
+    Route::put('update-pat-actaadministrativa/{id}', [PatActaAdministrativaController::class, 'update']);
+    Route::get('delete-pat-actaadministrativa/{id}', [PatActaAdministrativaController::class, 'destroy']);
     //PAT Expediente
     Route::post('insert-pat-expediente', [PatExpedienteController::class, 'insert']);
     Route::put('update-pat-expediente/{id}', [PatExpedienteController::class, 'update']);

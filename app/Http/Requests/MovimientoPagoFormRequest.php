@@ -30,7 +30,8 @@ class MovimientoPagoFormRequest extends FormRequest
             'imagen' => 'nullable|image|mimes:jpeg,png|max:3048',
             'usuario_id' => 'required|exists:users,id',
             'monto_q' => 'required|numeric',
-            'monto_d' => 'required|numeric'
+            'monto_d' => 'required|numeric',
+            'codigo' => 'nullable|string',
         ];
     }
 }

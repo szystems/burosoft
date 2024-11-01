@@ -16,9 +16,15 @@ class CreatePatNotificacionsTable extends Migration
         Schema::create('pat_notificacions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('pat_id');
-            $table->string('tipo_notificacion');
-            $table->string('recibio');
-            $table->string('domicilio_notificacion');
+            $table->date('fecha');
+            $table->time('hora');
+            $table->string('tipo_notificacion')->nullable();
+            $table->string('recibio')->nullable();
+            $table->string('domicilio_notificacion')->nullable();
+            $table->string('domicilio_notificacion_es')->nullable();
+            $table->string('domicilio_notificacion_otro')->nullable();
+            $table->string('persona_idonea')->nullable();
+            $table->integer('folios_notificados')->default(0);
             $table->string('acto_notificado');
             $table->string('plazo_atencion');
             $table->date('vencimiento_plazo');

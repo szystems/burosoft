@@ -36,7 +36,8 @@ class CuentaFormRequest extends FormRequest
             'datos_intermediario_correo' => 'nullable|email',
             'datos_propietario_nombre' => 'nullable',
             'datos_propietario_telefono' => 'nullable|string|max:10',
-            'datos_propietario_correo' => 'nullable|email'
+            'datos_propietario_correo' => 'nullable|email',
+            'codigo' => 'nullable|string',
         ];
     }
 }

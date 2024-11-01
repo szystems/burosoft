@@ -118,6 +118,16 @@
                                                     <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
+                                                            <label for="fullName" class="form-label">Código</label>
+                                                            <p>
+                                                                <strong>{{ $cuenta->codigo }}</strong>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
                                                             <label for="fullName" class="form-label">Razon Social (Cuenta)</label>
                                                             <p>
                                                                 {{ $cuenta->razon_social }}
@@ -251,11 +261,13 @@
                                                     @include('empresa.expcaso.pat.search')
 
                                                     <h4><strong>Listado de PAT</strong></h4>
+                                                    @if ($cuenta->estado == 1)
+                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                            data-bs-target="#addPatModal">
+                                                            <i class="bi bi-plus-square"></i> Agregar PAT
+                                                        </button>
+                                                    @endif
 
-                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                        data-bs-target="#addPatModal">
-                                                        <i class="bi bi-plus-square"></i> Agregar PAT
-                                                    </button>
 
                                                     @include('empresa.expcaso.pat.addpatmodal')
 
@@ -290,12 +302,14 @@
                                                                                     {{-- <li>
                                                                                         <a class="dropdown-item" href="{{ url('edit-pat/'.$pat->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                                                     </li> --}}
-                                                                                    @if (Auth::user()->principal == 1)
-                                                                                        <li>
-                                                                                            <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $pat->id }}">
-                                                                                                <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                                            </a>
-                                                                                        </li>
+                                                                                    @if ($cuenta->estado == 1)
+                                                                                        @if (Auth::user()->principal == 1)
+                                                                                            <li>
+                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $pat->id }}">
+                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                </a>
+                                                                                            </li>
+                                                                                        @endif
                                                                                     @endif
 
                                                                                 </ul>

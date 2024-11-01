@@ -56,6 +56,8 @@
                     <td align="left">
                         <font size="1">
                             <small>
+                                <strong>{{ $cuenta->codigo }}</strong>
+                                <br>
                                 <strong>{{ $cuenta->razon_social }}</strong>
                                 <br>
                                 {{ $cuenta->correo}}

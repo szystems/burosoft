@@ -55,10 +55,12 @@
                                     <thead>
                                         <tr>
                                             <td align="center"><i class="bi bi-list-task"></i></td>
+                                            <td align="center">Código</td>
                                             <td>Cuenta</td>
                                             <td>Nit / DPI</td>
                                             <td>Intermediario</td>
                                             <td>Propietario</td>
+                                            <td class="text-center">Estado</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -73,19 +75,31 @@
                                                         <li>
                                                             <a class="dropdown-item" href="{{ url('show-cuenta/'.$cuenta->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                         </li>
-                                                        <li>
-                                                            <a class="dropdown-item" href="{{ url('edit-cuenta/'.$cuenta->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
-                                                        </li>
-                                                        @if (Auth::user()->principal == 1)
+                                                        @if ($cuenta->estado == 1)
+                                                            <li>
+                                                                <a class="dropdown-item" href="{{ url('edit-cuenta/'.$cuenta->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
+                                                            </li>
+                                                        @endif
+
+                                                        @if ($cuenta->estado == 1)
                                                             <li>
                                                                 <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $cuenta->id }}">
-                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                    <i class="bi bi-x-circle-fill text-danger"></i> Cancelar
+                                                                </a>
+                                                            </li>
+                                                        @elseif ($cuenta->estado == 0)
+                                                            <li>
+                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#activateModal-{{ $cuenta->id }}">
+                                                                    <i class="bi bi-bookmark-check-fill text-success"></i> Activar
                                                                 </a>
                                                             </li>
                                                         @endif
 
                                                     </ul>
                                                 </div>
+                                            </td>
+                                            <td class=" text-center">
+                                                <small><strong>{{ $cuenta->codigo }}</strong></small>
                                             </td>
                                             <td>
                                                 <div class="d-flex align-items-center">
@@ -149,9 +163,19 @@
 
                                                 </div>
                                             </td>
+                                            <td align="center">
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    @if($cuenta->estado == 0)
+                                                        <span class="badge shade-light-red">Cancelada</span>
+                                                    @elseif ($cuenta->estado == 1)
+                                                        <span class="badge shade-light-green">Activa</span>
+                                                    @endif
+                                                </div>
+                                            </td>
 
                                         </tr>
                                         @include('empresa.cuenta.deletemodal')
+                                        @include('empresa.cuenta.activatemodal')
                                         @endforeach
                                     </tbody>
                                 </table>

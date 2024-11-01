@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Empresa;
 use App\Models\Config;
 use App\Http\Requests\EmpresaFormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use DB;
 use PDF;
@@ -25,9 +26,10 @@ class EmpresaController extends Controller
             $query->where('nombre', 'LIKE', '%' . $queryEmpresa . '%')
                 ->orWhere('email', 'LIKE', '%' . $queryEmpresa . '%')
                 ->orWhere('telefono', 'LIKE', '%' . $queryEmpresa . '%')
-                ->orWhere('celular', 'LIKE', '%' . $queryEmpresa . '%');
+                ->orWhere('celular', 'LIKE', '%' . $queryEmpresa . '%')
+                ->orWhere('id', '=',  $queryEmpresa);
             })
-            ->orderBy('fecha_vencimiento','asc')
+            ->orderBy('id','asc')
             ->paginate(20);
             $filterEmpresas = Empresa::all();
             return view('admin.empresa.index', compact('empresas','queryEmpresa','filterEmpresas'));

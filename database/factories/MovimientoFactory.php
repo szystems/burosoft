@@ -11,6 +11,7 @@ use App\Models\Rubro;
 
 class MovimientoFactory extends Factory
 {
+    protected static $correlativos = [];
     /**
      * Define the model's default state.
      *
@@ -22,6 +23,14 @@ class MovimientoFactory extends Factory
         $empresa = Empresa::find(1);
         $cuenta = Cuenta::where('empresa_id', $empresa->id)->inRandomOrder()->first();
         $rubro = Rubro::where('empresa_id', $empresa->id)->inRandomOrder()->first();
+
+        // Generar el correlativo para la combinación de empresa y cuenta
+        $key = $empresa->id . '-' . $cuenta->id;
+        if (!isset(self::$correlativos[$key])) {
+            self::$correlativos[$key] = 0;
+        }
+        self::$correlativos[$key]++;
+        $correlativo = self::$correlativos[$key];
 
         $monto_q = $this->faker->randomFloat(2, 1, 99999);
         $monto_d = $monto_q / 7.8;
@@ -35,6 +44,8 @@ class MovimientoFactory extends Factory
             'monto_q' => $monto_q,
             'monto_d' => $monto_d,
             'descripcion' => $this->faker->sentence,
+            'codigo' => "{$empresa->id}-{$cuenta->id}-MOV{$correlativo}",
+            'estado' => 1,
         ];
     }
 }

@@ -41,6 +41,17 @@
                                             Movimientos
                                             <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span></a>
                                     </li>
+                                    <li class="nav-item" role="presentation">
+                                        {{-- <a class="nav-link" id="tab-expcaso" data-bs-toggle="tab" href="{{ url('show-expcaso/'.$cuenta->id) }}" role="tab"
+                                            aria-controls="expcaso" aria-selected="false">
+                                            Exp/Caso
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
+                                        </a> --}}
+                                        <a class="nav-link" href="{{ url('show-expcaso/'.$cuenta->id) }}">
+                                            Exp/Caso
+                                        {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                    </a>
+                                    </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane fade show active" id="oneA" role="tabpanel">
@@ -58,15 +69,33 @@
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
                                                             {{-- <h5 class="card-title"><u>Informacíon de Paciente</u></h5> --}}
-                                                            <a href="{{ url('edit-cuenta/'.$cuenta->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                                            @if ($cuenta->id != 1)
-                                                                @if (Auth::user()->principal == 1)
-                                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $cuenta->id }}">
-                                                                        <i class="bi bi-trash"></i> Eliminar
+                                                            @if ($cuenta->estado == 1)
+                                                                <a href="{{ url('edit-cuenta/'.$cuenta->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
+                                                            @endif
+                                                            @if (Auth::user()->principal == 1)
+                                                                @if ($cuenta->estado == 0)
+                                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#activateModal-{{ $cuenta->id }}">
+                                                                        <i class="bi bi-bookmark-check"></i> Activar
                                                                     </button>
-                                                                    @include('empresa.cuenta.deletemodal')
+                                                                @elseif ($cuenta->estado == 1)
+                                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $cuenta->id }}">
+                                                                        <i class="bi bi-x-circle-fill"></i> Cancelar
+                                                                    </button>
                                                                 @endif
                                                             @endif
+
+                                                            @include('empresa.cuenta.deletemodal')
+                                                            @include('empresa.cuenta.activatemodal')
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="fullName" class="form-label">Código</label>
+                                                            <p>
+                                                                <strong>{{ $cuenta->codigo }}</strong>
+                                                            </p>
                                                         </div>
                                                     </div>
 
@@ -216,9 +245,11 @@
                                         <div class="mb-3">
                                             <h5 class="form-label">Listado de movimientos</h5>
                                             <p>Cuenta: <strong class="text-primary">{{ $cuenta->razon_social }}</strong></p>
-                                            <a href="{{ url('add-movimiento') }}" type="button" class="btn btn-success float-end">
-                                                <i class="bi bi-plus-square"></i> Agregar Movimiento
-                                            </a>
+                                            @if ($cuenta->estado == 1)
+                                                <a href="{{ url('add-movimiento') }}" type="button" class="btn btn-success float-end">
+                                                    <i class="bi bi-plus-square"></i> Agregar Movimiento
+                                                </a>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -297,15 +328,17 @@
                                                                             <li>
                                                                                 <a class="dropdown-item" href="{{ url('show-movimiento/'.$movimiento->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                                             </li>
-                                                                            <li>
-                                                                                <a class="dropdown-item" href="{{ url('edit-movimiento/'.$movimiento->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
-                                                                            </li>
-                                                                            @if (Auth::user()->principal == 1)
+                                                                            @if ($cuenta->estado == 1)
                                                                                 <li>
-                                                                                    <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
-                                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                                    </a>
+                                                                                    <a class="dropdown-item" href="{{ url('edit-movimiento/'.$movimiento->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                                                 </li>
+                                                                                @if (Auth::user()->principal == 1)
+                                                                                    <li>
+                                                                                        <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
+                                                                                            <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                        </a>
+                                                                                    </li>
+                                                                                @endif
                                                                             @endif
 
                                                                         </ul>

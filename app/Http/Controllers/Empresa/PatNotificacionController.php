@@ -23,6 +23,7 @@ class PatNotificacionController extends Controller
 {
     public function insert(PatNotificacionFormRequest $request)
     {
+        // dd($request->all());
         $vencimiento_plazo = date("Y-m-d", strtotime($request->vencimiento_plazo));
 
         $notificacion = new PatNotificacion();
@@ -38,9 +39,15 @@ class PatNotificacionController extends Controller
         // dd($ext);
         $notificacion->pat_id = $request->input('pat_id');
         $notificacion->usuario_id = $request->input('usuario_id');
+        $notificacion->fecha = $request->input('fecha');
+        $notificacion->hora = $request->input('hora');
         $notificacion->tipo_notificacion = $request->input('tipo_notificacion');
         $notificacion->recibio = $request->input('recibio');
         $notificacion->domicilio_notificacion = $request->input('domicilio_notificacion');
+        $notificacion->domicilio_notificacion_es = $request->input('domicilio_notificacion_es');
+        $notificacion->domicilio_notificacion_otro = $request->input('domicilio_notificacion_otro');
+        $notificacion->persona_idonea = $request->input('persona_idonea');
+        $notificacion->folios_notificados = $request->input('folios_notificados');
         $notificacion->acto_notificado = $request->input('acto_notificado');
         $notificacion->plazo_atencion = $request->input('plazo_atencion');
         $notificacion->vencimiento_plazo = $vencimiento_plazo;
@@ -79,8 +86,14 @@ class PatNotificacionController extends Controller
             $notificacion->tipo = $ext;
         }
         $notificacion->tipo_notificacion = $request->input('tipo_notificacion');
+        $notificacion->fecha = $request->input('fecha');
+        $notificacion->hora = $request->input('hora');
         $notificacion->recibio = $request->input('recibio');
         $notificacion->domicilio_notificacion = $request->input('domicilio_notificacion');
+        $notificacion->domicilio_notificacion_es = $request->input('domicilio_notificacion_es');
+        $notificacion->domicilio_notificacion_otro = $request->input('domicilio_notificacion_otro');
+        $notificacion->persona_idonea = $request->input('persona_idonea');
+        $notificacion->folios_notificados = $request->input('folios_notificados');
         $notificacion->acto_notificado = $request->input('acto_notificado');
         $notificacion->plazo_atencion = $request->input('plazo_atencion');
         $notificacion->vencimiento_plazo = $vencimiento_plazo;

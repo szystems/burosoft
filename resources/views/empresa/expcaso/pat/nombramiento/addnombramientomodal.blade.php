@@ -11,16 +11,6 @@ aria-labelledby="addNombramientoModal" aria-hidden="true">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        @if (count($errors)>0)
-            <div class="alert alert-danger text-white" role="alert">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{$error}}</li>
-                    @endforeach
-                </ul>
-            </div>
-
-        @endif
         <form action="{{ url('insert-pat-nombramiento') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="modal-body">
@@ -35,6 +25,21 @@ aria-labelledby="addNombramientoModal" aria-hidden="true">
                                 <span class="help-block opacity-7">
                                         <strong>
                                             <font color="red">{{ $errors->first('no') }}</font>
+                                        </strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <!-- Form Field Start -->
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha de Nombramiento</label>
+                            <input type="date" name="fecha" class="form-control" value="{{ old('fecha') }}" required/>
+                            @if ($errors->has('fecha'))
+                                <span class="help-block opacity-7">
+                                        <strong>
+                                            <font color="red">{{ $errors->first('fecha') }}</font>
                                         </strong>
                                 </span>
                             @endif

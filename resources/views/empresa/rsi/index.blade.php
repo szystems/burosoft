@@ -78,7 +78,7 @@
                                             <tr>
                                                 <td align="center">
                                                     <a href="{{ url('show-cuenta/'.$movimiento->cuenta_id) }}">
-                                                        <strong class="text-blue">{{ $movimiento->cuenta }}</strong>
+                                                        <strong class="text-blue">{{ $movimiento->codigo }} {{ $movimiento->cuenta }}</strong>
                                                     </a>
                                                 </td>
 

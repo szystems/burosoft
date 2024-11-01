@@ -20,7 +20,9 @@ class MovimientoPago extends Model
         'imagen',
         'usuario_id',
         'monto_q',
-        'monto_d'
+        'monto_d',
+        'codigo',
+        'estado',
     ];
 
     public function usuario()

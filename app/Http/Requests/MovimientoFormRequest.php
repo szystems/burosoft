@@ -30,7 +30,7 @@ class MovimientoFormRequest extends FormRequest
             'rubro_id' => 'required|exists:rubros,id',
             'monto_q' => 'required|numeric',
             'monto_d' => 'required|numeric',
-            'descripcion' => 'required',
+            'codigo' => 'nullable|string',
         ];
     }
 }

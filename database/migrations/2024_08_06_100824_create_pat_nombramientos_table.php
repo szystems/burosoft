@@ -17,6 +17,7 @@ class CreatePatNombramientosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pat_id');
             $table->string('no');
+            $table->date('fecha');
             $table->string('nombrado_1');
             $table->string('nombrado_2')->nullable();
             $table->string('nombrado_3')->nullable();

@@ -37,6 +37,7 @@ class PatNombramientoController extends Controller
         $nombramiento->pat_id = $request->input('pat_id');
         $nombramiento->usuario_id = $request->input('usuario_id');
         $nombramiento->no = $request->input('no');
+        $nombramiento->fecha = $request->input('fecha');
         $nombramiento->nombrado_1 = $request->input('nombrado_1');
         $nombramiento->nombrado_2 = $request->input('nombrado_2');
         $nombramiento->nombrado_3 = $request->input('nombrado_3');
@@ -77,6 +78,7 @@ class PatNombramientoController extends Controller
             $nombramiento->tipo = $ext;
         }
         $nombramiento->no = $request->input('no');
+        $nombramiento->fecha = $request->input('fecha');
         $nombramiento->nombrado_1 = $request->input('nombrado_1');
         $nombramiento->nombrado_2 = $request->input('nombrado_2');
         $nombramiento->nombrado_3 = $request->input('nombrado_3');

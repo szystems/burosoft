@@ -15,9 +15,10 @@ class CreatePatExpedientesTable extends Migration
     {
         Schema::create('pat_expedientes', function (Blueprint $table) {
             $table->id();
+            $table->date('fecha');
             $table->unsignedBigInteger('pat_id');
             $table->string('nombre');
-            $table->string('descripcion');
+            $table->longtext('descripcion');
             $table->string('archivo');
             $table->string('tipo');
             $table->unsignedBigInteger('usuario_id');

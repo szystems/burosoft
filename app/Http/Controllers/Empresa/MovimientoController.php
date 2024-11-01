@@ -26,6 +26,10 @@ class MovimientoController extends Controller
     {
         // dd($request);
         if ($request) {
+
+            $tipobusqueda = $request->input('tipobusqueda');
+            $fcodigo=$request->input('fcodigo');
+
             //obtengo datos
             if ($request->input('fecha_desde') != "") {
                 $fechaDesdeVista = date("d-m-Y", strtotime($request->input('fecha_desde')));
@@ -53,48 +57,63 @@ class MovimientoController extends Controller
             $usuarioID = $request->input('usuario_id');
             $saldo = $request->input('saldo');
             $ordenar = $request->input('ordenar');
+            $codigo = $request->input('codigo');
+
+            if (!$tipobusqueda == 1 or !$tipobusqueda) {
+
+                $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
+                ->where('fecha', '<=', $fechaHasta)
+                ->where('empresa_id', Auth::user()->empresa_id);
+                if (!empty($usuarioID)) {
+                    $Consultafiltros->where('usuario_id', '=', $usuarioID);
+                }
+                if (!empty($cuentaID)) {
+                    $Consultafiltros->where('cuenta_id', '=', $cuentaID);
+                }
+                if (!empty($rubroID)) {
+                    $Consultafiltros->where('rubro_id', '=', $rubroID);
+                }
+                if (!empty($codigo)) { // Verifica si el código no está vacío
+                    $Consultafiltros->where('codigo', 'like', '%' . $codigo . '%'); // Agrega la condición para buscar por código
+                }
+                if (!empty($saldo)){
+                    if ($saldo == "Pendiente") {
+                        $Consultafiltros->where(function ($query) {
+                            $query->whereRaw('monto_q > (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
+                        });
+                    }
+                    if ($saldo == "Pagado") {
+                        $Consultafiltros->where(function ($query) {
+                            $query->whereRaw('monto_q <= (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
+                        });
+                    }
+                }
+                if ($ordenar == "fecha") {
+                    $Consultafiltros->orderBy('fecha','desc');
+                    // $Consultafiltros->orderBy('cuenta_id','desc');
+                }else{
+                    $Consultafiltros->orderBy('codigo','desc');
+                    // $Consultafiltros->orderBy('fecha','desc');
+                }
+                // $Consultafiltros->orderBy('fecha','desc');
+                $movimientos = $Consultafiltros->get();
+
+            } elseif ($tipobusqueda == 2) {
+
+                $movimientos = Movimiento::where('codigo', 'LIKE', '%' . $fcodigo . '%')
+                ->where('empresa_id', Auth::user()->empresa_id)
+                ->orderBy('fecha','desc')
+                ->get();
+            }
 
 
-            $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
-            ->where('fecha', '<=', $fechaHasta)
-            ->where('empresa_id', Auth::user()->empresa_id);
-            if (!empty($usuarioID)) {
-                $Consultafiltros->where('usuario_id', '=', $usuarioID);
-            }
-            if (!empty($cuentaID)) {
-                $Consultafiltros->where('cuenta_id', '=', $cuentaID);
-            }
-            if (!empty($rubroID)) {
-                $Consultafiltros->where('rubro_id', '=', $rubroID);
-            }
-            if (!empty($saldo)){
-                if ($saldo == "Pendiente") {
-                    $Consultafiltros->where(function ($query) {
-                        $query->whereRaw('monto_q > (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
-                    });
-                }
-                if ($saldo == "Pagado") {
-                    $Consultafiltros->where(function ($query) {
-                        $query->whereRaw('monto_q <= (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
-                    });
-                }
-            }
-            if ($ordenar == "fecha") {
-                $Consultafiltros->orderBy('fecha','desc');
-                $Consultafiltros->orderBy('cuenta_id','desc');
-            }else{
-                $Consultafiltros->orderBy('cuenta_id','desc');
-                $Consultafiltros->orderBy('fecha','desc');
-            }
-            $Consultafiltros->orderBy('fecha','desc');
-            $movimientos = $Consultafiltros->get();
 
             $usuarios = User::where('empresa_id', Auth::user()->empresa_id)->orderBy('name','asc')->get();
-            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
+            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")->get();
             $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
             $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             //dd($request);
-            return view('empresa.movimiento.index', compact('movimientos','usuarios','cuentas','rubros','config','fechaDesdeVista','fechaHastaVista','request'));
+            return view('empresa.movimiento.index', compact('movimientos','usuarios','cuentas','rubros','config','fechaDesdeVista','fechaHastaVista','codigo','request','fcodigo','tipobusqueda'));
         }
     }
 
@@ -103,49 +122,79 @@ class MovimientoController extends Controller
         $movimiento = Movimiento::find($id);
         $documentos = MovimientoDocumento::where('movimiento_id', $id)->get();
         $pagos = MovimientoPago::where('movimiento_id', $id)->get();
-        $totalAbonadoQ = MovimientoPago::where('movimiento_id', $id)->sum('monto_q');
-        $totalAbonadoD = MovimientoPago::where('movimiento_id', $id)->sum('monto_d');
+        $totalAbonadoQ = MovimientoPago::where('movimiento_id', $id)->where('estado', 1)->sum('monto_q');
+        $totalAbonadoD = MovimientoPago::where('movimiento_id', $id)->where('estado', 1)->sum('monto_d');
         $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
         return view('empresa.movimiento.show', compact('movimiento','documentos','pagos','config','totalAbonadoQ','totalAbonadoD'));
     }
 
     public function add()
     {
-        $cuentas = cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
+        $cuentas = cuenta::where('empresa_id', Auth::user()->empresa_id)->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")->get();
         $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
         return view('empresa.movimiento.add', compact('cuentas','rubros'));
     }
 
     public function insert(MovimientoFormRequest $request)
     {
-        $hoy = Carbon::now('America/Guatemala');
-        $hoy = $hoy->format('Y-m-d');
+        $hoy = Carbon::now('America/Guatemala')->format('Y-m-d');
 
-        $movimiento = new Movimiento();
-        $movimiento->fecha = $hoy;
-        $movimiento->empresa_id = $request->input('empresa_id');
-        $movimiento->usuario_id = $request->input('usuario_id');
-        $movimiento->cuenta_id = $request->input('cuenta_id');
-        $movimiento->rubro_id = $request->input('rubro_id');
-        $movimiento->monto_q = $request->input('monto_q');
-        $movimiento->monto_d = $request->input('monto_d');
-        $movimiento->descripcion = $request->input('descripcion');
-        $movimiento->save();
+        DB::beginTransaction();
+        try {
+            $ultimoMovimiento = Movimiento::where('empresa_id', $request->input('empresa_id'))
+                ->where('cuenta_id', $request->input('cuenta_id'))
+                ->orderBy('id', 'desc')
+                ->first();
 
-        Bitacora::create([
-            'empresa_id' => Auth::user()->empresa_id,
-            'usuario_id' => Auth::user()->id,
-            'fecha' => now(),
-            'tipo' => "Movimiento",
-            'descripcion' => "Creo una nuevo movimiento: ".$movimiento->cuenta->razon_social.", ".$movimiento->rubro->nombre.", Q.".number_format($movimiento->monto_q,2, '.', ','),
-        ]);
+            // Inicializar el correlativo
+            $correlativo = 1; // Valor por defecto
 
-        return redirect('show-movimiento/'.$movimiento->id)->with('status',__('Movimiento agregado exitosamente.'));
+            if ($ultimoMovimiento) {
+                $codigoAnterior = $ultimoMovimiento->codigo;
+
+                // Usar expresión regular para extraer el número del correlativo
+                preg_match('/MOV(\d+)/', $codigoAnterior, $matches);
+
+                if (isset($matches[1])) {
+                    $correlativo = intval($matches[1]) + 1; // Incrementar el correlativo
+                }
+            }
+
+            // Construir el código
+            $codigo = $request->input('empresa_id') . '-' . $request->input('cuenta_id') . '-MOV' . $correlativo;
+
+            $movimiento = new Movimiento();
+            $movimiento->fecha = $hoy;
+            $movimiento->empresa_id = $request->input('empresa_id');
+            $movimiento->usuario_id = $request->input('usuario_id');
+            $movimiento->cuenta_id = $request->input('cuenta_id');
+            $movimiento->rubro_id = $request->input('rubro_id');
+            $movimiento->monto_q = $request->input('monto_q');
+            $movimiento->monto_d = $request->input('monto_d');
+            $movimiento->descripcion = $request->input('descripcion');
+            $movimiento->codigo = $codigo; // Asignar el código generado
+            $movimiento->save();
+
+            Bitacora::create([
+                'empresa_id' => Auth::user()->empresa_id,
+                'usuario_id' => Auth::user()->id,
+                'fecha' => now(),
+                'tipo' => "Movimiento",
+                'descripcion' => "Creo un nuevo movimiento: " . $movimiento->cuenta->razon_social . ", " . $movimiento->rubro->nombre . ", Q." . number_format($movimiento->monto_q, 2, '.', ','),
+            ]);
+
+            DB::commit();
+
+            return redirect('show-movimiento/' . $movimiento->id)->with('status', __('Movimiento agregado exitosamente.'));
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Error al agregar el movimiento: ' . $e->getMessage()]);
+        }
     }
 
     public function edit($id)
     {
-        $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
+        $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")->get();
         $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
         $config = Config::where('empresa_id', $id)->first();
         $movimiento = Movimiento::find($id);
@@ -177,21 +226,29 @@ class MovimientoController extends Controller
 
     public function destroy($id)
     {
+        // Encontrar el movimiento por su ID
         $movimiento = Movimiento::find($id);
-        $razon_social = $movimiento->razon_social;
-        $documentos = MovimientoDocumento::where('movimiento_id', $movimiento->id)->delete();
-        $pagos = MovimientoPago::where('movimiento_id', $movimiento->id)->delete();
-        $movimiento->delete();
 
+        // Verificar si el movimiento existe
+        if (!$movimiento) {
+            return redirect('movimientos')->with('error', __('Movimiento no encontrado.'));
+        }
+
+        // Cambiar el estado del movimiento a 0 (inactivo)
+        $movimiento->estado = 0; // Asumiendo que 'estado' es el campo que usas
+        $movimiento->save();
+
+        // Crear un registro en la bitácora
         Bitacora::create([
             'empresa_id' => Auth::user()->empresa_id,
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Movimiento",
-            'descripcion' => "Eliminó un movimiento: ".$movimiento->cuenta->razon_social.", ".$movimiento->rubro->nombre.", Q.".number_format($movimiento->monto_q,2, '.', ','),
+            'descripcion' => "Desactivó un movimiento: " . $movimiento->cuenta->razon_social . ", " . $movimiento->rubro->nombre . ", Q." . number_format($movimiento->monto_q, 2, '.', ','),
         ]);
 
-        return redirect('movimientos')->with('status',__('Movimiento eliminado correctamente.'));
+        // Redirigir con un mensaje de éxito
+        return redirect('movimientos')->with('status', __('Movimiento desactivado correctamente.'));
     }
 
     public function pdfmovimientos(Request $request)
@@ -321,8 +378,8 @@ class MovimientoController extends Controller
             $movimiento = Movimiento::find($request->input('fmovimiento_id'));
             $documentos = MovimientoDocumento::where('movimiento_id', $request->input('fmovimiento_id'))->get();
             $pagos = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->get();
-            $totalAbonadoQ = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->sum('monto_q');
-            $totalAbonadoD = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->sum('monto_d');
+            $totalAbonadoQ = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->where('estado', 1)->sum('monto_q');
+            $totalAbonadoD = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->where('estado', 1)->sum('monto_d');
 
             $nompdf = date('m/d/Y g:ia');
             $path = public_path('assets/uploads/');
@@ -356,6 +413,50 @@ class MovimientoController extends Controller
                 $pdf = PDF::loadView('empresa.movimiento.pdfmovimiento', compact('imagen','movimiento','config','documentos','pagos','totalAbonadoQ','totalAbonadoD'));
                 $pdf->setPaper($pdftamaño, $pdfhorientacion);
                 return $pdf->stream ('Reporte Movimiento ID: '.$movimiento->id.'-'.$nompdf.'.pdf');
+            }
+        }
+    }
+
+    public function pdfmovimientocabecera(Request $request, $id)
+    {
+        if ($request)
+        {
+            $verpdf = "Browser";
+            $nompdf = date('m/d/Y g:ia');
+            $path = public_path('assets/uploads/');
+
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+            $movimiento = Movimiento::find($id);
+            $totalAbonadoQ = MovimientoPago::where('movimiento_id', $id)->where('estado', 1)->sum('monto_q');
+            $totalAbonadoD = MovimientoPago::where('movimiento_id', $id)->where('estado', 1)->sum('monto_d');
+
+            $currency = $config->currency_simbol;
+
+            if ($config->logo == null)
+            {
+                $logo = null;
+                $imagen = null;
+            }
+            else
+            {
+                    $logo = $config->logo;
+                    $imagen = public_path('assets/uploads/logos/'.$logo);
+            }
+
+
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+
+            if ( $verpdf == "Download" )
+            {
+                $pdf = PDF::loadView('empresa.movimiento.pdfmovimientocabecera',['movimiento'=>$movimiento,'path'=>$path,'config'=>$config,'imagen'=>$imagen,'currency'=>$currency,'totalAbonadoQ'=>$totalAbonadoQ,'totalAbonadoD'=>$totalAbonadoD]);
+
+                return $pdf->download ('Movimiento: '.$movimiento->id.'-'.$nompdf.'.pdf');
+            }
+            if ( $verpdf == "Browser" )
+            {
+                $pdf = PDF::loadView('empresa.movimiento.pdfmovimientocabecera',['movimiento'=>$movimiento,'path'=>$path,'config'=>$config,'imagen'=>$imagen,'currency'=>$currency,'totalAbonadoQ'=>$totalAbonadoQ,'totalAbonadoD'=>$totalAbonadoD]);
+
+                return $pdf->stream ('Movimiento: '.$movimiento->id.'-'.$nompdf.'.pdf');
             }
         }
     }

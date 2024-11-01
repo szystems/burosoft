@@ -33,9 +33,10 @@ class CuentaController extends Controller
                 ->orWhere('correo', 'LIKE', '%' . $queryCuenta . '%')
                 ->orWhere('telefono', 'LIKE', '%' . $queryCuenta . '%')
                 ->orWhere('dpi', 'LIKE', '%' . $queryCuenta . '%')
-                ->orWhere('nit', 'LIKE', '%' . $queryCuenta . '%');
+                ->orWhere('nit', 'LIKE', '%' . $queryCuenta . '%')
+                ->orWhere('codigo', '=',  $queryCuenta );
             })
-            ->orderBy('razon_social','asc')
+            ->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")
             ->paginate(20);
 
             $filterCuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->get();
@@ -76,6 +77,16 @@ class CuentaController extends Controller
 
     public function insert(CuentaFormRequest $request)
     {
+
+        // Obtener el ID de la empresa del usuario autenticado
+        $empresaId = Auth::user()->empresa_id;
+
+        // Obtener el correlativo para el nuevo código
+        $correlativo = Cuenta::where('empresa_id', $empresaId)->count() + 1;
+
+        // Formatear el código como "empresa_id-correlativo"
+        $codigo = "{$empresaId}-{$correlativo}";
+
         $cuenta = new Cuenta();
         $cuenta->empresa_id = Auth::user()->empresa_id;
         $cuenta->nit = $request->input('nit');
@@ -91,6 +102,8 @@ class CuentaController extends Controller
         $cuenta->datos_propietario_nombre = $request->input('datos_propietario_nombre');
         $cuenta->datos_propietario_telefono = $request->input('datos_propietario_telefono');
         $cuenta->datos_propietario_correo = $request->input('datos_propietario_correo');
+        $cuenta->codigo = $codigo;
+        $cuenta->estado = 1;
         $cuenta->save();
 
         Bitacora::create([
@@ -144,18 +157,44 @@ class CuentaController extends Controller
     public function destroy($id)
     {
         $cuenta = Cuenta::find($id);
-        $razon_social = $cuenta->razon_social;
-        $cuenta->delete();
+        $cuenta->estado = 0; // Cambiar el estado a 0 en lugar de eliminar
+        $cuenta->save();
 
         Bitacora::create([
             'empresa_id' => Auth::user()->empresa_id,
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Cuenta",
-            'descripcion' => "Eliminó una cuenta: ".$razon_social
+            'descripcion' => "Cancelo una cuenta: ".$cuenta->razon_social
         ]);
 
-        return redirect('cuentas')->with('status',__('Cuenta eliminada correctamente.'));
+        return redirect('cuentas')->with('status',__('Cuenta cancelada correctamente.'));
+    }
+
+    public function activate($id)
+    {
+        // Buscar la cuenta por su ID
+        $cuenta = Cuenta::find($id);
+
+        // Verificar si la cuenta existe
+        if (!$cuenta) {
+            return redirect('cuentas')->with('error', __('Cuenta no encontrada.'));
+        }
+
+        // Cambiar el estado a 1 (activada)
+        $cuenta->estado = 1;
+        $cuenta->save();
+
+        // Registrar en la bitácora
+        Bitacora::create([
+            'empresa_id' => Auth::user()->empresa_id,
+            'usuario_id' => Auth::user()->id,
+            'fecha' => now(),
+            'tipo' => "Cuenta",
+            'descripcion' => "Activó una cuenta: " . $cuenta->razon_social
+        ]);
+
+        return redirect('cuentas')->with('status', __('Cuenta activada correctamente.'));
     }
 
     public function pdf(Request $request)
@@ -163,7 +202,7 @@ class CuentaController extends Controller
         if ($request)
         {
 
-            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
+            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")->get();
             $verpdf = "Browser";
             $nompdf = date('m/d/Y g:ia');
             $path = public_path('assets/uploads/');

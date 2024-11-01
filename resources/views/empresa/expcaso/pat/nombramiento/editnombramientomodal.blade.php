@@ -35,6 +35,21 @@
                         <div class="col-md-6 mb-3">
                             <!-- Form Field Start -->
                             <div class="mb-3">
+                                <label for="fecha_notificacion" class="form-label">Fecha de Nombramiento</label>
+                                <input type="date" name="fecha" class="form-control" value="{{ $nombramiento->fecha }}" required/>
+                                @if ($errors->has('fecha'))
+                                    <span class="help-block opacity-7">
+                                            <strong>
+                                                <font color="red">{{ $errors->first('fecha') }}</font>
+                                            </strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <!-- Form Field Start -->
+                            <div class="mb-3">
                                 <label for="periodo" class="form-label">Periodo</label>
                                 <input name="periodo" type="text" class="form-control" placeholder="Periodo..." value="{{ $nombramiento->periodo }}" required/>
                                 @if ($errors->has('periodo'))

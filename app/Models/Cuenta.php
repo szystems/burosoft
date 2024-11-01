@@ -25,6 +25,8 @@ class Cuenta extends Model
         'datos_intermediario_correo',
         'datos_propietario_nombre',
         'datos_propietario_telefono',
-        'datos_propietario_correo'
+        'datos_propietario_correo',
+        'codigo',
+        'estado',
     ];
 }

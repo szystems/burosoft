@@ -17,10 +17,16 @@ class CreatePatRequerimientosTable extends Migration
             $table->id();
             $table->unsignedBigInteger('pat_id');
             $table->string('no');
+            $table->date('fecha');
+            $table->date('fecha_maxima');
             $table->string('tipo_requerimiento');
+            $table->string('tipo_requerimiento_otro')->nullable();
             $table->string('lugar_atender');
+            $table->string('lugar_atender_otro')->nullable();
+            $table->string('domicilio');
             $table->string('plazo_atencion');
             $table->string('tipo_revision');
+            $table->string('tipo_revision_otro')->nullable();
             $table->string('archivo');
             $table->string('tipo');
             $table->unsignedBigInteger('usuario_id');

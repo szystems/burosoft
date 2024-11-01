@@ -11,9 +11,15 @@ class PatNotificacion extends Model
 
     protected $fillable = [
         'pat_id',
+        'fecha',
+        'hora',
         'tipo_notificacion',
         'recibio',
         'domicilio_notificacion',
+        'domicilio_notificacion_es',
+        'domicilio_notificacion_otro',
+        'persona_idonea',
+        'folios_notificados',
         'acto_notificado',
         'plazo_atencion',
         'vencimiento_plazo',

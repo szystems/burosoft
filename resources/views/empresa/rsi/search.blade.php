@@ -37,7 +37,7 @@
                                                 <select name="cuenta_id" class="form-select" aria-label="Default select example">
                                                     <option value=""{{ request('cuenta_id') == '' ? ' selected' : '' }}>Todos</option>
                                                     @foreach($cuentas as $cuenta)
-                                                        <option value="{{ $cuenta->id }}"{{ old('cuenta_id', request('cuenta_id')) == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->razon_social }}</option>
+                                                        <option value="{{ $cuenta->id }}"{{ old('cuenta_id', request('cuenta_id')) == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->codigo }} {{ $cuenta->razon_social }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>

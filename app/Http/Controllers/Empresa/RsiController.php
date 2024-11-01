@@ -33,6 +33,7 @@ class RsiController extends Controller
             ->select(
                 'cuentas.razon_social as cuenta',
                 'cuentas.id as cuenta_id',
+                'cuentas.codigo as codigo',
                 DB::raw('SUM(movimientos.monto_q) as total_monto_q'),
                 DB::raw('SUM(movimiento_pagos.monto_q) as total_pagado'),
                 DB::raw('SUM(movimientos.monto_q) - SUM(movimiento_pagos.monto_q) as saldo')
@@ -43,8 +44,10 @@ class RsiController extends Controller
                 $movimientos->where('cuentas.id', '=', $cuentaID);
             }
 
-            $movimientos = $movimientos->groupBy('cuentas.id', 'cuentas.razon_social');
+            // Agregar 'cuentas.codigo' al groupBy
+            $movimientos = $movimientos->groupBy('cuentas.id', 'cuentas.razon_social', 'cuentas.codigo');
 
+            // Condiciones para el saldo
             if (!empty($saldo)){
                 if ($saldo == "Pendiente") {
                     $movimientos->havingRaw('SUM(movimientos.monto_q) > SUM(movimiento_pagos.monto_q)');
@@ -54,10 +57,14 @@ class RsiController extends Controller
                 }
             }
 
+            // Ordenar por el código de cuenta
+            $movimientos = $movimientos->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo");
+
+            // Obtener los resultados
             $movimientos = $movimientos->get();
 
             $usuarios = User::where('empresa_id', Auth::user()->empresa_id)->orderBy('name','asc')->get();
-            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
+            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")->get();
             $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
             $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             //dd($request);
@@ -89,6 +96,7 @@ class RsiController extends Controller
             ->select(
                 'cuentas.razon_social as cuenta',
                 'cuentas.id as cuenta_id',
+                'cuentas.codigo as codigo',
                 DB::raw('SUM(movimientos.monto_q) as total_monto_q'),
                 DB::raw('SUM(movimiento_pagos.monto_q) as total_pagado'),
                 DB::raw('SUM(movimientos.monto_q) - SUM(movimiento_pagos.monto_q) as saldo')
@@ -98,7 +106,7 @@ class RsiController extends Controller
                 $movimientos->where('cuentas.id', '=', $cuentaID);
             }
 
-            $movimientos = $movimientos->groupBy('cuentas.id', 'cuentas.razon_social');
+            $movimientos = $movimientos->groupBy('cuentas.id', 'cuentas.razon_social', 'cuentas.codigo');
 
             if (!empty($saldo)){
                 if ($saldo == "Pendiente") {
@@ -108,6 +116,10 @@ class RsiController extends Controller
                     $movimientos->havingRaw('SUM(movimientos.monto_q) <= SUM(movimiento_pagos.monto_q)');
                 }
             }
+
+            // Ordenar por el código de cuenta
+            $movimientos = $movimientos->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo");
+
             $movimientos = $movimientos->get();
 
 

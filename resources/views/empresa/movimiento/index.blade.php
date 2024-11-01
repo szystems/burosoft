@@ -82,19 +82,19 @@
 
                         </div>
                         @include('empresa.movimiento.print')
+                        @include('empresa.movimiento.search2')
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table align-middle table-striped flex-column">
                                     <thead>
                                         <tr>
                                             <td align="center"><i class="bi bi-list-task"></i></td>
-                                            <td align="center">ID</td>
+                                            <td align="center">Código</td>
                                             <td align="center">Fecha</td>
                                             <td align="center">Cuenta</td>
                                             <td align="center">Rubro</td>
                                             <td align="center">Cargo Q/$</td>
-                                            <td align="center">Estado Saldo</td>
-                                            <td align="center">Pagado/Saldo</td>
+                                            <td align="center">Pagado/Saldo/Estado</td>
                                             <td align="center">Usuario</td>
                                             <td align="center">Datos Pagos</td>
                                         </tr>
@@ -103,8 +103,12 @@
                                         @php
                                             $monto_total_q = 0;
                                             $monto_total_d = 0;
+                                            $monto_total_q_eliminado = 0;
+                                            $monto_total_d_eliminado = 0;
                                             $pagado_total = 0;
                                             $saldo_total = 0;
+                                            $pagado_total_eliminado = 0;
+                                            $saldo_total_eliminado = 0;
                                         @endphp
                                         @foreach ($movimientos as $movimiento)
                                             <tr>
@@ -117,22 +121,33 @@
                                                             <li>
                                                                 <a class="dropdown-item" href="{{ url('show-movimiento/'.$movimiento->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                             </li>
-                                                            <li>
-                                                                <a class="dropdown-item" href="{{ url('edit-movimiento/'.$movimiento->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
-                                                            </li>
-                                                            @if (Auth::user()->principal == 1)
+                                                            @if ($movimiento->cuenta->estado == 1)
                                                                 <li>
-                                                                    <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
-                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                    </a>
+                                                                    <a class="dropdown-item" href="{{ url('edit-movimiento/'.$movimiento->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                                 </li>
-                                                            @endif
+                                                                @if ($movimiento->estado == 1)
+                                                                    @if (Auth::user()->principal == 1)
+                                                                        <li>
+                                                                            <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
+                                                                                <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                            </a>
+                                                                        </li>
+                                                                    @endif
+                                                                @endif
 
+                                                            @endif
                                                         </ul>
                                                     </div>
                                                 </td>
                                                 <td align="center">
-                                                    <strong>{{ $movimiento->id }}</strong>
+                                                    <p>
+                                                        <strong><a class="text-info" href="{{ url('show-movimiento/'.$movimiento->id) }}">{{ $movimiento->codigo }}</a></strong>
+                                                        @if($movimiento->estado == 0)
+                                                            <span class="badge shade-light-red">Eliminado</span>
+                                                        @elseif ($movimiento->estado == 1)
+                                                            <span class="badge shade-light-green">Activo</span>
+                                                        @endif
+                                                    </p>
                                                 </td>
                                                 <td align="center">
                                                     @php
@@ -156,6 +171,7 @@
                                                 @endphp
                                                 <td align="center">
                                                     <p>
+                                                        <font class="text-success">Q.{{ number_format($monto_pagado_q,2, '.', ',') }}</font>/<font class="text-warning">Q.{{ number_format($saldo,2, '.', ',') }}</font>
                                                         @if($movimiento->monto_q > $monto_pagado_q)
                                                             <span class="badge shade-light-yellow">Pendiente</span>
 
@@ -163,9 +179,6 @@
                                                             <span class="badge shade-light-green">Pagado</span>
                                                         @endif
                                                     </p>
-                                                </td>
-                                                <td align="center">
-                                                    <p><font class="text-success">Q.{{ number_format($monto_pagado_q,2, '.', ',') }}</font>/<font class="text-warning">Q.{{ number_format($saldo,2, '.', ',') }}</font></p>
                                                 </td>
 
                                                 <td align="center">
@@ -232,11 +245,21 @@
                                             </tr>
                                             @include('empresa.movimiento.deletemodal')
                                             @php
-                                                $monto_total_q = $monto_total_q + $movimiento->monto_q;
-                                                $monto_total_d = $monto_total_d + $movimiento->monto_d;
+                                                if ($movimiento->estado == 1) {
+                                                    $monto_total_q = $monto_total_q + $movimiento->monto_q;
+                                                    $monto_total_d = $monto_total_d + $movimiento->monto_d;
+                                                    $pagado_total = $pagado_total + $monto_pagado_q;
+                                                    $saldo_total = $saldo_total + $saldo;
+                                                }else{
+                                                    $monto_total_q_eliminado = $monto_total_q_eliminado + $movimiento->monto_q;
+                                                    $monto_total_d_eliminado = $monto_total_d_eliminado + $movimiento->monto_d;
+                                                    $pagado_total_eliminado = $pagado_total_eliminado + $monto_pagado_q;
+                                                    $saldo_total_eliminado = $saldo_total_eliminado + $saldo;
+                                                }
 
-                                                $pagado_total = $pagado_total + $monto_pagado_q;
-                                                $saldo_total = $saldo_total + $saldo;
+
+                                                // $pagado_total = $pagado_total + $monto_pagado_q;
+                                                // $saldo_total = $saldo_total + $saldo;
                                             @endphp
                                         @endforeach
                                     </tbody>
@@ -251,6 +274,18 @@
                                             <td align="center"><p><strong class="text-blue">Q.{{ number_format($monto_total_q,2, '.', ',') }}</strong>/$.{{ number_format($monto_total_d,2, '.', ',') }}</p></td>
                                             <td align="right"><p><strong>Pagado/Saldo:</strong></p></td>
                                             <td align="center"><p><strong class="text-success">Q.{{ number_format($pagado_total,2, '.', ',') }}</strong>/<strong class="text-warning">Q.{{ number_format($saldo_total,2, '.', ',') }}</strong></p></td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td align="right"><p><strong>Total Eliminado:</strong></p></td>
+
+                                            <td align="center"><p><strong class="text-danger">Q.{{ number_format($monto_total_q_eliminado,2, '.', ',') }}</strong>/$.{{ number_format($monto_total_d_eliminado,2, '.', ',') }}</p></td>
+                                            <td align="right"><p><strong>Pagado/Saldo:</strong></p></td>
+                                            <td align="center"><p><strong class="text-success">Q.{{ number_format($pagado_total_eliminado,2, '.', ',') }}</strong>/<strong class="text-warning">Q.{{ number_format($saldo_total_eliminado,2, '.', ',') }}</strong></p></td>
                                             <td></td>
                                         </tr>
                                     </tfoot>

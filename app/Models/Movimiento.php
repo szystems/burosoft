@@ -18,6 +18,8 @@ class Movimiento extends Model
         'monto_q',
         'monto_d',
         'descripcion',
+        'codigo',
+        'estado',
     ];
 
     public function usuario()

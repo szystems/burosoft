@@ -87,10 +87,10 @@ aria-labelledby="editPatModal" aria-hidden="true">
                             <label for="tipo_contribuyente" class="form-label">Tipo Contribuyente</label>
                             <select name="tipo_contribuyente" class="form-select" aria-label="Default select example" required>
                                 <option value="">Seleccione Tipo...</option>
-                                <option value="Especial" {{ $pat->tipo_contribuyente == "Especial" ? ' selected' : '' }}>Especial</option>
-                                <option value="Mediano" {{ $pat->tipo_contribuyente == "Mediano" ? ' selected' : '' }}>Mediano</option>
-                                <option value="Normal" {{ $pat->tipo_contribuyente == "Normal" ? ' selected' : '' }}>Normal</option>
-                                <option value="Pie" {{ $pat->tipo_contribuyente == "Pie" ? ' selected' : '' }}>Pie</option>
+                                <option value="Grande Especial" {{ old('tipo_contribuyente') == "Grande Especial" ? ' selected' : '' }}>Grande Especial</option>
+                                <option value="Mediano Especial" {{ old('tipo_contribuyente') == "Mediano Especial" ? ' selected' : '' }}>Mediano Especial</option>
+                                <option value="Normal General" {{ old('tipo_contribuyente') == "Normal General" ? ' selected' : '' }}>Normal General</option>
+                                <option value="Pequeño Contribuyente" {{ old('tipo_contribuyente') == "Pequeño Contribuyente" ? ' selected' : '' }}>Pequeño Contribuyente</option>
                             </select>
                             @if ($errors->has('tipo_contribuyente'))
                                 <span class="help-block opacity-7">

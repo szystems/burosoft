@@ -26,9 +26,12 @@ class PatRequerimientoFormRequest extends FormRequest
         return [
             'pat_id' => 'required|integer',
             'no' => 'required|string',
+            'fecha' => 'date',
+            'fecha_maxima' => 'date',
             'tipo_requerimiento' => 'required|string',
             'lugar_atender' => 'required|string',
             'plazo_atencion' => 'required|string',
+            'domicilio' => 'required|string',
             'tipo_revision' => 'required|string',
             'usuario_id' => 'required|string',
         ];

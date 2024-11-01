@@ -24,6 +24,7 @@
         <!-- Content wrapper start -->
         <div class="content-wrapper">
 
+            @include('empresa.expcaso.search')
 
             <!-- Row start -->
             <div class="row gx-3">
@@ -64,7 +65,7 @@
                                                 <div class="d-flex align-items-center">
 
                                                     <p class="m-0">
-                                                        <a class="text-primary" href="{{ url('show-expcaso/'.$cuenta->id) }}"><b>{{ $cuenta->razon_social }}</b></a>
+                                                        <a class="text-primary" href="{{ url('show-expcaso/'.$cuenta->id) }}"><b>{{ $cuenta->codigo }}<br>{{ $cuenta->razon_social }}</b></a>
                                                         <small>
                                                             <br>
                                                             <a class="text-info" href="mailto:{{ $cuenta->correo }}">{{ $cuenta->correo }}</a>

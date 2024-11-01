@@ -95,7 +95,7 @@
 
                     <td align="center">
                         <font size="1">
-                            {{ $movimiento->cuenta}}
+                            {{ $movimiento->codigo }} {{ $movimiento->cuenta}}
                         </font>
                     </td>
 
