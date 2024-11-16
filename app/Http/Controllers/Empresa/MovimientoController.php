@@ -59,7 +59,10 @@ class MovimientoController extends Controller
             $ordenar = $request->input('ordenar');
             $codigo = $request->input('codigo');
 
-            if (!$tipobusqueda == 1 or !$tipobusqueda) {
+            $movimientos = []; // Inicializa como null
+            // dd($tipobusqueda);
+
+            if ($tipobusqueda == 1 or !$tipobusqueda) {
 
                 $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
                 ->where('fecha', '<=', $fechaHasta)

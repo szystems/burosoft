@@ -49,7 +49,7 @@
                                 <small class="text-secondary"><u>Filtros:</u></small>
                                 <small class="text-muted">
 
-                                    Encontrados: <small class="text-info">{{ $movimientos->count() }},</small>
+                                    Encontrados: <small class="text-info">{{ count($movimientos ?? []) }},</small>
                                     @if ($fechaDesdeVista)
                                         Desde: <small class="text-info">{{ $fechaDesdeVista }},</small>
                                     @endif
