@@ -69,15 +69,32 @@
                                         <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-3">
-                                                <label for="cuenta" class="form-label">Cuenta</label>
-                                                <select name="cuenta_id" class="form-select" aria-label="Default select example">
+                                                <label for="fcuenta" class="form-label">Cuenta</label>
+                                                <select name="cuenta_id" id="fcuenta" class="form-select select2" aria-label="Default select example" style="width: 100%;">
                                                     <option value=""{{ request('cuenta_id') == '' ? ' selected' : '' }}>Todos</option>
                                                     @foreach($cuentas as $cuenta)
-                                                        <option value="{{ $cuenta->id }}"{{ old('cuenta_id', request('cuenta_id')) == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->codigo }} {{ $cuenta->razon_social }}</option>
+                                                        <option value="{{ $cuenta->id }}"{{ old('cuenta_id', request('cuenta_id')) == $cuenta->id ? ' selected' : '' }}>
+                                                            {{ $cuenta->codigo }} {{ $cuenta->razon_social }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#fcuenta').select2({
+                                                    placeholder: 'Seleccione cuenta',
+                                                    allowClear: true,
+                                                    minimumInputLength: 1,
+                                                    language: {
+                                                        inputTooShort: function() {
+                                                            return "Por favor, ingrese 1 o más caracteres"; // Cambia el texto aquí
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
 
                                         <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
@@ -94,15 +111,38 @@
                                         <div class="col-md-3 mb-3">
                                             <!-- Form Field Start -->
                                             <div class="mb-3">
-                                                <label for="rubro" class="form-label">Rubro</label>
-                                                <select name="rubro_id" class="form-select" aria-label="Default select example">
+                                                <label for="frubro" class="form-label">Rubro</label>
+                                                <select name="rubro_id" id="frubro" class="form-select select2" aria-label="Default select example" style="width: 100%;">
                                                     <option value=""{{ request('rubro_id') == '' ? ' selected' : '' }}>Todos</option>
                                                     @foreach($rubros as $rubro)
-                                                        <option value="{{ $rubro->id }}"{{ old('rubro_id', request('rubro_id')) == $rubro->id ? ' selected' : '' }}>{{ $rubro->nombre }}</option>
+                                                        <option value="{{ $rubro->id }}"{{ old('rubro_id', request('rubro_id')) == $rubro->id ? ' selected' : '' }}>
+                                                            {{ $rubro->nombre }} <!-- Cambia esto según el atributo que quieras mostrar -->
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#frubro').select2({
+                                                    placeholder: 'Seleccione rubro',
+                                                    allowClear: true,
+                                                    minimumInputLength: 1,
+                                                    language: {
+                                                        inputTooShort: function() {
+                                                            return "Por favor, ingrese 1 o más caracteres"; // Mensaje para input corto
+                                                        },
+                                                        noResults: function() {
+                                                            return "No se encontraron resultados"; // Mensaje cuando no hay resultados
+                                                        },
+                                                        searching: function() {
+                                                            return "Buscando..."; // Mensaje durante la búsqueda
+                                                        }
+                                                    }
+                                                });
+                                            });
+                                        </script>
 
 
                                         <div class="col-md-3 mb-3">

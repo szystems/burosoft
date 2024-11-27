@@ -11,7 +11,7 @@
         integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
 
 
-    <title>Movimiento</title>
+    <title>Cuenta Por Cobrar</title>
 
 </head>
 
@@ -19,7 +19,7 @@
     <center>
         <img align="center" src="{{ $imagen }}" alt="" height="100">
     </center>
-    <h3 align="center"><u>Movimiento</u></h3>
+    <h3 align="center"><u>Cuenta Por Cobrar</u></h3>
     <label>
         <font size="1">Fecha Reporte:</font>
         <font color="blue" size="1">
@@ -102,13 +102,13 @@
             </tr>
             <tr>
                 <th align="right">
-                    <font size="1">Monto (Quetzaltes):</font>
+                    <font size="1">Monto (Quetzales):</font>
                 </th>
                 <td>
                     <font size="1" color="blue"><strong>Q.{{ number_format($movimiento->monto_q,2, '.', ',') }}</strong></font>
                 </td>
                 <th align="right">
-                    <font size="1">Abonado/Saldo (Quetzaltes):</font>
+                    <font size="1">Abonado/Saldo (Quetzales):</font>
                 </th>
                 <td>
                     @php
@@ -141,13 +141,13 @@
             </tr>
             <tr>
                 <th align="right">
-                    <font size="1">Monto (Dolares):</font>
+                    <font size="1">Monto (Dólares):</font>
                 </th>
                 <td>
                     <font size="1" color="blue"><strong>$.{{ number_format($movimiento->monto_d,2, '.', ',') }}</strong></font>
                 </td>
                 <th align="right">
-                    <font size="1">Abonado/Saldo (Dolares):</font>
+                    <font size="1">Abonado/Saldo (Dólares):</font>
                 </th>
                 <td>
                     @php

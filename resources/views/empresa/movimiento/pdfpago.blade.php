@@ -87,13 +87,13 @@
             </tr>
             <tr>
                 <th align="right">
-                    <font size="1">Monto (Quetzaltes):</font>
+                    <font size="1">Monto (Quetzales):</font>
                 </th>
                 <td>
                     <font size="1" color="blue"><strong>Q.{{ number_format($movimiento->monto_q,2, '.', ',') }}</strong></font>
                 </td>
                 <th align="right">
-                    <font size="1">Abonado/Saldo (Quetzaltes):</font>
+                    <font size="1">Abonado/Saldo (Quetzales):</font>
                 </th>
                 <td>
                     @php
@@ -126,13 +126,13 @@
             </tr>
             <tr>
                 <th align="right">
-                    <font size="1">Monto (Dolares):</font>
+                    <font size="1">Monto (Dólares):</font>
                 </th>
                 <td>
                     <font size="1" color="blue"><strong>$.{{ number_format($movimiento->monto_d,2, '.', ',') }}</strong></font>
                 </td>
                 <th align="right">
-                    <font size="1">Abonado/Saldo (Dolares):</font>
+                    <font size="1">Abonado/Saldo (Dólares):</font>
                 </th>
                 <td>
                     @php

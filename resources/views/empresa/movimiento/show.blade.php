@@ -92,7 +92,7 @@
                                                     <div class="col-md-2 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="fecha" class="form-label">Creado / Actualizacion</label>
+                                                            <label for="fecha" class="form-label">Creado / Actualización</label>
                                                             @php
                                                                 $fecha = date("d/m/Y", strtotime($movimiento->fecha));
                                                                 $ultimaActualizacion = date("d/m/Y", strtotime($movimiento->updated_at));
@@ -152,7 +152,7 @@
                                                     <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="monto_q" class="form-label">Monto (Quetzaltes)</label>
+                                                            <label for="monto_q" class="form-label">Monto (Quetzales)</label>
                                                             <p><strong>Q.{{ number_format($movimiento->monto_q,2, '.', ',') }}</strong></p>
                                                         </div>
                                                     </div>
@@ -160,7 +160,7 @@
                                                     <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="monto_q" class="form-label">Abonado/Saldo (Quetzaltes)</label>
+                                                            <label for="monto_q" class="form-label">Abonado/Saldo (Quetzales)</label>
                                                             @php
                                                                 $saldoQ = $movimiento->monto_q - $totalAbonadoQ;
                                                             @endphp
@@ -198,7 +198,7 @@
                                                     <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="monto_d" class="form-label">Monto (Dolares)</label>
+                                                            <label for="monto_d" class="form-label">Monto (Dólares)</label>
                                                             <p>$.{{ number_format($movimiento->monto_d,2, '.', ',') }}</p>
                                                         </div>
                                                     </div>
@@ -206,7 +206,7 @@
                                                     <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="monto_d" class="form-label">Abonado/Saldo (Dolares)</label>
+                                                            <label for="monto_d" class="form-label">Abonado/Saldo (Dólares)</label>
                                                             @php
                                                                 $saldoD = $movimiento->monto_d - $totalAbonadoD;
                                                             @endphp

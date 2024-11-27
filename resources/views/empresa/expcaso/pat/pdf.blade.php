@@ -489,7 +489,7 @@
             <tr>
                 <td align="center">
                     @php
-                        $fecha = date('d/m/Y', strtotime($requerimiento->fecha));
+                        $fecha = date('d/m/Y', strtotime($expediente->fecha));
                     @endphp
                     <font size="1">{{ $fecha }}</font>
                 </td>

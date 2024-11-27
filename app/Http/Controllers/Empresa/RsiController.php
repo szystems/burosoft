@@ -58,7 +58,7 @@ class RsiController extends Controller
             }
 
             // Ordenar por el código de cuenta
-            $movimientos = $movimientos->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo");
+            $movimientos = $movimientos->orderByRaw("CAST(SUBSTRING_INDEX(cuentas.codigo, '-', -1) AS UNSIGNED), cuentas.codigo");
 
             // Obtener los resultados
             $movimientos = $movimientos->get();
@@ -118,7 +118,7 @@ class RsiController extends Controller
             }
 
             // Ordenar por el código de cuenta
-            $movimientos = $movimientos->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo");
+            $movimientos = $movimientos->orderByRaw("CAST(SUBSTRING_INDEX(cuentas.codigo, '-', -1) AS UNSIGNED), cuentas.codigo");
 
             $movimientos = $movimientos->get();
 

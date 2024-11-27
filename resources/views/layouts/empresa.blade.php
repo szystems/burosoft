@@ -7,51 +7,64 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
 		<!-- Meta -->
-		<meta name="description" content="Buro, software, finanzas, tibutario" />
+		<meta name="description" content="" />
 		<meta name="author" content="Szystems" />
 		<link rel="canonical" href="https://www.szystems.com">
 		<meta property="og:url" content="https://www.szystems.com">
 		<meta property="og:title" content="Buro">
-		<meta property="og:description" content="Software control financiero de empresas">
+		<meta property="og:description" content="Software de manejo de clinica">
 		<meta property="og:type" content="Web App">
-		<meta property="og:site_name" content="https://www.burosoft.com">
+		<meta property="og:site_name" content="https://www.software.burotributario.com">
 		<link rel="shortcut icon" href="assets/imgs/logos/favicon.ico" />
 
 		<!-- Title -->
-		<title>{{ config('app.name', 'Laravel') }}</title>
+		<title>{{ config('app.name', 'Buro') }}</title>
 
 		<!-- *************
 			************ Common Css Files *************
 		************ -->
 		<!-- Bootstrap css -->
-		<link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/css/bootstrap.min.css') }}" />
 
-		<!-- Bootstrap font icons css -->
-		<link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/fonts/bootstrap/bootstrap-icons.css') }}" />
+        <!-- Bootstrap font icons css -->
+        <link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/fonts/bootstrap/bootstrap-icons.css') }}" />
 
-		<!-- Main css -->
-		<link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/css/main.min.css') }}" />
+        <!-- Main css -->
+        <link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/css/main.min.css') }}" />
 
-		<!-- *************
-			************ Vendor Css Files *************
-		************ -->
-
-		<!-- Scrollbar CSS -->
-		<link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/OverlayScrollbars.min.css') }}" />
+        <!-- Vendor Css Files -->
+        <!-- Scrollbar CSS -->
+        <link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/OverlayScrollbars.min.css') }}" />
 
         <!-- Date Range CSS -->
-		{{-- <link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/vendor/daterange/daterange.css') }}" /> --}}
+        {{-- <link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/vendor/daterange/daterange.css') }}" /> --}}
 
-		<!-- Dropzone CSS -->
-		<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" />
+        <!-- Dropzone CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" />
 
         {{-- Datepicker --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+        <!-- Select2 CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+        <!-- jQuery (Necesario para JavaScript plugins) -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+        <!-- Bootstrap Bundle JS -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        <!-- Datepicker JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
-        {{-- Datepicker end --}}
+
+        <!-- Select2 JS -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        <!-- CKeditor 5 -->
+        <script src="{{ asset('assets/ckeditor5/ckeditor.js') }}"></script>
+
+
 	</head>
 
 	<body>
@@ -91,32 +104,30 @@
 		</div>
 		<!-- Page wrapper end -->
 
-		<!--  Required JavaScript Files  -->
-		<!-- Required jQuery first, then Bootstrap Bundle JS -->
-		<script src="{{ asset('dashboardtemplate/design/assets/js/jquery.min.js') }}"></script>
-		<script src="{{ asset('dashboardtemplate/design/assets/js/bootstrap.bundle.min.js') }}"></script>
-		<script src="{{ asset('dashboardtemplate/design/assets/js/modernizr.js') }}"></script>
-		<script src="{{ asset('dashboardtemplate/design/assets/js/moment.js') }}"></script>
+		<!-- Required JavaScript Files -->
+        <!-- Bootstrap Bundle JS -->
+        <script src="{{ asset('dashboardtemplate/design/assets/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('dashboardtemplate/design/assets/js/modernizr.js') }}"></script>
+        <script src="{{ asset('dashboardtemplate/design/assets/js/moment.js') }}"></script>
 
-		<!--  Vendor Js Files  -->
+        <!-- Vendor Js Files -->
+        <!-- Overlay Scroll JS -->
+        <script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js') }}"></script>
+        <script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/custom-scrollbar.js') }}"></script>
 
-		<!-- Overlay Scroll JS -->
-		<script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js') }}"></script>
-		<script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/custom-scrollbar.js') }}"></script>
+        <!-- News ticker -->
+        <script src="{{ asset('dashboardtemplate/design/assets/vendor/newsticker/newsTicker.min.js') }}"></script>
+        <script src="{{ asset('dashboardtemplate/design/assets/vendor/newsticker/custom-newsTicker.js') }}"></script>
 
-		<!-- News ticker -->
-		<script src="{{ asset('dashboardtemplate/design/assets/vendor/newsticker/newsTicker.min.js') }}"></script>
-		<script src="{{ asset('dashboardtemplate/design/assets/vendor/newsticker/custom-newsTicker.js') }}"></script>
+        <!-- Dropzone JS -->
+        <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
-        <!-- Date Range JS -->
-		{{-- <script src="{{ asset('dashboardtemplate/design/assets/vendor/daterange/daterange.js') }}"></script>
-		<script src="{{ asset('dashboardtemplate/design/assets/vendor/daterange/custom-daterange.js') }}"></script> --}}
+        <!-- Main Js Required -->
+        <script src="{{ asset('dashboardtemplate/design/assets/js/main.js') }}"></script>
 
-		<!-- Dropzone JS -->
-		<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+        <!-- Sweet Alert -->
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-		<!-- Main Js Required -->
-		<script src="{{ asset('dashboardtemplate/design/assets/js/main.js') }}"></script>
 
 		<!-- Apex Charts -->
 		{{-- <script src="{{ asset('dashboardtemplate/design/assets/vendor/apex/apexcharts.min.js') }}"></script>
@@ -131,9 +142,10 @@
 		<!-- Main Js Required -->
 		{{-- <script src="{{ asset('dashboardtemplate/design/assets/js/main.js') }}"></script> --}}
 
-        {{-- sweet alert --}}
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
+
+
 
         @if (session('status'))
             <script>

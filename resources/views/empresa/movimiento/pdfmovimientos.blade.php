@@ -11,7 +11,7 @@
         integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
 
 
-    <title>Movimientos</title>
+    <title>Cuentas Por Cobrar</title>
 
 </head>
 
@@ -19,7 +19,7 @@
     <center>
         <img align="center" src="{{ $imagen }}" alt="" height="100">
     </center>
-    <h3 align="center"><u>Movimientos</u></h3>
+    <h3 align="center"><u>Cuentas Por Cobrar</u></h3>
     <label>
         <font size="1">Fecha Reporte:</font>
         <font color="blue" size="1">
@@ -93,7 +93,7 @@
         </font>
     </label>
 
-    <h5><u>Listado de movimientos:</u></h5>
+    <h5><u>Cuentas:</u></h5>
     <table class="pure-table pure-table-bordered" Width=100%>
         <thead>
             <tr>

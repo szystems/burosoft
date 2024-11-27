@@ -117,7 +117,7 @@
                                                         </div>
 
                                                         <div class="col-md-3 mb-3">
-                                                            <label class="form-label">Monto (Dolares)</label>
+                                                            <label class="form-label">Monto (Dólares)</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text">$.</span>
                                                                 <input name="monto_d" type="number" step="0.01" class="form-control" id="monto_d" placeholder="0.00"  value="{{ $movimiento->monto_d }}">
