@@ -20,6 +20,9 @@ class CreatePatAtencionRequerimientosTable extends Migration
             $table->date('fecha');
             $table->enum('forma_atencion', ['Escrito', 'Verbal', 'Otro']);
             $table->string('forma_atencion_otro')->nullable();
+            $table->enum('entregado_en', ['Ventanilla', 'Actuante', 'Otros']);
+            $table->string('entregado_en_otro')->nullable();
+            $table->enum('oficio_respuesta', ['Si', 'No']);
             $table->enum('acta_administrativa', ['Si', 'No']);
             $table->string('quien_atendio', 100);
             $table->text('observaciones')->nullable();

@@ -358,7 +358,10 @@
                     <font size="1">Forma de Atención</font>
                 </th>
                 <th>
-                    <font size="1">Acta Administratíva</font>
+                    <font size="1">Entregado En</font>
+                </th>
+                <th>
+                    <font size="1">Lleva Solicitud <br> / <br> Acta Administratíva</font>
                 </th>
                 <th>
                     <font size="1">Atendio</font>
@@ -394,7 +397,16 @@
                     </font>
                 </td>
                 <td align="center">
-                    <font size="1">{{  $atencion->acta_administrativa}}</font>
+                    <font size="1">
+                        {{ $atencion->entregado_en }}
+                        @if ($atencion->entregado_en == "Otros")
+                            <br>
+                            {{ $atencion->entregado_en_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">{{  $atencion->oficio_respuesta}} / {{  $atencion->acta_administrativa}}</font>
                 </td>
                 <td align="center">
                     <font size="1">{{  $atencion->quien_atendio}}</font>

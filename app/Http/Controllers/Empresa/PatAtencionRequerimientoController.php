@@ -40,6 +40,9 @@ class PatAtencionRequerimientoController extends Controller
         $atencionrequerimiento->fecha = $request->input('fecha');
         $atencionrequerimiento->forma_atencion = $request->input('forma_atencion');
         $atencionrequerimiento->forma_atencion_otro = $request->input('forma_atencion_otro');
+        $atencionrequerimiento->entregado_en = $request->input('entregado_en');
+        $atencionrequerimiento->entregado_en_otro = $request->input('entregado_en_otro');
+        $atencionrequerimiento->oficio_respuesta = $request->input('oficio_respuesta');
         $atencionrequerimiento->acta_administrativa = $request->input('acta_administrativa');
         $atencionrequerimiento->quien_atendio = $request->input('quien_atendio');
         $atencionrequerimiento->observaciones = $request->input('observaciones');
@@ -80,6 +83,9 @@ class PatAtencionRequerimientoController extends Controller
         $atencionrequerimiento->fecha = $request->input('fecha');
         $atencionrequerimiento->forma_atencion = $request->input('forma_atencion');
         $atencionrequerimiento->forma_atencion_otro = $request->input('forma_atencion_otro');
+        $atencionrequerimiento->entregado_en = $request->input('entregado_en');
+        $atencionrequerimiento->entregado_en_otro = $request->input('entregado_en_otro');
+        $atencionrequerimiento->oficio_respuesta = $request->input('oficio_respuesta');
         $atencionrequerimiento->acta_administrativa = $request->input('acta_administrativa');
         $atencionrequerimiento->quien_atendio = $request->input('quien_atendio');
         $atencionrequerimiento->observaciones = $request->input('observaciones');

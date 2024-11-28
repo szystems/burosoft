@@ -21,6 +21,9 @@ class PatAtencionRequerimiento extends Model
         'archivo',
         'tipo',
         'usuario_id',
+        'entregado_en',
+        'entregado_en_otro',
+        'oficio_respuesta',
     ];
 
     protected $casts = [

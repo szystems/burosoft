@@ -370,6 +370,18 @@
                                                                                 <span class="badge rounded-pill primary ms-2">{{ $atencionrequerimientos->count() }}</span></a>
                                                                         </li>
                                                                         <li class="nav-item" role="presentation">
+                                                                            <a class="nav-link" id="tab-providenciaar" data-bs-toggle="tab" href="#providenciaar" role="tab"
+                                                                                aria-controls="providenciaar" aria-selected="false"> Providencia AR
+                                                                                {{-- <span class="badge rounded-pill primary ms-2">{{ $atencionrequerimientos->count() }}</span> --}}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item" role="presentation">
+                                                                            <a class="nav-link" id="tab-nulidades" data-bs-toggle="tab" href="#nulidades" role="tab"
+                                                                                aria-controls="nulidades" aria-selected="false"> Nulidades
+                                                                                {{-- <span class="badge rounded-pill primary ms-2">{{ $atencionrequerimientos->count() }}</span> --}}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item" role="presentation">
                                                                             <a class="nav-link" id="tab-actasadministrativas" data-bs-toggle="tab" href="#actasadministrativas" role="tab"
                                                                                 aria-controls="actasadministrativas" aria-selected="false"> Actas Administrativas
                                                                                 <span class="badge rounded-pill primary ms-2">{{ $actasadministrativas->count() }}</span></a>
@@ -378,6 +390,24 @@
                                                                             <a class="nav-link" id="tab-expedientes" data-bs-toggle="tab" href="#expedientes" role="tab"
                                                                                 aria-controls="expedientes" aria-selected="false">Expedientes/Antecedentes
                                                                                 <span class="badge rounded-pill primary ms-2">{{ $expedientes->count() }}</span></a>
+                                                                        </li>
+                                                                        <li class="nav-item" role="presentation">
+                                                                            <a class="nav-link" id="tab-raf" data-bs-toggle="tab" href="#raf" role="tab"
+                                                                                aria-controls="raf" aria-selected="false">RAF
+                                                                                {{-- <span class="badge rounded-pill primary ms-2">{{ $expedientes->count() }}</span> --}}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item" role="presentation">
+                                                                            <a class="nav-link" id="tab-va" data-bs-toggle="tab" href="#va" role="tab"
+                                                                                aria-controls="va" aria-selected="false">VA
+                                                                                {{-- <span class="badge rounded-pill primary ms-2">{{ $expedientes->count() }}</span> --}}
+                                                                            </a>
+                                                                        </li>
+                                                                        <li class="nav-item" role="presentation">
+                                                                            <a class="nav-link" id="tab-vp" data-bs-toggle="tab" href="#vp" role="tab"
+                                                                                aria-controls="vp" aria-selected="false">VP
+                                                                                {{-- <span class="badge rounded-pill primary ms-2">{{ $expedientes->count() }}</span> --}}
+                                                                            </a>
                                                                         </li>
                                                                     </ul>
                                                                     <div class="tab-content" id="customTabContent2">
@@ -840,6 +870,20 @@
 
                                                                             </div>
                                                                         </div>
+                                                                        <div class="tab-pane fade" id="providenciaar" role="tabpanel">
+                                                                            <div class="row gx-3">
+
+                                                                                <h4>Providencia de Atención Administrativas (PAR)</h4>
+                                                                                <hr>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="tab-pane fade" id="nulidades" role="tabpanel">
+                                                                            <div class="row gx-3">
+
+                                                                                <h4>Nulidades</h4>
+                                                                                <hr>
+                                                                            </div>
+                                                                        </div>
                                                                         <div class="tab-pane fade" id="actasadministrativas" role="tabpanel">
                                                                             <div class="row gx-3">
 
@@ -1024,6 +1068,27 @@
                                                                                     {{-- {{ $Movimientos->links() }} --}}
                                                                                 </div>
 
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="tab-pane fade" id="raf" role="tabpanel">
+                                                                            <div class="row gx-3">
+
+                                                                                <h4>Providencia de Emergencia (RAF)</h4>
+                                                                                <hr>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="tab-pane fade" id="va" role="tabpanel">
+                                                                            <div class="row gx-3">
+
+                                                                                <h4>VA</h4>
+                                                                                <hr>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="tab-pane fade" id="vp" role="tabpanel">
+                                                                            <div class="row gx-3">
+
+                                                                                <h4>VP</h4>
+                                                                                <hr>
                                                                             </div>
                                                                         </div>
                                                                     </div>

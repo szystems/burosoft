@@ -85,6 +85,60 @@
                         <div class="col-md-6 mb-3">
                             <!-- Form Field Start -->
                             <div class="mb-3">
+                                <label for="entregado_en" class="form-label">Entregado en</label>
+                                <select name="entregado_en" class="form-select" aria-label="Default select example"  required>
+                                    <option value="">Seleccione forma de atención...</option>
+                                    <option value="Ventanilla" {{ $atencion->entregado_en == "Ventanilla" ? ' selected' : '' }}>Ventanilla</option>
+                                    <option value="Actuante" {{ $atencion->entregado_en == "Actuante" ? ' selected' : '' }}>Actuante</option>
+                                    <option value="Otros" {{ $atencion->entregado_en == "Otros" ? ' selected' : '' }}>Otros</option>
+                                </select>
+                                @if ($errors->has('entregado_en'))
+                                    <span class="help-block opacity-7">
+                                            <strong>
+                                                <font color="red">{{ $errors->first('entregado_en') }}</font>
+                                            </strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <!-- Form Field Start -->
+                            <div class="mb-3">
+                                <label for="entregado_en_otro" class="form-label">Si es otro</label>
+                                <input name="entregado_en_otro" type="text" class="form-control" placeholder="Otra forma de entrega..." value="{{ $atencion->entregado_en_otro }}"/>
+                                @if ($errors->has('entregado_en_otro'))
+                                    <span class="help-block opacity-7">
+                                            <strong>
+                                                <font color="red">{{ $errors->first('entregado_en_otro') }}</font>
+                                            </strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <!-- Form Field Start -->
+                            <div class="mb-3">
+                                <label for="oficio_respuesta" class="form-label">¿El oficio de respuesta lleva solicitud?</label>
+                                <select name="oficio_respuesta" class="form-select" aria-label="Default select example"  required>
+                                    <option value="">Seleccione...</option>
+                                    <option value="Si" {{ $atencion->oficio_respuesta == "Si" ? ' selected' : '' }}>Si</option>
+                                    <option value="No" {{ $atencion->oficio_respuesta == "No" ? ' selected' : '' }}>No</option>
+                                </select>
+                                @if ($errors->has('oficio_respuesta'))
+                                    <span class="help-block opacity-7">
+                                            <strong>
+                                                <font color="red">{{ $errors->first('oficio_respuesta') }}</font>
+                                            </strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <!-- Form Field Start -->
+                            <div class="mb-3">
                                 <label for="acta_administrativa" class="form-label">¿Se suscribió acta administrativa?</label>
                                 <select name="acta_administrativa" class="form-select" aria-label="Default select example"  required>
                                     <option value="">Seleccione...</option>
@@ -105,7 +159,7 @@
                             <!-- Form Field Start -->
                             <div class="mb-3">
                                 <label for="quien_atendio" class="form-label">¿Quién atendió?</label>
-                                <input name="quien_atendio" type="text" class="form-control" placeholder="Otro lugar para atender..." value="{{ $atencion->quien_atendio }}" required/>
+                                <input name="quien_atendio" type="text" class="form-control" placeholder="Persona que atendió..." value="{{ $atencion->quien_atendio }}" required/>
                                 @if ($errors->has('quien_atendio'))
                                     <span class="help-block opacity-7">
                                             <strong>
