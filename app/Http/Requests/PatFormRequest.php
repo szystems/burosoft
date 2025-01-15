@@ -31,6 +31,7 @@ class PatFormRequest extends FormRequest
             'gerencia' => 'required|string',
             'tipo_contribuyente' => 'required|string',
             'estado' => 'required|string',
+            'resultado' => 'required|string',
         ];
     }
 }

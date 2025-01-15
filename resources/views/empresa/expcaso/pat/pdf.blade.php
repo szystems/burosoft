@@ -89,7 +89,7 @@
                 <th align="right">
                     <font size="1">Estado:</font>
                 </th>
-                <td colspan="3">
+                <td>
                     <b>
                         @if($pat->estado == "Activo")
                             <font size="1" color="limegreen">{{ $pat->estado }}</font>
@@ -99,6 +99,12 @@
                             <font size="1" color="orange">{{ $pat->estado }}</font>
                         @endif
                     </b>
+                </td>
+                <th align="right">
+                    <font size="1">Resultado:</font>
+                </th>
+                <td>
+                    <font size="1">{{ $pat->resultado }}</font>
                 </td>
             </tr>
 

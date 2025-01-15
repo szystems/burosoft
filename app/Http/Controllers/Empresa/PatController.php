@@ -34,6 +34,7 @@ class PatController extends Controller
             $gerencia = $request->input('gerencia');
             $tipoContribuyente = $request->input('tipo_contribuyente');
             $estado = $request->input('estado');
+            $resultado = $request->input('resultado');
 
             $config = Config::where('empresa_id', $cuenta->id)->first();
 
@@ -50,6 +51,9 @@ class PatController extends Controller
                 })
                 ->when($estado, function ($query, $estado) {
                     return $query->where('estado', $estado);
+                })
+                ->when($resultado, function ($query, $resultado) {
+                    return $query->where('resultado', $resultado);
                 })
                 ->orderBy('created_at', 'desc')
                 ->paginate(25);
@@ -85,6 +89,7 @@ class PatController extends Controller
         $pat->gerencia = $request->input('gerencia');
         $pat->tipo_contribuyente = $request->input('tipo_contribuyente');
         $pat->estado = $request->input('estado');
+        $pat->resultado = $request->input('resultado');
         $pat->save();
 
         Bitacora::create([
@@ -92,7 +97,7 @@ class PatController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Exp/Caso",
-            'descripcion' => "Creo un nuevo PAT de Exp/Caso: No. Expediente:".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado,
+            'descripcion' => "Creo un nuevo PAT de Exp/Caso: No. Expediente:".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado.", Resultado".$pat->resultado,
         ]);
 
         return redirect('show-pat/'.$pat->id)->with('status',__('PAT agregado exitosamente.'));
@@ -106,6 +111,7 @@ class PatController extends Controller
         $pat->gerencia = $request->input('gerencia');
         $pat->tipo_contribuyente = $request->input('tipo_contribuyente');
         $pat->estado = $request->input('estado');
+        $pat->resultado = $request->input('resultado');
         $pat->update();
 
         Bitacora::create([
@@ -113,7 +119,7 @@ class PatController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Exp/Caso",
-            'descripcion' => "Actualizó un PAT de Exp/Caso: No. Expediente:".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado,
+            'descripcion' => "Actualizó un PAT de Exp/Caso: No. Expediente:".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado.", Resultado".$pat->resultado,
         ]);
 
         return redirect('show-pat/'.$id)->with('status',__('Pat actualizado correctamente.'));

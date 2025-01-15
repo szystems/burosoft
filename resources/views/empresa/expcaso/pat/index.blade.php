@@ -284,6 +284,7 @@
                                                                     <td align="center">Gerencia</td>
                                                                     <td align="center">T.Contribuyente</td>
                                                                     <td align="center">Estado</td>
+                                                                    <td align="center">Resultado</td>
                                                                     <td align="center">Usuario</td>
                                                                 </tr>
                                                             </thead>
@@ -350,6 +351,9 @@
                                                                                     @endif
                                                                                 </p>
                                                                             </p>
+                                                                        </td>
+                                                                        <td align="center">
+                                                                            <p>{{ $pat->resultado }}</p>
                                                                         </td>
                                                                         <td align="center">
                                                                             <p>{{ $pat->usuario->name }}</p>

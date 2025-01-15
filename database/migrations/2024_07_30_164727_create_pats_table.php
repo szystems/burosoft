@@ -22,6 +22,7 @@ class CreatePatsTable extends Migration
             $table->string('gerencia');
             $table->string('tipo_contribuyente');
             $table->string('estado');
+            $table->string('resultado');
             $table->timestamps();
         });
     }

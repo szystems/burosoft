@@ -42,7 +42,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('bdeLeonBURO2024@@@'),
             'role_as' => 0,
             'estado' => 1,
-            'principal' => 0,
+            'principal' => 1,
         ]);
 
         User::create([
@@ -52,7 +52,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('rdeLeonBURO2024@@@'),
             'role_as' => 0,
             'estado' => 1,
-            'principal' => 0,
+            'principal' => 1,
         ]);
 
         User::create([
@@ -62,7 +62,7 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('ideLeonBURO2024@@@'),
             'role_as' => 0,
             'estado' => 1,
-            'principal' => 0,
+            'principal' => 1,
         ]);
 
         // User::factory()->count(100)->create();

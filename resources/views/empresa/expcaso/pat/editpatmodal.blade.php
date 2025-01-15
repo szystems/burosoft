@@ -87,10 +87,10 @@ aria-labelledby="editPatModal" aria-hidden="true">
                             <label for="tipo_contribuyente" class="form-label">Tipo Contribuyente</label>
                             <select name="tipo_contribuyente" class="form-select" aria-label="Default select example" required>
                                 <option value="">Seleccione Tipo...</option>
-                                <option value="Grande Especial" {{ old('tipo_contribuyente') == "Grande Especial" ? ' selected' : '' }}>Grande Especial</option>
-                                <option value="Mediano Especial" {{ old('tipo_contribuyente') == "Mediano Especial" ? ' selected' : '' }}>Mediano Especial</option>
-                                <option value="Normal General" {{ old('tipo_contribuyente') == "Normal General" ? ' selected' : '' }}>Normal General</option>
-                                <option value="Pequeño Contribuyente" {{ old('tipo_contribuyente') == "Pequeño Contribuyente" ? ' selected' : '' }}>Pequeño Contribuyente</option>
+                                <option value="Grande Especial" {{ $pat->tipo_contribuyente == "Grande Especial" ? ' selected' : '' }}>Grande Especial</option>
+                                <option value="Mediano Especial" {{ $pat->tipo_contribuyente == "Mediano Especial" ? ' selected' : '' }}>Mediano Especial</option>
+                                <option value="Normal General" {{ $pat->tipo_contribuyente == "Normal General" ? ' selected' : '' }}>Normal General</option>
+                                <option value="Pequeño Contribuyente" {{ $pat->tipo_contribuyente == "Pequeño Contribuyente" ? ' selected' : '' }}>Pequeño Contribuyente</option>
                             </select>
                             @if ($errors->has('tipo_contribuyente'))
                                 <span class="help-block opacity-7">
@@ -116,6 +116,27 @@ aria-labelledby="editPatModal" aria-hidden="true">
                                 <span class="help-block opacity-7">
                                         <strong>
                                             <font color="red">{{ $errors->first('estado') }}</font>
+                                        </strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <!-- Form Field Start -->
+                        <div class="mb-3">
+                            <label for="resultado" class="form-label">Resultado</label>
+                            <select name="resultado" class="form-select" aria-label="Default select example" required>
+                                <option value="Archivo" {{ $pat->resultado == "Archivo" ? ' selected' : '' }}>Archivo</option>
+                                <option value="RAF" {{ $pat->resultado == "RAF" ? ' selected' : '' }}>RAF</option>
+                                <option value="VA" {{ $pat->resultado == "VA" ? ' selected' : '' }}>VA</option>
+                                <option value="VP" {{ $pat->resultado == "VP" ? ' selected' : '' }}>VP</option>
+                                <option value="En proceso" {{ $pat->resultado == "En proceso" ? ' selected' : '' }}>En proceso</option>
+                            </select>
+                            @if ($errors->has('resultado'))
+                                <span class="help-block opacity-7">
+                                        <strong>
+                                            <font color="red">{{ $errors->first('resultado') }}</font>
                                         </strong>
                                 </span>
                             @endif

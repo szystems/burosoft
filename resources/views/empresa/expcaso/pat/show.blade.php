@@ -342,6 +342,16 @@
                                                         </div>
                                                     </div>
 
+                                                    <div class="col-md-4 mb-3">
+                                                        <!-- Form Field Start -->
+                                                        <div class="mb-3">
+                                                            <label for="resultado" class="form-label">Resultado</label>
+                                                            <p>
+                                                                {{ $pat->resultado }}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+
 
                                                     {{-- Inicio Tab --}}
                                                     <div class="col-xxl-12">

@@ -17,6 +17,7 @@ class Pat extends Model
         'gerencia',
         'tipo_contribuyente',
         'estado',
+        'resultado',
     ];
 
     public function usuario()

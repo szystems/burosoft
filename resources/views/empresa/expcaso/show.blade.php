@@ -176,8 +176,6 @@
                                                         </div>
                                                     </div>
 
-
-
                                                     <div class="col-md-12 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
@@ -185,8 +183,6 @@
                                                             <p>{{ $cuenta->direccion }}</p>
                                                         </div>
                                                     </div>
-
-
 
                                                     <hr>
 

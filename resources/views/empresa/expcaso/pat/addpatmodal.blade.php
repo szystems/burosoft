@@ -121,6 +121,27 @@ aria-labelledby="addPatModal" aria-hidden="true">
                         </div>
                     </div>
 
+                    <div class="col-md-4 mb-3">
+                        <!-- Form Field Start -->
+                        <div class="mb-3">
+                            <label for="resultado" class="form-label">Resultado</label>
+                            <select name="resultado" class="form-select" aria-label="Default select example" required>
+                                <option value="Archivo" {{ old('resultado') == "Archivo" ? ' selected' : '' }}>Archivo</option>
+                                <option value="RAF" {{ old('resultado') == "RAF" ? ' selected' : '' }}>RAF</option>
+                                <option value="VA" {{ old('resultado') == "VA" ? ' selected' : '' }}>VA</option>
+                                <option value="VP" {{ old('resultado') == "VP" ? ' selected' : '' }}>VP</option>
+                                <option value="En proceso" {{ old('resultado') == "En proceso" ? ' selected' : '' }}>En proceso</option>
+                            </select>
+                            @if ($errors->has('resultado'))
+                                <span class="help-block opacity-7">
+                                        <strong>
+                                            <font color="red">{{ $errors->first('resultado') }}</font>
+                                        </strong>
+                                </span>
+                            @endif
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="modal-footer">
