@@ -32,7 +32,7 @@ class RegisterController extends Controller
 
     protected function authenticated()
     {
-        if(Auth::user()->role_as == '0') //1 = Admin Login
+        if(Auth::user()->role_as == '0') //0 = Admin Login
         {
             return redirect('dashboard')->with('status',__('Bienvenido al panel de Administrador'));
         }

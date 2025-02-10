@@ -45,7 +45,7 @@
                             <div class="col-12 col-md-auto">
                                 <div class="btn-group-sm m-3">
                                     <a href="{{ url('edit-user/'.$user->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                    @if ($user->principal == "1")
+                                    @if ($user->role_as == "0")
 										<button disabled type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
                                             <i class="bi bi-trash"></i> Eliminar
                                         </button>

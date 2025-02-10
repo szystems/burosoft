@@ -66,7 +66,7 @@
                                                                     <option value="">Seleccione cuenta...</option>
                                                                     @foreach($cuentas as $cuenta)
                                                                         @if ($cuenta->estado == 1)
-                                                                            <option value="{{ $cuenta->id }}"{{ old('cuenta_id') == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->codigo }} {{ $cuenta->razon_social }}</option>
+                                                                            <option value="{{ $cuenta->id }}"{{ old('cuenta_id') == $cuenta->id ? ' selected' : '' }}>{{ $cuenta->razon_social }} {{ $cuenta->codigo }}</option>
                                                                         @endif
                                                                     @endforeach
                                                                 </select>

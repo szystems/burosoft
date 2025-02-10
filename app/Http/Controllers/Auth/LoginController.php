@@ -53,7 +53,7 @@ class LoginController extends Controller
             return redirect()->back()->withErrors(['license_expired' => 'Tu licencia y periodo de gracia expiro, porfavor ponte en contacto con el personal de Buro para renovar tu licencia.']);
         }
 
-        if(Auth::user()->role_as == '0') //1 = Admin Login
+        if(Auth::user()->role_as == '0') //0 = Admin Login
         {
             return redirect('dashboard')->with('status','Bienvenido al panel de Administrador');
         }

@@ -111,7 +111,7 @@
                                                         <div class="mb-3">
                                                             <a href="{{ url('edit-cuenta/'.$cuenta->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
                                                             @if ($cuenta->id != 1)
-                                                                @if (Auth::user()->principal == 1)
+                                                                @if (Auth::user()->role_as == 0)
                                                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $cuenta->id }}">
                                                                         <i class="bi bi-trash"></i> Eliminar
                                                                     </button>
@@ -381,14 +381,14 @@
                                                                         </li>
                                                                         <li class="nav-item" role="presentation">
                                                                             <a class="nav-link" id="tab-providenciaar" data-bs-toggle="tab" href="#providenciaar" role="tab"
-                                                                                aria-controls="providenciaar" aria-selected="false"> Providencia AR
-                                                                                {{-- <span class="badge rounded-pill primary ms-2">{{ $atencionrequerimientos->count() }}</span> --}}
+                                                                                aria-controls="providenciaar" aria-selected="false"> Providencia (AR)
+                                                                                <span class="badge rounded-pill primary ms-2">{{ $providencias->count() }}</span>
                                                                             </a>
                                                                         </li>
                                                                         <li class="nav-item" role="presentation">
                                                                             <a class="nav-link" id="tab-nulidades" data-bs-toggle="tab" href="#nulidades" role="tab"
                                                                                 aria-controls="nulidades" aria-selected="false"> Nulidades
-                                                                                {{-- <span class="badge rounded-pill primary ms-2">{{ $atencionrequerimientos->count() }}</span> --}}
+                                                                                <span class="badge rounded-pill primary ms-2">{{ $nulidades->count() }}</span>
                                                                             </a>
                                                                         </li>
                                                                         <li class="nav-item" role="presentation">
@@ -403,8 +403,8 @@
                                                                         </li>
                                                                         <li class="nav-item" role="presentation">
                                                                             <a class="nav-link" id="tab-raf" data-bs-toggle="tab" href="#raf" role="tab"
-                                                                                aria-controls="raf" aria-selected="false">RAF
-                                                                                {{-- <span class="badge rounded-pill primary ms-2">{{ $expedientes->count() }}</span> --}}
+                                                                                aria-controls="raf" aria-selected="false">Providencias de urgencia (RAF)
+                                                                                <span class="badge rounded-pill primary ms-2">{{ $rafs->count() }}</span>
                                                                             </a>
                                                                         </li>
                                                                         <li class="nav-item" role="presentation">
@@ -461,7 +461,7 @@
                                                                                                             <i class="bi bi-pencil"></i>
                                                                                                         </button>
 
-                                                                                                        @if (Auth::user()->principal == 1)
+                                                                                                        @if (Auth::user()->role_as == 0)
                                                                                                             <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteNombramientoModal-{{ $nombramiento->id }}">
                                                                                                                 <i class="bi bi-trash-fill text-white"></i>
                                                                                                             </button>
@@ -560,7 +560,7 @@
                                                                                                             <i class="bi bi-pencil"></i>
                                                                                                         </button>
 
-                                                                                                        @if (Auth::user()->principal == 1)
+                                                                                                        @if (Auth::user()->role_as == 0)
                                                                                                             <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteNotificacionModal-{{ $notificacion->id }}">
                                                                                                                 <i class="bi bi-trash-fill text-white"></i>
                                                                                                             </button>
@@ -691,7 +691,7 @@
                                                                                                             <i class="bi bi-pencil"></i>
                                                                                                         </button>
 
-                                                                                                        @if (Auth::user()->principal == 1)
+                                                                                                        @if (Auth::user()->role_as == 0)
                                                                                                             <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteRequerimientoModal-{{ $requerimiento->id }}">
                                                                                                                 <i class="bi bi-trash-fill text-white"></i>
                                                                                                             </button>
@@ -812,7 +812,7 @@
                                                                                                             <i class="bi bi-pencil"></i>
                                                                                                         </button>
 
-                                                                                                        @if (Auth::user()->principal == 1)
+                                                                                                        @if (Auth::user()->role_as == 0)
                                                                                                             <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteAtencionRequerimientoModal-{{ $atencion->id }}">
                                                                                                                 <i class="bi bi-trash-fill text-white"></i>
                                                                                                             </button>
@@ -883,8 +883,109 @@
                                                                         <div class="tab-pane fade" id="providenciaar" role="tabpanel">
                                                                             <div class="row gx-3">
 
-                                                                                <h4>Providencia de Atención Administrativas (PAR)</h4>
+                                                                                <h4>Providencia (AR)</h4>
                                                                                 <hr>
+                                                                                @if ($cuenta->estado == 1)
+                                                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                                                        data-bs-target="#addProvidenciaModal">
+                                                                                        <i class="bi bi-plus-square"></i> Agregar Providencia
+                                                                                    </button>
+                                                                                @endif
+
+                                                                                @include('empresa.expcaso.pat.providencia.addprovidenciamodal')
+
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table align-middle table-striped flex-column">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                <td align="center">No</td>
+                                                                                                <td align="center">Fecha Providencia</td>
+                                                                                                <td align="center">Tipo de Providencia</td>
+                                                                                                <td align="center">Se Admite</td>
+                                                                                                <td align="center">Observaciones</td>
+                                                                                                <td align="center">Usuario</td>
+                                                                                                <td align="center">Archivo</td>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($providencias as $providencia)
+                                                                                            <tr>
+                                                                                                <td align="center">
+
+                                                                                                    {{-- <a type="button" class="btn btn-info m-1" href="{{ asset('assets/uploads/pat/providencias'.$providencia->archivo) }}" target="_blank"><i class="bi bi-eye-fill text-white"></i></a> --}}
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
+                                                                                                            data-bs-target="#editarProvidenciaModal{{ $providencia->id }}">
+                                                                                                            <i class="bi bi-pencil"></i>
+                                                                                                        </button>
+
+                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                            <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteProvidenciaModal-{{ $providencia->id }}">
+                                                                                                                <i class="bi bi-trash-fill text-white"></i>
+                                                                                                            </button>
+                                                                                                        @endif
+
+                                                                                                        @include('empresa.expcaso.pat.providencia.editprovidenciamodal')
+                                                                                                        @include('empresa.expcaso.pat.providencia.deleteprovidenciamodal')
+                                                                                                    @endif
+
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>{{ $providencia->no }}</p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    @php
+                                                                                                        $fecha = date('d/m/Y', strtotime($providencia->fecha));
+                                                                                                    @endphp
+                                                                                                    <p><font class="text-info">{{ $fecha }}</font></p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>
+                                                                                                        {{ $providencia->tipo_providencia }}
+                                                                                                        @if ($providencia->tipo_providencia == "Otro")
+                                                                                                            <br>
+                                                                                                            {{ $providencia->tipo_providencia_otro }}
+                                                                                                        @endif
+                                                                                                    </p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>
+                                                                                                        {{  $providencia->admite}}
+                                                                                                        @if ($providencia->admite == "Otro")
+                                                                                                            <br>
+                                                                                                            {{ $providencia->admite_otro }}
+                                                                                                        @endif
+                                                                                                    </p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>{{  $providencia->observaciones}}</p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    @php
+                                                                                                        $usuario = \App\Models\User::find( $providencia->usuario_id );
+                                                                                                    @endphp
+                                                                                                    <p>{{ $pat->usuario->name }}</p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <strong><a href="{{ asset('assets/uploads/pat/providencias/'.$providencia->archivo) }}" target="_blank" class="text-blue">{{ $providencia->tipo }}</a></strong>
+                                                                                                </td>
+
+
+                                                                                            </tr>
+                                                                                            @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                    @if ($providencias->count() == 0)
+                                                                                        <div class="alert alert-warning text-white" role="alert">
+                                                                                            <ul align="center">
+                                                                                                <p>No se han ingresado providencias.</p>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                    {{-- {{ $Movimientos->links() }} --}}
+                                                                                </div>
+
                                                                             </div>
                                                                         </div>
                                                                         <div class="tab-pane fade" id="nulidades" role="tabpanel">
@@ -892,6 +993,94 @@
 
                                                                                 <h4>Nulidades</h4>
                                                                                 <hr>
+                                                                                @if ($cuenta->estado == 1)
+                                                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                                                        data-bs-target="#addNulidadModal">
+                                                                                        <i class="bi bi-plus-square"></i> Agregar Nulidad
+                                                                                    </button>
+                                                                                @endif
+
+                                                                                @include('empresa.expcaso.pat.nulidad.addnulidadmodal')
+
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table align-middle table-striped flex-column">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                <td align="center">No</td>
+                                                                                                <td align="center">Fecha Nulidad</td>
+                                                                                                <td align="center">Tipo de Nulidad</td>
+                                                                                                <td align="center">Nueva Notificacion</td>
+                                                                                                <td align="center">Usuario</td>
+                                                                                                <td align="center">Archivo</td>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($nulidades as $nulidad)
+                                                                                            <tr>
+                                                                                                <td align="center">
+
+                                                                                                    {{-- <a type="button" class="btn btn-info m-1" href="{{ asset('assets/uploads/pat/providencias'.$providencia->archivo) }}" target="_blank"><i class="bi bi-eye-fill text-white"></i></a> --}}
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
+                                                                                                            data-bs-target="#editarNulidadModal{{ $nulidad->id }}">
+                                                                                                            <i class="bi bi-pencil"></i>
+                                                                                                        </button>
+
+                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                            <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteNulidadModal-{{ $nulidad->id }}">
+                                                                                                                <i class="bi bi-trash-fill text-white"></i>
+                                                                                                            </button>
+                                                                                                        @endif
+
+                                                                                                        @include('empresa.expcaso.pat.nulidad.editnulidadmodal')
+                                                                                                        @include('empresa.expcaso.pat.nulidad.deletenulidadmodal')
+                                                                                                    @endif
+
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>{{ $nulidad->no }}</p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    @php
+                                                                                                        $fecha = date('d/m/Y', strtotime($nulidad->fecha));
+                                                                                                    @endphp
+                                                                                                    <p><font class="text-info">{{ $fecha }}</font></p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>
+                                                                                                        {{ $nulidad->tipo_nulidad }}
+                                                                                                    </p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>
+                                                                                                        {{  $nulidad->nueva_notificacion}}
+                                                                                                    </p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    @php
+                                                                                                        $usuario = \App\Models\User::find( $nulidad->usuario_id );
+                                                                                                    @endphp
+                                                                                                    <p>{{ $nulidad->usuario->name }}</p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <strong><a href="{{ asset('assets/uploads/pat/nulidades/'.$nulidad->archivo) }}" target="_blank" class="text-blue">{{ $nulidad->tipo }}</a></strong>
+                                                                                                </td>
+
+
+                                                                                            </tr>
+                                                                                            @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                    @if ($nulidades->count() == 0)
+                                                                                        <div class="alert alert-warning text-white" role="alert">
+                                                                                            <ul align="center">
+                                                                                                <p>No se han ingresado nulidades.</p>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                    {{-- {{ $Movimientos->links() }} --}}
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="tab-pane fade" id="actasadministrativas" role="tabpanel">
@@ -933,7 +1122,7 @@
                                                                                                             <i class="bi bi-pencil"></i>
                                                                                                         </button>
 
-                                                                                                        @if (Auth::user()->principal == 1)
+                                                                                                        @if (Auth::user()->role_as == 0)
                                                                                                             <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteActaAdministrativaModal-{{ $acta->id }}">
                                                                                                                 <i class="bi bi-trash-fill text-white"></i>
                                                                                                             </button>
@@ -1031,7 +1220,7 @@
                                                                                                             <i class="bi bi-pencil"></i>
                                                                                                         </button>
 
-                                                                                                        @if (Auth::user()->principal == 1)
+                                                                                                        @if (Auth::user()->role_as == 0)
                                                                                                             <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteExpedienteModal-{{ $expediente->id }}">
                                                                                                                 <i class="bi bi-trash-fill text-white"></i>
                                                                                                             </button>
@@ -1085,6 +1274,106 @@
 
                                                                                 <h4>Providencia de Emergencia (RAF)</h4>
                                                                                 <hr>
+                                                                                @if ($cuenta->estado == 1)
+                                                                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                                                        data-bs-target="#addRafModal">
+                                                                                        <i class="bi bi-plus-square"></i> Agregar RAF
+                                                                                    </button>
+                                                                                @endif
+
+                                                                                @include('empresa.expcaso.pat.raf.addrafmodal')
+
+                                                                                <div class="table-responsive">
+                                                                                    <table class="table align-middle table-striped flex-column">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                <td align="center">No</td>
+                                                                                                <td align="center">Fecha Providencia</td>
+                                                                                                <td align="center">Tipo de Providencia</td>
+                                                                                                <td align="center">Se Admite</td>
+                                                                                                <td align="center">Observaciones</td>
+                                                                                                <td align="center">Usuario</td>
+                                                                                                <td align="center">Archivo</td>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody>
+                                                                                            @foreach ($rafs as $raf)
+                                                                                            <tr>
+                                                                                                <td align="center">
+
+                                                                                                    {{-- <a type="button" class="btn btn-info m-1" href="{{ asset('assets/uploads/pat/providencias'.$providencia->archivo) }}" target="_blank"><i class="bi bi-eye-fill text-white"></i></a> --}}
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
+                                                                                                            data-bs-target="#editarRafModal{{ $raf->id }}">
+                                                                                                            <i class="bi bi-pencil"></i>
+                                                                                                        </button>
+
+                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                            <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteRafModal-{{ $raf->id }}">
+                                                                                                                <i class="bi bi-trash-fill text-white"></i>
+                                                                                                            </button>
+                                                                                                        @endif
+
+                                                                                                        @include('empresa.expcaso.pat.raf.editrafmodal')
+                                                                                                        @include('empresa.expcaso.pat.raf.deleterafmodal')
+                                                                                                    @endif
+
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>{{ $raf->no }}</p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    @php
+                                                                                                        $fecha = date('d/m/Y', strtotime($raf->fecha));
+                                                                                                    @endphp
+                                                                                                    <p><font class="text-info">{{ $fecha }}</font></p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>
+                                                                                                        {{ $raf->tipo_providencia }}
+                                                                                                        @if ($raf->tipo_providencia == "Otro")
+                                                                                                            <br>
+                                                                                                            {{ $raf->tipo_providencia_otro }}
+                                                                                                        @endif
+                                                                                                    </p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>
+                                                                                                        {{  $raf->admite}}
+                                                                                                        @if ($raf->admite == "Otro")
+                                                                                                            <br>
+                                                                                                            {{ $raf->admite_otro }}
+                                                                                                        @endif
+                                                                                                    </p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <p>{{  $raf->observaciones}}</p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    @php
+                                                                                                        $usuario = \App\Models\User::find( $raf->usuario_id );
+                                                                                                    @endphp
+                                                                                                    <p>{{ $pat->usuario->name }}</p>
+                                                                                                </td>
+                                                                                                <td align="center">
+                                                                                                    <strong><a href="{{ asset('assets/uploads/pat/rafs/'.$raf->archivo) }}" target="_blank" class="text-blue">{{ $raf->tipo }}</a></strong>
+                                                                                                </td>
+
+
+                                                                                            </tr>
+                                                                                            @endforeach
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                    @if ($rafs->count() == 0)
+                                                                                        <div class="alert alert-warning text-white" role="alert">
+                                                                                            <ul align="center">
+                                                                                                <p>No se han ingresado RAF's.</p>
+                                                                                            </ul>
+                                                                                        </div>
+                                                                                    @endif
+                                                                                    {{-- {{ $Movimientos->links() }} --}}
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="tab-pane fade" id="va" role="tabpanel">

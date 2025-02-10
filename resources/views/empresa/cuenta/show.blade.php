@@ -72,7 +72,7 @@
                                                             @if ($cuenta->estado == 1)
                                                                 <a href="{{ url('edit-cuenta/'.$cuenta->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
                                                             @endif
-                                                            @if (Auth::user()->principal == 1)
+                                                            @if (Auth::user()->role_as == 0)
                                                                 @if ($cuenta->estado == 0)
                                                                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#activateModal-{{ $cuenta->id }}">
                                                                         <i class="bi bi-bookmark-check"></i> Activar
@@ -332,7 +332,7 @@
                                                                                 <li>
                                                                                     <a class="dropdown-item" href="{{ url('edit-movimiento/'.$movimiento->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                                                 </li>
-                                                                                @if (Auth::user()->principal == 1)
+                                                                                @if (Auth::user()->role_as == 0)
                                                                                     <li>
                                                                                         <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
                                                                                             <i class="bi bi-trash-fill text-danger"></i> Eliminar

@@ -65,7 +65,7 @@
 
 
                                                             @if ($movimiento->cuenta->estado == 1)
-                                                                @if (Auth::user()->principal == 1)
+                                                                @if (Auth::user()->role_as == 0)
                                                                     <button type="button" class="btn btn-danger float-end m-1" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
                                                                         <i class="bi bi-trash"></i> Eliminar
                                                                     </button>
@@ -270,7 +270,7 @@
                                                                                     <i class="bi bi-pencil"></i>
                                                                                 </button>
 
-                                                                                @if (Auth::user()->principal == 1)
+                                                                                @if (Auth::user()->role_as == 0)
                                                                                     <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteDocModal-{{ $doc->id }}">
                                                                                         <i class="bi bi-trash-fill text-white"></i>
                                                                                     </button>
@@ -362,7 +362,7 @@
                                                                                         <i class="bi bi-pencil"></i>
                                                                                     </button>
 
-                                                                                    @if (Auth::user()->principal == 1)
+                                                                                    @if (Auth::user()->role_as == 0)
                                                                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePagoModal-{{ $pago->id }}">
                                                                                             <i class="bi bi-trash-fill text-white"></i>
                                                                                         </button>
@@ -401,7 +401,7 @@
                                                                     <td align="center">
                                                                         @if ($pago->imagen)
                                                                             <a href="{{ asset('assets/uploads/pagos/'.$pago->imagen) }}" target="_blank" rel="Imagen pago"><img src="{{ asset('assets/uploads/pagos/'.$pago->imagen) }}" class="img-thumbnail" style="height: 100px;" alt="Imagen pago" /></a>
-                                                                            @if (Auth::user()->principal == 1)
+                                                                            @if (Auth::user()->role_as == 0)
                                                                                 <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deletePagoImgModal-{{ $pago->id }}">
                                                                                     <i class="bi bi-trash-fill"></i>
                                                                                 </button>

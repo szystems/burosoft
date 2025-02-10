@@ -35,8 +35,11 @@ use App\Http\Controllers\Empresa\PatNombramientoController;
 use App\Http\Controllers\Empresa\PatNotificacionController;
 use App\Http\Controllers\Empresa\PatRequerimientoController;
 use App\Http\Controllers\Empresa\PatAtencionRequerimientoController;
+use App\Http\Controllers\Empresa\PatProvidenciaController;
+use App\Http\Controllers\Empresa\PatRafController;
 use App\Http\Controllers\Empresa\PatActaAdministrativaController;
 use App\Http\Controllers\Empresa\PatExpedienteController;
+use App\Http\Controllers\Empresa\PatNulidadController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
 /*
@@ -162,6 +165,18 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-pat-expediente', [PatExpedienteController::class, 'insert']);
     Route::put('update-pat-expediente/{id}', [PatExpedienteController::class, 'update']);
     Route::get('delete-pat-expediente/{id}', [PatExpedienteController::class, 'destroy']);
+    //PAT Providencia
+    Route::post('insert-pat-providencia', [PatProvidenciaController::class, 'insert']);
+    Route::put('update-pat-providencia/{id}', [PatProvidenciaController::class, 'update']);
+    Route::get('delete-pat-providencia/{id}', [PatProvidenciaController::class, 'destroy']);
+    //PAT Providencia de Urgencia (RAF)
+    Route::post('insert-pat-raf', [PatRafController::class, 'insert']);
+    Route::put('update-pat-raf/{id}', [PatRafController::class, 'update']);
+    Route::get('delete-pat-raf/{id}', [PatRafController::class, 'destroy']);
+    //PAT Nulidades
+    Route::post('insert-pat-nulidad', [PatNulidadController::class, 'insert']);
+    Route::put('update-pat-nulidad/{id}', [PatNulidadController::class, 'update']);
+    Route::get('delete-pat-nulidad/{id}', [PatNulidadController::class, 'destroy']);
 
     //Usuarios Empresa
     Route::get('bitacoras', [BitacoraController::class, 'index']);

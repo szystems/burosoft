@@ -99,7 +99,7 @@
 
                                                                 {{-- <h5 class="card-title"><u>Informacíon de Paciente</u></h5> --}}
                                                                 <a href="{{ url('edit-cuenta/'.$cuenta->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
-                                                                @if (Auth::user()->principal == 1)
+                                                                @if (Auth::user()->role_as == 0)
                                                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $cuenta->id }}">
                                                                         <i class="bi bi-trash"></i> Eliminar
                                                                     </button>

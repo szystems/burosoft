@@ -126,7 +126,7 @@
                                                                     <a class="dropdown-item" href="{{ url('edit-movimiento/'.$movimiento->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                                 </li>
                                                                 @if ($movimiento->estado == 1)
-                                                                    @if (Auth::user()->principal == 1)
+                                                                    @if (Auth::user()->role_as == 0)
                                                                         <li>
                                                                             <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $movimiento->id }}">
                                                                                 <i class="bi bi-trash-fill text-danger"></i> Eliminar

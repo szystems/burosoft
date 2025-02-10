@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PatRequerimiento extends Model
+class PatNulidad extends Model
 {
     use HasFactory;
 
@@ -13,15 +13,8 @@ class PatRequerimiento extends Model
         'pat_id',
         'no',
         'fecha',
-        'fecha_maxima',
-        'tipo_requerimiento',
-        'tipo_requerimiento_otro',
-        'lugar_atender',
-        'lugar_atender_otro',
-        'domicilio',
-        'plazo_atencion',
-        'tipo_revision',
-        'tipo_revision_otro',
+        'tipo_nulidad',
+        'nueva_notificacion',
         'archivo',
         'tipo',
         'usuario_id',

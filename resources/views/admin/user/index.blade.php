@@ -67,7 +67,7 @@
                                                         </li>
                                                         <li>
 
-                                                                @if ($user->principal == "1")
+                                                                @if ($user->role_as == "0")
                                                                     <a disabled type="button" class="btn bg-gradient-danger disabled" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
                                                                         <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                     </a>

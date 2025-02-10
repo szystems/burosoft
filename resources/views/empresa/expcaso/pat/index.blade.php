@@ -105,7 +105,7 @@
                                                         <div class="mb-3">
                                                             <a href="{{ url('edit-cuenta/'.$cuenta->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
                                                             @if ($cuenta->id != 1)
-                                                                @if (Auth::user()->principal == 1)
+                                                                @if (Auth::user()->role_as == 0)
                                                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $cuenta->id }}">
                                                                         <i class="bi bi-trash"></i> Eliminar
                                                                     </button>
@@ -304,7 +304,7 @@
                                                                                         <a class="dropdown-item" href="{{ url('edit-pat/'.$pat->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
                                                                                     </li> --}}
                                                                                     @if ($cuenta->estado == 1)
-                                                                                        @if (Auth::user()->principal == 1)
+                                                                                        @if (Auth::user()->role_as == 0)
                                                                                             <li>
                                                                                                 <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $pat->id }}">
                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar

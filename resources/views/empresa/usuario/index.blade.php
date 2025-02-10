@@ -70,22 +70,17 @@
                                                             <a class="dropdown-item" href="{{ url('show-empresa-usuario/'.$user->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                         </li>
                                                         @if ($fecha_gracia >= $today)
-                                                            <li>
-                                                                <a class="dropdown-item" href="{{ url('edit-empresa-usuario/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
-                                                            </li>
-                                                            <li>
+                                                            @if ($Auth::user()->role_as == "0")
+                                                                <li>
 
-                                                                    @if ($user->principal == "1")
-                                                                        <a disabled type="button" class="btn bg-gradient-danger disabled" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                                                            <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                        </a>
-                                                                    @else
-                                                                        <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
-                                                                            <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                        </a>
-                                                                    @endif
-
-                                                            </li>
+                                                                    <a class="dropdown-item" href="{{ url('edit-empresa-usuario/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>
+                                                                </li>
+                                                                <li>
+                                                                    <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
+                                                                        <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                    </a>
+                                                                </li>
+                                                            @endif
                                                         @endif
 
                                                     </ul>

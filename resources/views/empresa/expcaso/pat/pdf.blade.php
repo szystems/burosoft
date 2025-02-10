@@ -121,8 +121,10 @@
         </tbody> --}}
     </table>
 
+    @if ($nombramientos->count() != 0)
     <br>
-    <h4><strong><u>Nombramientos</u></strong></h4>
+    <h4><strong><u>Nombramientos</u> ({{ $nombramientos->count() }})</strong></h4>
+
     <table class="pure-table pure-table-bordered" Width=100%>
         <thead>
             <tr>
@@ -178,9 +180,11 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 
+    @if ($notificaciones->count() != 0)
     <br>
-    <h4><strong><u>Notificaciones</u></strong></h4>
+    <h4><strong><u>Notificaciones</u> ({{ $notificaciones->count() }})</strong></h4>
     <table class="pure-table pure-table-bordered" Width=100%>
         <thead>
             <tr>
@@ -267,9 +271,11 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 
+    @if ($requerimientos->count() != 0)
     <br>
-    <h4><strong><u>Requerimientos</u></strong></h4>
+    <h4><strong><u>Requerimientos</u> ({{ $requerimientos->count() }})</strong></h4>
     <table class="pure-table pure-table-bordered" Width=100%>
         <thead>
             <tr>
@@ -348,9 +354,11 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 
+    @if ($atencionrequerimientos->count() != 0)
     <br>
-    <h4><strong><u>Atención de Requerimientos</u></strong></h4>
+    <h4><strong><u>Atención de Requerimientos</u> ({{ $atencionrequerimientos->count() }})</strong></h4>
     <table class="pure-table pure-table-bordered" Width=100%>
         <thead>
             <tr>
@@ -427,9 +435,132 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 
+    @if ($providencias->count() != 0)
     <br>
-    <h4><strong><u>Actas Administrativas</u></strong></h4>
+    <h4><strong><u>Providencia (AR)</u> ({{ $providencias->count() }})</strong></h4>
+    <table class="pure-table pure-table-bordered" Width=100%>
+        <thead>
+            <tr>
+                <th>
+                    <font size="1">Fecha</font>
+                </th>
+                <th>
+                    <font size="1">Tipo de Providencia</font>
+                </th>
+                <th>
+                    <font size="1">Se Admite</font>
+                </th>
+                <th>
+                    <font size="1">Observaciones</font>
+                </th>
+                <th>
+                    <font size="1">Usuario</font>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($providencias as $providencia)
+            <tr>
+                <td align="center">
+                    @php
+                        $fecha = date('d/m/Y', strtotime($providencia->fecha));
+                    @endphp
+                    <font size="1">{{ $fecha }}</font>
+                </td>
+                <td align="center">
+                    <font size="1">
+                        {{ $providencia->tipo_providencia }}
+                        @if ($providencia->tipo_providencia == "Otro")
+                            <br>
+                            {{ $providencia->tipo_providencia_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">
+                        {{  $providencia->admite}}
+                        @if ($providencia->admite_otro == "Otro")
+                            <br>
+                            {{ $providencia->admite_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">{{ $providencia->observaciones }}</font>
+                </td>
+                <td align="center">
+                    <font size="1">{{ $providencia->usuario->name }}</font>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @endif
+
+    @if ($nulidades->count() != 0)
+    <br>
+    <h4><strong><u>Nulidades</u> ({{ $nulidades->count() }})</strong></h4>
+    <table class="pure-table pure-table-bordered" Width=100%>
+        <thead>
+            <tr>
+                <th>
+                    <font size="1">No</font>
+                </th>
+                <th>
+                    <font size="1">Fecha</font>
+                </th>
+                <th>
+                    <font size="1">Tipo de Nulidad</font>
+                </th>
+                <th>
+                    <font size="1">Nueva Notificacion</font>
+                </th>
+                <th>
+                    <font size="1">Usuario</font>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($nulidades as $nulidad)
+            <tr>
+                <td align="center">
+                    <font size="1">{{ $nulidad->no }}</font>
+                </td>
+                <td align="center">
+                    @php
+                        $fecha = date('d/m/Y', strtotime($nulidad->fecha));
+                    @endphp
+                    <font size="1">{{ $fecha }}</font>
+                </td>
+                <td align="center">
+                    <font size="1">
+                        {{ $nulidad->tipo_nulidad }}
+                        @if ($nulidad->tipo_nulidad == "Otro")
+                            <br>
+                            {{ $nulidad->tipo_nulidad_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">
+                        {{  $nulidad->nueva_notificacion}}
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">{{ $nulidad->usuario->name }}</font>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @endif
+
+
+    @if ($actasadministrativas->count() != 0)
+    <br>
+    <h4><strong><u>Actas Administrativas</u> ({{ $actasadministrativas->count() }})</strong></h4>
     <table class="pure-table pure-table-bordered" Width=100%>
         <thead>
             <tr>
@@ -482,9 +613,11 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 
+    @if ($expedientes->count() != 0)
     <br>
-    <h4><strong><u>Expediente Digital</u></strong></h4>
+    <h4><strong><u>Expedientes/Antecedentes</u> ({{ $expedientes->count() }})</strong></h4>
     <table class="pure-table pure-table-bordered" Width=100%>
         <thead>
             <tr>
@@ -524,6 +657,69 @@
             @endforeach
         </tbody>
     </table>
+    @endif
+
+    @if ($rafs->count() != 0)
+    <br>
+    <h4><strong><u>Providencias de Urgencia (RAF)</u> ({{ $rafs->count() }})</strong></h4>
+    <table class="pure-table pure-table-bordered" Width=100%>
+        <thead>
+            <tr>
+                <th>
+                    <font size="1">Fecha</font>
+                </th>
+                <th>
+                    <font size="1">Tipo de Providencia</font>
+                </th>
+                <th>
+                    <font size="1">Se Admite</font>
+                </th>
+                <th>
+                    <font size="1">Observaciones</font>
+                </th>
+                <th>
+                    <font size="1">Usuario</font>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($rafs as $raf)
+            <tr>
+                <td align="center">
+                    @php
+                        $fecha = date('d/m/Y', strtotime($raf->fecha));
+                    @endphp
+                    <font size="1">{{ $fecha }}</font>
+                </td>
+                <td align="center">
+                    <font size="1">
+                        {{ $raf->tipo_providencia }}
+                        @if ($raf->tipo_providencia == "Otro")
+                            <br>
+                            {{ $raf->tipo_providencia_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">
+                        {{  $raf->admite}}
+                        @if ($raf->admite_otro == "Otro")
+                            <br>
+                            {{ $raf->admite_otro }}
+                        @endif
+                    </font>
+                </td>
+                <td align="center">
+                    <font size="1">{{ $raf->observaciones }}</font>
+                </td>
+                <td align="center">
+                    <font size="1">{{ $raf->usuario->name }}</font>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @endif
 
 </body>
 

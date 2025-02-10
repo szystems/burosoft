@@ -102,10 +102,10 @@ class MovimientoController extends Controller
                 $movimientos = $Consultafiltros->get();
 
             } elseif ($tipobusqueda == 2) {
-
-                $movimientos = Movimiento::where('codigo', 'LIKE', '%' . $fcodigo . '%')
+                // dd($fcodigo);
+                $movimientos = Movimiento::where('cuenta_id', '=', $fcodigo)
                 ->where('empresa_id', Auth::user()->empresa_id)
-                ->orderBy('fecha','desc')
+                ->orderBy('fecha', 'desc')
                 ->get();
             }
 
@@ -133,7 +133,9 @@ class MovimientoController extends Controller
 
     public function add()
     {
-        $cuentas = cuenta::where('empresa_id', Auth::user()->empresa_id)->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")->get();
+        // $cuentas = cuenta::where('empresa_id', Auth::user()->empresa_id)->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")get();
+        $cuentas = cuenta::where('empresa_id', Auth::user()->empresa_id)->orderBy('razon_social','asc')->get();
+
         $rubros = Rubro::where('empresa_id', Auth::user()->empresa_id)->orderBy('nombre','asc')->get();
         return view('empresa.movimiento.add', compact('cuentas','rubros'));
     }
