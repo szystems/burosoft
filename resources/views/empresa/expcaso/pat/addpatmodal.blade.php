@@ -6,7 +6,7 @@ aria-labelledby="addPatModal" aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="addPatModal">
-                <i class="bi bi-plus text-success"></i> Agregar PAT
+                <i class="bi bi-plus text-success"></i> Agregar Expediente
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>

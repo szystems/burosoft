@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Cuenta;
 use App\Models\Config;
+use App\Models\Pat;
 use App\Models\User;
 use App\Models\Bitacora;
 use Illuminate\Support\Facades\Auth;
@@ -44,6 +45,7 @@ class ExpcasoController extends Controller
     {
         $cuenta = Cuenta::find($id);
         $config = Config::where('empresa_id', $cuenta->id)->first();
-        return view('empresa.expcaso.show', compact('cuenta','config'));
+        $patscount = Pat::where('cuenta_id', $cuenta->id)->count();
+        return view('empresa.expcaso.show', compact('cuenta','config','patscount'));
     }
 }

@@ -37,46 +37,46 @@
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-pat/'.$cuenta->id) }}">
-                                                PAT
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                                Expedientes
+                                            <span class="badge rounded-pill green ms-2">{{ $patscount }}</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" role="presentation">
+                                    {{-- <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-cat/'.$cuenta->id) }}">
                                                 CAT
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-csj-a/'.$cuenta->id) }}">
                                                 CSJ-A
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-cc-a/'.$cuenta->id) }}">
                                                 CC-A
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-ec/'.$cuenta->id) }}">
                                                 EC
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-pt/'.$cuenta->id) }}">
                                                 PT
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-otros/'.$cuenta->id) }}">
                                                 Otros
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
 
                                 </ul>
                                 <div class="tab-content">

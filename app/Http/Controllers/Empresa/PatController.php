@@ -41,6 +41,8 @@ class PatController extends Controller
 
             $config = Config::where('empresa_id', $cuenta->id)->first();
 
+            $patscount = Pat::where('cuenta_id', $cuenta->id)->count();
+
             $pats = Pat::where('cuenta_id', $cuenta->id)
                 ->when($queryPat, function ($query, $queryPat) {
                     return $query->where('no_programa', 'like', '%' . $queryPat . '%')
@@ -63,7 +65,7 @@ class PatController extends Controller
 
                 $usuarios = User::where('empresa_id', Auth::user()->empresa_id)->orderBy('name','asc')->get();
 
-            return view('empresa.expcaso.pat.index', compact('cuenta', 'config', 'pats', 'queryPat','usuarios'));
+            return view('empresa.expcaso.pat.index', compact('cuenta', 'config', 'pats', 'patscount', 'queryPat','usuarios'));
         }
     }
 
@@ -81,8 +83,9 @@ class PatController extends Controller
         $actasadministrativas = PatActaAdministrativa::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $rafs = PatRaf::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $nulidades = PatNulidad::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+        $patscount = Pat::where('cuenta_id', $cuenta->id)->count();
 
-        return view('empresa.expcaso.pat.show', compact('pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','providencias','actasadministrativas','rafs','nulidades'));
+        return view('empresa.expcaso.pat.show', compact('pat', 'patscount','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','providencias','actasadministrativas','rafs','nulidades'));
     }
 
     public function insert(PatFormRequest $request)
@@ -103,10 +106,10 @@ class PatController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Exp/Caso",
-            'descripcion' => "Creo un nuevo PAT de Exp/Caso: No. Expediente:".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado.", Resultado".$pat->resultado,
+            'descripcion' => "Creo un nuevo Expediente de Exp/Caso: No. Expediente:".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado.", Resultado".$pat->resultado,
         ]);
 
-        return redirect('show-pat/'.$pat->id)->with('status',__('PAT agregado exitosamente.'));
+        return redirect('show-pat/'.$pat->id)->with('status',__('Expediente agregado exitosamente.'));
     }
 
     public function update(PatFormRequest $request, $id)
@@ -125,10 +128,10 @@ class PatController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Exp/Caso",
-            'descripcion' => "Actualizó un PAT de Exp/Caso: No. Expediente:".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado.", Resultado".$pat->resultado,
+            'descripcion' => "Actualizó un Expediente de Exp/Caso: No. Expediente:".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado.", Resultado".$pat->resultado,
         ]);
 
-        return redirect('show-pat/'.$id)->with('status',__('Pat actualizado correctamente.'));
+        return redirect('show-pat/'.$id)->with('status',__('Expediente actualizado correctamente.'));
 
     }
 
@@ -148,12 +151,12 @@ class PatController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => now(),
             'tipo' => "Exp/Caso",
-            'descripcion' => "Eliminó un PAT de Exp/Caso: ".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado,
+            'descripcion' => "Eliminó un Expediente de Exp/Caso: ".$pat->no_expediente.", No. Programa".$pat->no_programa.", Gerencia:".$pat->gerencia.", Tipo Contribuyente:".$pat->tipo_contribuyente.", Estado".$pat->estado,
         ]);
 
         $pat->delete();
 
-        return redirect('index-pat/'.$cuenta->id)->with('status',__('PAT eliminado correctamente.'));
+        return redirect('index-pat/'.$cuenta->id)->with('status',__('Expediente eliminado correctamente.'));
     }
 
     public function pdf(Request $request)
@@ -203,13 +206,13 @@ class PatController extends Controller
             {
                 $pdf = PDF::loadView('empresa.expcaso.pat.pdf', compact('imagen','pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','providencias','actasadministrativas','rafs','nulidades'));
                 $pdf->setPaper($pdftamaño, $pdfhorientacion);
-                return $pdf->download ('PAT No.Expediente: '.$pat->no_expediente.', No.Programa: '.$pat->no_programa.' '.$nompdf.'.pdf');
+                return $pdf->download ('No.Expediente: '.$pat->no_expediente.', No.Programa: '.$pat->no_programa.' '.$nompdf.'.pdf');
             }
             if ( $pdfarchivo == "stream" )
             {
                 $pdf = PDF::loadView('empresa.expcaso.pat.pdf', compact('imagen','pat','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','providencias','actasadministrativas','rafs','nulidades'));
                 $pdf->setPaper($pdftamaño, $pdfhorientacion);
-                return $pdf->stream ('PAT No.Expediente: '.$pat->no_expediente.', No.Programa: '.$pat->no_programa.' '.$nompdf.'.pdf');
+                return $pdf->stream ('No.Expediente: '.$pat->no_expediente.', No.Programa: '.$pat->no_programa.' '.$nompdf.'.pdf');
             }
         }
     }

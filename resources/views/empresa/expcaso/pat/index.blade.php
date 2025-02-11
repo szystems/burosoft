@@ -37,46 +37,46 @@
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link active" id="tab-pat" data-bs-toggle="tab" href="#pat" role="tab"
                                             aria-controls="pat" aria-selected="false">
-                                                PAT
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                                Expedientes
+                                            <span class="badge rounded-pill green ms-2">{{ $patscount }}</span>
                                         </a>
                                     </li>
-                                    <li class="nav-item" role="presentation">
+                                    {{-- <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-cat/'.$cuenta->id) }}">
                                                 CAT
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-csj-a/'.$cuenta->id) }}">
                                                 CSJ-A
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-cc-a/'.$cuenta->id) }}">
                                                 CC-A
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-ec/'.$cuenta->id) }}">
                                                 EC
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-pt/'.$cuenta->id) }}">
                                                 PT
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
                                     </li>
                                     <li class="nav-item" role="presentation">
                                         <a class="nav-link" href="{{ url('index-otros/'.$cuenta->id) }}">
                                                 Otros
-                                            {{-- <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span> --}}
+                                            <span class="badge rounded-pill green ms-2">{{ $movimientos->count() }}</span>
                                         </a>
-                                    </li>
+                                    </li> --}}
 
                                 </ul>
                                 <div class="tab-content">
@@ -98,7 +98,7 @@
                                             <div class="col-sm-12 col-12">
                                                 <div class="row gx-3">
 
-                                                    <h3><u>PAT (Procedimiento de Administración Tributaria)</u></h3>
+                                                    <h3><u>Información de Cuenta</u></h3>
 
                                                     {{-- <div class="col-md-12 mb-3">
                                                         <!-- Form Field Start -->
@@ -260,11 +260,11 @@
 
                                                     @include('empresa.expcaso.pat.search')
 
-                                                    <h4><strong>Listado de PAT</strong></h4>
+                                                    <h4><strong>Listado de Expedientes</strong></h4>
                                                     @if ($cuenta->estado == 1)
                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                             data-bs-target="#addPatModal">
-                                                            <i class="bi bi-plus-square"></i> Agregar PAT
+                                                            <i class="bi bi-plus-square"></i> Agregar Expediente
                                                         </button>
                                                     @endif
 
@@ -321,26 +321,35 @@
                                                                                 $created = date('d/m/Y', strtotime($pat->created_at));
                                                                                 $updated = date('d/m/Y', strtotime($pat->updated_at));
                                                                             @endphp
-                                                                            <small>
-                                                                                <strong class="text-info">{{ $created }}</strong>
-                                                                                {{-- / <strong class="text-warning">{{ $updated }}</strong> --}}
-                                                                            </small>
+                                                                            <a class="dropdown-item" href="{{ url('show-pat/'.$pat->id) }}">
+                                                                                <small>
+                                                                                    <strong class="text-info">{{ $created }}</strong>
+                                                                                    {{-- / <strong class="text-warning">{{ $updated }}</strong> --}}
+                                                                                </small>
+                                                                            </a>
                                                                         </td>
                                                                         <td align="center">
-                                                                            <p>{{ $pat->no_expediente }}</p>
+                                                                            <a class="dropdown-item" href="{{ url('show-pat/'.$pat->id) }}">
+                                                                                <p>{{ $pat->no_expediente }}</p>
+                                                                            </a>
                                                                         </td>
                                                                         <td align="center">
-                                                                            <p>{{  $pat->no_programa }}</p>
+                                                                            <a class="dropdown-item" href="{{ url('show-pat/'.$pat->id) }}">
+                                                                                <p>{{  $pat->no_programa }}</p>
+                                                                            </a>
                                                                         </td>
                                                                         <td align="center">
-                                                                            <p>{{ $pat->gerencia }}</p>
+                                                                            <a class="dropdown-item" href="{{ url('show-pat/'.$pat->id) }}">
+                                                                                <p>{{ $pat->gerencia }}</p>
+                                                                            </a>
                                                                         </td>
                                                                         <td align="center">
-                                                                            <p>{{ $pat->tipo_contribuyente }}</p>
+                                                                            <a class="dropdown-item" href="{{ url('show-pat/'.$pat->id) }}">
+                                                                                <p>{{ $pat->tipo_contribuyente }}</p>
+                                                                            </a>
                                                                         </td>
                                                                         <td align="center">
-                                                                            <p>
-                                                                                {{-- {{ $pat->estado }} --}}
+                                                                            <a class="dropdown-item" href="{{ url('show-pat/'.$pat->id) }}">
                                                                                 <p>
                                                                                     @if($pat->estado == "Activo")
                                                                                         <span class="badge shade-light-green">{{ $pat->estado }}</span>
@@ -350,13 +359,17 @@
                                                                                         <span class="badge shade-light-yellow">{{ $pat->estado }}</span>
                                                                                     @endif
                                                                                 </p>
-                                                                            </p>
+                                                                            </a>
                                                                         </td>
                                                                         <td align="center">
-                                                                            <p>{{ $pat->resultado }}</p>
+                                                                            <a class="dropdown-item" href="{{ url('show-pat/'.$pat->id) }}">
+                                                                                <p>{{ $pat->resultado }}</p>
+                                                                            </a>
                                                                         </td>
                                                                         <td align="center">
-                                                                            <p>{{ $pat->usuario->name }}</p>
+                                                                            <a class="dropdown-item" href="{{ url('show-pat/'.$pat->id) }}">
+                                                                                <p>{{ $pat->usuario->name }}</p>
+                                                                            </a>
                                                                         </td>
 
                                                                     </tr>

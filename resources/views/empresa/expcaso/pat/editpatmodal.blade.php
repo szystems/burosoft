@@ -6,7 +6,7 @@ aria-labelledby="editPatModal" aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="editPatModal">
-                <i class="bi bi-pencil text-warning"></i> Editar PAT
+                <i class="bi bi-pencil text-warning"></i> Editar Expediente
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>

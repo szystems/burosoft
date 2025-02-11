@@ -11,7 +11,7 @@
         integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
 
 
-    <title>PAT</title>
+    <title>Expediente</title>
 
 </head>
 
@@ -19,7 +19,7 @@
     <center>
         <img align="center" src="{{ $imagen }}" alt="" height="100">
     </center>
-    <h3 align="center"><u>PAT</u></h3>
+    <h3 align="center"><u>Expediente</u></h3>
     <label>
         <font size="1">Fecha Reporte:</font>
         <font color="blue" size="1">
@@ -57,7 +57,7 @@
                 </td>
             </tr>
             <tr>
-                <th align="left" colspan="6"><u>PAT (Procedimiento de Administración Tributaria)</u></th>
+                <th align="left" colspan="6"><u>Expediente</u></th>
             </tr>
             <tr>
                 <th align="right">
