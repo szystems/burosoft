@@ -55,7 +55,8 @@ class RubroController extends Controller
             'descripcion' => "Creo un nuevo rubro: ".$rubro->nombre
         ]);
 
-        return redirect('show-rubro/'.$rubro->id)->with('status',__('Rubro agregado exitosamente.'));
+        // return redirect('show-rubro/'.$rubro->id)->with('status',__('Rubro agregado exitosamente.'));
+        return redirect('add-rubro')->with('status',__('Rubro agregado exitosamente.'));
     }
 
     public function edit($id)

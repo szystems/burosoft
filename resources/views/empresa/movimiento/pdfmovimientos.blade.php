@@ -129,7 +129,7 @@
 
                 @if ($request->has('festadosaldo'))
                 <th>
-                    <font size="1">Saldo</font>
+                    <font size="1">Pagado/Saldo</font>
                 </th>
                 @endif
 
@@ -392,14 +392,14 @@
                     <h2><font><strong><font color="limegreen">Q.{{ number_format($pagado_total,2, '.', ',') }}</font></strong> / <strong class="text-warning"><font color="orange">Q.{{ number_format($saldo_total,2, '.', ',') }}</font></strong></font></h2>
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <td align="center">
                     <h2>Total Eliminado: <font><strong><font color="red">Q.{{ number_format($monto_total_q_eliminado,2, '.', ',') }}</font></strong> / <font color="gray">$.{{ number_format($monto_total_d_eliminado,2, '.', ',') }}</font></strong></font></h2>
                 </td>
                 <td align="center">
                     <h2><font><strong><font color="limegreen">Q.{{ number_format($pagado_total_eliminado,2, '.', ',') }}</font></strong> / <strong class="text-warning"><font color="orange">Q.{{ number_format($saldo_total_eliminado,2, '.', ',') }}</font></strong></font></h2>
                 </td>
-            </tr>
+            </tr> --}}
         </tbody>
     </table>
 </body>

@@ -34,12 +34,21 @@ class MovimientoController extends Controller
             if ($request->input('fecha_desde') != "") {
                 $fechaDesdeVista = date("d-m-Y", strtotime($request->input('fecha_desde')));
                 $fechaDesde = date("Y-m-d", strtotime($request->input('fecha_desde')));
-            }else
-            {
-                $hoy = Carbon::now('America/Guatemala');
-                $fechaDesdeVista = $hoy->subDays(30);
-                $fechaDesdeVista = $hoy->format('d-m-Y');
-                $fechaDesde = date("Y-m-d", strtotime($fechaDesdeVista));
+            } else {
+                // Buscar la fecha más antigua de los movimientos para la empresa actual
+                $movimientoMasAntiguo = Movimiento::where('empresa_id', Auth::user()->empresa_id)
+                                      ->orderBy('fecha', 'asc')
+                                      ->first();
+
+                if ($movimientoMasAntiguo) {
+                    $fechaDesdeVista = date("d-m-Y", strtotime($movimientoMasAntiguo->fecha));
+                    $fechaDesde = date("Y-m-d", strtotime($movimientoMasAntiguo->fecha));
+                } else {
+                    // Si no hay movimientos, usar la fecha actual
+                    $hoy = Carbon::now('America/Guatemala');
+                    $fechaDesdeVista = $hoy->format('d-m-Y');
+                    $fechaDesde = date("Y-m-d", strtotime($fechaDesdeVista));
+                }
             }
 
             if ($request->input('fecha_hasta') != "") {
@@ -190,7 +199,8 @@ class MovimientoController extends Controller
 
             DB::commit();
 
-            return redirect('show-movimiento/' . $movimiento->id)->with('status', __('Movimiento agregado exitosamente.'));
+            // return redirect('show-movimiento/' . $movimiento->id)->with('status', __('Movimiento agregado exitosamente.'));
+            return redirect('add-movimiento')->with('status', __('Movimiento agregado exitosamente.'));
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->withErrors(['error' => 'Error al agregar el movimiento: ' . $e->getMessage()]);
@@ -311,7 +321,8 @@ class MovimientoController extends Controller
 
             $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
             ->where('fecha', '<=', $fechaHasta)
-            ->where('empresa_id', Auth::user()->empresa_id);
+            ->where('empresa_id', Auth::user()->empresa_id)
+            ->where('estado', 1);
             if (!empty($usuarioID)) {
                 $Consultafiltros->where('usuario_id', '=', $usuarioID);
             }

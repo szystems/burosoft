@@ -19,7 +19,7 @@ class CreateMovimientoDocumentosTable extends Migration
             $table->string('archivo');
             $table->string('tipo');
             $table->string('nombre');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->unsignedBigInteger('usuario_id');
             $table->timestamps();
         });

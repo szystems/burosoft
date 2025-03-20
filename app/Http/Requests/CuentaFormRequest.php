@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CuentaFormRequest extends FormRequest
 {
@@ -23,8 +24,14 @@ class CuentaFormRequest extends FormRequest
      */
     public function rules()
     {
+        // Obtenemos el ID de la cuenta si estamos en modo edición
+        $cuentaId = $this->route('cuenta') ?? $this->route('id');
+
         return [
-            'nit' => 'required',
+            'nit' => [
+                'required',
+                Rule::unique('cuentas', 'nit')->ignore($cuentaId)
+            ],
             'dpi' => 'nullable|string|max:15',
             'razon_social' => 'required',
             'telefono' => 'nullable|string|max:10',

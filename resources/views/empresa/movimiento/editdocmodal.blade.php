@@ -36,7 +36,7 @@
                             <!-- Form Field Start -->
                             <div class="mb-3">
                                 <label class="form-label">Descripción</label>
-                                <textarea name="descripcion" class="form-control" rows="3" placeholder="Descripción..." required>{{ $doc->descripcion }}</textarea>
+                                <textarea name="descripcion" class="form-control" rows="3" placeholder="Descripción...">{{ $doc->descripcion }}</textarea>
                                 @if ($errors->has('descripcion'))
                                     <span class="help-block opacity-7">
                                             <strong>

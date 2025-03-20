@@ -40,6 +40,13 @@ use App\Http\Controllers\Empresa\PatRafController;
 use App\Http\Controllers\Empresa\PatActaAdministrativaController;
 use App\Http\Controllers\Empresa\PatExpedienteController;
 use App\Http\Controllers\Empresa\PatNulidadController;
+use App\Http\Controllers\Empresa\VaController;
+use App\Http\Controllers\Empresa\AudienciaController;
+use App\Http\Controllers\Empresa\EvController;
+use App\Http\Controllers\Empresa\PpController;
+use App\Http\Controllers\Empresa\DpmrController;
+use App\Http\Controllers\Empresa\ResolucionController;
+use App\Http\Controllers\Empresa\RrController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
 /*
@@ -177,6 +184,47 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-pat-nulidad', [PatNulidadController::class, 'insert']);
     Route::put('update-pat-nulidad/{id}', [PatNulidadController::class, 'update']);
     Route::get('delete-pat-nulidad/{id}', [PatNulidadController::class, 'destroy']);
+
+    //VA
+    Route::get('show-va/{id}', [VaController::class, 'show']);
+    Route::get('pdf-va', [VaController::class, 'pdf']);
+    Route::get('show-audiencia/{id}', [VaController::class, 'showaudiencia']);
+
+    //Audiencias
+    Route::post('insert-audiencia', [AudienciaController::class, 'insert']);
+    Route::put('update-audiencia/{id}', [AudienciaController::class, 'update']);
+    Route::get('delete-audiencia/{id}', [AudienciaController::class, 'destroy']);
+    Route::delete('delete-audiencia/{id}', [AudienciaController::class, 'destroy']);
+
+    //Ev
+    Route::post('insert-ev', [EvController::class, 'insert']);
+    Route::put('update-ev/{id}', [EvController::class, 'update']);
+    Route::get('delete-ev/{id}', [EvController::class, 'destroy']);
+    Route::delete('delete-ev/{id}', [EvController::class, 'destroy']);
+
+    //Pp
+    Route::post('insert-pp', [PpController::class, 'insert']);
+    Route::put('update-pp/{id}', [PpController::class, 'update']);
+    Route::get('delete-pp/{id}', [PpController::class, 'destroy']);
+    Route::delete('delete-pp/{id}', [PpController::class, 'destroy']);
+
+    //Dpmr
+    Route::post('insert-dpmr', [DpmrController::class, 'insert']);
+    Route::put('update-dpmr/{id}', [DpmrController::class, 'update']);
+    Route::get('delete-dpmr/{id}', [DpmrController::class, 'destroy']);
+    Route::delete('delete-dpmr/{id}', [DpmrController::class, 'destroy']);
+
+    //Resolucion
+    Route::post('insert-resolucion', [ResolucionController::class, 'insert']);
+    Route::put('update-resolucion/{id}', [ResolucionController::class, 'update']);
+    Route::get('delete-resolucion/{id}', [ResolucionController::class, 'destroy']);
+    Route::delete('delete-resolucion/{id}', [ResolucionController::class, 'destroy']);
+
+    //Rr
+    Route::post('insert-rr', [RrController::class, 'insert']);
+    Route::put('update-rr/{id}', [RrController::class, 'update']);
+    Route::get('delete-rr/{id}', [RrController::class, 'destroy']);
+    Route::delete('delete-rr/{id}', [RrController::class, 'destroy']);
 
     //Usuarios Empresa
     Route::get('bitacoras', [BitacoraController::class, 'index']);

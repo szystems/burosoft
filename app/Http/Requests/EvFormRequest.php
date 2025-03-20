@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MovimientoDocumentoFormRequest extends FormRequest
+class EvFormRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class MovimientoDocumentoFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'movimiento_id' => 'required|integer',
-            'nombre' => 'required|string',
-            'descripcion' => 'nullable|string',
-            'usuario_id' => 'required|integer',
+            'fecha_hora_presentacion' => 'required|date',
+            'numero_documento'        => 'required|string',
+            'usuario_id'              => 'required|integer',
+            'audiencia_id'            => 'required|integer',
         ];
     }
 }

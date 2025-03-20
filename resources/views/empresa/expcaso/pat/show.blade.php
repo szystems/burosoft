@@ -361,8 +361,11 @@
                                                                             aria-controls="pf" aria-selected="true">PF</a>
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
-                                                                        <a class="nav-link" id="tab-va" data-bs-toggle="tab" href="#va" role="tab"
-                                                                            aria-controls="va" aria-selected="false">VA</a>
+                                                                        <a class="nav-link" href="{{ url('show-va/'.$pat->id) }}">
+                                                                            VA
+                                                                            <span class="badge rounded-pill green ms-2">{{ $audiencias->count() }}</span>
+                                                                        </a>
+
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
                                                                         <a class="nav-link" id="tab-vp" data-bs-toggle="tab" href="#vp" role="tab"
@@ -576,7 +579,7 @@
                                                                                                                             @endif
 
                                                                                                                             @include('empresa.expcaso.pat.notificacion.editnotificacionmodal')
-                                                                                                                            @include('empresa.expcaso.pat.notificacion.deletenotificacionmodal')`
+                                                                                                                            @include('empresa.expcaso.pat.notificacion.deletenotificacionmodal')
                                                                                                                         @endif
 
                                                                                                                     </td>
