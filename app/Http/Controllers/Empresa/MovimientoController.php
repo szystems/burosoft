@@ -476,4 +476,220 @@ class MovimientoController extends Controller
             }
         }
     }
+
+    public function pdfestadisticas(Request $request)
+    {
+        if ($request)
+        {
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+
+            //arreglo de fechas
+            if ($request->input('fecha_desde') != "") {
+                $fechaDesdeVista = date("d-m-Y", strtotime($request->input('fecha_desde')));
+                $fechaDesde = date("Y-m-d", strtotime($request->input('fecha_desde')));
+            } else {
+                // Buscar la fecha más antigua de los movimientos para la empresa actual
+                $movimientoMasAntiguo = Movimiento::where('empresa_id', Auth::user()->empresa_id)
+                                      ->orderBy('fecha', 'asc')
+                                      ->first();
+
+                if ($movimientoMasAntiguo) {
+                    $fechaDesdeVista = date("d-m-Y", strtotime($movimientoMasAntiguo->fecha));
+                    $fechaDesde = date("Y-m-d", strtotime($movimientoMasAntiguo->fecha));
+                } else {
+                    // Si no hay movimientos, usar la fecha actual
+                    $hoy = Carbon::now('America/Guatemala');
+                    $fechaDesdeVista = $hoy->format('d-m-Y');
+                    $fechaDesde = date("Y-m-d", strtotime($fechaDesdeVista));
+                }
+            }
+
+            if ($request->input('fecha_hasta') != "") {
+                $fechaHastaVista = date("d-m-Y", strtotime($request->input('fecha_hasta')));
+                $fechaHasta = date("Y-m-d", strtotime($request->input('fecha_hasta')));
+            } else {
+                $hoy = Carbon::now('America/Guatemala');
+                $fechaHastaVista = $hoy->format('d-m-Y');
+                $fechaHasta = date("Y-m-d", strtotime($fechaHastaVista));
+            }
+
+            // Obtener los filtros
+            $cuentaID = $request->input('cuenta_id');
+            $rubroID = $request->input('rubro_id');
+            $usuarioID = $request->input('usuario_id');
+            $saldo = $request->input('saldo');
+            $ordenar = $request->input('ordenar');
+            $codigo = $request->input('codigo');
+
+            // Consulta de movimientos con filtros
+            $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
+                ->where('fecha', '<=', $fechaHasta)
+                ->where('empresa_id', Auth::user()->empresa_id);
+
+            if (!empty($usuarioID)) {
+                $Consultafiltros->where('usuario_id', '=', $usuarioID);
+            }
+            if (!empty($cuentaID)) {
+                $Consultafiltros->where('cuenta_id', '=', $cuentaID);
+            }
+            if (!empty($rubroID)) {
+                $Consultafiltros->where('rubro_id', '=', $rubroID);
+            }
+            if (!empty($codigo)) {
+                $Consultafiltros->where('codigo', 'like', '%' . $codigo . '%');
+            }
+            if (!empty($saldo)){
+                if ($saldo == "Pendiente") {
+                    $Consultafiltros->where(function ($query) {
+                        $query->whereRaw('monto_q > (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
+                    });
+                }
+                if ($saldo == "Pagado") {
+                    $Consultafiltros->where(function ($query) {
+                        $query->whereRaw('monto_q <= (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
+                    });
+                }
+            }
+
+            if ($ordenar == "fecha") {
+                $Consultafiltros->orderBy('fecha','desc');
+            } else {
+                $Consultafiltros->orderBy('codigo','desc');
+            }
+
+            $movimientos = $Consultafiltros->get();
+
+            // Variables para estadísticas
+            $monto_total_q = 0;
+            $monto_total_d = 0;
+            $pagado_total = 0;
+            $saldo_total = 0;
+
+            // Arrays para estadísticas
+            $rubros_data = [];
+            $cuentas_data = [];
+            $usuarios_data = [];
+            $estado_pagos = ['Pagado' => 0, 'Pendiente' => 0];
+            $meses_data = [];
+
+            // Calcular estadísticas
+            foreach ($movimientos as $movimiento) {
+                if ($movimiento->estado == 1) {
+                    $monto_pagado_q = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                        ->where('estado', 1)
+                        ->sum('monto_q');
+                    $saldo = $movimiento->monto_q - $monto_pagado_q;
+
+                    $monto_total_q += $movimiento->monto_q;
+                    $monto_total_d += $movimiento->monto_d;
+                    $pagado_total += $monto_pagado_q;
+                    $saldo_total += $saldo;
+
+                    // Estadísticas por mes
+                    $mes = date('Y-m', strtotime($movimiento->fecha));
+                    if (!isset($meses_data[$mes])) {
+                        $meses_data[$mes] = [
+                            'monto_q' => 0,
+                            'pagado_q' => 0,
+                            'saldo_q' => 0,
+                            'count' => 0
+                        ];
+                    }
+                    $meses_data[$mes]['monto_q'] += $movimiento->monto_q;
+                    $meses_data[$mes]['pagado_q'] += $monto_pagado_q;
+                    $meses_data[$mes]['saldo_q'] += $saldo;
+                    $meses_data[$mes]['count']++;
+
+                    // Estadísticas por rubro
+                    $rubro = $movimiento->rubro->nombre;
+                    if (!isset($rubros_data[$rubro])) {
+                        $rubros_data[$rubro] = [
+                            'monto_q' => 0,
+                            'pagado_q' => 0,
+                            'saldo_q' => 0,
+                            'count' => 0
+                        ];
+                    }
+                    $rubros_data[$rubro]['monto_q'] += $movimiento->monto_q;
+                    $rubros_data[$rubro]['pagado_q'] += $monto_pagado_q;
+                    $rubros_data[$rubro]['saldo_q'] += $saldo;
+                    $rubros_data[$rubro]['count']++;
+
+                    // Estadísticas por cuenta
+                    $cuenta = $movimiento->cuenta->razon_social;
+                    if (!isset($cuentas_data[$cuenta])) {
+                        $cuentas_data[$cuenta] = [
+                            'monto_q' => 0,
+                            'pagado_q' => 0,
+                            'saldo_q' => 0,
+                            'count' => 0
+                        ];
+                    }
+                    $cuentas_data[$cuenta]['monto_q'] += $movimiento->monto_q;
+                    $cuentas_data[$cuenta]['pagado_q'] += $monto_pagado_q;
+                    $cuentas_data[$cuenta]['saldo_q'] += $saldo;
+                    $cuentas_data[$cuenta]['count']++;
+
+                    // Estadísticas por usuario
+                    $usuario = $movimiento->usuario->name ?? 'Sin Usuario';
+                    if (!isset($usuarios_data[$usuario])) {
+                        $usuarios_data[$usuario] = [
+                            'monto_q' => 0,
+                            'pagado_q' => 0,
+                            'saldo_q' => 0,
+                            'count' => 0
+                        ];
+                    }
+                    $usuarios_data[$usuario]['monto_q'] += $movimiento->monto_q;
+                    $usuarios_data[$usuario]['pagado_q'] += $monto_pagado_q;
+                    $usuarios_data[$usuario]['saldo_q'] += $saldo;
+                    $usuarios_data[$usuario]['count']++;
+
+                    // Estadísticas por estado de pago
+                    if ($movimiento->monto_q <= $monto_pagado_q) {
+                        $estado_pagos['Pagado']++;
+                    } else {
+                        $estado_pagos['Pendiente']++;
+                    }
+                }
+            }
+
+            // Preparar la generación del PDF
+            $nompdf = date('Y-m-d_H-i-s');
+
+            // Configurar el logo
+            if ($config->logo == null) {
+                $logo = null;
+                $imagen = null;
+            } else {
+                $logo = $config->logo;
+                $imagen = public_path('assets/uploads/logos/'.$logo);
+            }
+
+            // Generar el PDF
+            $pdf = PDF::loadView('empresa.movimiento.pdfestadisticas', compact(
+                'imagen',
+                'movimientos',
+                'config',
+                'request',
+                'fechaDesdeVista',
+                'fechaHastaVista',
+                'monto_total_q',
+                'monto_total_d',
+                'pagado_total',
+                'saldo_total',
+                'rubros_data',
+                'cuentas_data',
+                'usuarios_data',
+                'estado_pagos',
+                'meses_data'
+            ));
+
+            // Configurar el tamaño y orientación del PDF
+            $pdf->setPaper('letter', 'portrait');
+
+            // Devolver el PDF como descarga
+            return $pdf->stream('Estadisticas_Movimientos_'.$nompdf.'.pdf');
+        }
+    }
 }

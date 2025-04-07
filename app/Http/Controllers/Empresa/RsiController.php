@@ -153,4 +153,119 @@ class RsiController extends Controller
             }
         }
     }
+
+    // En el archivo RsiController.php
+    public function pdfRsiEstadisticas(Request $request)
+    {
+        if ($request)
+        {
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+
+            //arreglo de fechas
+            //recibir datos de filtro para consulta
+            $cuentaID = $request->input('cuenta_id');
+            $saldo = $request->input('saldo');
+
+            //Consulta
+            $movimientos = DB::table('movimientos')
+            ->join('cuentas', 'movimientos.cuenta_id', '=', 'cuentas.id')
+            ->select(
+                'cuentas.razon_social as cuenta',
+                'cuentas.id as cuenta_id',
+                'cuentas.codigo as codigo',
+                DB::raw('SUM(movimientos.monto_q) as total_monto_q'),
+                DB::raw('SUM(movimiento_pagos.monto_q) as total_pagado'),
+                DB::raw('SUM(movimientos.monto_q) - SUM(movimiento_pagos.monto_q) as saldo')
+            )
+            ->leftJoin('movimiento_pagos', 'movimientos.id', '=', 'movimiento_pagos.movimiento_id');
+
+            if (!empty($cuentaID)) {
+                $movimientos->where('cuentas.id', '=', $cuentaID);
+            }
+
+            $movimientos = $movimientos->groupBy('cuentas.id', 'cuentas.razon_social', 'cuentas.codigo');
+
+            if (!empty($saldo)){
+                if ($saldo == "Pendiente") {
+                    $movimientos->havingRaw('SUM(movimientos.monto_q) > SUM(movimiento_pagos.monto_q)');
+                }
+                if ($saldo == "Pagado") {
+                    $movimientos->havingRaw('SUM(movimientos.monto_q) <= SUM(movimiento_pagos.monto_q)');
+                }
+            }
+
+            // Ordenar por el código de cuenta
+            $movimientos = $movimientos->orderByRaw("CAST(SUBSTRING_INDEX(cuentas.codigo, '-', -1) AS UNSIGNED), cuentas.codigo");
+            $movimientos = $movimientos->get();
+
+            // Variables para estadísticas
+            $tmonto = 0;
+            $tpagado = 0;
+            $tsaldo = 0;
+
+            // Arrays para estadísticas
+            $cuentas_data = [];
+            $estado_pagos = ['Pagado' => 0, 'Pendiente' => 0];
+
+            // Calcular las estadísticas
+            foreach ($movimientos as $movimiento) {
+                $tmonto += $movimiento->total_monto_q;
+                $tpagado += $movimiento->total_pagado;
+
+                if ($movimiento->saldo == 0 && ($movimiento->total_pagado != $movimiento->total_monto_q)) {
+                    $tsaldo += $movimiento->total_monto_q;
+                } else {
+                    $tsaldo += $movimiento->saldo;
+                }
+
+                // Estado de pagos
+                if ($movimiento->total_monto_q > $movimiento->total_pagado) {
+                    $estado_pagos['Pendiente']++;
+                } else {
+                    $estado_pagos['Pagado']++;
+                }
+
+                // Datos para estadísticas por cuenta
+                $cuentaNombre = $movimiento->cuenta;
+                $cuentas_data[$cuentaNombre] = [
+                    'monto' => $movimiento->total_monto_q,
+                    'pagado' => $movimiento->total_pagado,
+                    'saldo' => ($movimiento->saldo == 0 && $movimiento->total_pagado != $movimiento->total_monto_q)
+                            ? $movimiento->total_monto_q
+                            : $movimiento->saldo,
+                    'codigo' => $movimiento->codigo
+                ];
+            }
+
+            $nompdf = date('Y-m-d_H-i-s');
+
+            // Configurar el logo
+            if ($config->logo == null) {
+                $logo = null;
+                $imagen = null;
+            } else {
+                $logo = $config->logo;
+                $imagen = public_path('assets/uploads/logos/'.$logo);
+            }
+
+            // Generar el PDF
+            $pdf = PDF::loadView('empresa.rsi.pdfestadisticas', compact(
+                'imagen',
+                'movimientos',
+                'config',
+                'request',
+                'tmonto',
+                'tpagado',
+                'tsaldo',
+                'cuentas_data',
+                'estado_pagos'
+            ));
+
+            // Configurar el tamaño y orientación del PDF
+            $pdf->setPaper('letter', 'portrait');
+
+            // Devolver el PDF como descarga
+            return $pdf->stream('Estadisticas_RSI_'.$nompdf.'.pdf');
+        }
+    }
 }

@@ -121,6 +121,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('pdf-movimiento', [MovimientoController::class, 'pdfmovimiento']);
     Route::get('pdf-movimiento-cabecera/{id}', [MovimientoController::class, 'pdfmovimientocabecera']);
     Route::get('exportmovimientos', [MovimientoController::class, 'exportexcel']);
+    Route::get('pdf-estadisticas-movimientos', [App\Http\Controllers\Empresa\MovimientoController::class, 'pdfestadisticas']);
 
     //Movimiento Documentos
     Route::post('insert-documento', [MovimientoDocumentoController::class, 'insert']);
@@ -137,6 +138,7 @@ Route::middleware(['auth'])->group(function () {
     //RSI
     Route::get('rsi', [RsiController::class, 'index']);
     Route::get('pdf-rsi', [RsiController::class, 'pdfrsi']);
+    Route::get('pdf-rsi-estadisticas', [App\Http\Controllers\Empresa\RsiController::class, 'pdfRsiEstadisticas'])->middleware(['auth']);
 
     //Exp/Caso
     Route::get('expcaso', [ExpcasoController::class, 'index']);

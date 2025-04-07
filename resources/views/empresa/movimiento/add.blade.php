@@ -110,9 +110,9 @@
                                                             </div>
                                                             @if ($errors->has('monto_q'))
                                                                 <span class="help-block opacity-7">
-                                                                        <strong>
-                                                                            <font color="red">{{ $errors->first('monto_q') }}</font>
-                                                                        </strong>
+                                                                    <strong>
+                                                                        <font color="red">{{ $errors->first('monto_q') }}</font>
+                                                                    </strong>
                                                                 </span>
                                                             @endif
                                                         </div>
@@ -121,13 +121,13 @@
                                                             <label class="form-label">Monto (Dólares)</label>
                                                             <div class="input-group">
                                                                 <span class="input-group-text">$.</span>
-                                                                <input name="monto_d" type="number" step="0.01" class="form-control" id="monto_d" placeholder="0.00"  value="{{ old('monto_d') }}">
+                                                                <input name="monto_d" type="number" step="0.01" class="form-control" id="monto_d" placeholder="0.00" value="{{ old('monto_d') }}">
                                                             </div>
                                                             @if ($errors->has('monto_d'))
                                                                 <span class="help-block opacity-7">
-                                                                        <strong>
-                                                                            <font color="red">{{ $errors->first('monto_d') }}</font>
-                                                                        </strong>
+                                                                    <strong>
+                                                                        <font color="red">{{ $errors->first('monto_d') }}</font>
+                                                                    </strong>
                                                                 </span>
                                                             @endif
                                                         </div>
@@ -139,9 +139,9 @@
                                                                 <textarea name="descripcion" class="form-control" rows="3" placeholder="Descripción del movimiento...">{{ old('descripcion') }}</textarea>
                                                                 @if ($errors->has('descripcion'))
                                                                     <span class="help-block opacity-7">
-                                                                            <strong>
-                                                                                <font color="red">{{ $errors->first('descripcion') }}</font>
-                                                                            </strong>
+                                                                        <strong>
+                                                                            <font color="red">{{ $errors->first('descripcion') }}</font>
+                                                                        </strong>
                                                                     </span>
                                                                 @endif
                                                             </div>
@@ -150,30 +150,20 @@
                                                         <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
                                                         <input type="hidden" name="empresa_id" value="{{ Auth::user()->empresa_id }}">
 
-                                                    </div>
-                                                    <div class="d-flex gap-2 justify-content-center">
-                                                        <a href="{{ url('movimientos') }}" type="button" class="btn btn-danger">
-                                                            <i class="bi bi-x-circle"></i> Cancelar
-                                                        </a>
-                                                        <button type="submit" class="btn btn-success">
-                                                            <i class="bi bi-check2-square"></i> Grabar
-                                                        </button>
+                                                        <div class="d-flex gap-2 justify-content-center">
+                                                            <a href="{{ url('movimientos') }}" type="button" class="btn btn-danger">
+                                                                <i class="bi bi-x-circle"></i> Cancelar
+                                                            </a>
+                                                            <button type="submit" class="btn btn-success">
+                                                                <i class="bi bi-check2-square"></i> Grabar
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </form>
                                             </div>
                                         </div>
-                                        <!-- Row end -->
                                     </div>
-
                                 </div>
-                                {{-- <div class="d-flex gap-2 justify-content-center">
-                                    <a href="{{ url('edit-user/'.$user->id) }}" type="button" class="btn btn-outline-secondary">
-                                        Cancelar
-                                    </a>
-                                    <button type="button" class="btn btn-success">
-                                        Update
-                                    </button>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
