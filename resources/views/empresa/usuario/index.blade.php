@@ -70,7 +70,7 @@
                                                             <a class="dropdown-item" href="{{ url('show-empresa-usuario/'.$user->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                         </li>
                                                         @if ($fecha_gracia >= $today)
-                                                            @if ($Auth::user()->role_as == "0")
+                                                            @if (Auth::user()->role_as == "0")
                                                                 <li>
 
                                                                     <a class="dropdown-item" href="{{ url('edit-empresa-usuario/'.$user->id) }}"><i class="bi bi-pencil-fill text-warning"></i> Editar</a>

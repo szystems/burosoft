@@ -51,7 +51,7 @@
                             @if ($fecha_gracia >= $today)
                                 <div class="col-12 col-md-auto">
                                     <div class="btn-group-sm m-3">
-                                        @if ($Auth::user()->role_as == "0")
+                                        @if (Auth::user()->role_as == "0")
                                             <a href="{{ url('edit-empresa-usuario/'.$user->id) }}" class="btn btn-warning" aria-current="page"><i class="bi bi-pencil"></i> Editar</a>
                                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $user->id }}">
                                                 <i class="bi bi-trash"></i> Eliminar

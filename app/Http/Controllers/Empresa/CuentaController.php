@@ -201,41 +201,69 @@ class CuentaController extends Controller
     {
         if ($request)
         {
+            // Limitar la cantidad de registros para evitar problemas de memoria
+            $limite = $request->input('limite') ? $request->input('limite') : 500;
 
-            $cuentas = Cuenta::where('empresa_id', Auth::user()->empresa_id)->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")->get();
-            $verpdf = "Browser";
-            $nompdf = date('m/d/Y g:ia');
+            // Seleccionar solo las columnas necesarias para reducir uso de memoria
+            $cuentas = Cuenta::select(
+                    'id',
+                    'codigo',
+                    'razon_social',
+                    'nit',
+                    'dpi',
+                    'correo',
+                    'telefono',
+                    'otra_forma_contacto',
+                    'datos_intermediario_nombre',
+                    'datos_intermediario_telefono',
+                    'datos_intermediario_correo',
+                    'datos_propietario_nombre',
+                    'datos_propietario_telefono',
+                    'datos_propietario_correo'
+                )
+                ->where('empresa_id', Auth::user()->empresa_id)
+                ->where('estado', 1) // Solo cuentas activas
+                ->orderByRaw("CAST(SUBSTRING_INDEX(codigo, '-', -1) AS UNSIGNED), codigo")
+                ->limit($limite)
+                ->get();
+
+            $nompdf = date('Y-m-d_H-i-s');
             $path = public_path('assets/uploads/');
 
             $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
-
             $currency = $config->currency_simbol;
 
-            if ($config->logo == null)
-            {
-                $logo = null;
+            if ($config->logo == null) {
                 $imagen = null;
-            }
-            else
-            {
-                    $logo = $config->logo;
-                    $imagen = public_path('assets/uploads/logos/'.$logo);
+            } else {
+                $imagen = public_path('assets/uploads/logos/'.$config->logo);
             }
 
+            // Determinar si descargar o mostrar en navegador
+            $pdfarchivo = $request->input('pdfarchivo') ?? "stream";
+            $pdftamaño = $request->input('pdftamaño') ?? "letter";
+            $pdfhorientacion = $request->input('pdfhorientacion') ?? "portrait";
 
-            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+            // Preparar los datos para la vista
+            $viewData = compact('cuentas', 'path', 'config', 'imagen', 'currency');
 
-            if ( $verpdf == "Download" )
-            {
-                $pdf = PDF::loadView('empresa.cuenta.pdf',['cuentas'=>$cuentas,'path'=>$path,'config'=>$config,'imagen'=>$imagen,'currency'=>$currency]);
+            // Crear el PDF con opciones optimizadas
+            $pdf = PDF::loadView('empresa.cuenta.pdf', $viewData);
 
-                return $pdf->download ('Cuentas: '.$nompdf.'.pdf');
-            }
-            if ( $verpdf == "Browser" )
-            {
-                $pdf = PDF::loadView('empresa.cuenta.pdf',['cuentas'=>$cuentas,'path'=>$path,'config'=>$config,'imagen'=>$imagen,'currency'=>$currency]);
+            // Configurar opciones para reducir uso de memoria
+            $pdf->setOption('isRemoteEnabled', true);
+            $pdf->setOption('isHtml5ParserEnabled', true);
+            $pdf->setOption('dpi', 72);
+            $pdf->setOption('defaultFont', 'sans-serif');
 
-                return $pdf->stream ('Cuentas: '.$nompdf.'.pdf');
+            // Configurar tamaño y orientación
+            $pdf->setPaper($pdftamaño, $pdfhorientacion);
+
+            // Devolver el PDF según el tipo solicitado
+            if ($pdfarchivo == "download") {
+                return $pdf->download('Cuentas_'.$nompdf.'.pdf');
+            } else {
+                return $pdf->stream('Cuentas_'.$nompdf.'.pdf');
             }
         }
     }

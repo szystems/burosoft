@@ -268,7 +268,6 @@ class MovimientoController extends Controller
 
     public function pdfmovimientos(Request $request)
     {
-        // dd($request);
         if ($request)
         {
             $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
@@ -307,80 +306,116 @@ class MovimientoController extends Controller
             $pdfhorientacion = $request->input('pdfhorientacion');
             $pdfarchivo = $request->input('pdfarchivo');
 
-            //recibir las columnas a mostrar
-            // $fid = $request->has('fid');
-            // $ffecha = $request->has('ffecha');
-            // $fcuenta = $request->has('fcuenta');
-            // $frubro = $request->has('frubro');
-            // $fcargo = $request->has('fcargo');
-            // $festadosaldo = $request->has('festadosaldo');
-            // $fpagadosaldo = $request->has('fpagadosaldo');
-            // $fusuario = $request->has('fusuario');
-            // $fpagos = $request->has('fpagos');
+            // Limitar la cantidad de registros para evitar problemas de memoria
+            $limite = $request->input('limite') ? $request->input('limite') : 100;
 
+            // Seleccionar solo las columnas necesarias
+            $consultaBase = Movimiento::select('movimientos.*')
+                ->with(['cuenta:id,razon_social', 'rubro:id,nombre', 'usuario:id,name'])
+                ->where('fecha', '>=', $fechaDesde)
+                ->where('fecha', '<=', $fechaHasta)
+                ->where('empresa_id', Auth::user()->empresa_id);
 
-            $Consultafiltros = Movimiento::where('fecha', '>=', $fechaDesde)
-            ->where('fecha', '<=', $fechaHasta)
-            ->where('empresa_id', Auth::user()->empresa_id)
-            ->where('estado', 1);
             if (!empty($usuarioID)) {
-                $Consultafiltros->where('usuario_id', '=', $usuarioID);
+                $consultaBase->where('usuario_id', '=', $usuarioID);
             }
             if (!empty($cuentaID)) {
-                $Consultafiltros->where('cuenta_id', '=', $cuentaID);
+                $consultaBase->where('cuenta_id', '=', $cuentaID);
             }
             if (!empty($rubroID)) {
-                $Consultafiltros->where('rubro_id', '=', $rubroID);
+                $consultaBase->where('rubro_id', '=', $rubroID);
             }
+
+            // Optimización para la consulta de saldo
             if (!empty($saldo)){
                 if ($saldo == "Pendiente") {
-                    $Consultafiltros->where(function ($query) {
-                        $query->whereRaw('monto_q > (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
-                    });
+                    $consultaBase->whereRaw('(SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id) < movimientos.monto_q');
                 }
                 if ($saldo == "Pagado") {
-                    $Consultafiltros->where(function ($query) {
-                        $query->whereRaw('monto_q <= (SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id)');
-                    });
+                    $consultaBase->whereRaw('(SELECT COALESCE(SUM(mp.monto_q), 0) FROM movimiento_pagos mp WHERE mp.movimiento_id = movimientos.id) >= movimientos.monto_q');
                 }
             }
-            if ($ordenar == "fecha") {
-                $Consultafiltros->orderBy('fecha','desc');
-                $Consultafiltros->orderBy('cuenta_id','desc');
-            }else{
-                $Consultafiltros->orderBy('cuenta_id','desc');
-                $Consultafiltros->orderBy('fecha','desc');
-            }
-            $movimientos = $Consultafiltros->get();
 
+            if ($ordenar == "fecha") {
+                $consultaBase->orderBy('fecha','desc');
+            } else {
+                $consultaBase->orderBy('cuenta_id','desc')
+                            ->orderBy('fecha','desc');
+            }
+
+            // Limitar la cantidad de registros para prevenir problemas de memoria
+            $movimientos = $consultaBase->limit($limite)->get();
+
+            // Precalcular totales
+            $monto_total_q = $movimientos->where('estado', 1)->sum('monto_q');
+            $monto_total_d = $movimientos->where('estado', 1)->sum('monto_d');
+
+            // Obtener todos los IDs de movimientos para consultar pagos
+            $movimientoIds = $movimientos->pluck('id')->toArray();
+
+            // Obtener pagos para todos los movimientos en una sola consulta
+            $pagosPorMovimiento = DB::table('movimiento_pagos')
+                ->select('movimiento_id', DB::raw('SUM(monto_q) as total_pagado'))
+                ->whereIn('movimiento_id', $movimientoIds)
+                ->groupBy('movimiento_id')
+                ->pluck('total_pagado', 'movimiento_id')
+                ->toArray();
+
+            // Si se necesitan pagos detallados, obtenerlos para todos los movimientos
+            $pagosDetallados = [];
+            if($request->has('fpagos')) {
+                $pagosDetallados = DB::table('movimiento_pagos')
+                    ->select('*')
+                    ->whereIn('movimiento_id', $movimientoIds)
+                    ->orderBy('fecha_documento', 'asc')
+                    ->get()
+                    ->groupBy('movimiento_id')
+                    ->toArray();
+            }
 
             $nompdf = date('m/d/Y g:ia');
             $path = public_path('assets/uploads/');
-
             $currency = $config->currency_simbol;
 
-            if ($config->logo == null)
-            {
-                $logo = null;
+            if ($config->logo == null) {
                 $imagen = null;
-            }
-            else
-            {
-                    $logo = $config->logo;
-                    $imagen = public_path('assets/uploads/logos/'.$logo);
+            } else {
+                $imagen = public_path('assets/uploads/logos/'.$config->logo);
             }
 
-            if ( $pdfarchivo == "download" )
-            {
-                $pdf = PDF::loadView('empresa.movimiento.pdfmovimientos', compact('imagen','movimientos','config','request','fechaDesdeVista','fechaHastaVista'));
+            // Pasar datos precalculados a la vista
+            $viewData = compact(
+                'imagen',
+                'movimientos',
+                'config',
+                'request',
+                'fechaDesdeVista',
+                'fechaHastaVista',
+                'pagosPorMovimiento',
+                'pagosDetallados',
+                'monto_total_q',
+                'monto_total_d'
+            );
+
+            if ($pdfarchivo == "download" || $pdfarchivo == "stream") {
+                // Primero crear el PDF con los datos de la vista
+                $pdf = PDF::loadView('empresa.movimiento.pdfmovimientos', $viewData);
+
+                // Luego configurar opciones una por una
+                $pdf->setOption('isRemoteEnabled', true);
+                $pdf->setOption('isHtml5ParserEnabled', true);
+                $pdf->setOption('dpi', 72);
+                $pdf->setOption('defaultFont', 'sans-serif');
+
+                // Configurar tamaño y orientación del papel
                 $pdf->setPaper($pdftamaño, $pdfhorientacion);
-                return $pdf->download ('Reporte Movimientos: '.$nompdf.'.pdf');
-            }
-            if ( $pdfarchivo == "stream" )
-            {
-                $pdf = PDF::loadView('empresa.movimiento.pdfmovimientos', compact('imagen','movimientos','config','request','fechaDesdeVista','fechaHastaVista'));
-                $pdf->setPaper($pdftamaño, $pdfhorientacion);
-                return $pdf->stream ('Reporte Movimientos: '.$nompdf.'.pdf');
+
+                // Devolver el PDF según el tipo solicitado
+                if ($pdfarchivo == "download") {
+                    return $pdf->download('Reporte Movimientos: '.$nompdf.'.pdf');
+                } else {
+                    return $pdf->stream('Reporte Movimientos: '.$nompdf.'.pdf');
+                }
             }
         }
     }

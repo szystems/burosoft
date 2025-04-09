@@ -2,113 +2,98 @@
 <html lang="es">
 
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Pure css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css"
-        integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
-
-
     <title>{{ __('Cuentas') }}</title>
-
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 4px;
+            text-align: left;
+            font-size: 9px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .blue { color: #0000FF; }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .header img {
+            max-height: 80px;
+        }
+        h3, h5 {
+            margin: 8px 0;
+        }
+    </style>
 </head>
 
 <body>
-    <center>
-        <img align="center" src="{{ $imagen }}" alt="" height="100">
-    </center>
-    <h3 align="center"><u>{{ __('Cuentas') }}</u></h3>
-    <label>
-        <font size="1">{{ __('Fecha Reporte:') }}:</font>
-        <font color="blue" size="1">
+    <div class="header">
+        @if($imagen)
+            <img src="{{ $imagen }}" alt="Logo">
+        @endif
+        <h3><u>{{ __('Cuentas') }}</u></h3>
+    </div>
+
+    <div>
+        <span>{{ __('Fecha Reporte:') }}: </span>
+        <span class="blue">
             @php
                 $horafecha = now();
                 $horafecha = $horafecha->format('d-m-Y, H:i:s')
             @endphp
             {{ $horafecha }}
-        </font>
-    </label>
-    <br>
+        </span>
+    </div>
 
     <h5><u>{{ __('Listado de Cuentas') }}:</u></h5>
-    <table class="pure-table pure-table-bordered" Width=100%>
+    <table>
         <thead>
             <tr>
-                <th>
-                    <font size="1">Cuenta</font>
-                </th>
-                <th>
-                    <font size="1">{{ __('Nit/DPI') }}</font>
-                </th>
-                <th>
-                    <font size="1">{{ __('Intermediario') }}</font>
-                </th>
-                <th>
-                    <font size="1">{{ __('Propietario') }}</font>
-                </th>
+                <th>Cuenta</th>
+                <th>{{ __('Nit/DPI') }}</th>
+                <th>{{ __('Intermediario') }}</th>
+                <th>{{ __('Propietario') }}</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($cuentas as $cuenta)
                 <tr>
-                    <td align="left">
-                        <font size="1">
-                            <small>
-                                <strong>{{ $cuenta->codigo }}</strong>
-                                <br>
-                                <strong>{{ $cuenta->razon_social }}</strong>
-                                <br>
-                                {{ $cuenta->correo}}
-                                <br>
-                                {{ $cuenta->telefono }}
-                                <br>
-                                {{ $cuenta->otra_forma_contacto }}
-                            </small>
-                        </font>
+                    <td>
+                        <strong>{{ $cuenta->codigo }}</strong><br>
+                        <strong>{{ $cuenta->razon_social }}</strong><br>
+                        {{ $cuenta->correo }}<br>
+                        {{ $cuenta->telefono }}<br>
+                        {{ $cuenta->otra_forma_contacto }}
                     </td>
-                    <td align="left">
-                        <font size="1">
-                            <small>
-                                Nit: {{ $cuenta->nit }}
-                                <br>
-                                DPI: {{ $cuenta->dpi }}
-                            </small>
-                        </font>
+                    <td>
+                        Nit: {{ $cuenta->nit }}<br>
+                        DPI: {{ $cuenta->dpi }}
                     </td>
-                    <td align="left">
-                        <font size="1">
-                            <small>
-                                <strong>{{ $cuenta->datos_intermediario_nombre }}</strong>
-                                <br>
-                                {{ $cuenta->datos_intermediario_correo}}
-                                <br>
-                                {{ $cuenta->datos_intermediario_telefono }}
-                            </small>
-                        </font>
+                    <td>
+                        <strong>{{ $cuenta->datos_intermediario_nombre }}</strong><br>
+                        {{ $cuenta->datos_intermediario_correo }}<br>
+                        {{ $cuenta->datos_intermediario_telefono }}
                     </td>
-                    <td align="left">
-                        <font size="1">
-                            <small>
-                                <strong>{{ $cuenta->datos_propietario_nombre }}</strong>
-                                <br>
-                                {{ $cuenta->datos_propietario_correo}}
-                                <br>
-                                {{ $cuenta->datos_propietario_telefono }}
-                            </small>
-                        </font>
+                    <td>
+                        <strong>{{ $cuenta->datos_propietario_nombre }}</strong><br>
+                        {{ $cuenta->datos_propietario_correo }}<br>
+                        {{ $cuenta->datos_propietario_telefono }}
                     </td>
-
-
                 </tr>
             @endforeach
-
         </tbody>
-
     </table>
-
-
 </body>
-
 </html>
