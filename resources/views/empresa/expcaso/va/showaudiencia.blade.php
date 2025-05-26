@@ -497,8 +497,14 @@
                                                                                             </li>
                                                                                             <li class="nav-item" role="presentation">
                                                                                                 <a class="nav-link" id="tab-resolucion" data-bs-toggle="tab" href="#resolucion" role="tab"
-                                                                                                    aria-controls="resolucion" aria-selected="false"> Resoluciones
+                                                                                                    aria-controls="resolucion" aria-selected="false"> R-SAT
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $resoluciones->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-rtributa" data-bs-toggle="tab" href="#rtributa" role="tab"
+                                                                                                    aria-controls="rtributa" aria-selected="false"> R-Tributa
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $rtributas->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
                                                                                             <li class="nav-item" role="presentation">
@@ -832,11 +838,11 @@
                                                                                             <div class="tab-pane fade" id="resolucion" role="tabpanel">
                                                                                                 <div class="row gx-3">
 
-                                                                                                    <h4>Resoluciones</h4>
+                                                                                                    <h4>R-SAT</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addResolucionModal">
-                                                                                                            <i class="bi bi-plus-square"></i> Agregar Resolución
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar R-SAT
                                                                                                         </button>
                                                                                                     @endif
 
@@ -907,6 +913,91 @@
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.va.resolucion.deleteresolucionmodal')
                                                                                                                     @include('empresa.expcaso.va.resolucion.editresolucionmodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="rtributa" role="tabpanel">
+                                                                                                <div class="row gx-3">
+
+                                                                                                    <h4>R-Tributa (Resolución Tribunal Administrativo Tributario y Aduanero)</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRtributaModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar R-Tributa
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.va.rtributa.addrtributamodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha de Notificación</td>
+                                                                                                                    <td>No. de Resolución</td>
+                                                                                                                    <td>Tipo de Resolución</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($rtributas as $rtributa)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    <li>
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editRtributaModal-{{ $rtributa->id }}">
+                                                                                                                                            <i class="bi bi-pencil-fill text-warning"></i> Editar
+                                                                                                                                        </a>
+                                                                                                                                    </li>
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                                                            <li>
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteRtributaModal-{{ $rtributa->id }}">
+                                                                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                                                                </a>
+                                                                                                                                            </li>
+                                                                                                                                        @endif
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($rtributa->fecha)) }}</strong>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $rtributa->numero_resolucion }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($rtributa->tipo_resolucion == 'total a favor')
+                                                                                                                                <span class="badge bg-success">Total a favor</span>
+                                                                                                                            @elseif($rtributa->tipo_resolucion == 'total en contra')
+                                                                                                                                <span class="badge bg-danger">Total en contra</span>
+                                                                                                                            @elseif($rtributa->tipo_resolucion == 'parcial')
+                                                                                                                                <span class="badge bg-warning">Parcial</span>
+                                                                                                                            @elseif($rtributa->tipo_resolucion == 'nulidad')
+                                                                                                                                <span class="badge bg-info">Nulidad</span>
+                                                                                                                            @elseif($rtributa->tipo_resolucion == 'penal')
+                                                                                                                                <span class="badge bg-dark">Penal</span>
+                                                                                                                            @else
+                                                                                                                                <span class="badge bg-secondary">No definido</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $rtributa->observaciones }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/rtributas/'.$rtributa->archivo) }}" target="_blank"><strong class="text-primary">{{ $rtributa->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $rtributa->usuario->name }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.va.rtributa.deletertributamodal')
+                                                                                                                    @include('empresa.expcaso.va.rtributa.editrtributamodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>

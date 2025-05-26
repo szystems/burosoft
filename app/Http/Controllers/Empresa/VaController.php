@@ -17,6 +17,7 @@ use App\Models\Ro;
 use App\Models\Mpmr;
 use App\Models\Ampmr;
 use App\Models\Resolucion;
+use App\Models\Rtributa;
 use App\Models\Rr;
 use App\Http\Requests\AudienciaFormRequest;
 use App\Models\Cuenta;
@@ -55,6 +56,7 @@ class VaController extends Controller
         $dpmrs = Dpmr::where('audiencia_id', $audiencia->id)->get();
         $adpmrs = Adpmr::where('audiencia_id', $audiencia->id)->get();
         $resoluciones = Resolucion::where('audiencia_id', $audiencia->id)->get();
+        $rtributas = Rtributa::where('audiencia_id', $audiencia->id)->get();
         $recursos = Rr::where('audiencia_id', $audiencia->id)->get();
         $ntrrs = Ntrr::where('audiencia_id', $audiencia->id)->get();
         $ocursos = Ocurso::where('audiencia_id', $audiencia->id)->get();
@@ -65,7 +67,7 @@ class VaController extends Controller
         return view('empresa.expcaso.va.showaudiencia', compact(
             'pat', 'patscount', 'cuenta', 'config', 'audiencias',
             'audiencia', 'evacuaciones', 'periodos', 'dpmrs', 'adpmrs',
-            'resoluciones', 'recursos', 'ntrrs', 'ocursos', 'ros', 'mpmrs', 'ampmrs'
+            'resoluciones', 'rtributas', 'recursos', 'ntrrs', 'ocursos', 'ros', 'mpmrs', 'ampmrs'
         ));
     }
 }

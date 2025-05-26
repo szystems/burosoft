@@ -46,6 +46,7 @@ use App\Http\Controllers\Empresa\EvController;
 use App\Http\Controllers\Empresa\PpController;
 use App\Http\Controllers\Empresa\DpmrController;
 use App\Http\Controllers\Empresa\ResolucionController;
+use App\Http\Controllers\Empresa\RtributaController;
 use App\Http\Controllers\Empresa\RrController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
@@ -221,6 +222,12 @@ Route::middleware(['auth'])->group(function () {
     Route::put('update-resolucion/{id}', [ResolucionController::class, 'update']);
     Route::get('delete-resolucion/{id}', [ResolucionController::class, 'destroy']);
     Route::delete('delete-resolucion/{id}', [ResolucionController::class, 'destroy']);
+
+    //R-Tributa
+    Route::post('insert-rtributa', [RtributaController::class, 'insert']);
+    Route::put('update-rtributa/{id}', [RtributaController::class, 'update']);
+    Route::get('delete-rtributa/{id}', [RtributaController::class, 'destroy']);
+    Route::delete('delete-rtributa/{id}', [RtributaController::class, 'destroy']);
 
     //Rr
     Route::post('insert-rr', [RrController::class, 'insert']);

@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addResolucionModal">
-                    <i class="bi bi-plus text-success"></i> Agregar Resolución
+                    <i class="bi bi-plus text-success"></i> Agregar R-SAT
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
