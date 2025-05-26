@@ -711,7 +711,7 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha de Notificación</td>
+                                                                                                                    <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -745,7 +745,8 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($dpmr->fecha)) }}</strong>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($dpmr->fecha_hora)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($dpmr->fecha_hora)) }}</span>
                                                                                                                         </td>
                                                                                                                         <td>{{ $dpmr->numero_resolucion }}</td>
                                                                                                                         <td>{{ $dpmr->observaciones }}</td>
@@ -1220,7 +1221,7 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha</td>
+                                                                                                                    <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -1254,7 +1255,8 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($mpmr->fecha)) }}</strong>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($mpmr->fecha_hora)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($mpmr->fecha_hora)) }}</span>
                                                                                                                         </td>
                                                                                                                         <td>{{ $mpmr->numero_resolucion }}</td>
                                                                                                                         <td>{{ $mpmr->observaciones }}</td>

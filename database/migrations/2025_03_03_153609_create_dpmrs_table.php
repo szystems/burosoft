@@ -16,7 +16,7 @@ class CreateDpmrsTable extends Migration
         Schema::create('dpmrs', function (Blueprint $table) {
             $table->id();
             $table->string('numero_resolucion');
-            $table->date('fecha');
+            $table->datetime('fecha_hora');
             $table->unsignedBigInteger('usuario_id');
             $table->unsignedBigInteger('audiencia_id');
             $table->string('archivo')->nullable();

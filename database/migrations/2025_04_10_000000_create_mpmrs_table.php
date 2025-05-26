@@ -15,7 +15,7 @@ class CreateMpmrsTable extends Migration
     {
         Schema::create('mpmrs', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
+            $table->datetime('fecha_hora');
             $table->string('numero_resolucion');
             $table->unsignedBigInteger('usuario_id');
             $table->unsignedBigInteger('audiencia_id');

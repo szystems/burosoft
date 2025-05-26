@@ -15,51 +15,44 @@
                 <div class="modal-body">
                     <div class="row gx-3">
                         <div class="col-md-6 mb-3">
-                            <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" name="fecha" class="form-control" value="{{ date('Y-m-d', strtotime($mpmr->fecha)) }}" required>
-                            @if ($errors->has('fecha'))
-                                <span class="help-block opacity-7">
-                                    <strong>
-                                        <font color="red">{{ $errors->first('fecha') }}</font>
-                                    </strong>
-                                </span>
-                            @endif
+                            <label for="fecha_hora_{{ $mpmr->id }}" class="form-label">Fecha y Hora <span class="text-danger">*</span></label>
+                            <input type="datetime-local" class="form-control @error('fecha_hora') is-invalid @enderror" 
+                                   id="fecha_hora_{{ $mpmr->id }}" name="fecha_hora" 
+                                   value="{{ old('fecha_hora', date('Y-m-d\TH:i', strtotime($mpmr->fecha_hora))) }}" required>
+                            @error('fecha_hora')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="numero_resolucion" class="form-label">No. de Resolución</label>
-                            <input type="text" name="numero_resolucion" class="form-control" value="{{ $mpmr->numero_resolucion }}" required>
-                            @if ($errors->has('numero_resolucion'))
-                                <span class="help-block opacity-7">
-                                    <strong>
-                                        <font color="red">{{ $errors->first('numero_resolucion') }}</font>
-                                    </strong>
-                                </span>
-                            @endif
+                            <label for="numero_resolucion_{{ $mpmr->id }}" class="form-label">Número de Resolución <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('numero_resolucion') is-invalid @enderror" 
+                                   id="numero_resolucion_{{ $mpmr->id }}" name="numero_resolucion" 
+                                   value="{{ old('numero_resolucion', $mpmr->numero_resolucion) }}" required>
+                            @error('numero_resolucion')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="archivo" class="form-label">Archivo</label>
-                            <input type="file" name="archivo" class="form-control">
-                            @if ($errors->has('archivo'))
-                                <span class="help-block opacity-7">
-                                    <strong>
-                                        <font color="red">{{ $errors->first('archivo') }}</font>
-                                    </strong>
-                                </span>
+                            <label for="archivo_{{ $mpmr->id }}" class="form-label">Archivo</label>
+                            <input type="file" class="form-control @error('archivo') is-invalid @enderror" 
+                                   id="archivo_{{ $mpmr->id }}" name="archivo" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            @if($mpmr->archivo)
+                                <small class="text-muted">Archivo actual: {{ $mpmr->archivo }}</small>
                             @endif
+                            @error('archivo')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3">
-                            <label for="observaciones" class="form-label">Observaciones</label>
-                            <textarea name="observaciones" class="form-control" rows="3">{{ $mpmr->observaciones }}</textarea>
-                            @if ($errors->has('observaciones'))
-                                <span class="help-block opacity-7">
-                                    <strong>
-                                        <font color="red">{{ $errors->first('observaciones') }}</font>
-                                    </strong>
-                                </span>
-                            @endif
+                        <div class="col-md-12 mb-3">
+                            <label for="observaciones_{{ $mpmr->id }}" class="form-label">Observaciones</label>
+                            <textarea class="form-control @error('observaciones') is-invalid @enderror" 
+                                      id="observaciones_{{ $mpmr->id }}" name="observaciones" rows="3">{{ old('observaciones', $mpmr->observaciones) }}</textarea>
+                            @error('observaciones')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
@@ -71,7 +64,7 @@
                         <i class="bi bi-x-circle"></i> Cancelar
                     </button>
                     <button type="submit" class="btn btn-warning">
-                        <i class="bi bi-check2-square"></i> Grabar
+                        <i class="bi bi-check2-square"></i> Actualizar
                     </button>
                 </div>
             </form>

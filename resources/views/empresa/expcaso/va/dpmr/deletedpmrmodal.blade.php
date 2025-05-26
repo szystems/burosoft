@@ -6,7 +6,7 @@
                 @method('DELETE')
                 <div class="modal-header">
                     <h5 class="modal-title h4" id="deleteDpmrModal-{{ $dpmr->id }}">
-                        Eliminar Dpmracuación de Audiencia:
+                        Eliminar Diligencia Para Mejor Resolver:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>

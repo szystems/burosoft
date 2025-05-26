@@ -24,7 +24,7 @@ class DpmrFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha' => 'required|date',
+            'fecha_hora' => 'required|date',
             'numero_resolucion' => 'required|string|max:255',
             'usuario_id' => 'required|exists:users,id',
             'audiencia_id' => 'required|exists:audiencias,id',

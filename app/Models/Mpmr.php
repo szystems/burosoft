@@ -11,7 +11,7 @@ class Mpmr extends Model
 
     // Propiedades fillable
     protected $fillable = [
-        'fecha',
+        'fecha_hora',
         'numero_resolucion',
         'archivo',
         'tipo_archivo',
