@@ -28,6 +28,7 @@ class DpmrFormRequest extends FormRequest
             'numero_resolucion' => 'required|string|max:255',
             'usuario_id' => 'required|exists:users,id',
             'audiencia_id' => 'required|exists:audiencias,id',
+            'observaciones' => 'nullable|string',
         ];
     }
 }

@@ -80,11 +80,22 @@ aria-labelledby="addDocModal" aria-hidden="true">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     <i class="bi bi-x-circle"></i> Cancelar
                 </button>
-                <button type="submit" class="btn btn-warning">
+                <button type="submit" class="btn btn-warning" id="btnSubmitDoc">
                     <i class="bi bi-check2-square"></i> Grabar
                 </button>
             </div>
         </form>
+        <!-- Script para prevenir múltiples envíos del formulario -->
+        <script>
+            document.getElementById('addDocModal').addEventListener('shown.bs.modal', function() {
+                document.querySelector('#addDocModal form').addEventListener('submit', function() {
+                    // Deshabilitar el botón de envío
+                    var btnSubmit = document.getElementById('btnSubmitDoc');
+                    btnSubmit.disabled = true;
+                    btnSubmit.innerHTML = '<i class="bi bi-hourglass-split"></i> Procesando...';
+                });
+            });
+        </script>
     </div>
 </div>
 </div>

@@ -245,6 +245,35 @@ Route::middleware(['auth'])->group(function () {
     Route::get('empresa-config', [ConfigEmpresaController::class, 'index']);
     Route::put('empresa-update-config', [ConfigEmpresaController::class, 'update']);
 
+    // Rutas para ADPMR
+    Route::post('insert-adpmr', [App\Http\Controllers\Empresa\AdpmrController::class, 'insert'])->name('insert-adpmr');
+    Route::put('update-adpmr/{id}', [App\Http\Controllers\Empresa\AdpmrController::class, 'update'])->name('update-adpmr');
+    Route::delete('delete-adpmr/{id}', [App\Http\Controllers\Empresa\AdpmrController::class, 'destroy'])->name('delete-adpmr');
+
+    // Rutas para NTRR
+    Route::post('insert-ntrr', [App\Http\Controllers\Empresa\NtrrController::class, 'insert'])->name('insert-ntrr');
+    Route::put('update-ntrr/{id}', [App\Http\Controllers\Empresa\NtrrController::class, 'update'])->name('update-ntrr');
+    Route::delete('delete-ntrr/{id}', [App\Http\Controllers\Empresa\NtrrController::class, 'destroy'])->name('delete-ntrr');
+
+    // Rutas para Ocurso
+    Route::post('insert-ocurso', [App\Http\Controllers\Empresa\OcursoController::class, 'insert'])->name('insert-ocurso');
+    Route::put('update-ocurso/{id}', [App\Http\Controllers\Empresa\OcursoController::class, 'update'])->name('update-ocurso');
+    Route::delete('delete-ocurso/{id}', [App\Http\Controllers\Empresa\OcursoController::class, 'destroy'])->name('delete-ocurso');
+
+    // Rutas para Resolución de Ocurso
+    Route::post('insert-ro', [App\Http\Controllers\Empresa\RoController::class, 'insert'])->name('insert-ro');
+    Route::put('update-ro/{id}', [App\Http\Controllers\Empresa\RoController::class, 'update'])->name('update-ro');
+    Route::delete('delete-ro/{id}', [App\Http\Controllers\Empresa\RoController::class, 'destroy'])->name('delete-ro');
+
+    // Rutas para Medidas Para Mejor Resolver
+    Route::post('insert-mpmr', [App\Http\Controllers\Empresa\MpmrController::class, 'insert'])->name('insert-mpmr');
+    Route::put('update-mpmr/{id}', [App\Http\Controllers\Empresa\MpmrController::class, 'update'])->name('update-mpmr');
+    Route::delete('delete-mpmr/{id}', [App\Http\Controllers\Empresa\MpmrController::class, 'destroy'])->name('delete-mpmr');
+
+    // Rutas para Atención Medidas Para Mejor Resolver
+    Route::post('insert-ampmr', [App\Http\Controllers\Empresa\AmpmrController::class, 'insert'])->name('insert-ampmr');
+    Route::put('update-ampmr/{id}', [App\Http\Controllers\Empresa\AmpmrController::class, 'update'])->name('update-ampmr');
+    Route::delete('delete-ampmr/{id}', [App\Http\Controllers\Empresa\AmpmrController::class, 'destroy'])->name('delete-ampmr');
 
     //User FrontEnd
     // Route::get('my-account', [UserController::class, 'indexuser']);

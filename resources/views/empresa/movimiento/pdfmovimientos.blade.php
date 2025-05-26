@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport"="width=device-width, initial-scale=1">
     <title>Cuentas Por Cobrar</title>
     <style>
         body {
@@ -148,7 +148,10 @@
             @endphp
             @foreach ($movimientos as $movimiento)
                 @php
-                    $monto_pagado_q = $pagosPorMovimiento[$movimiento->id] ?? 0;
+                    // Consultar pagos filtrando solo los activos
+                    $monto_pagado_q = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                        ->where('estado', 1) // Solo considerar pagos activos
+                        ->sum('monto_q');
                     $saldo = $movimiento->monto_q - $monto_pagado_q;
 
                     if ($movimiento->estado == 1) {
@@ -223,35 +226,44 @@
                         </td>
                     @endif
 
-                    @if ($request->has('fpagos') && isset($pagosDetallados[$movimiento->id]))
+                    @if ($request->has('fpagos'))
                         <td>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Monto</th>
-                                        <th>Forma Pago</th>
-                                        <th>Documento</th>
-                                        <th>Banco</th>
-                                        <th>Cuenta</th>
-                                        <th>Fecha</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($pagosDetallados[$movimiento->id] as $dp)
+                            @php
+                                // Obtener pagos filtrando solo los activos
+                                $pagos_activos = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                                    ->where('estado', 1) // Solo mostrar pagos activos
+                                    ->orderBy('fecha_documento', 'asc')
+                                    ->get();
+                            @endphp
+                            @if ($pagos_activos->count() > 0)
+                                <table>
+                                    <thead>
                                         <tr>
-                                            <td>Q.{{ number_format($dp->monto_q,2, '.', ',') }}</td>
-                                            <td>{{ $dp->forma_pago }}</td>
-                                            <td>{{ $dp->numero_documento }}</td>
-                                            <td class="blue">{{ $dp->banco }}</td>
-                                            <td class="gray">{{ $dp->numero_cuenta }}</td>
-                                            <td>{{ date('d/m/Y', strtotime($dp->fecha_documento)) }}</td>
+                                            <th>Monto</th>
+                                            <th>Forma Pago</th>
+                                            <th>Documento</th>
+                                            <th>Banco</th>
+                                            <th>Cuenta</th>
+                                            <th>Fecha</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pagos_activos as $dp)
+                                            <tr>
+                                                <td>Q.{{ number_format($dp->monto_q,2, '.', ',') }}</td>
+                                                <td>{{ $dp->forma_pago }}</td>
+                                                <td>{{ $dp->numero_documento }}</td>
+                                                <td class="blue">{{ $dp->banco }}</td>
+                                                <td class="gray">{{ $dp->numero_cuenta }}</td>
+                                                <td>{{ date('d/m/Y', strtotime($dp->fecha_documento)) }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                Sin pagos
+                            @endif
                         </td>
-                    @elseif ($request->has('fpagos'))
-                        <td>Sin pagos</td>
                     @endif
                 </tr>
             @endforeach

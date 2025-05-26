@@ -72,11 +72,22 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <i class="bi bi-x-circle"></i> Cancelar
                     </button>
-                    <button type="submit" class="btn btn-warning">
+                    <button type="submit" class="btn btn-warning" id="btnEditDoc{{ $doc->id }}">
                         <i class="bi bi-check2-square"></i> Grabar
                     </button>
                 </div>
             </form>
+            <!-- Script para prevenir múltiples envíos del formulario -->
+            <script>
+                document.getElementById('editarDocModal{{ $doc->id }}').addEventListener('shown.bs.modal', function() {
+                    document.querySelector('#editarDocModal{{ $doc->id }} form').addEventListener('submit', function() {
+                        // Deshabilitar el botón de envío
+                        var btnSubmit = document.getElementById('btnEditDoc{{ $doc->id }}');
+                        btnSubmit.disabled = true;
+                        btnSubmit.innerHTML = '<i class="bi bi-hourglass-split"></i> Procesando...';
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>

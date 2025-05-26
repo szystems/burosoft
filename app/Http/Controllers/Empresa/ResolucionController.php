@@ -33,7 +33,8 @@ class ResolucionController extends Controller
             'usuario_id' => Auth::user()->id,
             'fecha' => date('Y-m-d'),
             'tipo' => 'Exp/Caso',
-            'descripcion' => 'Se insertó una resolución No.: ' . $resolucion->numero_resolucion .
+            'descripcion' => 'Se insertó una nueva resolución No.: ' . $resolucion->numero_resolucion .
+                             ' de tipo: ' . $resolucion->tipo_resolucion .
                              ' para la audiencia No.: ' . $resolucion->audiencia->numero_audiencia .
                              ', cuenta: ' . $resolucion->audiencia->pat->cuenta->codigo . ' - ' . $resolucion->audiencia->pat->cuenta->razon_social .
                              ', Expediente: ' . $resolucion->audiencia->pat->no_expediente
@@ -74,6 +75,7 @@ class ResolucionController extends Controller
             'fecha' => date('Y-m-d'),
             'tipo' => 'Exp/Caso',
             'descripcion' => 'Se actualizó la resolución No.: ' . $resolucion->numero_resolucion .
+                             ' de tipo: ' . $resolucion->tipo_resolucion .
                              ' para la audiencia No.: ' . $resolucion->audiencia->numero_audiencia .
                              ', cuenta: ' . $resolucion->audiencia->pat->cuenta->codigo . ' - ' . $resolucion->audiencia->pat->cuenta->razon_social .
                              ', Expediente: ' . $resolucion->audiencia->pat->no_expediente
@@ -100,6 +102,7 @@ class ResolucionController extends Controller
             'fecha' => date('Y-m-d'),
             'tipo' => 'Exp/Caso',
             'descripcion' => 'Se eliminó la resolución No.: ' . $resolucion->numero_resolucion .
+                             ' de tipo: ' . $resolucion->tipo_resolucion .
                              ' para la audiencia No.: ' . $resolucion->audiencia->numero_audiencia .
                              ', cuenta: ' . $resolucion->audiencia->pat->cuenta->codigo . ' - ' . $resolucion->audiencia->pat->cuenta->razon_social .
                              ', Expediente: ' . $resolucion->audiencia->pat->no_expediente

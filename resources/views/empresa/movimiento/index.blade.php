@@ -234,6 +234,7 @@
                                                         </td>
                                                         @php
                                                             $monto_pagado_q = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                                                            ->where('estado', 1) // Solo considerar pagos activos
                                                             ->sum('monto_q');
                                                             $saldo = $movimiento->monto_q - $monto_pagado_q;
 
@@ -298,7 +299,9 @@
 
                                                         <td align="center">
                                                             @php
-                                                                $datos_pagos = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)->orderBy('fecha_documento','asc')->get();
+                                                                $datos_pagos = \App\Models\MovimientoPago::where('movimiento_id', $movimiento->id)
+                                                                ->where('estado', 1) // Solo mostrar pagos activos
+                                                                ->orderBy('fecha_documento','asc')->get();
                                                             @endphp
                                                             @if ($datos_pagos->count() > 0)
                                                                 <div class="table-responsive">

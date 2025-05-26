@@ -469,7 +469,7 @@
                                                                                                         </a>
                                                                                                     </td>
                                                                                                     <td align="center">
-                                                                                                        <p>{{ $config->currency_simbol }}.{{ $audiencia->impuestos }}</p>
+                                                                                                        <p>{{ $config->currency_simbol }}.{{ number_format($audiencia->impuestos,2, '.', ',') }}</p>
                                                                                                     </td>
                                                                                                     <td align="center">
                                                                                                         <p><strong><a href="{{ asset('uploads/va/audiencias/'.$audiencia->archivo) }}" target="_blank" class="text-blue">{{ $audiencia->tipo_archivo }}</a></strong></p>
@@ -498,7 +498,7 @@
 
                                                                     </div>
                                                                     <div class="tab-pane fade" id="vp" role="tabpanel">
-                                                                        <h4>Vía Procedural (VP)</h4>
+                                                                        <h4>Vía Penal (VP)</h4>
                                                                         <hr>
                                                                     </div>
 

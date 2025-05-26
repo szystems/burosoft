@@ -213,11 +213,22 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                         <i class="bi bi-x-circle"></i> Cancelar
                     </button>
-                    <button type="submit" class="btn btn-warning">
+                    <button type="submit" class="btn btn-warning" id="btnEditPago{{ $pago->id }}">
                         <i class="bi bi-check2-square"></i> Grabar
                     </button>
                 </div>
             </form>
+            <!-- Script para prevenir múltiples envíos del formulario -->
+            <script>
+                document.getElementById('editarPagoModal{{ $pago->id }}').addEventListener('shown.bs.modal', function() {
+                    document.querySelector('#editarPagoModal{{ $pago->id }} form').addEventListener('submit', function() {
+                        // Deshabilitar el botón de envío
+                        var btnSubmit = document.getElementById('btnEditPago{{ $pago->id }}');
+                        btnSubmit.disabled = true;
+                        btnSubmit.innerHTML = '<i class="bi bi-hourglass-split"></i> Procesando...';
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>

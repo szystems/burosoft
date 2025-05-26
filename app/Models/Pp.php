@@ -15,7 +15,8 @@ class Pp extends Model
         'usuario_id',
         'audiencia_id',
         'archivo',
-        'tipo_archivo'
+        'tipo_archivo',
+        'observaciones'
     ];
 
     public function usuario()

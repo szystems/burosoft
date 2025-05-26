@@ -1400,7 +1400,7 @@
                                                                         <hr>
                                                                     </div>
                                                                     <div class="tab-pane fade" id="vp" role="tabpanel">
-                                                                        <h4>Vía Procedural (VP)</h4>
+                                                                        <h4>Vía Penal (VP)</h4>
                                                                         <hr>
                                                                     </div>
 

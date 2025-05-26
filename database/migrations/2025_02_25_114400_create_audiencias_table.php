@@ -20,7 +20,7 @@ class CreateAudienciasTable extends Migration
             $table->string('numero_audiencia');
             $table->enum('tipo_audiencia', ['AEC', 'AIR', 'AS', 'AA']);
             $table->dateTime('fecha');
-            $table->decimal('impuestos', 8, 2);
+            $table->decimal('impuestos', 15, 2);
             $table->string('archivo')->nullable();
             $table->string('tipo_archivo')->nullable();
             $table->timestamps();

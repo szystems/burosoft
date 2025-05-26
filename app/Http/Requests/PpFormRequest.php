@@ -28,6 +28,7 @@ class PpFormRequest extends FormRequest
             'numero_documento'        => 'required|string',
             'usuario_id'              => 'required|integer',
             'audiencia_id'            => 'required|integer',
+            'observaciones'           => 'nullable|string',
         ];
     }
 }

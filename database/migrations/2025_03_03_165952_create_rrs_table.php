@@ -21,6 +21,7 @@ class CreateRrsTable extends Migration
             $table->unsignedBigInteger('audiencia_id');
             $table->string('archivo')->nullable();
             $table->string('tipo_archivo')->nullable();
+            $table->text('observaciones')->nullable();
             $table->timestamps();
 
             $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');

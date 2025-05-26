@@ -52,7 +52,7 @@
                                                     </div>
 
                                                 @endif
-                                                <form action="{{ url('update-movimiento/'.$movimiento->id) }}" method="POST">
+                                                <form action="{{ url('update-movimiento/'.$movimiento->id) }}" method="POST" id="formEditMovimiento">
                                                     @csrf
                                                     @method('PUT')
                                                     <div class="row gx-3">
@@ -154,11 +154,30 @@
                                                         <a href="{{ url('movimientos') }}" type="button" class="btn btn-danger">
                                                             <i class="bi bi-x-circle"></i> Cancelar
                                                         </a>
-                                                        <button type="submit" class="btn btn-success">
+                                                        <button type="submit" class="btn btn-success" id="btnSubmit">
                                                             <i class="bi bi-check2-square"></i> Grabar
                                                         </button>
                                                     </div>
                                                 </form>
+                                                <!-- Script para prevenir múltiples envíos del formulario -->
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', function() {
+                                                        var formElement = document.getElementById('formEditMovimiento');
+                                                        if (formElement) {
+                                                            formElement.addEventListener('submit', function(e) {
+                                                                // Obtener el botón de envío
+                                                                var btnSubmit = document.getElementById('btnSubmit');
+                                                                if (btnSubmit && !btnSubmit.disabled) {
+                                                                    // Deshabilitar el botón para evitar múltiples envíos
+                                                                    btnSubmit.disabled = true;
+                                                                    btnSubmit.innerHTML = '<i class="bi bi-hourglass-split"></i> Procesando...';
+                                                                    // Permitir que el formulario continúe enviándose
+                                                                    return true;
+                                                                }
+                                                            });
+                                                        }
+                                                    });
+                                                </script>
                                             </div>
                                         </div>
                                         <!-- Row end -->

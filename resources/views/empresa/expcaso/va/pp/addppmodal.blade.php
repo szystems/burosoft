@@ -53,6 +53,18 @@
                             @endif
                         </div>
 
+                        <div class="col-md-6 mb-3">
+                            <label for="observaciones" class="form-label">Observaciones</label>
+                            <textarea name="observaciones" class="form-control" rows="3">{{ old('observaciones') }}</textarea>
+                            @if ($errors->has('observaciones'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('observaciones') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
                         <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="audiencia_id" value="{{ $audiencia->id }}">
                     </div>

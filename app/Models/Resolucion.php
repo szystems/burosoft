@@ -13,10 +13,12 @@ class Resolucion extends Model
     protected $fillable = [
         'fecha',
         'numero_resolucion',
+        'tipo_resolucion',
         'archivo',
         'tipo_archivo',
         'usuario_id',
-        'audiencia_id'
+        'audiencia_id',
+        'observaciones'
     ];
 
     // Relación con el modelo Usuario

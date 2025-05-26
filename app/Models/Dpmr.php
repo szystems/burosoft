@@ -16,7 +16,8 @@ class Dpmr extends Model
         'archivo',
         'tipo_archivo',
         'usuario_id',
-        'audiencia_id'
+        'audiencia_id',
+        'observaciones'
     ];
 
     // Relación con el modelo Usuario

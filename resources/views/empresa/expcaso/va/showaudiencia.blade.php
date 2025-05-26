@@ -361,7 +361,7 @@
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
                                                                         <a class="nav-link" href="{{ url('show-va/'.$pat->id) }}">
-                                                                            Va
+                                                                            VA
                                                                             <span class="badge rounded-pill green ms-2">{{ $audiencias->count() }}</span>
                                                                         </a>
                                                                     </li>
@@ -444,7 +444,7 @@
                                                                                     <div class="mb-3">
                                                                                         <label for="impuestos" class="form-label">Impuestos</label>
                                                                                         <p>
-                                                                                            {{ $config->currency_simbol }}.{{ $audiencia->impuestos }}
+                                                                                            {{ $config->currency_simbol }}.{{ number_format($audiencia->impuestos,2, '.', ',') }}
                                                                                         </p>
                                                                                     </div>
                                                                                 </div>
@@ -473,7 +473,7 @@
                                                                                         <ul class="nav nav-tabs" id="patTab" role="tablist">
                                                                                             <li class="nav-item" role="presentation">
                                                                                                 <a class="nav-link active" id="tab-ev" data-bs-toggle="tab" href="#ev" role="tab"
-                                                                                                    aria-controls="ev" aria-selected="true">EV
+                                                                                                    aria-controls="ev" aria-selected="true">EA
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $evacuaciones->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
@@ -490,6 +490,12 @@
                                                                                                 </a>
                                                                                             </li>
                                                                                             <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-adpmr" data-bs-toggle="tab" href="#adpmr" role="tab"
+                                                                                                    aria-controls="adpmr" aria-selected="false">ADPMR
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $adpmrs->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
                                                                                                 <a class="nav-link" id="tab-resolucion" data-bs-toggle="tab" href="#resolucion" role="tab"
                                                                                                     aria-controls="resolucion" aria-selected="false"> Resoluciones
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $resoluciones->count() }}</span>
@@ -501,12 +507,42 @@
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $recursos->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-ntrr" data-bs-toggle="tab" href="#ntrr" role="tab"
+                                                                                                    aria-controls="ntrr" aria-selected="false">NTRR
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $ntrrs->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-ocurso" data-bs-toggle="tab" href="#ocurso" role="tab"
+                                                                                                    aria-controls="ocurso" aria-selected="false">Ocursos
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $ocursos->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-ro" data-bs-toggle="tab" href="#ro" role="tab"
+                                                                                                    aria-controls="ro" aria-selected="false">RO
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $ros->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-mpmr" data-bs-toggle="tab" href="#mpmr" role="tab"
+                                                                                                    aria-controls="mpmr" aria-selected="false">MPMR
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $mpmrs->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-ampmr" data-bs-toggle="tab" href="#ampmr" role="tab"
+                                                                                                    aria-controls="ampmr" aria-selected="false">AMPMR
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $ampmrs->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
                                                                                         </ul>
                                                                                         <div class="tab-content" id="customTabContent2">
                                                                                             <div class="tab-pane fade show active" id="ev" role="tabpanel">
                                                                                                 <div class="row gx-3">
 
-                                                                                                    <h4>Evacuación  de Audiencia (EV)</h4>
+                                                                                                    <h4>Evacuación  de Audiencia (EA)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
@@ -526,6 +562,7 @@
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Documento</td>
+                                                                                                                    <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -565,6 +602,7 @@
                                                                                                                             <span class="text-warning">{{ date('h:i A', strtotime($ev->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
                                                                                                                         <td>{{ $ev->numero_documento }}</td>
+                                                                                                                        <td>{{ $ev->observaciones }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/evacuaciones/'.$ev->archivo) }}" target="_blank"><strong class="text-primary">{{ $ev->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ev->usuario->name }}</td>
                                                                                                                     </tr>
@@ -600,6 +638,7 @@
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Documento</td>
+                                                                                                                    <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -639,6 +678,7 @@
                                                                                                                             <span class="text-warning">{{ date('h:i A', strtotime($pp->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
                                                                                                                         <td>{{ $pp->numero_documento }}</td>
+                                                                                                                        <td>{{ $pp->observaciones }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/periodos/'.$pp->archivo) }}" target="_blank"><strong class="text-primary">{{ $pp->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $pp->usuario->name }}</td>
                                                                                                                     </tr>
@@ -671,8 +711,9 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha</td>
+                                                                                                                    <td>Fecha de Notificación</td>
                                                                                                                     <td>No. de Resolución</td>
+                                                                                                                    <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -707,11 +748,80 @@
                                                                                                                             <strong class="text-secondary">{{ date('d/m/Y', strtotime($dpmr->fecha)) }}</strong>
                                                                                                                         </td>
                                                                                                                         <td>{{ $dpmr->numero_resolucion }}</td>
+                                                                                                                        <td>{{ $dpmr->observaciones }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/dpmrs/'.$dpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $dpmr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $dpmr->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.va.dpmr.deletedpmrmodal')
                                                                                                                     @include('empresa.expcaso.va.dpmr.editdpmrmodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="adpmr" role="tabpanel">
+                                                                                                <div class="row gx-3">
+                                                                                                    <h4>Atención de Diligencias Para Mejor Resolver (ADPMR)</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAdpmrModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Atención de Diligencia Para Mejor Resolver
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.va.adpmr.addadpmrmodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha y Hora</td>
+                                                                                                                    <td>No. de Documento</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($adpmrs as $adpmr)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    <li>
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editAdpmrModal-{{ $adpmr->id }}">
+                                                                                                                                            <i class="bi bi-pencil-fill text-warning"></i> Editar
+                                                                                                                                        </a>
+                                                                                                                                    </li>
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                                                            <li>
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteAdpmrModal-{{ $adpmr->id }}">
+                                                                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                                                                </a>
+                                                                                                                                            </li>
+                                                                                                                                        @endif
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($adpmr->fecha_hora_presentacion)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($adpmr->fecha_hora_presentacion)) }}</span>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $adpmr->numero_documento }}</td>
+                                                                                                                        <td>{{ $adpmr->observaciones }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/adpmrs/'.$adpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $adpmr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $adpmr->usuario->name }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.va.adpmr.deleteadpmrmodal')
+                                                                                                                    @include('empresa.expcaso.va.adpmr.editadpmrmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -737,8 +847,10 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha</td>
+                                                                                                                    <td>Fecha de Notificación</td>
                                                                                                                     <td>No. de Resolución</td>
+                                                                                                                    <td>Tipo de Resolución</td>
+                                                                                                                    <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -773,6 +885,22 @@
                                                                                                                             <strong class="text-secondary">{{ date('d/m/Y', strtotime($resolucion->fecha)) }}</strong>
                                                                                                                         </td>
                                                                                                                         <td>{{ $resolucion->numero_resolucion }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($resolucion->tipo_resolucion == 'total a favor')
+                                                                                                                                <span class="badge bg-success">Total a favor</span>
+                                                                                                                            @elseif($resolucion->tipo_resolucion == 'total en contra')
+                                                                                                                                <span class="badge bg-danger">Total en contra</span>
+                                                                                                                            @elseif($resolucion->tipo_resolucion == 'parcial')
+                                                                                                                                <span class="badge bg-warning">Parcial</span>
+                                                                                                                            @elseif($resolucion->tipo_resolucion == 'nulidad')
+                                                                                                                                <span class="badge bg-info">Nulidad</span>
+                                                                                                                            @elseif($resolucion->tipo_resolucion == 'penal')
+                                                                                                                                <span class="badge bg-dark">Penal</span>
+                                                                                                                            @else
+                                                                                                                                <span class="badge bg-secondary">No definido</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $resolucion->observaciones }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/resoluciones/'.$resolucion->archivo) }}" target="_blank"><strong class="text-primary">{{ $resolucion->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $resolucion->usuario->name }}</td>
                                                                                                                     </tr>
@@ -808,6 +936,7 @@
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Documento</td>
+                                                                                                                    <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -847,6 +976,7 @@
                                                                                                                             <span class="text-warning">{{ date('h:i A', strtotime($rr->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
                                                                                                                         <td>{{ $rr->numero_documento }}</td>
+                                                                                                                        <td>{{ $rr->observaciones }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/rrs/'.$rr->archivo) }}" target="_blank"><strong class="text-primary">{{ $rr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $rr->usuario->name }}</td>
                                                                                                                     </tr>
@@ -860,6 +990,353 @@
 
                                                                                                 </div>
                                                                                             </div>
+                                                                                            <div class="tab-pane fade" id="ntrr" role="tabpanel">
+                                                                                                <div class="row gx-3">
+                                                                                                    <h4>Negativa de Trámite Recurso de Revocatoria (NTRR)</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNtrrModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Negativa de Trámite Recurso de Revocatoria
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.va.ntrr.addntrrmodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha de Notificación</td>
+                                                                                                                    <td>No. de Resolución</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($ntrrs as $ntrr)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    <li>
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editNtrrModal-{{ $ntrr->id }}">
+                                                                                                                                            <i class="bi bi-pencil-fill text-warning"></i> Editar
+                                                                                                                                        </a>
+                                                                                                                                    </li>
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                                                            <li>
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteNtrrModal-{{ $ntrr->id }}">
+                                                                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                                                                </a>
+                                                                                                                                            </li>
+                                                                                                                                        @endif
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ntrr->fecha)) }}</strong>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $ntrr->numero_resolucion }}</td>
+                                                                                                                        <td>{{ $ntrr->observaciones }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/ntrrs/'.$ntrr->archivo) }}" target="_blank"><strong class="text-primary">{{ $ntrr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $ntrr->usuario->name }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.va.ntrr.deletentrrmodal')
+                                                                                                                    @include('empresa.expcaso.va.ntrr.editntrrmodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="ocurso" role="tabpanel">
+                                                                                                <div class="row gx-3">
+                                                                                                    <h4>Ocursos</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOcursoModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Ocurso
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.va.ocurso.addocursomodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha y Hora</td>
+                                                                                                                    <td>No. de Documento</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($ocursos as $ocurso)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    <li>
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editOcursoModal-{{ $ocurso->id }}">
+                                                                                                                                            <i class="bi bi-pencil-fill text-warning"></i> Editar
+                                                                                                                                        </a>
+                                                                                                                                    </li>
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                                                            <li>
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteOcursoModal-{{ $ocurso->id }}">
+                                                                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                                                                </a>
+                                                                                                                                            </li>
+                                                                                                                                        @endif
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ocurso->fecha_hora_presentacion)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($ocurso->fecha_hora_presentacion)) }}</span>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $ocurso->numero_documento }}</td>
+                                                                                                                        <td>{{ $ocurso->observaciones }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/ocursos/'.$ocurso->archivo) }}" target="_blank"><strong class="text-primary">{{ $ocurso->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $ocurso->usuario->name }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.va.ocurso.deleteocursomodal')
+                                                                                                                    @include('empresa.expcaso.va.ocurso.editocursomodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="ro" role="tabpanel">
+                                                                                                <div class="row gx-3">
+                                                                                                    <h4>Resolución de Ocurso (RO)</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRoModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Resolución de Ocurso
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.va.ro.addromodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha</td>
+                                                                                                                    <td>No. de Resolución</td>
+                                                                                                                    <td>Tipo de Resolución</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($ros as $ro)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    <li>
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editRoModal-{{ $ro->id }}">
+                                                                                                                                            <i class="bi bi-pencil-fill text-warning"></i> Editar
+                                                                                                                                        </a>
+                                                                                                                                    </li>
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                                                            <li>
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteRoModal-{{ $ro->id }}">
+                                                                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                                                                </a>
+                                                                                                                                            </li>
+                                                                                                                                        @endif
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ro->fecha)) }}</strong>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $ro->numero_resolucion }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($ro->tipo_resolucion == 'Procede tramite')
+                                                                                                                                <span class="badge bg-success">Procede trámite</span>
+                                                                                                                            @elseif($ro->tipo_resolucion == 'No procede tramite')
+                                                                                                                                <span class="badge bg-danger">No procede trámite</span>
+                                                                                                                            @else
+                                                                                                                                <span class="badge bg-secondary">No definido</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $ro->observaciones }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/ros/'.$ro->archivo) }}" target="_blank"><strong class="text-primary">{{ $ro->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $ro->usuario->name }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.va.ro.deleteromodal')
+                                                                                                                    @include('empresa.expcaso.va.ro.editromodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="mpmr" role="tabpanel">
+                                                                                                <div class="row gx-3">
+                                                                                                    <h4>Medidas Para Mejor Resolver (MPMR)</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMpmrModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Medida Para Mejor Resolver
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.va.mpmr.addmpmrmodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha</td>
+                                                                                                                    <td>No. de Resolución</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($mpmrs as $mpmr)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    <li>
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editMpmrModal-{{ $mpmr->id }}">
+                                                                                                                                            <i class="bi bi-pencil-fill text-warning"></i> Editar
+                                                                                                                                        </a>
+                                                                                                                                    </li>
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                                                            <li>
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteMpmrModal-{{ $mpmr->id }}">
+                                                                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                                                                </a>
+                                                                                                                                            </li>
+                                                                                                                                        @endif
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($mpmr->fecha)) }}</strong>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $mpmr->numero_resolucion }}</td>
+                                                                                                                        <td>{{ $mpmr->observaciones }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/mpmrs/'.$mpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $mpmr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $mpmr->usuario->name }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.va.mpmr.deletempmrmodal')
+                                                                                                                    @include('empresa.expcaso.va.mpmr.editmpmrmodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="ampmr" role="tabpanel">
+                                                                                                <div class="row gx-3">
+                                                                                                    <h4>Atención Medidas Para Mejor Resolver (AMPMR)</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAmpmrModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Atención Medidas Para Mejor Resolver
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.va.ampmr.addampmrmodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha y Hora</td>
+                                                                                                                    <td>No. de Documento</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($ampmrs as $ampmr)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    <li>
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editAmpmrModal-{{ $ampmr->id }}">
+                                                                                                                                            <i class="bi bi-pencil-fill text-warning"></i> Editar
+                                                                                                                                        </a>
+                                                                                                                                    </li>
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                                                            <li>
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteAmpmrModal-{{ $ampmr->id }}">
+                                                                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                                                                </a>
+                                                                                                                                            </li>
+                                                                                                                                        @endif
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ampmr->fecha_hora_presentacion)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($ampmr->fecha_hora_presentacion)) }}</span>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $ampmr->numero_documento }}</td>
+                                                                                                                        <td>{{ $ampmr->observaciones }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/ampmrs/'.$ampmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $ampmr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $ampmr->usuario->name }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.va.ampmr.deleteampmrmodal')
+                                                                                                                    @include('empresa.expcaso.va.ampmr.editampmrmodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -868,7 +1345,7 @@
                                                                         {{-- Fin Tab --}}
                                                                     </div>
                                                                     <div class="tab-pane fade" id="vp" role="tabpanel">
-                                                                        <h4>Vía Procedural (VP)</h4>
+                                                                        <h4>Vía Penal (VP)</h4>
                                                                         <hr>
 
                                                                     </div>

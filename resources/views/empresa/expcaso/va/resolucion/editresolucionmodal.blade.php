@@ -15,7 +15,7 @@
                 <div class="modal-body">
                     <div class="row gx-3">
                         <div class="col-md-6 mb-3">
-                            <label for="fecha" class="form-label">Fecha de Resolución</label>
+                            <label for="fecha" class="form-label">Fecha de Notificación</label>
                             <input type="date" name="fecha" class="form-control" value="{{ date('Y-m-d', strtotime($resolucion->fecha)) }}" required>
                             @if ($errors->has('fecha'))
                                 <span class="help-block opacity-7">
@@ -39,12 +39,43 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
+                            <label for="tipo_resolucion" class="form-label">Tipo de Resolución</label>
+                            <select name="tipo_resolucion" class="form-control" required>
+                                <option value="">Seleccione el tipo de resolución</option>
+                                <option value="total a favor" {{ $resolucion->tipo_resolucion == 'total a favor' ? 'selected' : '' }}>Total a favor</option>
+                                <option value="total en contra" {{ $resolucion->tipo_resolucion == 'total en contra' ? 'selected' : '' }}>Total en contra</option>
+                                <option value="parcial" {{ $resolucion->tipo_resolucion == 'parcial' ? 'selected' : '' }}>Parcial</option>
+                                <option value="nulidad" {{ $resolucion->tipo_resolucion == 'nulidad' ? 'selected' : '' }}>Nulidad</option>
+                                <option value="penal" {{ $resolucion->tipo_resolucion == 'penal' ? 'selected' : '' }}>Penal</option>
+                            </select>
+                            @if ($errors->has('tipo_resolucion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('tipo_resolucion') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
                             <label for="archivo" class="form-label">Archivo</label>
                             <input type="file" name="archivo" class="form-control">
                             @if ($errors->has('archivo'))
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('archivo') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="observaciones" class="form-label">Observaciones</label>
+                            <textarea name="observaciones" class="form-control" rows="3">{{ $resolucion->observaciones }}</textarea>
+                            @if ($errors->has('observaciones'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('observaciones') }}</font>
                                     </strong>
                                 </span>
                             @endif
