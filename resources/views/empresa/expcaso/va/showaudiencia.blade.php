@@ -1186,7 +1186,7 @@
                                                                                                                             @if($ro->tipo_resolucion == 'Procede tramite')
                                                                                                                                 <span class="badge bg-success">Procede trámite</span>
                                                                                                                             @elseif($ro->tipo_resolucion == 'No procede tramite')
-                                                                                                                                <span class="badge bg-danger">No procede trámite</span>
+                                                                                                                                <span class="badge bg-danger">No procede trámite (Analizar Amparo)</span>
                                                                                                                             @else
                                                                                                                                 <span class="badge bg-secondary">No definido</span>
                                                                                                                             @endif
