@@ -16,7 +16,7 @@
                     <div class="row gx-3">
                         <div class="col-md-6 mb-3">
                             <label for="fecha" class="form-label">Fecha de Notificación</label>
-                            <input type="date" name="fecha" class="form-control" value="{{ date('Y-m-d', strtotime($resolucion->fecha)) }}" required>
+                            <input type="date" name="fecha" class="form-control" value="{{ old('fecha', $resolucion->fecha ? \Carbon\Carbon::parse($resolucion->fecha)->format('Y-m-d') : '') }}" required>
                             @if ($errors->has('fecha'))
                                 <span class="help-block opacity-7">
                                     <strong>
@@ -76,6 +76,18 @@
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('observaciones') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="numero_folios" class="form-label">Número de Folios</label>
+                            <input type="number" name="numero_folios" class="form-control" value="{{ $resolucion->numero_folios }}" min="1">
+                            @if ($errors->has('numero_folios'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('numero_folios') }}</font>
                                     </strong>
                                 </span>
                             @endif

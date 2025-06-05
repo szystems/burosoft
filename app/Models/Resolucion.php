@@ -18,7 +18,8 @@ class Resolucion extends Model
         'tipo_archivo',
         'usuario_id',
         'audiencia_id',
-        'observaciones'
+        'observaciones',
+        'numero_folios'
     ];
 
     // Relación con el modelo Usuario

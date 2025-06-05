@@ -30,6 +30,7 @@ class ResolucionFormRequest extends FormRequest
             'usuario_id' => 'required|exists:users,id',
             'audiencia_id' => 'required|exists:audiencias,id',
             'observaciones' => 'nullable|string',
+            'numero_folios' => 'nullable|integer|min:1',
         ];
     }
 }

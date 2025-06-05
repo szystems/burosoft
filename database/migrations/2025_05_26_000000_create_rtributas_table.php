@@ -19,10 +19,10 @@ class CreateRtributasTable extends Migration
             $table->date('fecha');
             $table->enum('tipo_resolucion', ['total a favor', 'total en contra', 'parcial', 'nulidad', 'penal']);
             $table->unsignedBigInteger('usuario_id');
-            $table->unsignedBigInteger('audiencia_id');
-            $table->string('archivo')->nullable();
+            $table->unsignedBigInteger('audiencia_id');            $table->string('archivo')->nullable();
             $table->string('tipo_archivo')->nullable();
             $table->text('observaciones')->nullable();
+            $table->integer('numero_folios')->nullable();
             $table->timestamps();
 
             $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');

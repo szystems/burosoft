@@ -55,6 +55,16 @@
                             @enderror
                         </div>
 
+                        <div class="col-md-6 mb-3">
+                            <label for="numero_folios_{{ $mpmr->id }}" class="form-label">Número de Folios</label>
+                            <input type="number" class="form-control @error('numero_folios') is-invalid @enderror" 
+                                   id="numero_folios_{{ $mpmr->id }}" name="numero_folios" 
+                                   value="{{ old('numero_folios', $mpmr->numero_folios) }}" min="1">
+                            @error('numero_folios')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
                         <input type="hidden" name="audiencia_id" value="{{ $mpmr->audiencia_id }}">
                     </div>

@@ -1,5 +1,8 @@
 <!-- Modal -->
-<div class="modal fade" id="editNtrrModal-{{ $ntrr->id }}" tabindex="-1" aria-labelledby="editNtrrModal-{{ $ntrr->id }}" aria-hidden="true">
+<                        <div class="col-md-6 mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" name="fecha" class="form-control" value="{{ old('fecha', $ntrr->fecha ? \Carbon\Carbon::parse($ntrr->fecha)->format('Y-m-d') : '') }}" required>
+                            @if ($errors->has('fecha'))class="modal fade" id="editNtrrModal-{{ $ntrr->id }}" tabindex="-1" aria-labelledby="editNtrrModal-{{ $ntrr->id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
@@ -57,6 +60,18 @@
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('observaciones') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="numero_folios" class="form-label">Número de Folios</label>
+                            <input type="number" name="numero_folios" class="form-control" value="{{ $ntrr->numero_folios }}" min="1">
+                            @if ($errors->has('numero_folios'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('numero_folios') }}</font>
                                     </strong>
                                 </span>
                             @endif

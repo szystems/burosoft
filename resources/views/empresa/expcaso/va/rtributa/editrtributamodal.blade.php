@@ -13,12 +13,11 @@
                 @csrf
                 @method('PUT')
                 <div class="modal-body">
-                    <div class="row gx-3">
-                        <div class="col-md-6 mb-3">
+                    <div class="row gx-3">                        <div class="col-md-6 mb-3">
                             <label for="fecha_{{ $rtributa->id }}" class="form-label">Fecha de Notificación <span class="text-danger">*</span></label>
                             <input type="date" class="form-control @error('fecha') is-invalid @enderror" 
                                    id="fecha_{{ $rtributa->id }}" name="fecha" 
-                                   value="{{ old('fecha', date('Y-m-d', strtotime($rtributa->fecha))) }}" required>
+                                   value="{{ old('fecha', $rtributa->fecha ? \Carbon\Carbon::parse($rtributa->fecha)->format('Y-m-d') : '') }}" required>
                             @error('fecha')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -66,6 +65,16 @@
                             <textarea class="form-control @error('observaciones') is-invalid @enderror" 
                                       id="observaciones_{{ $rtributa->id }}" name="observaciones" rows="3">{{ old('observaciones', $rtributa->observaciones) }}</textarea>
                             @error('observaciones')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="numero_folios_{{ $rtributa->id }}" class="form-label">Número de Folios</label>
+                            <input type="number" class="form-control @error('numero_folios') is-invalid @enderror" 
+                                   id="numero_folios_{{ $rtributa->id }}" name="numero_folios" 
+                                   value="{{ old('numero_folios', $rtributa->numero_folios) }}" min="1">
+                            @error('numero_folios')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

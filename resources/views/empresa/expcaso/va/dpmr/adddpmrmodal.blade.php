@@ -52,6 +52,15 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="numero_folios" class="form-label">Número de Folios</label>
+                            <input type="number" class="form-control @error('numero_folios') is-invalid @enderror" 
+                                   id="numero_folios" name="numero_folios" value="{{ old('numero_folios') }}" min="1">
+                            @error('numero_folios')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

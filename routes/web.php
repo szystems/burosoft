@@ -47,6 +47,8 @@ use App\Http\Controllers\Empresa\PpController;
 use App\Http\Controllers\Empresa\DpmrController;
 use App\Http\Controllers\Empresa\ResolucionController;
 use App\Http\Controllers\Empresa\RtributaController;
+use App\Http\Controllers\Empresa\NulidadController;
+use App\Http\Controllers\Empresa\EcController;
 use App\Http\Controllers\Empresa\RrController;
 use App\Http\Controllers\Empresa\BitacoraController;
 
@@ -281,6 +283,21 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-ampmr', [App\Http\Controllers\Empresa\AmpmrController::class, 'insert'])->name('insert-ampmr');
     Route::put('update-ampmr/{id}', [App\Http\Controllers\Empresa\AmpmrController::class, 'update'])->name('update-ampmr');
     Route::delete('delete-ampmr/{id}', [App\Http\Controllers\Empresa\AmpmrController::class, 'destroy'])->name('delete-ampmr');
+
+    // Rutas para Nulidad
+    Route::post('insert-nulidad', [NulidadController::class, 'insert'])->name('insert-nulidad');
+    Route::put('update-nulidad/{id}', [NulidadController::class, 'update'])->name('update-nulidad');
+    Route::delete('delete-nulidad/{id}', [NulidadController::class, 'destroy'])->name('delete-nulidad');
+
+    // Rutas para EC (Económico Coactivo)
+    Route::post('insert-ec', [EcController::class, 'insert'])->name('insert-ec');
+    Route::put('update-ec/{id}', [EcController::class, 'update'])->name('update-ec');
+    Route::delete('delete-ec/{id}', [EcController::class, 'destroy'])->name('delete-ec');
+
+    // Rutas para EC (Económico Coactivo)
+    Route::post('insert-ec', [EcController::class, 'insert'])->name('insert-ec');
+    Route::put('update-ec/{id}', [EcController::class, 'update'])->name('update-ec');
+    Route::delete('delete-ec/{id}', [EcController::class, 'destroy'])->name('delete-ec');
 
     //User FrontEnd
     // Route::get('my-account', [UserController::class, 'indexuser']);

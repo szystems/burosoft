@@ -175,7 +175,7 @@ class PatController extends Controller
             //Consultas
             $pat = Pat::find($request->input('ffpat_id'));
             $cuenta = Cuenta::find($pat->cuenta_id);
-            $config = $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
+            $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             $nombramientos = PatNombramiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
             $notificaciones = PatNotificacion::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
             $requerimientos = PatRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();

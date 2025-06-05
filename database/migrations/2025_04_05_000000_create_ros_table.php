@@ -23,6 +23,7 @@ class CreateRosTable extends Migration
             $table->string('archivo')->nullable();
             $table->string('tipo_archivo')->nullable();
             $table->text('observaciones')->nullable();
+            $table->integer('numero_folios')->nullable();
             $table->timestamps();
 
             $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');

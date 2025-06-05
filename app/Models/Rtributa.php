@@ -7,9 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rtributa extends Model
 {
-    use HasFactory;
-
-    // Propiedades fillable
+    use HasFactory;    // Propiedades fillable
     protected $fillable = [
         'fecha',
         'numero_resolucion',
@@ -18,7 +16,8 @@ class Rtributa extends Model
         'tipo_archivo',
         'usuario_id',
         'audiencia_id',
-        'observaciones'
+        'observaciones',
+        'numero_folios'
     ];
 
     // Relación con el modelo Usuario

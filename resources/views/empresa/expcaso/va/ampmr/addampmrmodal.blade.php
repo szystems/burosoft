@@ -64,6 +64,18 @@
                                 </span>
                             @endif
                         </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="numero_folios" class="form-label">Número de Folios</label>
+                            <input type="number" name="numero_folios" class="form-control" value="{{ old('numero_folios') }}" min="1">
+                            @if ($errors->has('numero_folios'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('numero_folios') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

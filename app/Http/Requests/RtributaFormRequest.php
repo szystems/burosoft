@@ -22,14 +22,15 @@ class RtributaFormRequest extends FormRequest
      * @return array
      */
     public function rules()
-    {
-        return [
+    {        return [
             'fecha' => 'required|date',
             'numero_resolucion' => 'required|string|max:255',
             'tipo_resolucion' => 'required|in:total a favor,total en contra,parcial,nulidad,penal',
             'usuario_id' => 'required|exists:users,id',
             'audiencia_id' => 'required|exists:audiencias,id',
             'observaciones' => 'nullable|string',
+            'numero_folios' => 'nullable|integer|min:1',
+            'numero_folios' => 'nullable|integer|min:1',
         ];
     }
 }

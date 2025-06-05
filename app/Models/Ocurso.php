@@ -16,7 +16,8 @@ class Ocurso extends Model
         'audiencia_id',
         'archivo',
         'tipo_archivo',
-        'observaciones'
+        'observaciones',
+        'numero_folios'
     ];
 
     public function usuario()

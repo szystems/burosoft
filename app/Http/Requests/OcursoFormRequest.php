@@ -29,6 +29,7 @@ class OcursoFormRequest extends FormRequest
             'usuario_id'              => 'required|integer',
             'audiencia_id'            => 'required|integer',
             'observaciones'           => 'nullable|string',
+            'numero_folios'           => 'nullable|integer|min:1',
         ];
     }
 }
