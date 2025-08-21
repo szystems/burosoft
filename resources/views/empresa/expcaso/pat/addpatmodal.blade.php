@@ -127,7 +127,7 @@ aria-labelledby="addPatModal" aria-hidden="true">
                             <label for="resultado" class="form-label">Resultado</label>
                             <select name="resultado" class="form-select" aria-label="Default select example" required>
                                 <option value="Archivo" {{ old('resultado') == "Archivo" ? ' selected' : '' }}>Archivo</option>
-                                <option value="RAF" {{ old('resultado') == "RAF" ? ' selected' : '' }}>RAF</option>
+                                <option value="PRAF" {{ old('resultado') == "PRAF" ? ' selected' : '' }}>PRAF</option>
                                 <option value="VA" {{ old('resultado') == "VA" ? ' selected' : '' }}>VA</option>
                                 <option value="VP" {{ old('resultado') == "VP" ? ' selected' : '' }}>VP</option>
                                 <option value="En proceso" {{ old('resultado') == "En proceso" ? ' selected' : '' }}>En proceso</option>

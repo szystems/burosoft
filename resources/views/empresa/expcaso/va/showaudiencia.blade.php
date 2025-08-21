@@ -134,7 +134,7 @@
                                                     <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="fullName" class="form-label">Razon Social (Cuenta)</label>
+                                                            <label for="fullName" class="form-label">Razón Social (Cuenta)</label>
                                                             <p>
                                                                 {{ $cuenta->razon_social }}
                                                             </p>
@@ -264,7 +264,7 @@
                                                         </div>
                                                     </div> --}}
 
-                                                    <h3><u>Expediente</u></h3>
+                                                    Expediente Digital
                                                     <hr>
                                                     @if ($cuenta->estado == 1)
 
@@ -366,8 +366,9 @@
                                                                         </a>
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
-                                                                        <a class="nav-link" id="tab-vp" data-bs-toggle="tab" href="#vp" role="tab"
-                                                                            aria-controls="vp" aria-selected="false">VP</a>
+                                                                        <a class="nav-link" href="{{ url('show-pa/'.$pat->id) }}">PA
+                                                                            <span class="badge rounded-pill blue ms-2">{{ $audienciasPaCount }}</span>
+                                                                        </a>
                                                                     </li>
                                                                 </ul>
                                                                 <div class="tab-content" id="customTabContent">
@@ -429,7 +430,7 @@
                                                                                 <div class="col-md-4 mb-3">
                                                                                     <!-- Form Field Start -->
                                                                                     <div class="mb-3">
-                                                                                        <label for="fecha" class="form-label">Fecha</label>
+                                                                                        <label for="fecha" class="form-label">Fecha de la Audiencia</label>
                                                                                         <p>
                                                                                             @php
                                                                                                 $fecha = date('d/m/Y', strtotime($audiencia->fecha));
@@ -456,7 +457,7 @@
                                                                                 </div>
                                                                                 <div class="col-md-4 mb-3">
                                                                                     <div class="mb-3">
-                                                                                        <label for="impuestos" class="form-label">Impuestos</label>
+                                                                                        <label for="impuestos" class="form-label">Monto</label>
                                                                                         <p>
                                                                                             {{ $config->currency_simbol }}.{{ number_format($audiencia->impuestos,2, '.', ',') }}
                                                                                         </p>
@@ -547,7 +548,7 @@
                                                                                             </li>
                                                                                             <li class="nav-item" role="presentation">
                                                                                                 <a class="nav-link" id="tab-ocurso" data-bs-toggle="tab" href="#ocurso" role="tab"
-                                                                                                    aria-controls="ocurso" aria-selected="false">Ocursos
+                                                                                                    aria-controls="ocurso" aria-selected="false">Ocurso
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $ocursos->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
@@ -652,12 +653,12 @@
                                                                                             <div class="tab-pane fade" id="pp" role="tabpanel">
                                                                                                 <div class="row gx-3">
 
-                                                                                                    <h4>Periodo de Prueba (PP)</h4>
+                                                                                                    <h4>Período de Prueba (PP)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                                                                             data-bs-target="#addPpModal">
-                                                                                                            <i class="bi bi-plus-square"></i> Agregar Periodo de Prueba
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Período de Prueba
                                                                                                         </button>
                                                                                                     @endif
 
@@ -1349,7 +1350,7 @@
                                                                                             </div>
                                                                                             <div class="tab-pane fade" id="ocurso" role="tabpanel">
                                                                                                 <div class="row gx-3">
-                                                                                                    <h4>Ocursos</h4>
+                                                                                                    <h4>Ocurso</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOcursoModal">

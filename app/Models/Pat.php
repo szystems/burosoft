@@ -29,4 +29,14 @@ class Pat extends Model
     {
         return $this->belongsTo(Cuenta::class, 'cuenta_id');
     }
+
+    public function audiencias()
+    {
+        return $this->hasMany(Audiencia::class, 'pat_id');
+    }
+
+    public function audienciasPa()
+    {
+        return $this->hasMany(AudienciaPa::class, 'pat_id');
+    }
 }

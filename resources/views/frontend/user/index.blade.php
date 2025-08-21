@@ -37,7 +37,7 @@
                     <h2 class="mb-3">{{ __('Bienvenido a tu cuenta') }} {{ ucwords($nombre[0]) }}. </h2>
                     <p>
                         {{-- {{ __('Aqui puedes ver tus ') }} <a href="{{ url('my-orders') }}" class="tab-trigger-link link-underline">{{ __('ordenes recientes') }}</a>  --}}
-                        {{ __('Aqui podras manejar tu cuenta como tu') }} <a href="{{ url('user-details/'.Auth::id()) }}" class="tab-trigger-link">{{ __('información personal.') }}</a>
+                        {{ __('Aquí podrás manejar tu cuenta como tu') }} <a href="{{ url('user-details/'.Auth::id()) }}" class="tab-trigger-link">{{ __('información personal.') }}</a>
                     </p>
                     <p>
                         {{ __('¿No eres el usuario?') }}

@@ -49,8 +49,8 @@ aria-labelledby="addNombramientoModal" aria-hidden="true">
                     <div class="col-md-6 mb-3">
                         <!-- Form Field Start -->
                         <div class="mb-3">
-                            <label for="periodo" class="form-label">Periodo</label>
-                            <input name="periodo" type="text" class="form-control" placeholder="Periodo..." value="{{ old('periodo') }}" required/>
+                            <label for="periodo" class="form-label">Período</label>
+                            <input name="periodo" type="text" class="form-control" placeholder="Período..." value="{{ old('periodo') }}" required/>
                             @if ($errors->has('periodo'))
                                 <span class="help-block opacity-7">
                                         <strong>

@@ -1,33 +1,198 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# BuroSoft - Sistema de Gestión Legal y Contable
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+[![Laravel](https://img.shields.io/badge/Laravel-8.x-red.svg)](https://laravel.com/)
+[![PHP](https://img.shields.io/badge/PHP-7.3%2B-blue.svg)](https://php.net/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-## About Laravel
+BuroSoft es un sistema integral de gestión legal y contable desarrollado en Laravel 8, diseñado para abogados y contadores que necesitan administrar múltiples empresas, llevar control de movimientos financieros y gestionar procesos administrativos y violaciones administrativas.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Características Principales
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Gestión Multi-empresa**: Administración de múltiples empresas desde una sola plataforma
+- **Sistema de Suscripciones**: Planes flexibles con múltiples plataformas de pago
+- **Gestión Contable**: Control completo de movimientos, cuentas y rubros financieros
+- **Procesos Administrativos (PA)**: Gestión integral de procedimientos administrativos
+- **Violaciones Administrativas (VA)**: Control de expedientes y procesos de violaciones
+- **Sistema de Bitácoras**: Registro completo de actividades del sistema
+- **Panel de Administración**: Dashboard completo para administradores y empresas
+- **Generación de Documentos**: Exportación a PDF y Excel
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 📋 Requisitos del Sistema
 
-## Learning Laravel
+- **PHP**: 7.3 o superior (8.0+ recomendado)
+- **Composer**: 2.0 o superior
+- **Node.js**: 14.x o superior
+- **MySQL**: 5.7 o superior / MariaDB 10.3+
+- **Extensiones PHP requeridas**:
+  - BCMath
+  - Ctype
+  - Fileinfo
+  - JSON
+  - Mbstring
+  - OpenSSL
+  - PDO
+  - Tokenizer
+  - XML
+  - GD (para generación de PDFs)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🛠️ Instalación y Configuración
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clonar el Repositorio
+```bash
+git clone https://github.com/szystems/burosoft.git
+cd burosoft
+```
 
-## Laravel Sponsors
+### 2. Instalar Dependencias
+```bash
+# Dependencias de PHP
+composer install
+
+# Dependencias de Node.js
+npm install
+```
+
+### 3. Configuración del Entorno
+```bash
+# Copiar archivo de configuración
+cp .env.example .env
+
+# Generar clave de aplicación
+php artisan key:generate
+```
+
+### 4. Configurar Base de Datos
+Editar el archivo `.env` con los datos de tu base de datos:
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=burosoft
+DB_USERNAME=tu_usuario
+DB_PASSWORD=tu_contraseña
+```
+
+### 5. Ejecutar Migraciones y Seeders
+```bash
+# Ejecutar migraciones
+php artisan migrate
+
+# Ejecutar seeders (opcional)
+php artisan db:seed
+```
+
+### 6. Compilar Assets
+```bash
+# Para desarrollo
+npm run dev
+
+# Para producción
+npm run production
+```
+
+### 7. Configurar Permisos
+```bash
+# Linux/macOS
+chmod -R 755 storage
+chmod -R 755 bootstrap/cache
+
+# Windows (ejecutar como administrador)
+icacls storage /grant Everyone:F /t
+icacls bootstrap\cache /grant Everyone:F /t
+```
+
+## 🏗️ Estructura del Proyecto
+
+### Módulos Principales
+
+1. **Frontend**: Landing page y sistema de suscripciones
+2. **Admin**: Panel de administración del sistema
+3. **Empresa**: Dashboard y gestión por empresa
+
+### Entidades Principales
+
+- **PAT**: Proceso Administrativo Tributario
+- **VA/PA**: Violaciones/Procesos Administrativos  
+- **Movimientos**: Transacciones financieras
+- **Audiencias**: Gestión de audiencias legales
+- **Resoluciones**: Documentos de resolución
+- **Empresas**: Entidades cliente del sistema
+
+### Estructura de Carpetas
+
+```
+burosoft/
+├── app/                    # Código fuente de la aplicación
+│   ├── Http/Controllers/   # Controladores organizados por módulo
+│   ├── Models/            # Modelos Eloquent
+│   ├── Services/          # Lógica de negocio
+│   └── Traits/            # Traits reutilizables
+├── database/
+│   ├── migrations/        # 54+ migraciones del sistema
+│   ├── seeders/          # Datos iniciales
+│   └── factories/        # Factories para testing
+├── resources/
+│   ├── views/            # Vistas Blade organizadas por módulo
+│   ├── js/               # JavaScript y Vue.js
+│   └── css/              # Estilos CSS/SCSS
+├── routes/               # Definición de rutas
+├── scripts/              # Scripts de mantenimiento y corrección
+├── docs/                 # Documentación del proyecto
+│   ├── project/          # Documentación técnica principal
+│   ├── scripts/          # Documentación de scripts
+│   └── temp/             # Archivos temporales
+└── temp/                 # Archivos temporales de desarrollo
+```
+
+## 🔗 Documentación Adicional
+
+- [**PRD (Product Requirements Document)**](docs/project/PRD.md) - Requerimientos funcionales y no funcionales
+- [**Arquitectura del Sistema**](docs/project/ARCHITECTURE.md) - Diseño técnico y decisiones arquitectónicas  
+- [**Documentación de API**](docs/project/API.md) - Endpoints, parámetros y ejemplos de uso
+- [**Scripts de Mantenimiento**](docs/scripts/README.md) - Documentación de scripts de corrección y mantenimiento
+
+## 🚀 Uso Rápido
+
+### Iniciar Servidor de Desarrollo
+```bash
+php artisan serve
+```
+El sistema estará disponible en: `http://localhost:8000`
+
+### Acceso por Defecto
+- **Admin**: `/admin` 
+- **Empresa**: `/empresa`
+- **Frontend**: `/`
+
+## 🧪 Testing
+
+```bash
+# Ejecutar todas las pruebas
+./vendor/bin/phpunit
+
+# Ejecutar pruebas específicas
+./vendor/bin/phpunit --filter NombreDeLaPrueba
+```
+
+## 🤝 Contribución
+
+1. Fork el proyecto
+2. Crear rama de feature (`git checkout -b feature/nueva-caracteristica`)
+3. Commit los cambios (`git commit -am 'Agregar nueva característica'`)
+4. Push a la rama (`git push origin feature/nueva-caracteristica`)
+5. Crear Pull Request
+
+## 📜 Licencia
+
+Este proyecto está bajo la Licencia MIT. Ver [LICENSE](LICENSE) para más detalles.
+
+## 🆘 Soporte
+
+Para soporte técnico o reportar bugs, crear un issue en el repositorio o contactar al equipo de desarrollo.
+
+---
+
+**Desarrollado por SZSystems** • [GitHub](https://github.com/szystems) • Versión 2.0
 
 We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 

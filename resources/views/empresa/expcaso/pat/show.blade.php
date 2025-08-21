@@ -264,7 +264,7 @@
                                                         </div>
                                                     </div> --}}
 
-                                                    <h3><u>Expediente</u></h3>
+                                                    <h3><u>Expediente Digital</u></h3>
                                                     <hr>
                                                     @if ($cuenta->estado == 1)
 
@@ -363,7 +363,14 @@
                                                                     <li class="nav-item" role="presentation">
                                                                         <a class="nav-link" href="{{ url('show-va/'.$pat->id) }}">
                                                                             VA
-                                                                            <span class="badge rounded-pill green ms-2">{{ $audiencias->count() }}</span>
+                                                                            <span class="badge rounded-pill blue ms-2">{{ $audiencias->count() }}</span>
+                                                                        </a>
+
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="{{ url('show-pa/'.$pat->id) }}">
+                                                                            PA
+                                                                            <span class="badge rounded-pill green ms-2">{{ $pat->audienciasPa->count() }}</span>
                                                                         </a>
 
                                                                     </li>
@@ -427,7 +434,7 @@
                                                                                             </li>
                                                                                             <li class="nav-item" role="presentation">
                                                                                                 <a class="nav-link" id="tab-raf" data-bs-toggle="tab" href="#raf" role="tab"
-                                                                                                    aria-controls="raf" aria-selected="false">Providencias de urgencia (RAF)
+                                                                                                    aria-controls="raf" aria-selected="false">Providencias de urgencia (PRAF)
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $rafs->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
@@ -456,7 +463,7 @@
                                                                                                                     <td align="center">Fecha</td>
                                                                                                                     <td align="center">No.</td>
                                                                                                                     <td align="left">Nombramientos</td>
-                                                                                                                    <td align="left">Periodo</td>
+                                                                                                                    <td align="left">Período</td>
                                                                                                                     <td align="center">Usuario</td>
                                                                                                                     <td align="center">Archivo</td>
                                                                                                                 </tr>
@@ -538,7 +545,7 @@
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                                                                             data-bs-target="#addNotificacionModal">
-                                                                                                            <i class="bi bi-plus-square"></i> Agregar Notificacion
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Notificación
                                                                                                         </button>
                                                                                                     @endif
 
@@ -686,7 +693,7 @@
                                                                                                                     <td align="center">Tipo de Requerimiento</td>
                                                                                                                     <td align="center">Lugar Para Atender</td>
                                                                                                                     <td align="center">Plazo de Atención</td>
-                                                                                                                    <td align="center">Tipo de Revision</td>
+                                                                                                                    <td align="center">Tipo de Revisión</td>
                                                                                                                     <td align="center">Usuario</td>
                                                                                                                     <td align="center">Archivo</td>
                                                                                                                 </tr>
@@ -1284,12 +1291,12 @@
                                                                                             <div class="tab-pane fade" id="raf" role="tabpanel">
                                                                                                 <div class="row gx-3">
 
-                                                                                                    <h4>Providencia de Emergencia (RAF)</h4>
+                                                                                                    <h4>Providencia de Urgencia (PRAF)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
                                                                                                             data-bs-target="#addRafModal">
-                                                                                                            <i class="bi bi-plus-square"></i> Agregar RAF
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar PRAF
                                                                                                         </button>
                                                                                                     @endif
 
@@ -1380,7 +1387,7 @@
                                                                                                         @if ($rafs->count() == 0)
                                                                                                             <div class="alert alert-warning text-white" role="alert">
                                                                                                                 <ul align="center">
-                                                                                                                    <p>No se han ingresado RAF's.</p>
+                                                                                                                    <p>No se han ingresado PRAF's.</p>
                                                                                                                 </ul>
                                                                                                             </div>
                                                                                                         @endif

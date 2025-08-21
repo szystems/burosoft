@@ -152,7 +152,7 @@
                                 @endif
                             </div>
                             <div class="col-sm-3">
-                                <label>{{ __('Codigo Postal') }}</label>
+                                <label>{{ __('Código Postal') }}</label>
                                 <input name="zipcode" type="text" class="form-control" value="{{ $user->zipcode }}">
                                 @if ($errors->has('zipcode'))
                                     <span class="help-block opacity-7">

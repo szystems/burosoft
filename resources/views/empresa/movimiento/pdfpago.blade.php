@@ -236,7 +236,7 @@
                             <br>
                         @endif
                         @if ($pago->numero_cuenta)
-                            <strong>Numero Cuenta:</strong> {{ $pago->numero_cuenta }}
+                            <strong>Número Cuenta:</strong> {{ $pago->numero_cuenta }}
                             <br>
                         @endif
                         @if ($pago->fecha_documento)

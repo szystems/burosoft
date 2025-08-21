@@ -46,7 +46,7 @@
                             @endphp
                             <i class="bi bi-patch-exclamation-fill text-warning font-1x me-2"></i>
 
-                            <span>Podras ver tus registros Hasta: {{ $fecha_gracia }}  </span>
+                            <span>Podrás ver tus registros Hasta: {{ $fecha_gracia }}  </span>
                         </a>
                     </li>
                 @endif

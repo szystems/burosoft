@@ -42,11 +42,11 @@ aria-labelledby="addAudienciaModal" aria-hidden="true">
                         </select>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="fecha" class="form-label">Fecha</label>
+                        <label for="fecha" class="form-label">Fecha de la Audiencia </label>
                         <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha') }}" required>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="impuestos" class="form-label">Impuestos</label>
+                        <label for="impuestos" class="form-label">Monto</label>
                         <div class="input-group">
                             <span class="input-group-text">{{ $config->currency_simbol }}</span>
                             <input type="number" step="0.01" name="impuestos" id="impuestos" class="form-control" value="{{ old('impuestos') }}" required>

@@ -10,7 +10,7 @@
               </h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">¿Está seguro de cancelar esta cuenta? si acepta no podra agregar movimientos a esta cuenta hasta que se vuelva a activar.</div>
+          <div class="modal-body">¿Está seguro de cancelar esta cuenta? si acepta no podrá agregar movimientos a esta cuenta hasta que se vuelva a activar.</div>
           <div class="modal-footer">
               <button type="button" class="btn btn-info" data-bs-dismiss="modal">
                 <i class="bi bi-x-circle"></i> Regresar

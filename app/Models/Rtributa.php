@@ -17,7 +17,7 @@ class Rtributa extends Model
         'usuario_id',
         'audiencia_id',
         'observaciones',
-        'numero_folios'
+        'numero_folios',
     ];
 
     // Relación con el modelo Usuario

@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editPpModal-{{ $pp->id }}">
-                    <i class="bi bi-pencil text-warning"></i> Editar Periodo de Prueba
+                    <i class="bi bi-pencil text-warning"></i> Editar Período de Prueba
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

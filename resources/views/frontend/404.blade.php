@@ -11,8 +11,8 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="text-left mb-4">
-                        <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Pagina no encontrada</h5>
-                        {{-- <h1>Regresar a la pagina Principal</h1> --}}
+                        <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Página no encontrada</h5>
+                        {{-- <h1>Regresar a la página Principal</h1> --}}
                     </div>
                     {{-- <p>Quieres regresar a</p> --}}
                     <a href="{{ url('/') }}" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Ir a inicio...</a>

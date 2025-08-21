@@ -249,7 +249,7 @@
             {{-- <div class="col-lg-5 col-md-12 mb-5">
                 @if (Auth::guest())
                     <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">{{ __('Subscribe') }}</h5>
-                    <p>Escoge el plan que mas se adecue a tus necesidades</p>
+                    <p>Escoge el plan que más se adecue a tus necesidades</p>
                     <div class="w-100">
                         <div class="input-group">
                             <a href="{{ url('register') }}" class="btn btn-primary px-4">{{ __('Suscribirse') }}</a>
@@ -258,7 +258,7 @@
                 @else
                     @if (! optional(auth()->user())->hasActiveSubscription())
                         <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">{{ __('Subscribe') }}</h5>
-                        <p>Escoge el plan que mas se adecue a tus necesidades</p>
+                        <p>Escoge el plan que más se adecue a tus necesidades</p>
                         <div class="w-100">
                             <div class="input-group">
                                 <a href="{{ url('subscribe') }}" class="btn btn-primary px-4">{{ __('Suscribirse') }}</a>

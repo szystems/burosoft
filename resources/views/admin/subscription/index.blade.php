@@ -119,7 +119,7 @@
                                 </table>
                                 @if ($subscriptions->count() == 0)
                                     <div class="alert alert-primary text-white" role="alert">
-                                        <strong>{{ __('No se encontraron suscripciones.') }}</strong> <a href="{{ url('add-subscription') }}"> {{ __('Crear Subscripcion') }}</a>
+                                        <strong>{{ __('No se encontraron suscripciones.') }}</strong> <a href="{{ url('add-subscription') }}"> {{ __('Crear Suscripción') }}</a>
                                     </div>
                                 @endif
                             </div>

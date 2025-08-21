@@ -83,7 +83,7 @@
                                                         <div class="col-md-2 mb-3">
                                                             <!-- Form Field Start -->
                                                             <div class="mb-3">
-                                                                <label for="emailId" class="form-label">Periodo de Gracia</label>
+                                                                <label for="emailId" class="form-label">Período de Gracia</label>
                                                                 <p>
                                                                     @php
                                                                         $fecha_gracia = date("d/m/Y", strtotime("+".$config->gracia." months", strtotime($empresa->fecha_vencimiento)));

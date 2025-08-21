@@ -5,12 +5,12 @@
                 @csrf
                 <div class="modal-header">
                     <h5 class="modal-title h4" id="deleteRafModal-{{ $raf->id }}">
-                        Eliminar RAF:
+                        Eliminar PRAF:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Está seguro de eliminar esta providencia de urgencia (RAF)?
+                    ¿Está seguro de eliminar esta providencia de urgencia (PRAF)?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

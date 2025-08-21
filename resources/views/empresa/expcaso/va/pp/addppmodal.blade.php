@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addPpModal">
-                    <i class="bi bi-plus text-success"></i> Agregar Periodo de Prueba
+                    <i class="bi bi-plus text-success"></i> Agregar Período de Prueba
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

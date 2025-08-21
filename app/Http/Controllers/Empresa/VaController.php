@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Pat;
 use App\Models\Audiencia;
+use App\Models\AudienciaPa;
 use App\Models\Ev;
 use App\Models\Pp;
 use App\Models\Dpmr;
@@ -41,8 +42,9 @@ class VaController extends Controller
         $config = Config::where('empresa_id', $pat->cuenta_id)->first();
         $patscount = Pat::where('cuenta_id', $cuenta->id)->count();
         $audiencias = Audiencia::where('pat_id', $id)->paginate(10);
+        $audienciasPaCount = AudienciaPa::where('pat_id', $id)->count();
 
-        return view('empresa.expcaso.va.show', compact('pat', 'patscount','cuenta','config','audiencias'));
+        return view('empresa.expcaso.va.show', compact('pat', 'patscount','cuenta','config','audiencias','audienciasPaCount'));
     }
 
     public function showaudiencia($id)
@@ -67,11 +69,12 @@ class VaController extends Controller
         $ros = Ro::where('audiencia_id', $audiencia->id)->get();
         $mpmrs = Mpmr::where('audiencia_id', $audiencia->id)->get();
         $ampmrs = Ampmr::where('audiencia_id', $audiencia->id)->get();
+        $audienciasPaCount = AudienciaPa::where('pat_id', $pat->id)->count();
 
         return view('empresa.expcaso.va.showaudiencia', compact(
             'pat', 'patscount', 'cuenta', 'config', 'audiencias',
             'audiencia', 'evacuaciones', 'periodos', 'dpmrs', 'adpmrs',
-            'resoluciones', 'rtributas', 'nulidades', 'ecs', 'recursos', 'ntrrs', 'ocursos', 'ros', 'mpmrs', 'ampmrs'
+            'resoluciones', 'rtributas', 'nulidades', 'ecs', 'recursos', 'ntrrs', 'ocursos', 'ros', 'mpmrs', 'ampmrs', 'audienciasPaCount'
         ));
     }
 }

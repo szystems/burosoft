@@ -15,11 +15,12 @@ class CreateRtributasTable extends Migration
     {
         Schema::create('rtributas', function (Blueprint $table) {
             $table->id();
-            $table->string('numero_resolucion');
             $table->date('fecha');
+            $table->string('numero_resolucion');
             $table->enum('tipo_resolucion', ['total a favor', 'total en contra', 'parcial', 'nulidad', 'penal']);
             $table->unsignedBigInteger('usuario_id');
-            $table->unsignedBigInteger('audiencia_id');            $table->string('archivo')->nullable();
+            $table->unsignedBigInteger('audiencia_id');
+            $table->string('archivo')->nullable();
             $table->string('tipo_archivo')->nullable();
             $table->text('observaciones')->nullable();
             $table->integer('numero_folios')->nullable();

@@ -6,7 +6,7 @@ aria-labelledby="addRafModal" aria-hidden="true">
     <div class="modal-content">
         <div class="modal-header">
             <h5 class="modal-title" id="addRafModal">
-                <i class="bi bi-plus text-success"></i> Agregar RAF
+                <i class="bi bi-plus text-success"></i> Agregar PRAF
             </h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
@@ -34,7 +34,7 @@ aria-labelledby="addRafModal" aria-hidden="true">
                     <div class="col-md-3 mb-3">
                         <!-- Form Field Start -->
                         <div class="mb-3">
-                            <label for="fecha" class="form-label">Fecha de RAF</label>
+                            <label for="fecha" class="form-label">Fecha de PRAF</label>
                             <input type="date" name="fecha" class="form-control text-center" value="{{ old('fecha') }}" required/>
                             @if ($errors->has('fecha'))
                                 <span class="help-block opacity-7">
@@ -49,9 +49,9 @@ aria-labelledby="addRafModal" aria-hidden="true">
                     <div class="col-md-6 mb-3">
                         <!-- Form Field Start -->
                         <div class="mb-3">
-                            <label for="tipo_providencia" class="form-label">Tipo RAF</label>
+                            <label for="tipo_providencia" class="form-label">Tipo PRAF</label>
                             <select name="tipo_providencia" class="form-select" aria-label="Default select example"  required>
-                                <option value="">Seleccione tipo de RAF...</option>
+                                <option value="">Seleccione tipo de PRAF...</option>
                                 <option value="R. Admite" {{ old('tipo_providencia') == "R. Admite" ? ' selected' : '' }}>R. Admite</option>
                                 <option value="R. Anula" {{ old('tipo_providencia') == "R. Anula" ? ' selected' : '' }}>R. Anula</option>
                                 <option value="Otro" {{ old('tipo_providencia') == "Otro" ? ' selected' : '' }}>Otro</option>

@@ -41,7 +41,23 @@ use App\Http\Controllers\Empresa\PatActaAdministrativaController;
 use App\Http\Controllers\Empresa\PatExpedienteController;
 use App\Http\Controllers\Empresa\PatNulidadController;
 use App\Http\Controllers\Empresa\VaController;
+use App\Http\Controllers\Empresa\PaController;
 use App\Http\Controllers\Empresa\AudienciaController;
+use App\Http\Controllers\Empresa\AudienciaPaController;
+use App\Http\Controllers\Empresa\EvPaController;
+use App\Http\Controllers\Empresa\PpPaController;
+use App\Http\Controllers\Empresa\DpmrPaController;
+use App\Http\Controllers\Empresa\AdpmrPaController;
+use App\Http\Controllers\Empresa\AmpmrPaController;
+use App\Http\Controllers\Empresa\MpmrPaController;
+use App\Http\Controllers\Empresa\EcPaController;
+use App\Http\Controllers\Empresa\NtrrPaController;
+use App\Http\Controllers\Empresa\NulidadPaController;
+use App\Http\Controllers\Empresa\OcursoPaController;
+use App\Http\Controllers\Empresa\ResolucionPaController;
+use App\Http\Controllers\Empresa\RoPaController;
+use App\Http\Controllers\Empresa\RrPaController;
+use App\Http\Controllers\Empresa\RtributaPaController;
 use App\Http\Controllers\Empresa\EvController;
 use App\Http\Controllers\Empresa\PpController;
 use App\Http\Controllers\Empresa\DpmrController;
@@ -181,7 +197,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-pat-providencia', [PatProvidenciaController::class, 'insert']);
     Route::put('update-pat-providencia/{id}', [PatProvidenciaController::class, 'update']);
     Route::get('delete-pat-providencia/{id}', [PatProvidenciaController::class, 'destroy']);
-    //PAT Providencia de Urgencia (RAF)
+    //PAT Providencia de Urgencia (PRAF)
     Route::post('insert-pat-raf', [PatRafController::class, 'insert']);
     Route::put('update-pat-raf/{id}', [PatRafController::class, 'update']);
     Route::get('delete-pat-raf/{id}', [PatRafController::class, 'destroy']);
@@ -194,6 +210,88 @@ Route::middleware(['auth'])->group(function () {
     Route::get('show-va/{id}', [VaController::class, 'show']);
     Route::get('pdf-va', [VaController::class, 'pdf']);
     Route::get('show-audiencia/{id}', [VaController::class, 'showaudiencia']);
+
+    //PA
+    Route::get('show-pa/{id}', [PaController::class, 'show']);
+    Route::get('show-audiencia-pa/{id}', [PaController::class, 'showaudiencia']);
+
+    //Audiencias PA
+    Route::post('insert-audiencia-pa', [AudienciaPaController::class, 'insert']);
+    Route::put('update-audiencia-pa/{id}', [AudienciaPaController::class, 'update']);
+    Route::get('delete-audiencia-pa/{id}', [AudienciaPaController::class, 'destroy']);
+    Route::delete('delete-audiencia-pa/{id}', [AudienciaPaController::class, 'destroy']);
+
+    //Ev PA
+    Route::post('insert-ev-pa', [EvPaController::class, 'insert']);
+    Route::put('update-ev-pa/{id}', [EvPaController::class, 'update']);
+    Route::get('delete-ev-pa/{id}', [EvPaController::class, 'destroy']);
+    Route::delete('delete-ev-pa/{id}', [EvPaController::class, 'destroy']);
+
+    //PP PA
+    Route::post('insert-pp-pa', [PpPaController::class, 'insert']);
+    Route::put('update-pp-pa/{id}', [PpPaController::class, 'update']);
+    Route::get('delete-pp-pa/{id}', [PpPaController::class, 'destroy']);
+    Route::delete('delete-pp-pa/{id}', [PpPaController::class, 'destroy']);
+
+    // Rutas DPMR PA
+    Route::post('insert-dpmr-pa', [DpmrPaController::class, 'insert'])->name('insert.dpmr.pa');
+    Route::put('update-dpmr-pa/{id}', [DpmrPaController::class, 'update'])->name('update.dpmr.pa');
+    Route::delete('delete-dpmr-pa/{id}', [DpmrPaController::class, 'destroy'])->name('delete.dpmr.pa');
+
+    // Rutas ADPMR PA
+    Route::post('insert-adpmr-pa', [AdpmrPaController::class, 'insert'])->name('insert.adpmr.pa');
+    Route::put('update-adpmr-pa/{id}', [AdpmrPaController::class, 'update'])->name('update.adpmr.pa');
+    Route::delete('delete-adpmr-pa/{id}', [AdpmrPaController::class, 'destroy'])->name('delete.adpmr.pa');
+
+    // Rutas AMPMR PA
+    Route::post('insert-ampmr-pa', [AmpmrPaController::class, 'insert'])->name('insert.ampmr.pa');
+    Route::put('update-ampmr-pa/{id}', [AmpmrPaController::class, 'update'])->name('update.ampmr.pa');
+    Route::delete('delete-ampmr-pa/{id}', [AmpmrPaController::class, 'destroy'])->name('delete.ampmr.pa');
+
+    // Rutas MPMR PA
+    Route::post('insert-mpmr-pa', [MpmrPaController::class, 'insert'])->name('insert.mpmr.pa');
+    Route::put('update-mpmr-pa/{id}', [MpmrPaController::class, 'update'])->name('update.mpmr.pa');
+    Route::delete('delete-mpmr-pa/{id}', [MpmrPaController::class, 'destroy'])->name('delete.mpmr.pa');
+
+    // Rutas EC PA
+    Route::post('insert-ec-pa', [EcPaController::class, 'insert'])->name('insert.ec.pa');
+    Route::put('update-ec-pa/{id}', [EcPaController::class, 'update'])->name('update.ec.pa');
+    Route::delete('delete-ec-pa/{id}', [EcPaController::class, 'destroy'])->name('delete.ec.pa');
+
+    // Rutas NTRR PA
+    Route::post('insert-ntrr-pa', [NtrrPaController::class, 'insert'])->name('insert.ntrr.pa');
+    Route::put('update-ntrr-pa/{id}', [NtrrPaController::class, 'update'])->name('update.ntrr.pa');
+    Route::delete('delete-ntrr-pa/{id}', [NtrrPaController::class, 'destroy'])->name('delete.ntrr.pa');
+
+    // Rutas Nulidad PA
+    Route::post('insert-nulidad-pa', [NulidadPaController::class, 'insert'])->name('insert.nulidad.pa');
+    Route::put('update-nulidad-pa/{id}', [NulidadPaController::class, 'update'])->name('update.nulidad.pa');
+    Route::delete('delete-nulidad-pa/{id}', [NulidadPaController::class, 'destroy'])->name('delete.nulidad.pa');
+
+    // Rutas Ocurso PA
+    Route::post('insert-ocurso-pa', [OcursoPaController::class, 'insert'])->name('insert.ocurso.pa');
+    Route::put('update-ocurso-pa/{id}', [OcursoPaController::class, 'update'])->name('update.ocurso.pa');
+    Route::delete('delete-ocurso-pa/{id}', [OcursoPaController::class, 'destroy'])->name('delete.ocurso.pa');
+
+    // Rutas Resolución PA
+    Route::post('insert-resolucion-pa', [ResolucionPaController::class, 'insert'])->name('insert.resolucion.pa');
+    Route::put('update-resolucion-pa/{id}', [ResolucionPaController::class, 'update'])->name('update.resolucion.pa');
+    Route::delete('delete-resolucion-pa/{id}', [ResolucionPaController::class, 'destroy'])->name('delete.resolucion.pa');
+
+    // Rutas RO PA
+    Route::post('insert-ro-pa', [RoPaController::class, 'insert'])->name('insert.ro.pa');
+    Route::put('update-ro-pa/{id}', [RoPaController::class, 'update'])->name('update.ro.pa');
+    Route::delete('delete-ro-pa/{id}', [RoPaController::class, 'destroy'])->name('delete.ro.pa');
+
+    // Rutas RR PA
+    Route::post('insert-rr-pa', [RrPaController::class, 'insert'])->name('insert.rr.pa');
+    Route::put('update-rr-pa/{id}', [RrPaController::class, 'update'])->name('update.rr.pa');
+    Route::delete('delete-rr-pa/{id}', [RrPaController::class, 'destroy'])->name('delete.rr.pa');
+
+    // Rutas Rtributa PA
+    Route::post('insert-rtributa-pa', [RtributaPaController::class, 'insert'])->name('insert.rtributa.pa');
+    Route::put('update-rtributa-pa/{id}', [RtributaPaController::class, 'update'])->name('update.rtributa.pa');
+    Route::delete('delete-rtributa-pa/{id}', [RtributaPaController::class, 'destroy'])->name('delete.rtributa.pa');
 
     //Audiencias
     Route::post('insert-audiencia', [AudienciaController::class, 'insert']);

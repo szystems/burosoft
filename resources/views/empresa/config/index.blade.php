@@ -61,7 +61,7 @@
                                             {{-- <h1 class="display-5 fw-bold text-green">
                                                 General
                                             </h1> --}}
-                                            <p class="text-yellow">Cambia los valores generales que utilizara la aplicación:</p>
+                                            <p class="text-yellow">Cambia los valores generales que utilizará la aplicación:</p>
                                             <div class="col-lg-12 mx-auto">
 
                                                 @if (count($errors)>0)

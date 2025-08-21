@@ -122,7 +122,7 @@
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
                                                                     <label for="telefono" class="form-label">Teléfono</label>
-                                                                    <input name="telefono" type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" placeholder="Telefono..." value="{{ $user->telefono }}" />
+                                                                    <input name="telefono" type="number" oninput="this.value = this.value.replace(/[^0-9]/g, '');" class="form-control" placeholder="Teléfono..." value="{{ $user->telefono }}" />
                                                                     @if ($errors->has('telefono'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>
@@ -167,7 +167,7 @@
                                                                 <!-- Form Field Start -->
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Dirección</label>
-                                                                    <textarea name="direccion" class="form-control" rows="3" placeholder="Direccion de la persona...">{{ $user->direccion }}</textarea>
+                                                                    <textarea name="direccion" class="form-control" rows="3" placeholder="Dirección de la persona...">{{ $user->direccion }}</textarea>
                                                                     @if ($errors->has('direccion'))
                                                                         <span class="help-block opacity-7">
                                                                                 <strong>

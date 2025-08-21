@@ -128,7 +128,7 @@ aria-labelledby="editPatModal" aria-hidden="true">
                             <label for="resultado" class="form-label">Resultado</label>
                             <select name="resultado" class="form-select" aria-label="Default select example" required>
                                 <option value="Archivo" {{ $pat->resultado == "Archivo" ? ' selected' : '' }}>Archivo</option>
-                                <option value="RAF" {{ $pat->resultado == "RAF" ? ' selected' : '' }}>RAF</option>
+                                <option value="PRAF" {{ $pat->resultado == "PRAF" ? ' selected' : '' }}>PRAF</option>
                                 <option value="VA" {{ $pat->resultado == "VA" ? ' selected' : '' }}>VA</option>
                                 <option value="VP" {{ $pat->resultado == "VP" ? ' selected' : '' }}>VP</option>
                                 <option value="En proceso" {{ $pat->resultado == "En proceso" ? ' selected' : '' }}>En proceso</option>

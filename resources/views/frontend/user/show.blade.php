@@ -65,7 +65,7 @@
                             <input readonly name="city" type="text" class="form-control" value="{{ $user->city }}">
                         </div>
                         <div class="col-sm-3">
-                            <label>{{ __('Codigo Postal') }}</label>
+                            <label>{{ __('Código Postal') }}</label>
                             <input readonly name="zipcode" type="text" class="form-control" value="{{ $user->zipcode }}">
                         </div>
                         <div class="col-sm-12">

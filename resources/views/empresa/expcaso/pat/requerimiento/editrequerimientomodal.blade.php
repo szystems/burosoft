@@ -151,9 +151,9 @@
                         <div class="col-md-6 mb-3">
                             <!-- Form Field Start -->
                             <div class="mb-3">
-                                <label for="tipo_revision" class="form-label">Tipo de Revision</label>
+                                <label for="tipo_revision" class="form-label">Tipo de Revisión</label>
                                 <select name="tipo_revision" class="form-select" aria-label="Default select example" required>
-                                    <option value="">Seleccione tipo de revision...</option>
+                                    <option value="">Seleccione tipo de revisión...</option>
                                     <option value="Integrada" {{ $requerimiento->tipo_revision }} == "Integrada" ? ' selected' : '' }}>Integrada</option>
                                     <option value="IVA" {{ $requerimiento->tipo_revision == "IVA" ? ' selected' : '' }}>IVA</option>
                                     <option value="ISR" {{ $requerimiento->tipo_revision == "ISR" ? ' selected' : '' }}>ISR</option>
@@ -176,7 +176,7 @@
                             <!-- Form Field Start -->
                             <div class="mb-3">
                                 <label for="tipo_revision_otro" class="form-label">Si es otro</label>
-                                <input name="tipo_revision_otro" type="text" class="form-control" placeholder="Otro tipo de revision..." value="{{ $requerimiento->tipo_revision_otro }}"/>
+                                <input name="tipo_revision_otro" type="text" class="form-control" placeholder="Otro tipo de revisión..." value="{{ $requerimiento->tipo_revision_otro }}"/>
                                 @if ($errors->has('tipo_revision_otro'))
                                     <span class="help-block opacity-7">
                                             <strong>

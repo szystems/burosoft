@@ -30,7 +30,7 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="numero_resolucion" class="form-label">No. de Resolucion</label>
+                            <label for="numero_resolucion" class="form-label">No. de Resolución</label>
                             <input type="text" name="numero_resolucion" class="form-control" value="{{ old('numero_resolucion') }}" required>
                             @if ($errors->has('numero_documento'))
                                 <span class="help-block opacity-7">

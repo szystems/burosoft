@@ -150,9 +150,9 @@ aria-labelledby="addRequerimientoModal" aria-hidden="true">
                     <div class="col-md-6 mb-3">
                         <!-- Form Field Start -->
                         <div class="mb-3">
-                            <label for="tipo_revision" class="form-label">Tipo de Revision</label>
+                            <label for="tipo_revision" class="form-label">Tipo de Revisión</label>
                             <select name="tipo_revision" class="form-select" aria-label="Default select example" required>
-                                <option value="">Seleccione tipo de revision...</option>
+                                <option value="">Seleccione tipo de revisión...</option>
                                 <option value="Integrada" {{ old('tipo_revision') }} == "Integrada" ? ' selected' : '' }}>Integrada</option>
                                 <option value="IVA" {{ old('tipo_revision') == "IVA" ? ' selected' : '' }}>IVA</option>
                                 <option value="ISR" {{ old('tipo_revision') == "ISR" ? ' selected' : '' }}>ISR</option>

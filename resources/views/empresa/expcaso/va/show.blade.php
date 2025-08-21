@@ -134,7 +134,7 @@
                                                     <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="fullName" class="form-label">Razon Social (Cuenta)</label>
+                                                            <label for="fullName" class="form-label">Razón Social (Cuenta)</label>
                                                             <p>
                                                                 {{ $cuenta->razon_social }}
                                                             </p>
@@ -264,7 +264,7 @@
                                                         </div>
                                                     </div> --}}
 
-                                                    <h3><u>Expediente</u></h3>
+                                                    Expediente Digital
                                                     <hr>
                                                     @if ($cuenta->estado == 1)
 
@@ -366,6 +366,11 @@
                                                                         </a>
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="{{ url('show-pa/'.$pat->id) }}">PA
+                                                                            <span class="badge rounded-pill blue ms-2">{{ $audienciasPaCount }}</span>
+                                                                        </a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
                                                                         <a class="nav-link" id="tab-vp" data-bs-toggle="tab" href="#vp" role="tab"
                                                                             aria-controls="vp" aria-selected="false">VP</a>
                                                                     </li>
@@ -412,10 +417,10 @@
                                                                                         <thead>
                                                                                             <tr>
                                                                                                 <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                <td align="center">Fecha</td>
+                                                                                                <td align="center">Fecha de la Audiencia </td>
                                                                                                 <td align="center">No.Audiencia</td>
                                                                                                 <td align="center">Tipo Audiencia</td>
-                                                                                                <td align="center">Impuestos</td>
+                                                                                                <td align="center">Monto</td>
                                                                                                 <td align="center">Archivo</td>
                                                                                                 <td align="center">Usuario</td>
                                                                                             </tr>

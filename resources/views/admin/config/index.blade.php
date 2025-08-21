@@ -153,7 +153,7 @@
 
                                                         <div class="col-md-4 mb-3">
                                                             <div class="mb-3">
-                                                                <label for="gracia" class="form-label">Periodo de gracia</label>
+                                                                <label for="gracia" class="form-label">Período de gracia</label>
                                                                 <select name="gracia" class="form-select">
                                                                     <option selected value="{{ $config->gracia }}">{{ $config->gracia }}</option>
                                                                     <option value="0">0 Meses</option>
@@ -172,7 +172,7 @@
                                                                 </select>
                                                                 <span class="help-block opacity-7">
                                                                     <strong class="text-warning">
-                                                                        Periodo despues de vencer la licencia y poder acceder a sus datos
+                                                                        Período después de vencer la licencia y poder acceder a sus datos
                                                                     </strong>
                                                                 </span>
                                                                 @if ($errors->has('gracia'))

@@ -12,7 +12,7 @@
         </div>
         <div class="modal-body">
             <h3><b>{{ __('¿Está seguro que desea cancelar su suscripción?') }}</b></h3>
-            <p>Si cancela su suscripción actual se eliminara por completo y no tendrá acceso al contenido de www.burotributario.com, deberá crear una nueva suscripción para tener nuevamente acceso.</p>
+            <p>Si cancela su suscripción actual se eliminará por completo y no tendrá acceso al contenido de www.burotributario.com, deberá crear una nueva suscripción para tener nuevamente acceso.</p>
         </div>
         <div class="modal-footer">
             <form action="{{ url('cancel-subscription-gratis') }}" method="POST">

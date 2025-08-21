@@ -6,12 +6,12 @@
                 @method('DELETE')
                 <div class="modal-header">
                     <h5 class="modal-title h4" id="deletePpModal-{{ $pp->id }}">
-                        Eliminar Periodo de Prueba:
+                        Eliminar Período de Prueba:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Está seguro de eliminar este periodo de prueba?
+                    ¿Está seguro de eliminar este período de prueba?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

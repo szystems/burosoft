@@ -122,7 +122,7 @@
                                                     <div class="col-md-4 mb-3">
                                                         <!-- Form Field Start -->
                                                         <div class="mb-3">
-                                                            <label for="fullName" class="form-label">Razon Social</label>
+                                                            <label for="fullName" class="form-label">Razón Social</label>
                                                             <p>
                                                                 {{ $cuenta->razon_social }}
                                                             </p>

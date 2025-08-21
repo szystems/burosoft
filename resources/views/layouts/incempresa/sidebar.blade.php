@@ -23,7 +23,7 @@
                 <li class="{{ Request::is('dashboard') ? 'active-page-link':''  }}">
                     <a href="{{ url('/dashboard') }}">
                         <i class="bi bi-house"></i>
-                        <span class="menu-text">Panel de Administracion</span>
+                        <span class="menu-text">Panel de Administración</span>
                     </a>
                 </li>
                 @endif

@@ -138,7 +138,7 @@
                     <font size="1">Nombramientos</font>
                 </th>
                 <th>
-                    <font size="1">Periodo</font>
+                    <font size="1">Período</font>
                 </th>
                 <th>
                     <font size="1">Usuario</font>
@@ -661,7 +661,7 @@
 
     @if ($rafs->count() != 0)
     <br>
-    <h4><strong><u>Providencias de Urgencia (RAF)</u> ({{ $rafs->count() }})</strong></h4>
+    <h4><strong><u>Providencias de Urgencia (PRAF)</u> ({{ $rafs->count() }})</strong></h4>
     <table class="pure-table pure-table-bordered" Width=100%>
         <thead>
             <tr>

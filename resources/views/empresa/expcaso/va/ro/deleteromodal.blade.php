@@ -11,7 +11,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    ¿Está seguro de eliminar esta resolución de ocurso?
+                    <p>¿Está seguro que desea eliminar este registro de Resolución de Ocurso (VA)?</p>
+                    <div class="alert alert-warning">
+                        <strong>No. de Escrito:</strong> {{ $ro->numero_escrito }}<br>
+                        <strong>Fecha de Creación:</strong> {{ $ro->created_at->format('d/m/Y H:i') }}
+                    </div>
+                    <p class="text-danger"><strong>Esta acción no se puede deshacer.</strong></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">

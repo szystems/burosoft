@@ -20,8 +20,8 @@ class CreateMovimientosTable extends Migration
             $table->unsignedInteger('empresa_id');
             $table->unsignedInteger('cuenta_id');
             $table->unsignedInteger('rubro_id');
-            $table->decimal('monto_q', 8, 2)->default(0.00);
-            $table->decimal('monto_d', 8, 2)->default(0.00);
+            $table->decimal('monto_q', 12, 2)->default(0.00);
+            $table->decimal('monto_d', 12, 2)->default(0.00);
             $table->text('descripcion')->nullable();
             $table->string('codigo');
             $table->boolean('estado')->default(1);
