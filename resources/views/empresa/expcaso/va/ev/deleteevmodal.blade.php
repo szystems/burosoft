@@ -1,11 +1,11 @@
-<div class="modal fade" id="deleteEvModal-{{ $ev->id }}" tabindex="-1" aria-labelledby="deleteEvModal-{{ $ev->id }}" aria-hidden="true">
+<div class="modal fade" id="deleteEvVaModal-{{ $ev->id }}" tabindex="-1" aria-labelledby="deleteEvVaModal-{{ $ev->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-ev/'.$ev->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deleteEvModal-{{ $ev->id }}">
+                    <h5 class="modal-title h4" id="deleteEvVaModal-{{ $ev->id }}">
                         Eliminar Evacuación de Audiencia:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

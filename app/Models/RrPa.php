@@ -14,6 +14,7 @@ class RrPa extends Model
     protected $fillable = [
         'fecha_hora_presentacion',
         'numero_documento',
+        'oficina_agencia_ea',
         'usuario_id',
         'audiencia_pa_id',
         'archivo',

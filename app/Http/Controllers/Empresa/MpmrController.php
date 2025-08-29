@@ -19,10 +19,27 @@ class MpmrController extends Controller
 
         if ($request->hasFile('archivo')) {
             $file = $request->file('archivo');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/mpmrs'), $filename);
-            $data['archivo'] = $filename;
-            $data['tipo_archivo'] = $file->getClientOriginalExtension();
+            
+            // Verificar que el archivo sea válido
+            if ($file->isValid()) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $uploadPath = public_path('uploads/mpmrs');
+                
+                // Crear directorio si no existe
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                
+                // Mover archivo
+                if ($file->move($uploadPath, $filename)) {
+                    $data['archivo'] = $filename;
+                    $data['tipo_archivo'] = $file->getClientOriginalExtension();
+                } else {
+                    return redirect()->back()->withErrors(['archivo' => 'Error al subir el archivo.'])->withInput();
+                }
+            } else {
+                return redirect()->back()->withErrors(['archivo' => 'El archivo no es válido.'])->withInput();
+            }
         }
 
         $mpmr = Mpmr::create($data);
@@ -56,10 +73,27 @@ class MpmrController extends Controller
             }
 
             $file = $request->file('archivo');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/mpmrs'), $filename);
-            $data['archivo'] = $filename;
-            $data['tipo_archivo'] = $file->getClientOriginalExtension();
+            
+            // Verificar que el archivo sea válido
+            if ($file->isValid()) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $uploadPath = public_path('uploads/mpmrs');
+                
+                // Crear directorio si no existe
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                
+                // Mover archivo
+                if ($file->move($uploadPath, $filename)) {
+                    $data['archivo'] = $filename;
+                    $data['tipo_archivo'] = $file->getClientOriginalExtension();
+                } else {
+                    return redirect()->back()->withErrors(['archivo' => 'Error al subir el archivo.'])->withInput();
+                }
+            } else {
+                return redirect()->back()->withErrors(['archivo' => 'El archivo no es válido.'])->withInput();
+            }
         } else {
             unset($data['archivo']);
             unset($data['tipo_archivo']);

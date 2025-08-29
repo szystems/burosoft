@@ -12,6 +12,7 @@ class Mpmr extends Model
     // Propiedades fillable
     protected $fillable = [
         'fecha_hora',
+        'fecha_resolucion',
         'numero_resolucion',
         'archivo',
         'tipo_archivo',
@@ -19,6 +20,11 @@ class Mpmr extends Model
         'audiencia_id',
         'observaciones',
         'numero_folios'
+    ];
+
+    protected $casts = [
+        'fecha_hora' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con el modelo Usuario

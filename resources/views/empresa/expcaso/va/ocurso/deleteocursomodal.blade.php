@@ -1,11 +1,11 @@
-<div class="modal fade" id="deleteOcursoModal-{{ $ocurso->id }}" tabindex="-1" aria-labelledby="deleteOcursoModal-{{ $ocurso->id }}" aria-hidden="true">
+<div class="modal fade" id="deleteOcursoVaModal-{{ $ocurso->id }}" tabindex="-1" aria-labelledby="deleteOcursoVaModal-{{ $ocurso->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-ocurso/'.$ocurso->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deleteOcursoModal-{{ $ocurso->id }}">
+                    <h5 class="modal-title h4" id="deleteOcursoVaModal-{{ $ocurso->id }}">
                         Eliminar Ocurso:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

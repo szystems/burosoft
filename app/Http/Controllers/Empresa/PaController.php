@@ -17,6 +17,7 @@ use App\Models\OcursoPa;
 use App\Models\RoPa;
 use App\Models\MpmrPa;
 use App\Models\AmpmrPa;
+use App\Models\AceptacionPa;
 use App\Models\RsatPa;
 use App\Models\RtributaPa;
 use App\Models\NulidadPa;
@@ -70,11 +71,12 @@ class PaController extends Controller
         $rosPa = RoPa::where('audiencia_pa_id', $audienciaPa->id)->get();
         $mpmrsPa = MpmrPa::where('audiencia_pa_id', $audienciaPa->id)->get();
         $ampmrsPa = AmpmrPa::where('audiencia_pa_id', $audienciaPa->id)->get();
+        $aceptacionesPa = AceptacionPa::with('usuario')->where('audiencia_pa_id', $audienciaPa->id)->get();
 
         return view('empresa.expcaso.pa.showaudiencia', compact(
             'pat', 'patscount', 'cuenta', 'config', 'audienciasPa', 'audienciasVaCount',
             'audienciaPa', 'evacuacionesPa', 'periodosPa', 'dpmrsPa', 'adpmrsPa',
-            'rsatPa', 'rtributaPa', 'nulidadesPa', 'ecsPa', 'recursosPa', 'ntrrsPa', 'ocursosPa', 'rosPa', 'mpmrsPa', 'ampmrsPa'
+            'rsatPa', 'rtributaPa', 'nulidadesPa', 'ecsPa', 'recursosPa', 'ntrrsPa', 'ocursosPa', 'rosPa', 'mpmrsPa', 'ampmrsPa', 'aceptacionesPa'
         ))->with('audiencia', $audienciaPa);
     }
 }

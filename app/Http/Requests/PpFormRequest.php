@@ -30,6 +30,7 @@ class PpFormRequest extends FormRequest
             'audiencia_id'            => 'required|integer',
             'observaciones'           => 'nullable|string',
             'numero_folios'           => 'nullable|integer|min:1',
+            'oficina_presentacion'    => 'nullable|string|max:255',
         ];
     }
 }

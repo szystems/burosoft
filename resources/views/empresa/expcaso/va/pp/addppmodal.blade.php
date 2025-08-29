@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="addPpModal" tabindex="-1" aria-labelledby="addPpModal" aria-hidden="true">
+<div class="modal fade" id="addPpVaModal" tabindex="-1" aria-labelledby="addPpVaModal" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addPpModal">
+                <h5 class="modal-title" id="addPpVaModalLabel">
                     <i class="bi bi-plus text-success"></i> Agregar Período de Prueba
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -72,6 +72,18 @@
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('numero_folios') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="oficina_presentacion" class="form-label">Oficina o agencia donde fue presentada</label>
+                            <input type="text" name="oficina_presentacion" class="form-control" value="{{ old('oficina_presentacion') }}">
+                            @if ($errors->has('oficina_presentacion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_presentacion') }}</font>
                                     </strong>
                                 </span>
                             @endif

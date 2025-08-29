@@ -63,6 +63,18 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
+                            <label for="oficina_presentacion" class="form-label">Oficina o Agencia de Presentación</label>
+                            <input type="text" name="oficina_presentacion" class="form-control" value="{{ $ev->oficina_presentacion }}" placeholder="Ej: Oficina Central, Agencia Zona 1, etc.">
+                            @if ($errors->has('oficina_presentacion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_presentacion') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
                             <label for="numero_folios" class="form-label">Número de Folios</label>
                             <input type="number" name="numero_folios" class="form-control" value="{{ $ev->numero_folios }}" min="1">
                             @if ($errors->has('numero_folios'))

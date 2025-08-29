@@ -12,6 +12,8 @@ class Ro extends Model
     // Propiedades fillable
     protected $fillable = [
         'fecha',
+        'fecha_notificacion',
+        'fecha_resolucion',
         'numero_resolucion',
         'tipo_resolucion',
         'archivo',
@@ -20,6 +22,12 @@ class Ro extends Model
         'audiencia_id',
         'observaciones',
         'numero_folios'
+    ];
+
+    protected $casts = [
+        'fecha' => 'date',
+        'fecha_notificacion' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con el modelo Usuario

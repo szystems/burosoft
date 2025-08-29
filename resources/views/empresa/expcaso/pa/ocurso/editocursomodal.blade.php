@@ -14,26 +14,37 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="row gx-3">
-                        <!-- Campo oculto 'is_pa' eliminado -->
                         <div class="col-md-6 mb-3">
-                            <label for="fecha" class="form-label">Fecha de Notificación</label>
-                            <input type="datetime-local" name="fecha" class="form-control" value="{{ date('Y-m-d\TH:i', strtotime($ocurso->fecha)) }}" required>
-                            @if ($errors->has('fecha'))
+                            <label for="fecha_hora_presentacion" class="form-label">Fecha y Hora de Presentación</label>
+                            <input type="datetime-local" name="fecha_hora_presentacion" class="form-control" value="{{ date('Y-m-d\TH:i', strtotime($ocurso->fecha_hora_presentacion)) }}" required>
+                            @if ($errors->has('fecha_hora_presentacion'))
                                 <span class="help-block opacity-7">
                                     <strong>
-                                        <font color="red">{{ $errors->first('fecha') }}</font>
+                                        <font color="red">{{ $errors->first('fecha_hora_presentacion') }}</font>
                                     </strong>
                                 </span>
                             @endif
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="numero_escrito" class="form-label">No. de Escrito</label>
-                            <input type="text" name="numero_escrito" class="form-control" value="{{ $ocurso->numero_escrito }}" required>
-                            @if ($errors->has('numero_escrito'))
+                            <label for="numero_documento" class="form-label">No. de Documento</label>
+                            <input type="text" name="numero_documento" class="form-control" value="{{ $ocurso->numero_documento }}" required>
+                            @if ($errors->has('numero_documento'))
                                 <span class="help-block opacity-7">
                                     <strong>
-                                        <font color="red">{{ $errors->first('numero_escrito') }}</font>
+                                        <font color="red">{{ $errors->first('numero_documento') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="oficina_agencia_ea" class="form-label">Oficina o agencia donde fue presentada la Evacuacion de Audiencia (EA)</label>
+                            <input type="text" name="oficina_agencia_ea" class="form-control" value="{{ $ocurso->oficina_agencia_ea }}" maxlength="300">
+                            @if ($errors->has('oficina_agencia_ea'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_agencia_ea') }}</font>
                                     </strong>
                                 </span>
                             @endif

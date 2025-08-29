@@ -13,10 +13,21 @@ class EcPa extends Model
 
     protected $fillable = [
         'numero_resolucion',
+        'fecha_hora_notificacion',
+        'fecha_resolucion',
+        'juzgado_que_conoce',
+        'medidas_decretadas',
+        'medidas_decretadas_otro',
         'usuario_id',
         'audiencia_pa_id',
         'observaciones',
         'numero_folios',
+    ];
+
+    protected $casts = [
+        'fecha_hora_notificacion' => 'datetime',
+        'fecha_resolucion' => 'date',
+        'medidas_decretadas' => 'array',
     ];
 
     // Relación con AudienciaPa

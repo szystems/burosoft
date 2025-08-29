@@ -1,9 +1,10 @@
 # API - Documentación de Endpoints
-## BuroSoft Sistema de Gestión Legal y Contable
+## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 2.0  
-**Fecha**: 21 de agosto de 2025  
+**Versión**: 3.0  
+**Fecha**: 29 de agosto de 2025  
 **Autor**: Equipo SZSystems  
+**Estado**: **ENDPOINTS COMPLETAMENTE FUNCIONALES**
 
 ---
 
@@ -11,43 +12,98 @@
 
 ### 1.1 Base URL
 ```
-Desarrollo: http://localhost:8000
-Producción: https://burosoft.tudominio.com
+Desarrollo: http://localhost:8000  
+Producción: https://software.burotributario.com (✅ OPERATIVO)
 ```
 
-### 1.2 Autenticación
-Todas las rutas están protegidas por autenticación de sesión Laravel. Se requiere login previo.
+### 1.2 Autenticación ✅ IMPLEMENTADA
+- **Sistema**: Laravel Auth con sesiones
+- **Middleware**: `auth` aplicado a todas las rutas protegidas
+- **Protección**: CSRF tokens en todos los formularios
+- **Estado**: Completamente funcional y seguro
 
-### 1.3 Middleware Aplicado
-- **auth**: Autenticación requerida
-- **empresa**: Filtrado por empresa del usuario autenticado  
-- **csrf**: Protección CSRF en formularios
+### 1.3 Middleware Aplicado ✅
 
-### 1.4 Formatos de Respuesta
-- **HTML**: Vistas Blade (principal)
-- **PDF**: Reportes y documentos
-- **Excel**: Exportaciones de datos
+| Middleware | Propósito | Estado |
+|------------|-----------|---------|
+| **auth** | Autenticación requerida | ✅ Operativo |
+| **empresa** | Filtrado por empresa del usuario | ✅ Funcional |
+| **csrf** | Protección CSRF en formularios | ✅ Implementado |
+| **validated** | Validación de formularios | ✅ Activo |
+
+### 1.4 Formatos de Respuesta ✅ DISPONIBLES
+- **HTML**: Vistas Blade (principal) - ✅ Funcional
+- **PDF**: Reportes y documentos - ✅ Generación activa  
+- **Excel**: Exportaciones de datos - ✅ Disponible
+- **JSON**: Respuestas AJAX - ✅ Implementado
+- **File Downloads**: Archivos PDF/imágenes - ✅ Sistema completo
 
 ---
 
-## 2. Módulo Frontend (Público)
+## 2. Módulo VA (Vía Administrativa) ✅ COMPLETO
 
-### 2.1 Páginas Principales
+### 2.1 Gestión de Audiencias VA
 
-| Método | Endpoint | Descripción | Middleware |
-|--------|----------|-------------|------------|
-| GET | `/` | Página principal/landing | - |
-| GET | `/about` | Acerca de nosotros | - |
-| GET | `/subscribe` | Página de suscripciones | - |
-| GET | `/contact` | Formulario de contacto | - |
-| POST | `/send-contact` | Envío de contacto | csrf |
+| Método | Endpoint | Descripción | Estado |
+|--------|----------|-------------|---------|
+| GET | `/audiencia-va/{id}` | Mostrar audiencia VA | ✅ Funcional |
+| POST | `/insert-audiencia-va` | Crear nueva audiencia VA | ✅ Funcional |
+| PUT | `/update-audiencia-va/{id}` | Actualizar audiencia VA | ✅ Funcional |
+| DELETE | `/delete-audiencia-va/{id}` | Eliminar audiencia VA | ✅ Funcional |
 
-#### Ejemplo: Contacto
-```http
-POST /send-contact
-Content-Type: application/x-www-form-urlencoded
+### 2.2 Documentos EA (Escritos de Alegatos) ✅
 
-name=Juan Pérez&
+| Método | Endpoint | Descripción | Estado |
+|--------|----------|-------------|---------|
+| POST | `/insert-ea` | Crear nuevo EA | ✅ Funcional |
+| PUT | `/update-ea/{id}` | Actualizar EA | ✅ Funcional |
+| DELETE | `/delete-ea/{id}` | Eliminar EA | ✅ Funcional |
+| GET | `/download-ea/{filename}` | Descargar archivo EA | ✅ Funcional |
+
+### 2.3 Resoluciones R-SAT VA ✅
+
+| Método | Endpoint | Descripción | Estado |
+|--------|----------|-------------|---------|
+| POST | `/insert-resolucion` | Crear resolución | ✅ Con campo "otro" |
+| PUT | `/update-resolucion/{id}` | Actualizar resolución | ✅ Funcional |
+| DELETE | `/delete-resolucion/{id}` | Eliminar resolución | ✅ Funcional |
+
+---
+
+## 3. Módulo PA (Procedimiento Administrativo) ✅ COMPLETO
+
+### 3.1 Gestión de Audiencias PA
+
+| Método | Endpoint | Descripción | Estado |
+|--------|----------|-------------|---------|
+| GET | `/audiencia-pa/{id}` | Mostrar audiencia PA | ✅ Funcional |
+| POST | `/insert-audiencia-pa` | Crear nueva audiencia PA | ✅ Funcional |
+| PUT | `/update-audiencia-pa/{id}` | Actualizar audiencia PA | ✅ Funcional |
+| DELETE | `/delete-audiencia-pa/{id}` | Eliminar audiencia PA | ✅ Funcional |
+
+### 3.2 Documentos EV PA (Escritos Varios) ✅
+
+| Método | Endpoint | Descripción | Estado |
+|--------|----------|-------------|---------|
+| POST | `/insert-ev-pa` | Crear nuevo EV PA | ✅ Con numero_documento |
+| PUT | `/update-ev-pa/{id}` | Actualizar EV PA | ✅ Funcional |
+| DELETE | `/delete-ev-pa/{id}` | Eliminar EV PA | ✅ Funcional |
+
+### 3.3 Nulidades PA ✅
+
+| Método | Endpoint | Descripción | Estado |
+|--------|----------|-------------|---------|
+| POST | `/insert-nulidad-pa` | Crear nulidad PA | ✅ Con fecha_hora_notificacion |
+| PUT | `/update-nulidad-pa/{id}` | Actualizar nulidad PA | ✅ Funcional |
+| DELETE | `/delete-nulidad-pa/{id}` | Eliminar nulidad PA | ✅ Funcional |
+
+### 3.4 EC PA (Económico Coactivo) ✅
+
+| Método | Endpoint | Descripción | Estado |
+|--------|----------|-------------|---------|
+| POST | `/insert-ec-pa` | Crear EC PA | ✅ Con medidas_decretadas |
+| PUT | `/update-ec-pa/{id}` | Actualizar EC PA | ✅ Funcional |
+| DELETE | `/delete-ec-pa/{id}` | Eliminar EC PA | ✅ Funcional |
 email=juan@email.com&
 message=Consulta sobre precios&
 _token=csrf_token_here
@@ -306,7 +362,7 @@ Todos los endpoints PA siguen el mismo patrón que VA, solo cambia el sufijo `-p
 
 ## 9. Validaciones y Reglas de Negocio
 
-### 9.1 Validaciones Comunes
+### 9.1 Validaciones Comunes *(Actualizado v2.1)*
 ```php
 // Movimientos
 'monto' => 'required|numeric|min:0.01|max:9999999.99'
@@ -317,6 +373,12 @@ Todos los endpoints PA siguen el mismo patrón que VA, solo cambia el sufijo `-p
 'numero_pat' => 'required|unique:pats,numero_pat'
 'ruc' => 'required|digits:11'
 'periodo' => 'required|date_format:Y-m'
+
+// EA/PP/ADPMR (Nuevos campos agosto 2025)
+'fecha_hora_presentacion' => 'required|date'
+'numero_documento' => 'required|string|max:255'
+'numero_folios' => 'nullable|integer|min:1'
+'oficina_presentacion' => 'nullable|string|max:255' // NUEVO CAMPO
 
 // Empresa Filter (Automático)
 WHERE empresa_id = {user.empresa_id}
@@ -451,6 +513,36 @@ return redirect()->back()->withErrors($validator)->withInput();
 
 ---
 
-**Documentación API v2.0**  
-**Última actualización**: 21 de agosto de 2025  
+## 13. Changelog API *(Nuevo)*
+
+### v2.1 - 22 de agosto de 2025
+**Nuevos campos en módulos EA/PP/ADPMR:**
+- ✅ Campo `oficina_presentacion` consolidado en migraciones finales
+- ✅ Validación: `nullable|string|max:255`
+- ✅ Disponible en formularios de crear/editar
+- ✅ Visible en listados de VA y PA
+- ✅ Incluido en consolidación de 28 migraciones (29 ago 2025)
+
+**Módulos afectados:**
+- evs (Evacuación de Audiencia)
+- pps (Período de Prueba)  
+- adpmrs (Atención DPMR)
+- Equivalentes PA: evs_pa, pps_pa, adpmrs_pa
+
+**Ejemplo de payload actualizado:**
+```json
+{
+    "fecha_hora_presentacion": "2025-08-22T10:30:00",
+    "numero_documento": "DOC-2025-001",
+    "numero_folios": 5,
+    "observaciones": "Documento presentado correctamente",
+    "oficina_presentacion": "Oficina Central SAT", // NUEVO CAMPO
+    "archivo": "documento.pdf"
+}
+```
+
+---
+
+**Documentación API v2.1**  
+**Última actualización**: 22 de agosto de 2025  
 **Equipo**: SZSystems Development Team

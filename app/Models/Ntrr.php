@@ -11,14 +11,21 @@ class Ntrr extends Model
 
     // Propiedades fillable
     protected $fillable = [
-        'fecha',
+        'fecha_hora_notificacion',
         'numero_resolucion',
+        'fecha_resolucion',
         'archivo',
         'tipo_archivo',
         'usuario_id',
         'audiencia_id',
         'observaciones',
         'numero_folios'
+    ];
+
+    // Conversión de tipos
+    protected $casts = [
+        'fecha_hora_notificacion' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con el modelo Usuario

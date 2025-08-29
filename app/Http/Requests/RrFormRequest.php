@@ -26,6 +26,7 @@ class RrFormRequest extends FormRequest
         return [
             'fecha_hora_presentacion' => 'required|date',
             'numero_documento'        => 'required|string',
+            'oficina_agencia_ea'      => 'nullable|string|max:300',
             'usuario_id'              => 'required|integer',
             'audiencia_id'            => 'required|integer',
             'observaciones'           => 'nullable|string',

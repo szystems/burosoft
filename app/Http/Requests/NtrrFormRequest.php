@@ -24,8 +24,9 @@ class NtrrFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha' => 'required|date',
+            'fecha_hora_notificacion' => 'required|date',
             'numero_resolucion' => 'required|string|max:255',
+            'fecha_resolucion' => 'nullable|date',
             'usuario_id' => 'required|exists:users,id',
             'audiencia_id' => 'required|exists:audiencias,id',
             'observaciones' => 'nullable|string',

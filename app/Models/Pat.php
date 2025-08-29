@@ -39,4 +39,9 @@ class Pat extends Model
     {
         return $this->hasMany(AudienciaPa::class, 'pat_id');
     }
+
+    public function rcts()
+    {
+        return $this->hasMany(PatRct::class, 'pat_id');
+    }
 }

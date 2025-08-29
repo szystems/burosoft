@@ -1,11 +1,11 @@
-<div class="modal fade" id="deleteNulidadModal-{{ $nulidad->id }}" tabindex="-1" aria-labelledby="deleteNulidadModal-{{ $nulidad->id }}" aria-hidden="true">
+<div class="modal fade" id="deleteNulidadVaModal-{{ $nulidad->id }}" tabindex="-1" aria-labelledby="deleteNulidadVaModal-{{ $nulidad->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-nulidad/'.$nulidad->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deleteNulidadModal-{{ $nulidad->id }}">
+                    <h5 class="modal-title h4" id="deleteNulidadVaModal-{{ $nulidad->id }}">
                         Eliminar Nulidad:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

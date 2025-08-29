@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="addMpmrModal" tabindex="-1" aria-labelledby="addMpmrModal" aria-hidden="true">
+<div class="modal fade" id="addMpmrVaModal" tabindex="-1" aria-labelledby="addMpmrVaModal" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addMpmrModal">
+                <h5 class="modal-title" id="addMpmrVaModalLabel">
                     <i class="bi bi-plus text-success"></i> Agregar Medida Para Mejor Resolver
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -18,10 +18,19 @@
                         <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
 
                         <div class="col-md-6 mb-3">
-                            <label for="fecha_hora" class="form-label">Fecha y Hora <span class="text-danger">*</span></label>
+                            <label for="fecha_hora" class="form-label">Fecha y Hora de Notificación <span class="text-danger">*</span></label>
                             <input type="datetime-local" class="form-control @error('fecha_hora') is-invalid @enderror" 
                                    id="fecha_hora" name="fecha_hora" value="{{ old('fecha_hora') }}" required>
                             @error('fecha_hora')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="fecha_resolucion" class="form-label">Fecha de Resolución</label>
+                            <input type="date" class="form-control @error('fecha_resolucion') is-invalid @enderror" 
+                                   id="fecha_resolucion" name="fecha_resolucion" value="{{ old('fecha_resolucion') }}">
+                            @error('fecha_resolucion')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

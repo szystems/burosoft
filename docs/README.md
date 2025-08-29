@@ -11,6 +11,19 @@ Esta carpeta contiene toda la documentación del proyecto BuroSoft, organizada e
 
 ## 🛠️ Documentación de Correcciones y Mejoras
 
+### [`database/`](database/) - Documentación de Base de Datos
+- **[`migrations/`](database/migrations/)** - Scripts SQL de migración organizados
+  - `migraciones_completas_ipage_final.sql` - **Script principal para producción**
+  - Otros archivos de migración para desarrollo y testing
+- Base de datos optimizada para MySQL 5.7.44-log en iPage hosting
+
+### [`fixes/`](fixes/) - Documentación de Bug Fixes
+- `showaudiencia_spacing_issue.md` - Fix de espaciado en vista de audiencias
+- `va_corrections_completed.md` - Correcciones completadas en módulo VA
+
+### [`implementation/`](implementation/) - Nuevas Funcionalidades
+- `rtributa_implementation_summary.md` - Implementación del módulo RTributa
+
 ### Documentación de Correcciones de Modales
 - `correccion_variables_modales.md` - Corrección de variables en modales
 - `modal_ea_fix_summary.md` - Resumen de correcciones de modales EA

@@ -18,19 +18,19 @@
                         <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
 
                         <div class="col-md-6 mb-3">
-                            <label for="fecha" class="form-label">Fecha de Notificación</label>
-                            <input type="date" name="fecha" class="form-control" value="{{ old('fecha') }}" required>
-                            @if ($errors->has('fecha'))
+                            <label for="fecha_hora_notificacion" class="form-label">Fecha y Hora de Notificación <span class="text-danger">*</span></label>
+                            <input type="datetime-local" name="fecha_hora_notificacion" class="form-control" value="{{ old('fecha_hora_notificacion') }}" required>
+                            @if ($errors->has('fecha_hora_notificacion'))
                                 <span class="help-block opacity-7">
                                     <strong>
-                                        <font color="red">{{ $errors->first('fecha') }}</font>
+                                        <font color="red">{{ $errors->first('fecha_hora_notificacion') }}</font>
                                     </strong>
                                 </span>
                             @endif
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="numero_resolucion" class="form-label">No. de Resolución</label>
+                            <label for="numero_resolucion" class="form-label">No. de Resolución <span class="text-danger">*</span></label>
                             <input type="text" name="numero_resolucion" class="form-control" value="{{ old('numero_resolucion') }}" required>
                             @if ($errors->has('numero_resolucion'))
                                 <span class="help-block opacity-7">
@@ -42,7 +42,19 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="tipo_nulidad" class="form-label">Tipo de Nulidad</label>
+                            <label for="fecha_resolucion" class="form-label">Fecha de Resolución</label>
+                            <input type="date" name="fecha_resolucion" class="form-control" value="{{ old('fecha_resolucion') }}">
+                            @if ($errors->has('fecha_resolucion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('fecha_resolucion') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="tipo_nulidad" class="form-label">Tipo de Nulidad <span class="text-danger">*</span></label>
                             <select name="tipo_nulidad" class="form-control" required>
                                 <option value="" selected disabled>Seleccione el tipo de nulidad</option>
                                 <option value="Absoluta" {{ old('tipo_nulidad') == 'Absoluta' ? 'selected' : '' }}>Absoluta</option>

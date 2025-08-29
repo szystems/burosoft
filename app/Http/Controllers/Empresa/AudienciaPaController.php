@@ -21,6 +21,9 @@ class AudienciaPaController extends Controller
             'fecha' => 'required|date',
             'impuestos' => 'required|numeric|min:0',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+            'fecha_notificacion' => 'nullable|date',
+            'plazo_evacuar' => 'nullable|string|max:255',
+            'plazo_evacuar_otro' => 'nullable|string|max:255|required_if:plazo_evacuar,Otro',
         ]);
 
         $audienciaPa = new AudienciaPa();
@@ -30,6 +33,9 @@ class AudienciaPaController extends Controller
         $audienciaPa->tipo_audiencia = $request->tipo_audiencia;
         $audienciaPa->fecha = $request->fecha;
         $audienciaPa->impuestos = $request->impuestos;
+        $audienciaPa->fecha_notificacion = $request->fecha_notificacion;
+        $audienciaPa->plazo_evacuar = $request->plazo_evacuar;
+        $audienciaPa->plazo_evacuar_otro = $request->plazo_evacuar_otro;
 
         // Manejo de archivo
         if ($request->hasFile('archivo')) {
@@ -53,6 +59,9 @@ class AudienciaPaController extends Controller
             'fecha' => 'required|date',
             'impuestos' => 'required|numeric|min:0',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
+            'fecha_notificacion' => 'nullable|date',
+            'plazo_evacuar' => 'nullable|string|max:255',
+            'plazo_evacuar_otro' => 'nullable|string|max:255|required_if:plazo_evacuar,Otro',
         ]);
 
         $audienciaPa = AudienciaPa::find($id);
@@ -60,6 +69,9 @@ class AudienciaPaController extends Controller
         $audienciaPa->tipo_audiencia = $request->tipo_audiencia;
         $audienciaPa->fecha = $request->fecha;
         $audienciaPa->impuestos = $request->impuestos;
+        $audienciaPa->fecha_notificacion = $request->fecha_notificacion;
+        $audienciaPa->plazo_evacuar = $request->plazo_evacuar;
+        $audienciaPa->plazo_evacuar_otro = $request->plazo_evacuar_otro;
 
         // Manejo de archivo
         if ($request->hasFile('archivo')) {

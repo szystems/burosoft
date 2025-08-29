@@ -17,12 +17,13 @@
                         <!-- Campo oculto 'is_pa' eliminado -->
 
                         <div class="col-md-6 mb-3">
-                            <label for="fecha" class="form-label">Fecha de Notificación <span class="text-danger">*</span></label>
-                            <input type="date" name="fecha" class="form-control" value="{{ old('fecha', $rtributa->fecha ? \Carbon\Carbon::parse($rtributa->fecha)->format('Y-m-d') : '') }}" required>
-                            @if ($errors->has('fecha'))
+                            <label for="fecha_hora_notificacion" class="form-label">Fecha y Hora de Notificación <span class="text-danger">*</span></label>
+                            <input type="datetime-local" name="fecha_hora_notificacion" class="form-control" 
+                                   value="{{ old('fecha_hora_notificacion', $rtributa->fecha_hora_notificacion ? \Carbon\Carbon::parse($rtributa->fecha_hora_notificacion)->format('Y-m-d\TH:i') : '') }}" required>
+                            @if ($errors->has('fecha_hora_notificacion'))
                                 <span class="help-block opacity-7">
                                     <strong>
-                                        <font color="red">{{ $errors->first('fecha') }}</font>
+                                        <font color="red">{{ $errors->first('fecha_hora_notificacion') }}</font>
                                     </strong>
                                 </span>
                             @endif
@@ -40,21 +41,87 @@
                             @endif
                         </div>
 
-
                         <div class="col-md-6 mb-3">
                             <label for="tipo_resolucion" class="form-label">Tipo de Resolución <span class="text-danger">*</span></label>
-                            <select name="tipo_resolucion" class="form-control" required>
+                            <select name="tipo_resolucion" id="tipo_resolucion_edit_{{ $rtributa->id }}_pa" class="form-control" required onchange="toggleTipoResolucionOtroPa('edit_{{ $rtributa->id }}')">
                                 <option value="">Seleccione...</option>
                                 <option value="total a favor" {{ old('tipo_resolucion', $rtributa->tipo_resolucion) == 'total a favor' ? 'selected' : '' }}>Total a favor</option>
                                 <option value="total en contra" {{ old('tipo_resolucion', $rtributa->tipo_resolucion) == 'total en contra' ? 'selected' : '' }}>Total en contra</option>
                                 <option value="parcial" {{ old('tipo_resolucion', $rtributa->tipo_resolucion) == 'parcial' ? 'selected' : '' }}>Parcial</option>
                                 <option value="nulidad" {{ old('tipo_resolucion', $rtributa->tipo_resolucion) == 'nulidad' ? 'selected' : '' }}>Nulidad</option>
                                 <option value="penal" {{ old('tipo_resolucion', $rtributa->tipo_resolucion) == 'penal' ? 'selected' : '' }}>Penal</option>
+                                <option value="otro" {{ old('tipo_resolucion', $rtributa->tipo_resolucion) == 'otro' ? 'selected' : '' }}>Otro</option>
                             </select>
                             @if ($errors->has('tipo_resolucion'))
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('tipo_resolucion') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Campo Tipo de Resolución Otro -->
+                        <div class="col-md-6 mb-3" id="tipo_resolucion_otro_edit_{{ $rtributa->id }}_pa" style="display: {{ old('tipo_resolucion', $rtributa->tipo_resolucion) == 'otro' || $rtributa->tipo_resolucion_otro ? 'block' : 'none' }};">
+                            <label for="tipo_resolucion_otro" class="form-label">Especifique Tipo de Resolución <span class="text-danger">*</span></label>
+                            <input type="text" 
+                                   {{ (old('tipo_resolucion', $rtributa->tipo_resolucion) == 'otro' || $rtributa->tipo_resolucion_otro) ? 'name=tipo_resolucion_otro' : '' }}
+                                   class="form-control" 
+                                   value="{{ old('tipo_resolucion_otro', $rtributa->tipo_resolucion_otro) }}">
+                            @if ($errors->has('tipo_resolucion_otro'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('tipo_resolucion_otro') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="fecha_resolucion" class="form-label">Fecha de Resolución</label>
+                            <input type="date" name="fecha_resolucion" class="form-control" 
+                                   value="{{ old('fecha_resolucion', $rtributa->fecha_resolucion ? \Carbon\Carbon::parse($rtributa->fecha_resolucion)->format('Y-m-d') : '') }}">
+                            @if ($errors->has('fecha_resolucion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('fecha_resolucion') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="plazo_cat" class="form-label">Plazo CAT</label>
+                            <select name="plazo_cat" id="plazo_cat_edit_{{ $rtributa->id }}_pa" class="form-control" onchange="togglePlazoCatOtroPa('edit_{{ $rtributa->id }}')">
+                                <option value="">Seleccione...</option>
+                                <option value="5 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '5 días' ? 'selected' : '' }}>5 días</option>
+                                <option value="10 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '10 días' ? 'selected' : '' }}>10 días</option>
+                                <option value="15 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '15 días' ? 'selected' : '' }}>15 días</option>
+                                <option value="30 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '30 días' ? 'selected' : '' }}>30 días</option>
+                                <option value="45 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '45 días' ? 'selected' : '' }}>45 días</option>
+                                <option value="60 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '60 días' ? 'selected' : '' }}>60 días</option>
+                                <option value="otro" {{ old('plazo_cat', $rtributa->plazo_cat) == 'otro' ? 'selected' : '' }}>Otro</option>
+                            </select>
+                            @if ($errors->has('plazo_cat'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('plazo_cat') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <!-- Campo Plazo CAT Otro -->
+                        <div class="col-md-6 mb-3" id="plazo_cat_otro_edit_{{ $rtributa->id }}_pa" style="display: {{ old('plazo_cat', $rtributa->plazo_cat) == 'otro' || $rtributa->plazo_cat_otro ? 'block' : 'none' }};">
+                            <label for="plazo_cat_otro" class="form-label">Especifique Plazo CAT <span class="text-danger">*</span></label>
+                            <input type="text" 
+                                   {{ (old('plazo_cat', $rtributa->plazo_cat) == 'otro' || $rtributa->plazo_cat_otro) ? 'name=plazo_cat_otro' : '' }}
+                                   class="form-control" 
+                                   value="{{ old('plazo_cat_otro', $rtributa->plazo_cat_otro) }}">
+                            @if ($errors->has('plazo_cat_otro'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('plazo_cat_otro') }}</font>
                                     </strong>
                                 </span>
                             @endif
@@ -112,3 +179,75 @@
         </div>
     </div>
 </div>
+
+<script>
+function toggleTipoResolucionOtroPa(modalType) {
+    const selectElement = document.getElementById('tipo_resolucion_' + modalType + '_pa');
+    const otroElement = document.getElementById('tipo_resolucion_otro_' + modalType + '_pa');
+    
+    if (selectElement && otroElement) {
+        const inputElement = otroElement.querySelector('input');
+        if (selectElement.value === 'otro') {
+            otroElement.style.display = 'block';
+            inputElement.required = true;
+            inputElement.setAttribute('name', 'tipo_resolucion_otro');
+        } else {
+            otroElement.style.display = 'none';
+            inputElement.required = false;
+            inputElement.value = '';
+            inputElement.removeAttribute('name');
+        }
+    }
+}
+
+function togglePlazoCatOtroPa(modalType) {
+    const selectElement = document.getElementById('plazo_cat_' + modalType + '_pa');
+    const otroElement = document.getElementById('plazo_cat_otro_' + modalType + '_pa');
+    
+    if (selectElement && otroElement) {
+        const inputElement = otroElement.querySelector('input');
+        if (selectElement.value === 'otro') {
+            otroElement.style.display = 'block';
+            inputElement.required = true;
+            inputElement.setAttribute('name', 'plazo_cat_otro');
+        } else {
+            otroElement.style.display = 'none';
+            inputElement.required = false;
+            inputElement.value = '';
+            inputElement.removeAttribute('name');
+        }
+    }
+}
+
+// Inicializar cuando se abra el modal
+$(document).on('shown.bs.modal', '[id*="editRtributaPaModal-"]', function () {
+    const modalId = $(this).attr('id').match(/editRtributaPaModal-(\d+)/)[1];
+    const tipoSelect = document.getElementById('tipo_resolucion_edit_' + modalId + '_pa');
+    const plazoSelect = document.getElementById('plazo_cat_edit_' + modalId + '_pa');
+    
+    if (tipoSelect) {
+        toggleTipoResolucionOtroPa('edit_' + modalId);
+    }
+    if (plazoSelect) {
+        togglePlazoCatOtroPa('edit_' + modalId);
+    }
+});
+
+// También inicializar al cargar la página por si ya hay contenido
+document.addEventListener('DOMContentLoaded', function() {
+    // Para todos los modales de edición que puedan estar presentes
+    const editModals = document.querySelectorAll('[id*="editRtributaPaModal-"]');
+    editModals.forEach(function(modal) {
+        const modalId = modal.id.match(/editRtributaPaModal-(\d+)/)[1];
+        const tipoSelect = document.getElementById('tipo_resolucion_edit_' + modalId + '_pa');
+        const plazoSelect = document.getElementById('plazo_cat_edit_' + modalId + '_pa');
+        
+        if (tipoSelect) {
+            toggleTipoResolucionOtroPa('edit_' + modalId);
+        }
+        if (plazoSelect) {
+            togglePlazoCatOtroPa('edit_' + modalId);
+        }
+    });
+});
+</script>

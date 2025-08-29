@@ -16,7 +16,8 @@ class NulidadPaController extends Controller
     {
         $request->validate([
             'audiencia_pa_id' => 'required',
-            'fecha' => 'required|date',
+            'fecha_hora_notificacion' => 'required|date',
+            'fecha_resolucion' => 'nullable|date',
             'numero_resolucion' => 'required|string|max:255',
             'tipo_nulidad' => 'required|string',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
@@ -27,7 +28,8 @@ class NulidadPaController extends Controller
         $nulidadPa = new NulidadPa();
         $nulidadPa->audiencia_pa_id = $request->audiencia_pa_id;
         $nulidadPa->usuario_id = Auth::user()->id;
-        $nulidadPa->fecha = $request->fecha;
+        $nulidadPa->fecha_hora_notificacion = $request->fecha_hora_notificacion;
+        $nulidadPa->fecha_resolucion = $request->fecha_resolucion;
         $nulidadPa->numero_resolucion = $request->numero_resolucion;
         $nulidadPa->tipo_nulidad = $request->tipo_nulidad;
         $nulidadPa->observaciones = $request->observaciones;
@@ -62,7 +64,8 @@ class NulidadPaController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'fecha' => 'required|date',
+            'fecha_hora_notificacion' => 'required|date',
+            'fecha_resolucion' => 'nullable|date',
             'numero_resolucion' => 'required|string|max:255',
             'tipo_nulidad' => 'required|string',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
@@ -72,7 +75,8 @@ class NulidadPaController extends Controller
 
         $nulidadPa = NulidadPa::findOrFail($id);
         $nulidadPa->usuario_id = Auth::user()->id;
-        $nulidadPa->fecha = $request->fecha;
+        $nulidadPa->fecha_hora_notificacion = $request->fecha_hora_notificacion;
+        $nulidadPa->fecha_resolucion = $request->fecha_resolucion;
         $nulidadPa->numero_resolucion = $request->numero_resolucion;
         $nulidadPa->tipo_nulidad = $request->tipo_nulidad;
         $nulidadPa->observaciones = $request->observaciones;

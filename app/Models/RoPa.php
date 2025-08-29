@@ -13,6 +13,8 @@ class RoPa extends Model
 
     protected $fillable = [
         'fecha',
+        'fecha_notificacion',
+        'fecha_resolucion',
         'numero_resolucion',
         'tipo_resolucion',
         'archivo',
@@ -25,6 +27,8 @@ class RoPa extends Model
 
     protected $casts = [
         'fecha' => 'date',
+        'fecha_notificacion' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con AudienciaPa

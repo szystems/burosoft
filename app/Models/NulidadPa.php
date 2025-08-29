@@ -13,7 +13,8 @@ class NulidadPa extends Model
 
 
     protected $fillable = [
-        'fecha',
+        'fecha_hora_notificacion',
+        'fecha_resolucion',
         'numero_resolucion',
         'tipo_nulidad',
         'usuario_id',
@@ -25,7 +26,8 @@ class NulidadPa extends Model
     ];
 
     protected $casts = [
-        'fecha' => 'date',
+        'fecha_hora_notificacion' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con AudienciaPa

@@ -96,7 +96,7 @@
                                             <div class="col-md-12 mb-3">
                                                 <!-- Form Field Start -->
                                                 <div class="mb-3">
-                                                    @include('empresa.expcaso.pat.print')
+{{--                                                     @include('empresa.expcaso.pat.print') --}}
                                                 </div>
                                             </div>
 
@@ -264,7 +264,7 @@
                                                         </div>
                                                     </div> --}}
 
-                                                    Expediente Digital
+                                                    <h3><u>Expediente Digital</u></h3>
                                                     <hr>
                                                     @if ($cuenta->estado == 1)
 
@@ -360,26 +360,30 @@
                                                                         <a class="nav-link" href="{{ url('show-pat/'.$pat->id) }}">PF</a>
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
-                                                                        <a class="nav-link" href="{{ url('show-va/'.$pat->id) }}">
+                                                                        <a class="nav-link active" href="{{ url('show-audiencia/'.$audiencia->id) }}">
                                                                             VA
-                                                                            <span class="badge rounded-pill green ms-2">{{ $audiencias->count() }}</span>
+                                                                            <span class="badge rounded-pill blue ms-2">{{ $audienciasVaCount }}</span>
                                                                         </a>
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
-                                                                        <a class="nav-link" href="{{ url('show-pa/'.$pat->id) }}">PA
-                                                                            <span class="badge rounded-pill blue ms-2">{{ $audienciasPaCount }}</span>
+                                                                        <a class="nav-link" href="{{ url('show-pa/'.$cuenta->id) }}">PA
+                                                                            <span class="badge rounded-pill green ms-2">{{ $audienciasPaCount }}</span>
                                                                         </a>
                                                                     </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CAT - En desarrollo')">CAT</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CSJ - En desarrollo')">CSJ</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CC - En desarrollo')">CC</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('VP - En desarrollo')">VP</a>
+                                                                    </li>
                                                                 </ul>
-                                                                <div class="tab-content" id="customTabContent">
-
-                                                                    <div class="tab-pane fade" id="pf" role="tabpanel">
-                                                                        <h4>Procedimineto de Fiscalización (PF)</h4>
-                                                                        <hr>
-                                                                        {{-- Inicio Tab --}}
-
-                                                                    </div>
-                                                                    <div class="tab-pane fade show active" id="va" role="tabpanel">
+                                                                <div class="content-section">
                                                                         <h4>Vía Administrativa (VA)</h4>
                                                                         <hr>
                                                                         @if (count($errors)>0)
@@ -472,6 +476,36 @@
                                                                                 </div>
                                                                                 <div class="col-md-4 mb-3">
                                                                                     <div class="mb-3">
+                                                                                        <label for="fecha_notificacion" class="form-label">Fecha de Notificación</label>
+                                                                                        <p>
+                                                                                            @if($audiencia->fecha_notificacion)
+                                                                                                <strong class="text-secondary">
+                                                                                                    {{ $audiencia->fecha_notificacion instanceof \Carbon\Carbon ? $audiencia->fecha_notificacion->format('d/m/Y') : date('d/m/Y', strtotime($audiencia->fecha_notificacion)) }}
+                                                                                                </strong>
+                                                                                            @else
+                                                                                                <span class="text-muted">No especificada</span>
+                                                                                            @endif
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="plazo_evacuar" class="form-label">Plazo para Evacuar</label>
+                                                                                        <p>
+                                                                                            @if($audiencia->plazo_evacuar)
+                                                                                                @if($audiencia->plazo_evacuar == 'Otro' && $audiencia->plazo_evacuar_otro)
+                                                                                                    <strong class="text-primary">{{ $audiencia->plazo_evacuar_otro }}</strong>
+                                                                                                @else
+                                                                                                    <strong class="text-primary">{{ $audiencia->plazo_evacuar }}</strong>
+                                                                                                @endif
+                                                                                            @else
+                                                                                                <span class="text-muted">No especificado</span>
+                                                                                            @endif
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="mb-3">
                                                                                         <label for="impuestos" class="form-label">Usuario</label>
                                                                                         <p>
                                                                                             {{ $audiencia->usuario->name }}
@@ -487,8 +521,14 @@
                                                                                     <div class="custom-tabs-container">
                                                                                         <ul class="nav nav-tabs" id="patTab" role="tablist">
                                                                                             <li class="nav-item" role="presentation">
-                                                                                                <a class="nav-link active" id="tab-ev" data-bs-toggle="tab" href="#ev" role="tab"
-                                                                                                    aria-controls="ev" aria-selected="true">EA
+                                                                                                <a class="nav-link active" id="tab-aceptacion" data-bs-toggle="tab" href="#aceptacion" role="tab"
+                                                                                                    aria-controls="aceptacion" aria-selected="true">Aceptación
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $aceptaciones->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-ev" data-bs-toggle="tab" href="#ev" role="tab"
+                                                                                                    aria-controls="ev" aria-selected="false">EA
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $evacuaciones->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
@@ -514,24 +554,6 @@
                                                                                                 <a class="nav-link" id="tab-resolucion" data-bs-toggle="tab" href="#resolucion" role="tab"
                                                                                                     aria-controls="resolucion" aria-selected="false"> R-SAT
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $resoluciones->count() }}</span>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <a class="nav-link" id="tab-rtributa" data-bs-toggle="tab" href="#rtributa" role="tab"
-                                                                                                    aria-controls="rtributa" aria-selected="false"> R-Tributa
-                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $rtributas->count() }}</span>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <a class="nav-link" id="tab-nulidad" data-bs-toggle="tab" href="#nulidad" role="tab"
-                                                                                                    aria-controls="nulidad" aria-selected="false"> Nulidad
-                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $nulidades->count() }}</span>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <a class="nav-link" id="tab-ec" data-bs-toggle="tab" href="#ec" role="tab"
-                                                                                                    aria-controls="ec" aria-selected="false"> EC
-                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $ecs->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
                                                                                             <li class="nav-item" role="presentation">
@@ -570,20 +592,113 @@
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $ampmrs->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-rtributa" data-bs-toggle="tab" href="#rtributa" role="tab"
+                                                                                                    aria-controls="rtributa" aria-selected="false"> R-Tributa
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $rtributas->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-nulidad" data-bs-toggle="tab" href="#nulidad" role="tab"
+                                                                                                    aria-controls="nulidad" aria-selected="false"> Nulidad
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $nulidades->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-ec" data-bs-toggle="tab" href="#ec" role="tab"
+                                                                                                    aria-controls="ec" aria-selected="false"> EC
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $ecs->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
                                                                                         </ul>
                                                                                         <div class="tab-content" id="customTabContent2">
-                                                                                            <div class="tab-pane fade show active" id="ev" role="tabpanel">
+                                                                                            <div class="tab-pane fade show active" id="aceptacion" role="tabpanel">
+                                                                                                <div class="row gx-3">
+
+                                                                                                    <h4>Aceptación</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                                                                            data-bs-target="#addAceptacionVaModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Aceptación
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.va.aceptacion.addaceptacionmodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha y Hora</td>
+                                                                                                                    <td>No. de Documento</td>
+                                                                                                                    <td># Folios</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Oficina Presentación</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($aceptaciones as $aceptacion)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        <li>
+                                                                                                                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editAceptacionVaModal"
+                                                                                                                                                data-id="{{ $aceptacion->id }}"
+                                                                                                                                                data-fecha_hora_presentacion="{{ $aceptacion->fecha_hora_presentacion }}"
+                                                                                                                                                data-numero_documento="{{ $aceptacion->numero_documento }}"
+                                                                                                                                                data-observaciones="{{ $aceptacion->observaciones }}"
+                                                                                                                                                data-oficina_presentacion="{{ $aceptacion->oficina_presentacion }}"
+                                                                                                                                                data-numero_folios="{{ $aceptacion->numero_folios }}"
+                                                                                                                                                data-archivo="{{ $aceptacion->archivo }}"
+                                                                                                                                                data-audiencia_id="{{ $aceptacion->audiencia_id }}"><i class="bi bi-pencil-square text-warning"></i> Editar</a>
+                                                                                                                                        </li>
+                                                                                                                                        <li>
+                                                                                                                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteAceptacionVaModal"
+                                                                                                                                                data-id="{{ $aceptacion->id }}"
+                                                                                                                                                data-numero_documento="{{ $aceptacion->numero_documento }}"
+                                                                                                                                                data-fecha_hora="{{ $aceptacion->fecha_hora_presentacion }}"><i class="bi bi-trash text-danger"></i> Eliminar</a>
+                                                                                                                                        </li>
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ \Carbon\Carbon::parse($aceptacion->fecha_hora_presentacion)->format('d/m/Y H:i') }}</td>
+                                                                                                                        <td>{{ $aceptacion->numero_documento }}</td>
+                                                                                                                        <td>{{ $aceptacion->numero_folios ?? 'N/A' }}</td>
+                                                                                                                        <td>{{ $aceptacion->observaciones ?? 'N/A' }}</td>
+                                                                                                                        <td>{{ $aceptacion->oficina_presentacion ?? 'N/A' }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/aceptacions/' . $aceptacion->archivo) }}" target="_blank"><strong class="text-primary">{{ $aceptacion->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $aceptacion->usuario->name ?? 'N/A' }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.va.aceptacion.deleteaceptacionmodal')
+                                                                                                                    @include('empresa.expcaso.va.aceptacion.editaceptacionmodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="ev" role="tabpanel">
                                                                                                 <div class="row gx-3">
 
                                                                                                     <h4>Evacuación  de Audiencia (EA)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                                                                            data-bs-target="#addEvModal">
+                                                                                                            data-bs-target="#addEvVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Evacuación de Audiencia
                                                                                                         </button>
                                                                                                     @endif
-
 
                                                                                                     @include('empresa.expcaso.va.ev.addevmodal')
 
@@ -597,6 +712,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
+                                                                                                                    <td>Oficina Presentación</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -614,14 +730,14 @@
                                                                                                                                         <a class="dropdown-item" href="{{ url('show-ev/'.$ev->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                                                                                                     </li> --}}
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editEvModal-{{ $ev->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editEvVaModal-{{ $ev->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteEvModal-{{ $ev->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteEvVaModal-{{ $ev->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -638,11 +754,11 @@
                                                                                                                         <td>{{ $ev->numero_documento }}</td>
                                                                                                                         <td>{{ $ev->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ev->observaciones }}</td>
+                                                                                                                        <td>{{ $ev->oficina_presentacion ?: 'N/A' }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/evacuaciones/'.$ev->archivo) }}" target="_blank"><strong class="text-primary">{{ $ev->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ev->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.va.ev.deleteevmodal')
-                                                                                                                    @include('empresa.expcaso.va.ev.addevmodal')
                                                                                                                     @include('empresa.expcaso.va.ev.editevmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
@@ -657,11 +773,10 @@
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                                                                            data-bs-target="#addPpModal">
+                                                                                                            data-bs-target="#addPpVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Período de Prueba
                                                                                                         </button>
                                                                                                     @endif
-
 
                                                                                                     @include('empresa.expcaso.va.pp.addppmodal')
 
@@ -675,6 +790,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
+                                                                                                                    <td>Oficina Presentación</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -692,14 +808,14 @@
                                                                                                                                         <a class="dropdown-item" href="{{ url('show-pp/'.$pp->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                                                                                                     </li> --}}
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editPpModal-{{ $pp->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editPpVaModal-{{ $pp->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deletePpModal-{{ $pp->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deletePpVaModal-{{ $pp->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -716,11 +832,11 @@
                                                                                                                         <td>{{ $pp->numero_documento }}</td>
                                                                                                                         <td>{{ $pp->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $pp->observaciones }}</td>
+                                                                                                                        <td>{{ $pp->oficina_presentacion ?: 'N/A' }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/periodos/'.$pp->archivo) }}" target="_blank"><strong class="text-primary">{{ $pp->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $pp->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.va.pp.deleteppmodal')
-                                                                                                                    @include('empresa.expcaso.va.pp.addppmodal')
                                                                                                                     @include('empresa.expcaso.va.pp.editppmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
@@ -735,7 +851,7 @@
                                                                                                     <h4>Diligencias Para Mejor Resolver (DPMR)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDpmrModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addDpmrVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Diligencia Para Mejor Resolver
                                                                                                         </button>
                                                                                                     @endif
@@ -766,14 +882,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editDpmrModal-{{ $dpmr->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editDpmrVaModal-{{ $dpmr->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteDpmrModal-{{ $dpmr->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteDpmrVaModal-{{ $dpmr->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -805,7 +921,7 @@
                                                                                                     <h4>Atención de Diligencias Para Mejor Resolver (ADPMR)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAdpmrModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAdpmrVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Atención de Diligencia Para Mejor Resolver
                                                                                                         </button>
                                                                                                     @endif
@@ -822,6 +938,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
+                                                                                                                    <td>Oficina Presentación</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -836,14 +953,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editAdpmrModal-{{ $adpmr->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editAdpmrVaModal-{{ $adpmr->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteAdpmrModal-{{ $adpmr->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteAdpmrVaModal-{{ $adpmr->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -859,6 +976,7 @@
                                                                                                                         <td>{{ $adpmr->numero_documento }}</td>
                                                                                                                         <td>{{ $adpmr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $adpmr->observaciones }}</td>
+                                                                                                                        <td>{{ $adpmr->oficina_presentacion ?: 'N/A' }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/adpmrs/'.$adpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $adpmr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $adpmr->usuario->name }}</td>
                                                                                                                     </tr>
@@ -876,12 +994,10 @@
                                                                                                     <h4>R-SAT</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addResolucionModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addResolucionVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar R-SAT
                                                                                                         </button>
                                                                                                     @endif
-
-                                                                                                    @include('empresa.expcaso.va.resolucion.addresolucionmodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -892,6 +1008,7 @@
                                                                                                                     <td>Fecha de Notificación</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Tipo de Resolución</td>
+                                                                                                                    <td>PpRR</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -908,14 +1025,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editResolucionModal-{{ $resolucion->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editResolucionVaModal-{{ $resolucion->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteResolucionModal-{{ $resolucion->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteResolucionVaModal-{{ $resolucion->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -939,8 +1056,21 @@
                                                                                                                                 <span class="badge bg-info">Nulidad</span>
                                                                                                                             @elseif($resolucion->tipo_resolucion == 'penal')
                                                                                                                                 <span class="badge bg-dark">Penal</span>
+                                                                                                                            @elseif($resolucion->tipo_resolucion == 'otro')
+                                                                                                                                <span class="badge bg-secondary">{{ $resolucion->tipo_resolucion_otro ?: 'Otro' }}</span>
                                                                                                                             @else
                                                                                                                                 <span class="badge bg-secondary">No definido</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($resolucion->plazo_revocatoria)
+                                                                                                                                @if($resolucion->plazo_revocatoria == 'otro')
+                                                                                                                                    <span class="badge bg-primary">{{ $resolucion->plazo_revocatoria_otro ?: 'Otro' }}</span>
+                                                                                                                                @else
+                                                                                                                                    <span class="badge bg-primary">{{ $resolucion->plazo_revocatoria }}</span>
+                                                                                                                                @endif
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
                                                                                                                             @endif
                                                                                                                         </td>
                                                                                                                         <td>{{ $resolucion->numero_folios ?: 'N/A' }}</td>
@@ -948,8 +1078,8 @@
                                                                                                                         <td><a href="{{ asset('uploads/resoluciones/'.$resolucion->archivo) }}" target="_blank"><strong class="text-primary">{{ $resolucion->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $resolucion->usuario->name }}</td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.resolucion.deleteresolucionmodal')
-                                                                                                                    @include('empresa.expcaso.va.resolucion.editresolucionmodal')
+                                                                                                                     @include('empresa.expcaso.va.resolucion.deleteresolucionmodal')
+                                                                                                                     @include('empresa.expcaso.va.resolucion.editresolucionmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -963,12 +1093,10 @@
                                                                                                     <h4>R-Tributa (Resolución Tribunal Administrativo Tributario y Aduanero)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRtributaModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRtributaVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar R-Tributa
                                                                                                         </button>
                                                                                                     @endif
-
-                                                                                                    @include('empresa.expcaso.va.rtributa.addrtributamodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -979,6 +1107,8 @@
                                                                                                                     <td>Fecha de Notificación</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Tipo de Resolución</td>
+                                                                                                                    <td>Fecha de Resolución</td>
+                                                                                                                    <td>Plazo CAT</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -995,14 +1125,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editRtributaModal-{{ $rtributa->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editRtributaVaModal-{{ $rtributa->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteRtributaModal-{{ $rtributa->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteRtributaVaModal-{{ $rtributa->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -1012,7 +1142,11 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($rtributa->fecha)) }}</strong>
+                                                                                                                            @if($rtributa->fecha_hora_notificacion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y H:i', strtotime($rtributa->fecha_hora_notificacion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">No definida</span>
+                                                                                                                            @endif
                                                                                                                         </td>
                                                                                                                         <td>{{ $rtributa->numero_resolucion }}</td>
                                                                                                                         <td>
@@ -1026,8 +1160,26 @@
                                                                                                                                 <span class="badge bg-info">Nulidad</span>
                                                                                                                             @elseif($rtributa->tipo_resolucion == 'penal')
                                                                                                                                 <span class="badge bg-dark">Penal</span>
+                                                                                                                            @elseif($rtributa->tipo_resolucion == 'otro')
+                                                                                                                                <span class="badge bg-secondary text-white" title="Valor: {{ $rtributa->tipo_resolucion_otro }}">{{ $rtributa->tipo_resolucion_otro ?: 'Otro (sin especificar)' }}</span>
                                                                                                                             @else
                                                                                                                                 <span class="badge bg-secondary">No definido</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($rtributa->fecha_resolucion)
+                                                                                                                                <strong class="text-info">{{ date('d/m/Y', strtotime($rtributa->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($rtributa->plazo_cat == 'otro')
+                                                                                                                                <span class="badge bg-warning text-dark">{{ $rtributa->plazo_cat_otro ?: 'Otro (sin especificar)' }}</span>
+                                                                                                                            @elseif($rtributa->plazo_cat)
+                                                                                                                                <span class="badge bg-primary">{{ $rtributa->plazo_cat }}</span>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
                                                                                                                             @endif
                                                                                                                         </td>
                                                                                                                         <td>{{ $rtributa->numero_folios ?: 'N/A' }}</td>
@@ -1035,8 +1187,8 @@
                                                                                                                         <td><a href="{{ asset('uploads/rtributas/'.$rtributa->archivo) }}" target="_blank"><strong class="text-primary">{{ $rtributa->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $rtributa->usuario->name }}</td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.rtributa.deletertributamodal')
-                                                                                                                    @include('empresa.expcaso.va.rtributa.editrtributamodal')
+                                                                                                                     @include('empresa.expcaso.va.rtributa.deletertributamodal')
+                                                                                                                     @include('empresa.expcaso.va.rtributa.editrtributamodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1050,12 +1202,12 @@
                                                                                                     <h4>Nulidad</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNulidadModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNulidadVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Nulidad
                                                                                                         </button>
                                                                                                     @endif
 
-                                                                                                    @include('empresa.expcaso.va.nulidad.addnulidadmodal')
+                                                                                                     @include('empresa.expcaso.va.nulidad.addnulidadmodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -1063,8 +1215,9 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha de Notificación</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
                                                                                                                     <td>No. de Resolución</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>Tipo de Nulidad</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
@@ -1082,14 +1235,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editNulidadModal-{{ $nulidad->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editNulidadVaModal-{{ $nulidad->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteNulidadModal-{{ $nulidad->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteNulidadVaModal-{{ $nulidad->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -1099,9 +1252,22 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($nulidad->fecha)) }}</strong>
+                                                                                                                            @if($nulidad->fecha_hora_notificacion)
+                                                                                                                                <strong class="text-secondary">
+                                                                                                                                    {{ $nulidad->fecha_hora_notificacion instanceof \Carbon\Carbon ? $nulidad->fecha_hora_notificacion->format('d/m/Y H:i') : date('d/m/Y H:i', strtotime($nulidad->fecha_hora_notificacion)) }}
+                                                                                                                                </strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">No especificada</span>
+                                                                                                                            @endif
                                                                                                                         </td>
                                                                                                                         <td>{{ $nulidad->numero_resolucion }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($nulidad->fecha_resolucion)
+                                                                                                                                <strong class="text-info">{{ date('d/m/Y', strtotime($nulidad->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>
                                                                                                                             @if($nulidad->tipo_nulidad == 'Absoluta')
                                                                                                                                 <span class="badge bg-danger">Absoluta</span>
@@ -1131,12 +1297,12 @@
                                                                                                     <h4>EC (Económico Coactivo)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEcModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEcVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar EC (Económico Coactivo)
                                                                                                         </button>
                                                                                                     @endif
 
-                                                                                                    @include('empresa.expcaso.va.ec.addecmodal')
+                                                                                                     @include('empresa.expcaso.va.ec.addecmodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -1145,6 +1311,10 @@
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Número de Resolución</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
+                                                                                                                    <td>Juzgado que Conoce</td>
+                                                                                                                    <td>Medidas Decretadas</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Usuario</td>
@@ -1166,14 +1336,14 @@
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editEcModal-{{ $ec->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editEcVaModal-{{ $ec->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteEcModal-{{ $ec->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteEcVaModal-{{ $ec->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -1183,6 +1353,39 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>{{ $ec->numero_resolucion }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($ec->fecha_hora_notificacion)
+                                                                                                                                <strong class="text-secondary">{{ $ec->fecha_hora_notificacion->format('d/m/Y H:i') }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($ec->fecha_resolucion)
+                                                                                                                                <strong class="text-secondary">{{ $ec->fecha_resolucion->format('d/m/Y') }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $ec->juzgado_que_conoce ?: 'N/A' }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($ec->medidas_decretadas && is_array($ec->medidas_decretadas) && count($ec->medidas_decretadas) > 0)
+                                                                                                                                @php
+                                                                                                                                    $medidas = $ec->medidas_decretadas;
+                                                                                                                                    $medidasTexto = [];
+                                                                                                                                    foreach($medidas as $medida) {
+                                                                                                                                        if($medida === 'Otro' && $ec->medidas_decretadas_otro) {
+                                                                                                                                            $medidasTexto[] = 'Otro: ' . $ec->medidas_decretadas_otro;
+                                                                                                                                        } else {
+                                                                                                                                            $medidasTexto[] = $medida;
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                @endphp
+                                                                                                                                <small class="text-secondary">{{ implode(', ', $medidasTexto) }}</small>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>{{ $ec->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ec->observaciones ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ec->usuario->name }}</td>
@@ -1190,9 +1393,11 @@
                                                                                                                             <strong class="text-secondary">{{ $ec->created_at->format('d/m/Y H:i') }}</strong>
                                                                                                                         </td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.ec.showecmodal')
-                                                                                                                    @include('empresa.expcaso.va.ec.editecmodal')
-                                                                                                                    @include('empresa.expcaso.va.ec.deleteecmodal')
+                                                                                                                @endforeach
+                                                                                                                @foreach($ecs as $ec)
+                                                                                                                     @include('empresa.expcaso.va.ec.showecmodal')
+                                                                                                                     @include('empresa.expcaso.va.ec.editecmodal')
+                                                                                                                     @include('empresa.expcaso.va.ec.deleteecmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1207,13 +1412,13 @@
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
                                                                                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                                                                                            data-bs-target="#addRrModal">
+                                                                                                            data-bs-target="#addRrVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Recurso de Revocatoria
                                                                                                         </button>
                                                                                                     @endif
 
 
-                                                                                                    @include('empresa.expcaso.va.rr.addrrmodal')
+                                                                                                     @include('empresa.expcaso.va.rr.addrrmodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -1223,6 +1428,7 @@
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Documento</td>
+                                                                                                                    <td>Oficina/Agencia EA</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -1242,14 +1448,14 @@
                                                                                                                                         <a class="dropdown-item" href="{{ url('show-pp/'.$pp->id) }}"><i class="bi bi-eye-fill text-blue"></i> Información</a>
                                                                                                                                     </li> --}}
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editRrModal-{{ $rr->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editRrVaModal-{{ $rr->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteRrModal-{{ $rr->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteRrVaModal-{{ $rr->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -1264,14 +1470,14 @@
                                                                                                                             <span class="text-warning">{{ date('h:i A', strtotime($rr->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
                                                                                                                         <td>{{ $rr->numero_documento }}</td>
+                                                                                                                        <td>{{ $rr->oficina_agencia_ea ?? 'N/A' }}</td>
                                                                                                                         <td>{{ $rr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $rr->observaciones }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/rrs/'.$rr->archivo) }}" target="_blank"><strong class="text-primary">{{ $rr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $rr->usuario->name }}</td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.rr.deleterrmodal')
-                                                                                                                    @include('empresa.expcaso.va.rr.addrrmodal')
-                                                                                                                    @include('empresa.expcaso.va.rr.editrrmodal')
+                                                                                                                     @include('empresa.expcaso.va.rr.deleterrmodal')
+                                                                                                                     @include('empresa.expcaso.va.rr.editrrmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1284,12 +1490,12 @@
                                                                                                     <h4>Negativa de Trámite Recurso de Revocatoria (NTRR)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNtrrModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNtrrVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Negativa de Trámite Recurso de Revocatoria
                                                                                                         </button>
                                                                                                     @endif
 
-                                                                                                    @include('empresa.expcaso.va.ntrr.addntrrmodal')
+                                                                                                     @include('empresa.expcaso.va.ntrr.addntrrmodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -1297,7 +1503,8 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha de Notificación</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
@@ -1315,16 +1522,16 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editNtrrModal-{{ $ntrr->id }}">
+                                                                                                                                        <button type="button" class="btn bg-gradient-warning dropdown-item" data-bs-toggle="modal" data-bs-target="#editNtrrVaModal-{{ $ntrr->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
-                                                                                                                                        </a>
+                                                                                                                                        </button>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteNtrrModal-{{ $ntrr->id }}">
+                                                                                                                                                <button type="button" class="btn bg-gradient-danger dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteNtrrVaModal-{{ $ntrr->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
-                                                                                                                                                </a>
+                                                                                                                                                </button>
                                                                                                                                             </li>
                                                                                                                                         @endif
                                                                                                                                     @endif
@@ -1332,7 +1539,10 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ntrr->fecha)) }}</strong>
+                                                                                                                            <strong class="text-secondary">{{ $ntrr->fecha_hora_notificacion ? \Carbon\Carbon::parse($ntrr->fecha_hora_notificacion)->format('d/m/Y H:i') : 'N/A' }}</strong>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ $ntrr->fecha_resolucion ? \Carbon\Carbon::parse($ntrr->fecha_resolucion)->format('d/m/Y') : 'N/A' }}</strong>
                                                                                                                         </td>
                                                                                                                         <td>{{ $ntrr->numero_resolucion }}</td>
                                                                                                                         <td>{{ $ntrr->numero_folios ?: 'N/A' }}</td>
@@ -1340,8 +1550,8 @@
                                                                                                                         <td><a href="{{ asset('uploads/ntrrs/'.$ntrr->archivo) }}" target="_blank"><strong class="text-primary">{{ $ntrr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ntrr->usuario->name }}</td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.ntrr.deletentrrmodal')
-                                                                                                                    @include('empresa.expcaso.va.ntrr.editntrrmodal')
+                                                                                                                     @include('empresa.expcaso.va.ntrr.deletentrrmodal')
+                                                                                                                     @include('empresa.expcaso.va.ntrr.editntrrmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1353,12 +1563,12 @@
                                                                                                     <h4>Ocurso</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOcursoModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addOcursoVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Ocurso
                                                                                                         </button>
                                                                                                     @endif
 
-                                                                                                    @include('empresa.expcaso.va.ocurso.addocursomodal')
+                                                                                                     @include('empresa.expcaso.va.ocurso.addocursomodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -1370,6 +1580,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
+                                                                                                                    <td>Oficina/Agencia EA</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -1384,14 +1595,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editOcursoModal-{{ $ocurso->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editOcursoVaModal-{{ $ocurso->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteOcursoModal-{{ $ocurso->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteOcursoVaModal-{{ $ocurso->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -1407,11 +1618,12 @@
                                                                                                                         <td>{{ $ocurso->numero_documento }}</td>
                                                                                                                         <td>{{ $ocurso->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ocurso->observaciones }}</td>
+                                                                                                                        <td>{{ $ocurso->oficina_agencia_ea ?: 'N/A' }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/ocursos/'.$ocurso->archivo) }}" target="_blank"><strong class="text-primary">{{ $ocurso->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ocurso->usuario->name }}</td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.ocurso.deleteocursomodal')
-                                                                                                                    @include('empresa.expcaso.va.ocurso.editocursomodal')
+                                                                                                                     @include('empresa.expcaso.va.ocurso.deleteocursomodal')
+                                                                                                                     @include('empresa.expcaso.va.ocurso.editocursomodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1423,12 +1635,12 @@
                                                                                                     <h4>Resolución de Ocurso (RO)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRoModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addRoVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Resolución de Ocurso
                                                                                                         </button>
                                                                                                     @endif
 
-                                                                                                    @include('empresa.expcaso.va.ro.addromodal')
+                                                                                                     @include('empresa.expcaso.va.ro.addromodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -1436,7 +1648,9 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha</td>
+                                                                                                                    <td>Fecha (Original)</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Tipo de Resolución</td>
                                                                                                                     <td># Folios</td>
@@ -1455,14 +1669,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editRoModal-{{ $ro->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editRoVaModal-{{ $ro->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteRoModal-{{ $ro->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteRoVaModal-{{ $ro->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -1473,6 +1687,21 @@
                                                                                                                         </td>
                                                                                                                         <td>
                                                                                                                             <strong class="text-secondary">{{ date('d/m/Y', strtotime($ro->fecha)) }}</strong>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($ro->fecha_notificacion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y', strtotime($ro->fecha_notificacion)) }}</strong>
+                                                                                                                                <span class="text-warning">{{ date('h:i A', strtotime($ro->fecha_notificacion)) }}</span>
+                                                                                                                            @else
+                                                                                                                                N/A
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($ro->fecha_resolucion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y', strtotime($ro->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                N/A
+                                                                                                                            @endif
                                                                                                                         </td>
                                                                                                                         <td>{{ $ro->numero_resolucion }}</td>
                                                                                                                         <td>
@@ -1489,8 +1718,8 @@
                                                                                                                         <td><a href="{{ asset('uploads/ros/'.$ro->archivo) }}" target="_blank"><strong class="text-primary">{{ $ro->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ro->usuario->name }}</td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.ro.deleteromodal')
-                                                                                                                    @include('empresa.expcaso.va.ro.editromodal')
+                                                                                                                     @include('empresa.expcaso.va.ro.deleteromodal')
+                                                                                                                     @include('empresa.expcaso.va.ro.editromodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1502,12 +1731,12 @@
                                                                                                     <h4>Medidas Para Mejor Resolver (MPMR)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMpmrModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMpmrVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Medida Para Mejor Resolver
                                                                                                         </button>
                                                                                                     @endif
 
-                                                                                                    @include('empresa.expcaso.va.mpmr.addmpmrmodal')
+                                                                                                     @include('empresa.expcaso.va.mpmr.addmpmrmodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -1515,7 +1744,8 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha y Hora</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
@@ -1533,14 +1763,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editMpmrModal-{{ $mpmr->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editMpmrVaModal-{{ $mpmr->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteMpmrModal-{{ $mpmr->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteMpmrVaModal-{{ $mpmr->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -1553,14 +1783,21 @@
                                                                                                                             <strong class="text-secondary">{{ date('d/m/Y', strtotime($mpmr->fecha_hora)) }}</strong>
                                                                                                                             <span class="text-warning">{{ date('h:i A', strtotime($mpmr->fecha_hora)) }}</span>
                                                                                                                         </td>
+                                                                                                                        <td>
+                                                                                                                            @if($mpmr->fecha_resolucion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y', strtotime($mpmr->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                N/A
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>{{ $mpmr->numero_resolucion }}</td>
                                                                                                                         <td>{{ $mpmr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $mpmr->observaciones }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/mpmrs/'.$mpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $mpmr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $mpmr->usuario->name }}</td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.mpmr.deletempmrmodal')
-                                                                                                                    @include('empresa.expcaso.va.mpmr.editmpmrmodal')
+                                                                                                                     @include('empresa.expcaso.va.mpmr.deletempmrmodal')
+                                                                                                                     @include('empresa.expcaso.va.mpmr.editmpmrmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1572,12 +1809,12 @@
                                                                                                     <h4>Atención Medidas Para Mejor Resolver (AMPMR)</h4>
                                                                                                     <hr>
                                                                                                     @if ($cuenta->estado == 1)
-                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAmpmrModal">
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAmpmrVaModal">
                                                                                                             <i class="bi bi-plus-square"></i> Agregar Atención Medidas Para Mejor Resolver
                                                                                                         </button>
                                                                                                     @endif
 
-                                                                                                    @include('empresa.expcaso.va.ampmr.addampmrmodal')
+                                                                                                     @include('empresa.expcaso.va.ampmr.addampmrmodal')
 
                                                                                                     <br>
                                                                                                     <div class="table-responsive">
@@ -1587,6 +1824,7 @@
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Documento</td>
+                                                                                                                    <td>Oficina EA</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -1603,14 +1841,14 @@
                                                                                                                                 </button>
                                                                                                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
                                                                                                                                     <li>
-                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editAmpmrModal-{{ $ampmr->id }}">
+                                                                                                                                        <a type="button" class="btn bg-gradient-warning" data-bs-toggle="modal" data-bs-target="#editAmpmrVaModal-{{ $ampmr->id }}">
                                                                                                                                             <i class="bi bi-pencil-fill text-warning"></i> Editar
                                                                                                                                         </a>
                                                                                                                                     </li>
                                                                                                                                     @if ($cuenta->estado == 1)
                                                                                                                                         @if (Auth::user()->role_as == 0)
                                                                                                                                             <li>
-                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteAmpmrModal-{{ $ampmr->id }}">
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteAmpmrVaModal-{{ $ampmr->id }}">
                                                                                                                                                     <i class="bi bi-trash-fill text-danger"></i> Eliminar
                                                                                                                                                 </a>
                                                                                                                                             </li>
@@ -1624,13 +1862,14 @@
                                                                                                                             <span class="text-warning">{{ date('h:i A', strtotime($ampmr->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
                                                                                                                         <td>{{ $ampmr->numero_documento }}</td>
+                                                                                                                        <td>{{ $ampmr->oficina_ea ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ampmr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ampmr->observaciones }}</td>
                                                                                                                         <td><a href="{{ asset('uploads/ampmrs/'.$ampmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $ampmr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ampmr->usuario->name }}</td>
                                                                                                                     </tr>
-                                                                                                                    @include('empresa.expcaso.va.ampmr.deleteampmrmodal')
-                                                                                                                    @include('empresa.expcaso.va.ampmr.editampmrmodal')
+                                                                                                                     @include('empresa.expcaso.va.ampmr.deleteampmrmodal')
+                                                                                                                     @include('empresa.expcaso.va.ampmr.editampmrmodal')
                                                                                                                 @endforeach
                                                                                                             </tbody>
                                                                                                         </table>
@@ -1643,13 +1882,6 @@
                                                                             </div>
                                                                         </div>
                                                                         {{-- Fin Tab --}}
-                                                                    </div>
-                                                                    <div class="tab-pane fade" id="vp" role="tabpanel">
-                                                                        <h4>Vía Penal (VP)</h4>
-                                                                        <hr>
-
-                                                                    </div>
-
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1673,6 +1905,18 @@
     </div>
     <!-- Content wrapper scroll end -->
 
+<!-- MODALES FUERA DEL CONTENEDOR DE TABS -->
+@include('empresa.expcaso.va.resolucion.addresolucionmodal')
+@include('empresa.expcaso.va.rtributa.addrtributamodal')
+@include('empresa.expcaso.va.nulidad.addnulidadmodal')
+@include('empresa.expcaso.va.ec.addecmodal')
+@include('empresa.expcaso.va.rr.addrrmodal')
+@include('empresa.expcaso.va.ntrr.addntrrmodal')
+@include('empresa.expcaso.va.ocurso.addocursomodal')
+@include('empresa.expcaso.va.ro.addromodal')
+@include('empresa.expcaso.va.mpmr.addmpmrmodal')
+@include('empresa.expcaso.va.ampmr.addampmrmodal')
+
 <script>
     // Auto-close alerts after 5 seconds
     document.addEventListener('DOMContentLoaded', function() {
@@ -1683,6 +1927,85 @@
                 bsAlert.close();
             });
         }, 5000);
+    });
+
+    // Script para manejar checkboxes "Otro" en modales EC
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.medida-otro-checkbox').forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                const targetId = this.getAttribute('data-target');
+                const inputId = this.getAttribute('data-input');
+                const targetField = document.getElementById(targetId);
+                const inputField = document.getElementById(inputId);
+                
+                if (this.checked) {
+                    targetField.style.display = 'block';
+                } else {
+                    targetField.style.display = 'none';
+                    if (inputField) {
+                        inputField.value = '';
+                    }
+                }
+            });
+        });
+    });
+
+    // Script específico para modales NTRR
+    $(document).ready(function() {
+        // Manejar clicks en botones de editar NTRR
+        $(document).on('click', '[data-bs-target*="editNtrrVaModal"]', function(e) {
+            e.preventDefault();
+            var modalTarget = $(this).attr('data-bs-target');
+            $(modalTarget).modal('show');
+        });
+        
+        // Manejar clicks en botones de eliminar NTRR
+        $(document).on('click', '[data-bs-target*="deleteNtrrVaModal"]', function(e) {
+            e.preventDefault();
+            var modalTarget = $(this).attr('data-bs-target');
+            $(modalTarget).modal('show');
+        });
+    });
+
+    // Script para manejar modales de Aceptación VA
+    $(document).on('show.bs.modal', '#editAceptacionVaModal', function(event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var fecha_hora = button.data('fecha_hora_presentacion');
+        var numero_documento = button.data('numero_documento');
+        var observaciones = button.data('observaciones');
+        var oficina_presentacion = button.data('oficina_presentacion');
+        var numero_folios = button.data('numero_folios');
+        var archivo = button.data('archivo');
+        var audiencia_id = button.data('audiencia_id');
+
+        var modal = $(this);
+        modal.find('#edit_fecha_hora_presentacion').val(fecha_hora);
+        modal.find('#edit_numero_documento').val(numero_documento);
+        modal.find('#edit_observaciones').val(observaciones);
+        modal.find('#edit_oficina_presentacion').val(oficina_presentacion);
+        modal.find('#edit_numero_folios').val(numero_folios);
+        modal.find('#edit_audiencia_id').val(audiencia_id);
+        
+        if (archivo) {
+            modal.find('#current_archivo').html('<small class="text-info">Archivo actual: ' + archivo + '</small>');
+        } else {
+            modal.find('#current_archivo').html('');
+        }
+
+        modal.find('#editAceptacionVaForm').attr('action', '/update-aceptacion/' + id);
+    });
+
+    $(document).on('show.bs.modal', '#deleteAceptacionVaModal', function(event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var numero_documento = button.data('numero_documento');
+        var fecha_hora = button.data('fecha_hora');
+
+        var modal = $(this);
+        modal.find('#delete_numero_documento').text(numero_documento);
+        modal.find('#delete_fecha_hora').text(fecha_hora);
+        modal.find('#deleteAceptacionVaForm').attr('action', '/delete-aceptacion/' + id);
     });
 </script>
 

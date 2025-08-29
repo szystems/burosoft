@@ -1,12 +1,9 @@
 <!-- Modal -->
-<                        <div class="col-md-6 mb-3">
-                            <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" name="fecha" class="form-control" value="{{ old('fecha', $ntrr->fecha ? \Carbon\Carbon::parse($ntrr->fecha)->format('Y-m-d') : '') }}" required>
-                            @if ($errors->has('fecha'))class="modal fade" id="editNtrrModal-{{ $ntrr->id }}" tabindex="-1" aria-labelledby="editNtrrModal-{{ $ntrr->id }}" aria-hidden="true">
+<div class="modal fade" id="editNtrrVaModal-{{ $ntrr->id }}" tabindex="-1" aria-labelledby="editNtrrVaModal-{{ $ntrr->id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editNtrrModal-{{ $ntrr->id }}">
+                <h5 class="modal-title" id="editNtrrVaModalLabel-{{ $ntrr->id }}">
                     <i class="bi bi-pencil text-warning"></i> Editar Negativa de Trámite Recurso de Revocatoria
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -17,13 +14,29 @@
                 @method('PUT')
                 <div class="modal-body">
                     <div class="row gx-3">
+
+                        <input type="hidden" name="audiencia_id" value="{{ $ntrr->audiencia_id }}">
+                        <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
+
                         <div class="col-md-6 mb-3">
-                            <label for="fecha" class="form-label">Fecha de Notificación</label>
-                            <input type="date" name="fecha" class="form-control" value="{{ date('Y-m-d', strtotime($ntrr->fecha)) }}" required>
-                            @if ($errors->has('fecha'))
+                            <label for="fecha_hora_notificacion" class="form-label">Fecha y Hora de Notificación</label>
+                            <input type="datetime-local" name="fecha_hora_notificacion" class="form-control" value="{{ $ntrr->fecha_hora_notificacion ? \Carbon\Carbon::parse($ntrr->fecha_hora_notificacion)->format('Y-m-d\TH:i') : '' }}" required>
+                            @if ($errors->has('fecha_hora_notificacion'))
                                 <span class="help-block opacity-7">
                                     <strong>
-                                        <font color="red">{{ $errors->first('fecha') }}</font>
+                                        <font color="red">{{ $errors->first('fecha_hora_notificacion') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="fecha_resolucion" class="form-label">Fecha de Resolución</label>
+                            <input type="date" name="fecha_resolucion" class="form-control" value="{{ $ntrr->fecha_resolucion ? \Carbon\Carbon::parse($ntrr->fecha_resolucion)->format('Y-m-d') : '' }}">
+                            @if ($errors->has('fecha_resolucion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('fecha_resolucion') }}</font>
                                     </strong>
                                 </span>
                             @endif
@@ -51,6 +64,9 @@
                                     </strong>
                                 </span>
                             @endif
+                            @if($ntrr->archivo)
+                                <small class="text-muted">Archivo actual: {{ $ntrr->archivo }}</small>
+                            @endif
                         </div>
 
                         <div class="col-md-6 mb-3">
@@ -76,9 +92,6 @@
                                 </span>
                             @endif
                         </div>
-
-                        <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
-                        <input type="hidden" name="audiencia_id" value="{{ $ntrr->audiencia_id }}">
                     </div>
                 </div>
                 <div class="modal-footer">

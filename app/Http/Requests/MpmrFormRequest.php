@@ -24,7 +24,8 @@ class MpmrFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha_hora' => 'required|date',
+            'fecha_hora' => 'required|date_format:Y-m-d\TH:i',
+            'fecha_resolucion' => 'nullable|date',
             'numero_resolucion' => 'required|string|max:255',
             'usuario_id' => 'required|exists:users,id',
             'audiencia_id' => 'required|exists:audiencias,id',

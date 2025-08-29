@@ -14,6 +14,8 @@ class RsatPa extends Model
     protected $fillable = [
         'numero_resolucion',
         'fecha',
+        'fecha_notificacion',
+        'fecha_resolucion',
         'usuario_id',
         'audiencia_pa_id',
         'archivo',
@@ -21,10 +23,15 @@ class RsatPa extends Model
         'observaciones',
         'numero_folios',
         'tipo_resolucion',
+        'tipo_resolucion_otro',
+        'plazo_revocatoria',
+        'plazo_revocatoria_otro',
     ];
 
     protected $casts = [
         'fecha' => 'date',
+        'fecha_notificacion' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con AudienciaPa

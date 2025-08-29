@@ -25,7 +25,8 @@ class NulidadFormRequest extends FormRequest
     {        $rules = [
             'audiencia_id' => 'required|exists:audiencias,id',
             'usuario_id' => 'required|exists:users,id',
-            'fecha' => 'required|date',
+            'fecha_hora_notificacion' => 'required|date',
+            'fecha_resolucion' => 'nullable|date',
             'numero_resolucion' => 'required|string|max:255',
             'observaciones' => 'nullable|string',
             'tipo_nulidad' => 'required|in:Absoluta,Relativa',

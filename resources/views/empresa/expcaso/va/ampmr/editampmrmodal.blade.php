@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="editAmpmrModal-{{ $ampmr->id }}" tabindex="-1" aria-labelledby="editAmpmrModal-{{ $ampmr->id }}" aria-hidden="true">
+<div class="modal fade" id="editAmpmrVaModal-{{ $ampmr->id }}" tabindex="-1" aria-labelledby="editAmpmrVaModal-{{ $ampmr->id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editAmpmrModal-{{ $ampmr->id }}">
+                <h5 class="modal-title" id="editAmpmrVaModal-{{ $ampmr->id }}">
                     <i class="bi bi-pencil text-warning"></i> Editar Atención Medidas Para Mejor Resolver
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -33,6 +33,18 @@
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('numero_documento') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="oficina_ea" class="form-label">Oficina o agencia donde fue presentada la Evacuación de Audiencia (EA)</label>
+                            <input type="text" name="oficina_ea" class="form-control" value="{{ $ampmr->oficina_ea }}">
+                            @if ($errors->has('oficina_ea'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_ea') }}</font>
                                     </strong>
                                 </span>
                             @endif

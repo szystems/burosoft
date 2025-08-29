@@ -40,6 +40,7 @@ use App\Http\Controllers\Empresa\PatRafController;
 use App\Http\Controllers\Empresa\PatActaAdministrativaController;
 use App\Http\Controllers\Empresa\PatExpedienteController;
 use App\Http\Controllers\Empresa\PatNulidadController;
+use App\Http\Controllers\Empresa\PatRctController;
 use App\Http\Controllers\Empresa\VaController;
 use App\Http\Controllers\Empresa\PaController;
 use App\Http\Controllers\Empresa\AudienciaController;
@@ -50,6 +51,9 @@ use App\Http\Controllers\Empresa\DpmrPaController;
 use App\Http\Controllers\Empresa\AdpmrPaController;
 use App\Http\Controllers\Empresa\AmpmrPaController;
 use App\Http\Controllers\Empresa\MpmrPaController;
+use App\Http\Controllers\Empresa\AceptacionController;
+use App\Http\Controllers\Empresa\AceptacionPaController;
+use App\Http\Controllers\Empresa\ConstanciaPagoController;
 use App\Http\Controllers\Empresa\EcPaController;
 use App\Http\Controllers\Empresa\NtrrPaController;
 use App\Http\Controllers\Empresa\NulidadPaController;
@@ -205,6 +209,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-pat-nulidad', [PatNulidadController::class, 'insert']);
     Route::put('update-pat-nulidad/{id}', [PatNulidadController::class, 'update']);
     Route::get('delete-pat-nulidad/{id}', [PatNulidadController::class, 'destroy']);
+    //PAT RCT (Resolución del Conflicto Tributario)
+    Route::post('insert-pat-rct', [PatRctController::class, 'insert']);
+    Route::put('update-pat-rct/{id}', [PatRctController::class, 'update']);
+    Route::get('delete-pat-rct/{id}', [PatRctController::class, 'destroy']);
 
     //VA
     Route::get('show-va/{id}', [VaController::class, 'show']);
@@ -247,6 +255,11 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-ampmr-pa', [AmpmrPaController::class, 'insert'])->name('insert.ampmr.pa');
     Route::put('update-ampmr-pa/{id}', [AmpmrPaController::class, 'update'])->name('update.ampmr.pa');
     Route::delete('delete-ampmr-pa/{id}', [AmpmrPaController::class, 'destroy'])->name('delete.ampmr.pa');
+
+    // Rutas Aceptación PA
+    Route::post('insert-aceptacion-pa', [AceptacionPaController::class, 'insert'])->name('insert.aceptacion.pa');
+    Route::put('update-aceptacion-pa/{id}', [AceptacionPaController::class, 'update'])->name('update.aceptacion.pa');
+    Route::delete('delete-aceptacion-pa/{id}', [AceptacionPaController::class, 'destroy'])->name('delete.aceptacion.pa');
 
     // Rutas MPMR PA
     Route::post('insert-mpmr-pa', [MpmrPaController::class, 'insert'])->name('insert.mpmr.pa');
@@ -381,6 +394,16 @@ Route::middleware(['auth'])->group(function () {
     Route::post('insert-ampmr', [App\Http\Controllers\Empresa\AmpmrController::class, 'insert'])->name('insert-ampmr');
     Route::put('update-ampmr/{id}', [App\Http\Controllers\Empresa\AmpmrController::class, 'update'])->name('update-ampmr');
     Route::delete('delete-ampmr/{id}', [App\Http\Controllers\Empresa\AmpmrController::class, 'destroy'])->name('delete-ampmr');
+
+    // Rutas para Aceptación
+    Route::post('insert-aceptacion', [AceptacionController::class, 'insert'])->name('insert-aceptacion');
+    Route::put('update-aceptacion/{id}', [AceptacionController::class, 'update'])->name('update-aceptacion');
+    Route::delete('delete-aceptacion/{id}', [AceptacionController::class, 'destroy'])->name('delete-aceptacion');
+
+    // Rutas para Constancia de Pago
+    Route::post('insert-constancia-pago', [ConstanciaPagoController::class, 'insert'])->name('insert-constancia-pago');
+    Route::put('update-constancia-pago/{id}', [ConstanciaPagoController::class, 'update'])->name('update-constancia-pago');
+    Route::delete('delete-constancia-pago/{id}', [ConstanciaPagoController::class, 'destroy'])->name('delete-constancia-pago');
 
     // Rutas para Nulidad
     Route::post('insert-nulidad', [NulidadController::class, 'insert'])->name('insert-nulidad');

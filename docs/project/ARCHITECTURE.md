@@ -1,23 +1,35 @@
 # ARCHITECTURE - Arquitectura del Sistema
-## BuroSoft Sistema de Gestión Legal y Contable
+## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 2.0  
-**Fecha**: 21 de agosto de 2025  
+**Versión**: 3.0  
+**Fecha**: 29 de agosto de 2025  
 **Autor**: Equipo SZSystems  
+**Estado**: **SISTEMA EN PRODUCCIÓN - ARQUITECTURA ESTABLE**
 
 ---
 
 ## 1. Resumen Arquitectónico
 
-BuroSoft está construido como una aplicación web monolítica multi-tenant utilizando el framework Laravel 8, con arquitectura MVC y patrones de diseño que garantizan escalabilidad, mantenibilidad y seguridad.
+BUROSOFT está construido como una aplicación web monolítica multi-tenant **completamente operativa** utilizando Laravel 8, con arquitectura MVC robusta, base de datos sincronizada entre desarrollo y producción, y sistema de modales JavaScript sin conflictos.
 
-### 1.1 Principios Arquitectónicos
+### 1.1 Principios Arquitectónicos Implementados ✅
 
-- **Separación de Responsabilidades**: Cada capa tiene una responsabilidad específica
-- **Multi-tenancy**: Aislamiento completo de datos entre empresas
-- **Modularidad**: Organización por módulos funcionales (Admin, Empresa, Frontend)
-- **Reutilización**: Traits, Services y Helpers para lógica común
-- **Seguridad**: Middleware y validación en cada capa
+- ✅ **Separación de Responsabilidades**: Cada capa con responsabilidad específica
+- ✅ **Multi-tenancy**: Aislamiento completo de datos entre empresas
+- ✅ **Modularidad**: Organización por módulos VA/PA/PAT completamente funcionales
+- ✅ **Reutilización**: Traits, Services y Helpers implementados
+- ✅ **Seguridad**: Middleware y validación en cada capa operativa
+- ✅ **Escalabilidad**: Sistema preparado para crecimiento en iPage hosting
+
+### 1.2 Estado de Despliegue Actual
+
+| Entorno | Estado | Base de Datos | Funcionalidad |
+|---------|--------|---------------|---------------|
+| **Desarrollo Local** | ✅ Operativo | 28 migraciones consolidadas | 100% funcional |
+| **Producción iPage** | ✅ Desplegado | Sincronizada | 100% funcional |
+| **Sistema VA** | ✅ Completo | Tablas sincronizadas | Sin problemas |
+| **Sistema PA** | ✅ Completo | Tablas sincronizadas | Sin problemas |
+| **JavaScript/Modales** | ✅ Sin conflictos | - | Naming único |
 
 ---
 
@@ -28,25 +40,26 @@ BuroSoft está construido como una aplicación web monolítica multi-tenant util
 │                    NAVEGADOR WEB                            │
 │                 (Chrome, Firefox, Edge)                     │
 └─────────────────────┬───────────────────────────────────────┘
-                     │ HTTP/HTTPS
+                     │ HTTPS (Producción iPage)
 ┌─────────────────────▼───────────────────────────────────────┐
 │                 SERVIDOR WEB                                │
-│              (Apache/Nginx + PHP 8.0)                      │
+│              (iPage Apache + PHP 7.4+)                     │
 └─────────────────────┬───────────────────────────────────────┘
                      │
 ┌─────────────────────▼───────────────────────────────────────┐
 │                 LARAVEL 8 APPLICATION                       │
 │  ┌─────────────────────────────────────────────────────┐   │
-│  │                 FRONTEND LAYER                      │   │
-│  │              (Blade Templates + JS)                 │   │
+│  │            FRONTEND LAYER ✅ OPERATIVO              │   │
+│  │        (Blade Templates + Bootstrap 5 + JS)        │   │
+│  │        Modal System sin conflictos naming          │   │
 │  └─────────────────────┬───────────────────────────────┘   │
 │  ┌─────────────────────▼───────────────────────────────┐   │
-│  │                ROUTING LAYER                        │   │
-│  │               (web.php routes)                      │   │
+│  │             ROUTING LAYER ✅ COMPLETO               │   │
+│  │        (web.php con rutas VA/PA/PAT)                │   │
 │  └─────────────────────┬───────────────────────────────┘   │
 │  ┌─────────────────────▼───────────────────────────────┐   │
-│  │              MIDDLEWARE LAYER                       │   │
-│  │          (Auth, CSRF, Throttle, etc.)               │   │
+│  │           MIDDLEWARE LAYER ✅ SEGURO                │   │
+│  │          (Auth, CSRF, Validation, etc.)             │   │
 │  └─────────────────────┬───────────────────────────────┘   │
 │  ┌─────────────────────▼───────────────────────────────┐   │
 │  │             CONTROLLER LAYER                        │   │
@@ -114,21 +127,25 @@ pat_expedientes
 pat_nulidads
 ```
 
-#### **Sistema VA (Violaciones Administrativas)**
+#### **Sistema VA (Violaciones Administrativas)** *(Actualizado)*
 ```sql
--- Flujo VA completo
-audiencias → evs → pps → dpmrs → adpmrs → resolucions → 
+-- Flujo VA completo con mejoras agosto 2025
+audiencias → evs* → pps* → dpmrs → adpmrs* → resolucions → 
 rrs → ntrrs → ocursos → ros → mpmrs → ampmrs → 
 rtributas → nulidades → ecs
+
+-- * Incluyen campo oficina_presentacion (nullable)
 ```
 
-#### **Sistema PA (Procesos Administrativos)**
+#### **Sistema PA (Procesos Administrativos)** *(Actualizado)*
 ```sql
--- Duplicación del flujo VA con sufijo _pa
-audiencias_pa → evs_pa → pps_pa → dpmrs_pa → adpmrs_pa → 
+-- Duplicación del flujo VA con sufijo _pa + campo oficina_presentacion
+audiencias_pa → evs_pa* → pps_pa* → dpmrs_pa → adpmrs_pa* → 
 resolucions_pa → rsat_pa → rrs_pa → ntrrs_pa → ocursos_pa → 
 ros_pa → mpmrs_pa → ampmrs_pa → rtributas_pa → 
 nulidades_pa → ecs_pa
+
+-- * Incluyen campo oficina_presentacion (nullable)
 ```
 
 ### 3.2 Relaciones Clave
@@ -260,7 +277,7 @@ database/factories/
 - ✅ Performance óptima
 - ✅ Mantenimiento específico por flujo
 - ❌ Duplicación de código (mitigado con traits)
-- ❌ Duplicación de migraciones
+- ✅ **RESUELTO (29 ago 2025)**: Migraciones consolidadas de 92+ a 28 archivos
 
 ### 5.4 ADR-004: Sistema de Auditoría
 **Fecha**: 2024-05-01  
@@ -491,6 +508,35 @@ stages:
 
 ---
 
+## 12. Architecture Decision Records (ADRs)
+
+### ADR-001: Campo oficina_presentacion en módulos EA/PP/ADPMR
+**Fecha**: 22 de agosto de 2025  
+**Estado**: Aceptado  
+
+**Contexto**: Los módulos EA (Evacuación de Audiencia), PP (Período de Prueba) y ADPMR (Atención de Diligencias Para Mejor Resolver) necesitan registrar la oficina o agencia donde fueron presentados los documentos.
+
+**Decisión**: Agregar campo `oficina_presentacion` (varchar(255), nullable) a las tablas:
+- evs, evs_pa
+- pps, pps_pa  
+- adpmrs, adpmrs_pa
+
+**Consecuencias**:
+- ✅ Permite trazabilidad completa de documentos
+- ✅ Consistencia entre sistemas VA y PA
+- ✅ Campo opcional para retrocompatibilidad
+- ✅ Formularios y vistas actualizadas automáticamente
+- ✅ **COMPLETADO (29 ago 2025)**: Campo incluido en consolidación de migraciones
+
+**Implementación COMPLETADA**: 
+- ✅ Consolidación: Campos incluidos en 28 migraciones consolidadas
+- ✅ Validación: nullable|string|max:255 implementada
+- ✅ UI: Campo en modales de agregar/editar funcionando
+- ✅ Listados: Nueva columna "Oficina Presentación" operativa
+
+---
+
 **Documento técnico aprobado por**: Arquitecto de Software SZSystems  
-**Última actualización**: 21 de agosto de 2025  
-**Próxima revisión**: 21 de noviembre de 2025
+**Última actualización**: 29 de agosto de 2025  
+**Consolidación DB**: ✅ COMPLETADA - 28 migraciones optimizadas  
+**Próxima revisión**: 29 de noviembre de 2025

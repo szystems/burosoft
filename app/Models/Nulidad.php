@@ -12,7 +12,8 @@ class Nulidad extends Model
     protected $table = 'nulidades';    protected $fillable = [
         'audiencia_id',
         'usuario_id',
-        'fecha',
+        'fecha_hora_notificacion',
+        'fecha_resolucion',
         'numero_resolucion',
         'archivo',
         'tipo_archivo',
@@ -22,7 +23,8 @@ class Nulidad extends Model
     ];
 
     protected $dates = [
-        'fecha',
+        'fecha_hora_notificacion',
+        'fecha_resolucion',
         'created_at',
         'updated_at',
     ];

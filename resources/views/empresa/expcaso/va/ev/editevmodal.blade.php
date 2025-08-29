@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="editEvModal-{{ $ev->id }}" tabindex="-1" aria-labelledby="editEvModal-{{ $ev->id }}" aria-hidden="true">
+<div class="modal fade" id="editEvVaModal-{{ $ev->id }}" tabindex="-1" aria-labelledby="editEvVaModal-{{ $ev->id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editEvModal-{{ $ev->id }}">
+                <h5 class="modal-title" id="editEvVaModalLabel-{{ $ev->id }}">
                     <i class="bi bi-pencil text-warning"></i> Editar Evacuación de Audiencia
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -57,6 +57,18 @@
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('observaciones') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="oficina_presentacion" class="form-label">Oficina o Agencia de Presentación</label>
+                            <input type="text" name="oficina_presentacion" class="form-control" value="{{ $ev->oficina_presentacion }}" placeholder="Ej: Oficina Central, Agencia Zona 1, etc.">
+                            @if ($errors->has('oficina_presentacion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_presentacion') }}</font>
                                     </strong>
                                 </span>
                             @endif

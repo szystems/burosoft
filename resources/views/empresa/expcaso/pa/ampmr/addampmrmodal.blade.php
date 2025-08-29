@@ -42,6 +42,18 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
+                            <label for="oficina_ea" class="form-label">Oficina o agencia donde fue presentada la Evacuación de Audiencia (EA)</label>
+                            <input type="text" name="oficina_ea" class="form-control" value="{{ old('oficina_ea') }}">
+                            @if ($errors->has('oficina_ea'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_ea') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
                             <label for="archivo" class="form-label">Archivo</label>
                             <input type="file" name="archivo" class="form-control" required>
                             @if ($errors->has('archivo'))

@@ -24,12 +24,15 @@ class AudienciaFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'pat_id'           => 'required|integer',
-            'usuario_id'       => 'required|integer',
-            'numero_audiencia' => 'required|string',
-            'tipo_audiencia'   => 'required|in:AEC,AIR,AS,AA',
-            'fecha'            => 'required|date',
-            'impuestos'        => 'required|numeric',
+            'pat_id'             => 'required|integer',
+            'usuario_id'         => 'required|integer',
+            'numero_audiencia'   => 'required|string',
+            'tipo_audiencia'     => 'required|in:AEC,AIR,AS,AA',
+            'fecha'              => 'required|date',
+            'impuestos'          => 'required|numeric',
+            'fecha_notificacion' => 'nullable|date',
+            'plazo_evacuar'      => 'nullable|string|max:255',
+            'plazo_evacuar_otro' => 'nullable|string|max:255|required_if:plazo_evacuar,Otro',
         ];
     }
 }

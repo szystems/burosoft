@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Empresa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\RtributaPaFormRequest;
 use App\Models\RtributaPa;
 use App\Models\AudienciaPa;
 use App\Models\Bitacora;
@@ -12,26 +13,9 @@ use Illuminate\Support\Facades\File;
 
 class RtributaPaController extends Controller
 {
-    public function insert(Request $request)
+    public function insert(RtributaPaFormRequest $request)
     {
-        $request->validate([
-            'audiencia_pa_id' => 'required',
-            'fecha' => 'required|date',
-            'numero_resolucion' => 'required|string|max:255',
-            'tipo_resolucion' => 'required|in:total a favor,total en contra,parcial,nulidad,penal',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
-
-        $data = $request->only([
-            'audiencia_pa_id',
-            'fecha',
-            'numero_resolucion',
-            'tipo_resolucion',
-            'observaciones',
-            'numero_folios',
-        ]);
+        $data = $request->validated();
         $data['usuario_id'] = Auth::user()->id;
 
         // Manejo de archivo
@@ -58,24 +42,12 @@ class RtributaPaController extends Controller
         return redirect('show-audiencia-pa/' . $data['audiencia_pa_id'])->with('status', 'Resolución Tributaria PA creada exitosamente');
     }
 
-    public function update(Request $request, $id)
+    public function update(RtributaPaFormRequest $request, $id)
     {
-        $request->validate([
-            'fecha' => 'required|date',
-            'numero_resolucion' => 'required|string|max:255',
-            'tipo_resolucion' => 'required|in:total a favor,total en contra,parcial,nulidad,penal',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
+        $data = $request->validated();
+        $data['usuario_id'] = Auth::user()->id;
 
         $rtributaPa = RtributaPa::findOrFail($id);
-        $rtributaPa->usuario_id = Auth::user()->id;
-        $rtributaPa->fecha = $request->fecha;
-        $rtributaPa->numero_resolucion = $request->numero_resolucion;
-        $rtributaPa->tipo_resolucion = $request->tipo_resolucion;
-        $rtributaPa->observaciones = $request->observaciones;
-        $rtributaPa->numero_folios = $request->numero_folios;
 
         // Manejo de archivo
         if ($request->hasFile('archivo')) {
@@ -87,11 +59,14 @@ class RtributaPaController extends Controller
             $file = $request->file('archivo');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/pa/rtributa'), $filename);
-            $rtributaPa->archivo = $filename;
-            $rtributaPa->tipo_archivo = $file->getClientOriginalExtension();
+            $data['archivo'] = $filename;
+            $data['tipo_archivo'] = $file->getClientOriginalExtension();
+        } else {
+            unset($data['archivo']);
+            unset($data['tipo_archivo']);
         }
 
-        $rtributaPa->save();
+        $rtributaPa->update($data);
 
         // Insertar en Bitácora
         Bitacora::create([

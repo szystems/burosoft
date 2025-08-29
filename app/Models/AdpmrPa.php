@@ -20,6 +20,7 @@ class AdpmrPa extends Model
         'tipo_archivo',
         'observaciones',
         'numero_folios',
+        'oficina_presentacion',
     ];
 
     protected $casts = [

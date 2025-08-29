@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Empresa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\RrPaFormRequest;
 use App\Models\RrPa;
 use App\Models\AudienciaPa;
 use App\Models\Bitacora;
@@ -12,35 +13,20 @@ use Illuminate\Support\Facades\File;
 
 class RrPaController extends Controller
 {
-    public function insert(Request $request)
+    public function insert(RrPaFormRequest $request)
     {
-        $request->validate([
-            'audiencia_pa_id' => 'required',
-            'fecha_hora_presentacion' => 'required|date',
-            'numero_documento' => 'required|string|max:255',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
+        $data = $request->validated();
+        $data['usuario_id'] = Auth::user()->id;
 
-        $rrPa = new RrPa();
-        $rrPa->audiencia_pa_id = $request->audiencia_pa_id;
-        $rrPa->usuario_id = Auth::user()->id;
-        $rrPa->fecha_hora_presentacion = $request->fecha_hora_presentacion;
-        $rrPa->numero_documento = $request->numero_documento;
-        $rrPa->observaciones = $request->observaciones;
-        $rrPa->numero_folios = $request->numero_folios;
-
-        // Manejo de archivo
         if ($request->hasFile('archivo')) {
             $file = $request->file('archivo');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/pa/rr'), $filename);
-            $rrPa->archivo = $filename;
-            $rrPa->tipo_archivo = $file->getClientOriginalExtension();
+            $data['archivo'] = $filename;
+            $data['tipo_archivo'] = $file->getClientOriginalExtension();
         }
 
-        $rrPa->save();
+        $rrPa = RrPa::create($data);
 
         // Insertar en Bitácora
         Bitacora::create([
@@ -54,27 +40,16 @@ class RrPaController extends Controller
                              ', Expediente: ' . $rrPa->audienciaPa->pat->no_expediente
         ]);
 
-        return redirect('show-audiencia-pa/' . $request->audiencia_pa_id)->with('status', 'Recurso de Revocatoria PA creado exitosamente');
+        return redirect('show-audiencia-pa/' . $data['audiencia_pa_id'])->with('status', 'Recurso de Revocatoria PA creado exitosamente');
     }
 
-    public function update(Request $request, $id)
+    public function update(RrPaFormRequest $request, $id)
     {
-        $request->validate([
-            'fecha_hora_presentacion' => 'required|date',
-            'numero_documento' => 'required|string|max:255',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
+        $data = $request->validated();
+        $data['usuario_id'] = Auth::user()->id;
 
         $rrPa = RrPa::findOrFail($id);
-        $rrPa->usuario_id = Auth::user()->id;
-        $rrPa->fecha_hora_presentacion = $request->fecha_hora_presentacion;
-        $rrPa->numero_documento = $request->numero_documento;
-        $rrPa->observaciones = $request->observaciones;
-        $rrPa->numero_folios = $request->numero_folios;
 
-        // Manejo de archivo
         if ($request->hasFile('archivo')) {
             // Eliminar archivo anterior si existe
             if ($rrPa->archivo && File::exists(public_path('uploads/pa/rr/' . $rrPa->archivo))) {
@@ -84,11 +59,14 @@ class RrPaController extends Controller
             $file = $request->file('archivo');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/pa/rr'), $filename);
-            $rrPa->archivo = $filename;
-            $rrPa->tipo_archivo = $file->getClientOriginalExtension();
+            $data['archivo'] = $filename;
+            $data['tipo_archivo'] = $file->getClientOriginalExtension();
+        } else {
+            unset($data['archivo']);
+            unset($data['tipo_archivo']);
         }
 
-        $rrPa->save();
+        $rrPa->update($data);
 
         // Insertar en Bitácora
         Bitacora::create([

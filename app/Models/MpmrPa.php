@@ -13,6 +13,7 @@ class MpmrPa extends Model
 
     protected $fillable = [
         'fecha_hora',
+        'fecha_resolucion',
         'numero_resolucion',
         'usuario_id',
         'audiencia_pa_id',
@@ -24,6 +25,7 @@ class MpmrPa extends Model
 
     protected $casts = [
         'fecha_hora' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con AudienciaPa

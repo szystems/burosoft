@@ -1,11 +1,11 @@
-<div class="modal fade" id="deletePpModal-{{ $pp->id }}" tabindex="-1" aria-labelledby="deletePpModal-{{ $pp->id }}" aria-hidden="true">
+<div class="modal fade" id="deletePpVaModal-{{ $pp->id }}" tabindex="-1" aria-labelledby="deletePpVaModal-{{ $pp->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-pp/'.$pp->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deletePpModal-{{ $pp->id }}">
+                    <h5 class="modal-title h4" id="deletePpVaModal-{{ $pp->id }}">
                         Eliminar Período de Prueba:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

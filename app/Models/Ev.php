@@ -17,7 +17,8 @@ class Ev extends Model
         'archivo',
         'tipo_archivo',
         'observaciones',
-        'numero_folios'
+        'numero_folios',
+        'oficina_presentacion'
     ];
 
     public function usuario()

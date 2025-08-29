@@ -1,11 +1,11 @@
-<div class="modal fade" id="deleteResolucionModal-{{ $resolucion->id }}" tabindex="-1" aria-labelledby="deleteResolucionModal-{{ $resolucion->id }}" aria-hidden="true">
+<div class="modal fade" id="deleteResolucionVaModal-{{ $resolucion->id }}" tabindex="-1" aria-labelledby="deleteResolucionVaModal-{{ $resolucion->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-resolucion/'.$resolucion->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deleteResolucionModal-{{ $resolucion->id }}">
+                    <h5 class="modal-title h4" id="deleteResolucionVaModal-{{ $resolucion->id }}">
                         Eliminar R-SAT:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

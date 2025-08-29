@@ -1,11 +1,11 @@
-<div class="modal fade" id="deleteAdpmrModal-{{ $adpmr->id }}" tabindex="-1" aria-labelledby="deleteAdpmrModal-{{ $adpmr->id }}" aria-hidden="true">
+<div class="modal fade" id="deleteAdpmrVaModal-{{ $adpmr->id }}" tabindex="-1" aria-labelledby="deleteAdpmrVaModal-{{ $adpmr->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-adpmr/'.$adpmr->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deleteAdpmrModal-{{ $adpmr->id }}">
+                    <h5 class="modal-title h4" id="deleteAdpmrVaModal-{{ $adpmr->id }}">
                         Eliminar Atención DPMR:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

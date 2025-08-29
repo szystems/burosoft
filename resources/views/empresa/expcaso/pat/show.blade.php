@@ -375,8 +375,16 @@
 
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
-                                                                        <a class="nav-link" id="tab-vp" data-bs-toggle="tab" href="#vp" role="tab"
-                                                                            aria-controls="vp" aria-selected="false">VP</a>
+                                                                        <a class="nav-link" href="#" onclick="alert('CAT - En desarrollo')">CAT</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CSJ - En desarrollo')">CSJ</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CC - En desarrollo')">CC</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('VP - En desarrollo')">VP</a>
                                                                     </li>
                                                                 </ul>
                                                                 <div class="tab-content" id="customTabContent">
@@ -436,6 +444,18 @@
                                                                                                 <a class="nav-link" id="tab-raf" data-bs-toggle="tab" href="#raf" role="tab"
                                                                                                     aria-controls="raf" aria-selected="false">Providencias de urgencia (PRAF)
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $rafs->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-rct" data-bs-toggle="tab" href="#rct" role="tab"
+                                                                                                    aria-controls="rct" aria-selected="false">RCT
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $rcts->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-constancia-pago" data-bs-toggle="tab" href="#constancia-pago" role="tab"
+                                                                                                    aria-controls="constancia-pago" aria-selected="false">Constancia de Pago
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $constanciasPago->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
                                                                                         </ul>
@@ -1392,6 +1412,194 @@
                                                                                                             </div>
                                                                                                         @endif
                                                                                                         {{-- {{ $Movimientos->links() }} --}}
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="rct" role="tabpanel">
+                                                                                                <div class="row gx-3">
+
+                                                                                                    <h4>RCT (Resolución del Conflicto Tributario)</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                                                                            data-bs-target="#addRctModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar RCT
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.pat.rct.addrctmodal')
+
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td align="center">Fecha Citación</td>
+                                                                                                                    <td align="center">Medio Citación</td>
+                                                                                                                    <td align="center">Fecha Atención</td>
+                                                                                                                    <td align="center">Lugar Celebración</td>
+                                                                                                                    <td align="center">Suscribe Acta</td>
+                                                                                                                    <td align="center">Usuario</td>
+                                                                                                                    <td align="center">Archivos</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach ($rcts as $rct)
+                                                                                                                <tr>
+                                                                                                                    <td align="center">
+                                                                                                                        @if ($cuenta->estado == 1)
+                                                                                                                            <button type="button" class="btn btn-warning  m-1" data-bs-toggle="modal"
+                                                                                                                                data-bs-target="#editarRctModal{{ $rct->id }}">
+                                                                                                                                <i class="bi bi-pencil"></i>
+                                                                                                                            </button>
+
+                                                                                                                            @if (Auth::user()->role_as == 0)
+                                                                                                                                <button type="button" class="btn btn-danger  m-1" data-bs-toggle="modal" data-bs-target="#deleteRctModal-{{ $rct->id }}">
+                                                                                                                                    <i class="bi bi-trash-fill text-white"></i>
+                                                                                                                                </button>
+                                                                                                                            @endif
+
+                                                                                                                            @include('empresa.expcaso.pat.rct.editrctmodal')
+                                                                                                                            @include('empresa.expcaso.pat.rct.deleterctmodal')
+                                                                                                                        @endif
+                                                                                                                    </td>
+                                                                                                                    <td align="center">
+                                                                                                                        @php
+                                                                                                                            $fecha_citacion = date("d/m/Y", strtotime($rct->fecha_citacion));
+                                                                                                                        @endphp
+                                                                                                                        <p><font class="text-info">{{ $fecha_citacion }}</font></p>
+                                                                                                                    </td>
+                                                                                                                    <td align="center">
+                                                                                                                        <p>
+                                                                                                                            {{ $rct->medio_citacion }}
+                                                                                                                            @if ($rct->medio_citacion == "Otro")
+                                                                                                                                <br>
+                                                                                                                                {{ $rct->medio_citacion_otro }}
+                                                                                                                            @endif
+                                                                                                                        </p>
+                                                                                                                    </td>
+                                                                                                                    <td align="center">
+                                                                                                                        @php
+                                                                                                                            $fecha_atencion = date("d/m/Y", strtotime($rct->fecha_atencion));
+                                                                                                                        @endphp
+                                                                                                                        <p><font class="text-info">{{ $fecha_atencion }}</font></p>
+                                                                                                                    </td>
+                                                                                                                    <td align="center">
+                                                                                                                        <p>{{ $rct->lugar_celebracion }}</p>
+                                                                                                                    </td>
+                                                                                                                    <td align="center">
+                                                                                                                        <p>
+                                                                                                                            @if($rct->suscribe_acta == 'Si')
+                                                                                                                                <span class="badge bg-success">{{ $rct->suscribe_acta }}</span>
+                                                                                                                            @else
+                                                                                                                                <span class="badge bg-secondary">{{ $rct->suscribe_acta }}</span>
+                                                                                                                            @endif
+                                                                                                                        </p>
+                                                                                                                    </td>
+                                                                                                                    <td align="center">
+                                                                                                                        @php
+                                                                                                                            $usuario = \App\Models\User::find( $rct->usuario_id );
+                                                                                                                        @endphp
+                                                                                                                        <p>{{ $pat->usuario->name }}</p>
+                                                                                                                    </td>
+                                                                                                                    <td align="center">
+                                                                                                                        @if($rct->archivo_acta)
+                                                                                                                            <strong><a href="{{ asset('assets/uploads/pat/rcts/'.$rct->archivo_acta) }}" target="_blank" class="text-blue">Acta</a></strong><br>
+                                                                                                                        @endif
+                                                                                                                        @if($rct->archivo_recibo_pago)
+                                                                                                                            <strong><a href="{{ asset('assets/uploads/pat/rcts/'.$rct->archivo_recibo_pago) }}" target="_blank" class="text-green">Recibo</a></strong>
+                                                                                                                        @endif
+                                                                                                                    </td>
+                                                                                                                </tr>
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                        @if ($rcts->count() == 0)
+                                                                                                            <div class="alert alert-warning text-white" role="alert">
+                                                                                                                <ul align="center">
+                                                                                                                    <p>No se han ingresado RCT's.</p>
+                                                                                                                </ul>
+                                                                                                            </div>
+                                                                                                        @endif
+                                                                                                    </div>
+
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="constancia-pago" role="tabpanel">
+                                                                                                <div class="row gx-3">
+                                                                                                    <h4>Constancia de Pago</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addConstanciaPagoModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Constancia de Pago
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.pat.constancia-pago.addconstanciapagomodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha de Pago</td>
+                                                                                                                    <td>Identificación</td>
+                                                                                                                    <td>Descripción</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($constanciasPago as $constancia)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        <li>
+                                                                                                                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editConstanciaPagoModal"
+                                                                                                                                                data-id="{{ $constancia->id }}"
+                                                                                                                                                data-fecha_pago="{{ $constancia->fecha_pago ? $constancia->fecha_pago->format('Y-m-d') : '' }}"
+                                                                                                                                                data-identificacion="{{ $constancia->identificacion }}"
+                                                                                                                                                data-descripcion="{{ $constancia->descripcion }}">
+                                                                                                                                                <i class="bi bi-pencil-fill text-warning"></i> Editar
+                                                                                                                                            </a>
+                                                                                                                                        </li>
+                                                                                                                                        @if (Auth::user()->role_as == 0)
+                                                                                                                                            <li>
+                                                                                                                                                <a type="button" class="btn bg-gradient-danger" data-bs-toggle="modal" data-bs-target="#deleteConstanciaPagoModal-{{ $constancia->id }}">
+                                                                                                                                                    <i class="bi bi-trash-fill text-danger"></i> Eliminar
+                                                                                                                                                </a>
+                                                                                                                                            </li>
+                                                                                                                                        @endif
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ \Carbon\Carbon::parse($constancia->fecha_pago)->format('d/m/Y') }}</strong>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $constancia->identificacion }}</td>
+                                                                                                                        <td>{{ $constancia->descripcion ?? 'N/A' }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/constancia-pagos/' . $constancia->archivo) }}" target="_blank"><strong class="text-primary">{{ $constancia->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $constancia->usuario->name ?? 'N/A' }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.pat.constancia-pago.deleteconstanciapagomodal')
+                                                                                                                    @include('empresa.expcaso.pat.constancia-pago.editconstanciapagomodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                        @if ($constanciasPago->count() == 0)
+                                                                                                            <div class="alert alert-warning text-white" role="alert">
+                                                                                                                <ul align="center">
+                                                                                                                    <p>No se han ingresado constancias de pago.</p>
+                                                                                                                </ul>
+                                                                                                            </div>
+                                                                                                        @endif
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>

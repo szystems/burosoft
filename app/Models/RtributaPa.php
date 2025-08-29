@@ -12,9 +12,13 @@ class RtributaPa extends Model
     protected $table = 'rtributas_pa';
 
     protected $fillable = [
-        'fecha',
+        'fecha_hora_notificacion',
         'numero_resolucion',
         'tipo_resolucion',
+        'tipo_resolucion_otro',
+        'fecha_resolucion',
+        'plazo_cat',
+        'plazo_cat_otro',
         'archivo',
         'tipo_archivo',
         'usuario_id',
@@ -24,7 +28,8 @@ class RtributaPa extends Model
     ];
 
     protected $casts = [
-        'fecha' => 'date',
+        'fecha_hora_notificacion' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con AudienciaPa

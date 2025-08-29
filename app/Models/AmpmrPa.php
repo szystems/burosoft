@@ -14,6 +14,7 @@ class AmpmrPa extends Model
     protected $fillable = [
         'fecha_hora_presentacion',
         'numero_documento',
+        'oficina_ea',
         'usuario_id',
         'audiencia_pa_id',
         'archivo',

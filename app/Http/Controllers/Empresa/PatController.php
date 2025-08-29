@@ -16,6 +16,8 @@ use App\Models\PatProvidencia;
 use App\Models\PatActaAdministrativa;
 use App\Models\PatRaf;
 use App\Models\PatNulidad;
+use App\Models\PatRct;
+use App\Models\ConstanciaPago;
 use App\Models\Audiencia;
 use App\Models\Cuenta;
 use App\Models\Config;
@@ -84,10 +86,12 @@ class PatController extends Controller
         $actasadministrativas = PatActaAdministrativa::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $rafs = PatRaf::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $nulidades = PatNulidad::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+        $rcts = PatRct::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
+        $constanciasPago = ConstanciaPago::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $patscount = Pat::where('cuenta_id', $cuenta->id)->count();
         $audiencias = Audiencia::where('pat_id', $id)->paginate(10);
 
-        return view('empresa.expcaso.pat.show', compact('pat', 'patscount','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','providencias','actasadministrativas','rafs','nulidades','audiencias'));
+        return view('empresa.expcaso.pat.show', compact('pat', 'patscount','cuenta','config','nombramientos','notificaciones','requerimientos','expedientes','atencionrequerimientos','providencias','actasadministrativas','rafs','nulidades','rcts','constanciasPago','audiencias'));
     }
 
     public function insert(PatFormRequest $request)

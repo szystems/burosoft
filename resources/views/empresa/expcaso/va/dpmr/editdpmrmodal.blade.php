@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="editDpmrModal-{{ $dpmr->id }}" tabindex="-1" aria-labelledby="editDpmrModal-{{ $dpmr->id }}" aria-hidden="true">
+<div class="modal fade" id="editDpmrVaModal-{{ $dpmr->id }}" tabindex="-1" aria-labelledby="editDpmrVaModal-{{ $dpmr->id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editDpmrModal-{{ $dpmr->id }}">
+                <h5 class="modal-title" id="editDpmrVaModal-{{ $dpmr->id }}">
                     <i class="bi bi-pencil text-warning"></i> Editar Diligencia Para Mejor Resolver
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

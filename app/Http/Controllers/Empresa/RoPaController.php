@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Empresa;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\RoPaFormRequest;
 use App\Models\RoPa;
 use App\Models\AudienciaPa;
 use App\Models\Bitacora;
@@ -12,37 +12,20 @@ use Illuminate\Support\Facades\File;
 
 class RoPaController extends Controller
 {
-    public function insert(Request $request)
+    public function insert(RoPaFormRequest $request)
     {
-        $request->validate([
-            'audiencia_pa_id' => 'required',
-            'fecha' => 'required|date',
-            'numero_resolucion' => 'required|string|max:255',
-            'tipo_resolucion' => 'required|string',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
+        $data = $request->validated();
+        $data['usuario_id'] = Auth::user()->id;
 
-        $roPa = new RoPa();
-        $roPa->audiencia_pa_id = $request->audiencia_pa_id;
-        $roPa->usuario_id = Auth::user()->id;
-        $roPa->fecha = $request->fecha;
-        $roPa->numero_resolucion = $request->numero_resolucion;
-        $roPa->tipo_resolucion = $request->tipo_resolucion;
-        $roPa->observaciones = $request->observaciones;
-        $roPa->numero_folios = $request->numero_folios;
-
-        // Manejo de archivo
         if ($request->hasFile('archivo')) {
             $file = $request->file('archivo');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/pa/ro'), $filename);
-            $roPa->archivo = $filename;
-            $roPa->tipo_archivo = $file->getClientOriginalExtension();
+            $data['archivo'] = $filename;
+            $data['tipo_archivo'] = $file->getClientOriginalExtension();
         }
 
-        $roPa->save();
+        $roPa = RoPa::create($data);
 
         // Insertar en Bitácora
         Bitacora::create([
@@ -59,24 +42,12 @@ class RoPaController extends Controller
         return redirect('show-audiencia-pa/' . $request->audiencia_pa_id)->with('status', 'Resolución de Ocurso PA creado exitosamente');
     }
 
-    public function update(Request $request, $id)
+    public function update(RoPaFormRequest $request, $id)
     {
-        $request->validate([
-            'fecha' => 'required|date',
-            'numero_resolucion' => 'required|string|max:255',
-            'tipo_resolucion' => 'required|string',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
+        $data = $request->validated();
+        $data['usuario_id'] = Auth::user()->id;
 
         $roPa = RoPa::findOrFail($id);
-        $roPa->usuario_id = Auth::user()->id;
-        $roPa->fecha = $request->fecha;
-        $roPa->numero_resolucion = $request->numero_resolucion;
-        $roPa->tipo_resolucion = $request->tipo_resolucion;
-        $roPa->observaciones = $request->observaciones;
-        $roPa->numero_folios = $request->numero_folios;
 
         // Manejo de archivo
         if ($request->hasFile('archivo')) {
@@ -88,11 +59,11 @@ class RoPaController extends Controller
             $file = $request->file('archivo');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/pa/ro'), $filename);
-            $roPa->archivo = $filename;
-            $roPa->tipo_archivo = $file->getClientOriginalExtension();
+            $data['archivo'] = $filename;
+            $data['tipo_archivo'] = $file->getClientOriginalExtension();
         }
 
-        $roPa->save();
+        $roPa->update($data);
 
         // Insertar en Bitácora
         Bitacora::create([

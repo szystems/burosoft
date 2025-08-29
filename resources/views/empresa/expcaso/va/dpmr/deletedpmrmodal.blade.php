@@ -1,11 +1,11 @@
-<div class="modal fade" id="deleteDpmrModal-{{ $dpmr->id }}" tabindex="-1" aria-labelledby="deleteDpmrModal-{{ $dpmr->id }}" aria-hidden="true">
+<div class="modal fade" id="deleteDpmrVaModal-{{ $dpmr->id }}" tabindex="-1" aria-labelledby="deleteDpmrVaModal-{{ $dpmr->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-dpmr/'.$dpmr->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deleteDpmrModal-{{ $dpmr->id }}">
+                    <h5 class="modal-title h4" id="deleteDpmrVaModal-{{ $dpmr->id }}">
                         Eliminar Diligencia Para Mejor Resolver:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

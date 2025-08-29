@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Empresa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\AmpmrPaFormRequest;
 use App\Models\AmpmrPa;
 use App\Models\AudienciaPa;
 use App\Models\Bitacora;
@@ -12,35 +13,38 @@ use Illuminate\Support\Facades\File;
 
 class AmpmrPaController extends Controller
 {
-    public function insert(Request $request)
+    public function insert(AmpmrPaFormRequest $request)
     {
-        $request->validate([
-            'audiencia_pa_id' => 'required',
-            'fecha_hora_presentacion' => 'required|date',
-            'numero_documento' => 'required|string|max:255',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
-
-        $ampmrPa = new AmpmrPa();
-        $ampmrPa->audiencia_pa_id = $request->audiencia_pa_id;
-        $ampmrPa->usuario_id = Auth::user()->id;
-        $ampmrPa->fecha_hora_presentacion = $request->fecha_hora_presentacion;
-        $ampmrPa->numero_documento = $request->numero_documento;
-        $ampmrPa->observaciones = $request->observaciones;
-        $ampmrPa->numero_folios = $request->numero_folios;
+        $data = $request->validated();
+        $data['usuario_id'] = Auth::user()->id;
 
         // Manejo de archivo
         if ($request->hasFile('archivo')) {
             $file = $request->file('archivo');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/pa/ampmr'), $filename);
-            $ampmrPa->archivo = $filename;
-            $ampmrPa->tipo_archivo = $file->getClientOriginalExtension();
+            
+            // Verificar que el archivo sea válido
+            if ($file->isValid()) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $uploadPath = public_path('uploads/pa/ampmr');
+                
+                // Crear directorio si no existe
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                
+                // Mover archivo
+                if ($file->move($uploadPath, $filename)) {
+                    $data['archivo'] = $filename;
+                    $data['tipo_archivo'] = $file->getClientOriginalExtension();
+                } else {
+                    return redirect()->back()->withErrors(['archivo' => 'Error al subir el archivo.'])->withInput();
+                }
+            } else {
+                return redirect()->back()->withErrors(['archivo' => 'El archivo no es válido.'])->withInput();
+            }
         }
 
-        $ampmrPa->save();
+        $ampmrPa = AmpmrPa::create($data);
 
         // Insertar en Bitácora
         Bitacora::create([
@@ -54,25 +58,15 @@ class AmpmrPaController extends Controller
                              ', Expediente: ' . $ampmrPa->audienciaPa->pat->no_expediente
         ]);
 
-        return redirect('show-audiencia-pa/' . $request->audiencia_pa_id)->with('status', 'Atención de Memorial Para Mejor Resolver PA creado exitosamente');
+        return redirect('show-audiencia-pa/' . $data['audiencia_pa_id'])->with('status', 'Atención de Memorial Para Mejor Resolver PA creado exitosamente');
     }
 
-    public function update(Request $request, $id)
+    public function update(AmpmrPaFormRequest $request, $id)
     {
-        $request->validate([
-            'fecha_hora_presentacion' => 'required|date',
-            'numero_documento' => 'required|string|max:255',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
+        $data = $request->validated();
+        $data['usuario_id'] = Auth::user()->id;
 
         $ampmrPa = AmpmrPa::findOrFail($id);
-        $ampmrPa->usuario_id = Auth::user()->id;
-        $ampmrPa->fecha_hora_presentacion = $request->fecha_hora_presentacion;
-        $ampmrPa->numero_documento = $request->numero_documento;
-        $ampmrPa->observaciones = $request->observaciones;
-        $ampmrPa->numero_folios = $request->numero_folios;
 
         // Manejo de archivo
         if ($request->hasFile('archivo')) {
@@ -82,13 +76,33 @@ class AmpmrPaController extends Controller
             }
 
             $file = $request->file('archivo');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('uploads/pa/ampmr'), $filename);
-            $ampmrPa->archivo = $filename;
-            $ampmrPa->tipo_archivo = $file->getClientOriginalExtension();
+            
+            // Verificar que el archivo sea válido
+            if ($file->isValid()) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $uploadPath = public_path('uploads/pa/ampmr');
+                
+                // Crear directorio si no existe
+                if (!file_exists($uploadPath)) {
+                    mkdir($uploadPath, 0755, true);
+                }
+                
+                // Mover archivo
+                if ($file->move($uploadPath, $filename)) {
+                    $data['archivo'] = $filename;
+                    $data['tipo_archivo'] = $file->getClientOriginalExtension();
+                } else {
+                    return redirect()->back()->withErrors(['archivo' => 'Error al subir el archivo.'])->withInput();
+                }
+            } else {
+                return redirect()->back()->withErrors(['archivo' => 'El archivo no es válido.'])->withInput();
+            }
+        } else {
+            unset($data['archivo']);
+            unset($data['tipo_archivo']);
         }
 
-        $ampmrPa->save();
+        $ampmrPa->update($data);
 
         // Insertar en Bitácora
         Bitacora::create([

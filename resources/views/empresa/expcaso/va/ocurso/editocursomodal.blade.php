@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="editOcursoModal-{{ $ocurso->id }}" tabindex="-1" aria-labelledby="editOcursoModal-{{ $ocurso->id }}" aria-hidden="true">
+<div class="modal fade" id="editOcursoVaModal-{{ $ocurso->id }}" tabindex="-1" aria-labelledby="editOcursoVaModal-{{ $ocurso->id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editOcursoModal-{{ $ocurso->id }}">
+                <h5 class="modal-title" id="editOcursoVaModal-{{ $ocurso->id }}">
                     <i class="bi bi-pencil text-warning"></i> Editar Ocurso
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -33,6 +33,18 @@
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('numero_documento') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="oficina_agencia_ea" class="form-label">Oficina o agencia donde fue presentada la Evacuacion de Audiencia (EA)</label>
+                            <input type="text" name="oficina_agencia_ea" class="form-control" value="{{ $ocurso->oficina_agencia_ea }}" maxlength="300">
+                            @if ($errors->has('oficina_agencia_ea'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_agencia_ea') }}</font>
                                     </strong>
                                 </span>
                             @endif

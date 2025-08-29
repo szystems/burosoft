@@ -17,6 +17,7 @@ use App\Models\Ocurso;
 use App\Models\Ro;
 use App\Models\Mpmr;
 use App\Models\Ampmr;
+use App\Models\Aceptacion;
 use App\Models\Resolucion;
 use App\Models\Rtributa;
 use App\Models\Nulidad;
@@ -42,9 +43,10 @@ class VaController extends Controller
         $config = Config::where('empresa_id', $pat->cuenta_id)->first();
         $patscount = Pat::where('cuenta_id', $cuenta->id)->count();
         $audiencias = Audiencia::where('pat_id', $id)->paginate(10);
+        $audienciasVaCount = Audiencia::where('pat_id', $id)->count();
         $audienciasPaCount = AudienciaPa::where('pat_id', $id)->count();
 
-        return view('empresa.expcaso.va.show', compact('pat', 'patscount','cuenta','config','audiencias','audienciasPaCount'));
+        return view('empresa.expcaso.va.show', compact('pat', 'patscount','cuenta','config','audiencias','audienciasVaCount','audienciasPaCount'));
     }
 
     public function showaudiencia($id)
@@ -69,12 +71,14 @@ class VaController extends Controller
         $ros = Ro::where('audiencia_id', $audiencia->id)->get();
         $mpmrs = Mpmr::where('audiencia_id', $audiencia->id)->get();
         $ampmrs = Ampmr::where('audiencia_id', $audiencia->id)->get();
+        $aceptaciones = Aceptacion::with('usuario')->where('audiencia_id', $audiencia->id)->get();
+        $audienciasVaCount = Audiencia::where('pat_id', $pat->id)->count();
         $audienciasPaCount = AudienciaPa::where('pat_id', $pat->id)->count();
 
         return view('empresa.expcaso.va.showaudiencia', compact(
             'pat', 'patscount', 'cuenta', 'config', 'audiencias',
             'audiencia', 'evacuaciones', 'periodos', 'dpmrs', 'adpmrs',
-            'resoluciones', 'rtributas', 'nulidades', 'ecs', 'recursos', 'ntrrs', 'ocursos', 'ros', 'mpmrs', 'ampmrs', 'audienciasPaCount'
+            'resoluciones', 'rtributas', 'nulidades', 'ecs', 'recursos', 'ntrrs', 'ocursos', 'ros', 'mpmrs', 'ampmrs', 'aceptaciones', 'audienciasVaCount', 'audienciasPaCount'
         ));
     }
 }

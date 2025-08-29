@@ -264,7 +264,7 @@
                                                         </div>
                                                     </div> --}}
 
-                                                    Expediente Digital
+                                                    <h3><u>Expediente Digital</u></h3>
                                                     <hr>
                                                     @if ($cuenta->estado == 1)
 
@@ -372,8 +372,16 @@
                                                                         </a>
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
-                                                                        <a class="nav-link" id="tab-vp" data-bs-toggle="tab" href="#vp" role="tab"
-                                                                            aria-controls="vp" aria-selected="false">VP</a>
+                                                                        <a class="nav-link" href="#" onclick="alert('CAT - En desarrollo')">CAT</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CSJ - En desarrollo')">CSJ</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CC - En desarrollo')">CC</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('VP - En desarrollo')">VP</a>
                                                                     </li>
                                                                 </ul>
                                                                 <div class="tab-content" id="customTabContent">
@@ -477,6 +485,36 @@
                                                                                 </div>
                                                                                 <div class="col-md-4 mb-3">
                                                                                     <div class="mb-3">
+                                                                                        <label for="fecha_notificacion" class="form-label">Fecha de Notificación</label>
+                                                                                        <p>
+                                                                                            @if($audienciaPa->fecha_notificacion)
+                                                                                                <strong class="text-secondary">
+                                                                                                    {{ $audienciaPa->fecha_notificacion instanceof \Carbon\Carbon ? $audienciaPa->fecha_notificacion->format('d/m/Y') : date('d/m/Y', strtotime($audienciaPa->fecha_notificacion)) }}
+                                                                                                </strong>
+                                                                                            @else
+                                                                                                <span class="text-muted">No especificada</span>
+                                                                                            @endif
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="plazo_evacuar" class="form-label">Plazo para Evacuar</label>
+                                                                                        <p>
+                                                                                            @if($audienciaPa->plazo_evacuar)
+                                                                                                @if($audienciaPa->plazo_evacuar == 'Otro' && $audienciaPa->plazo_evacuar_otro)
+                                                                                                    <strong class="text-primary">{{ $audienciaPa->plazo_evacuar_otro }}</strong>
+                                                                                                @else
+                                                                                                    <strong class="text-primary">{{ $audienciaPa->plazo_evacuar }}</strong>
+                                                                                                @endif
+                                                                                            @else
+                                                                                                <span class="text-muted">No especificado</span>
+                                                                                            @endif
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-4 mb-3">
+                                                                                    <div class="mb-3">
                                                                                         <label for="impuestos" class="form-label">Usuario</label>
                                                                                         <p>
                                                                                             {{ $audienciaPa->usuario->name }}
@@ -492,8 +530,14 @@
                                                                                     <div class="custom-tabs-container">
                                                                                         <ul class="nav nav-tabs" id="patTab" role="tablist">
                                                                                             <li class="nav-item" role="presentation">
-                                                                                                <a class="nav-link active" id="tab-ev" data-bs-toggle="tab" href="#ev" role="tab"
-                                                                                                    aria-controls="ev" aria-selected="true">EA
+                                                                                                <a class="nav-link active" id="tab-aceptacion" data-bs-toggle="tab" href="#aceptacion" role="tab"
+                                                                                                    aria-controls="aceptacion" aria-selected="true">Aceptación
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $aceptacionesPa->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-ev" data-bs-toggle="tab" href="#ev" role="tab"
+                                                                                                    aria-controls="ev" aria-selected="false">EA
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $evacuacionesPa->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
@@ -519,24 +563,6 @@
                                                                                                 <a class="nav-link" id="tab-resolucion" data-bs-toggle="tab" href="#resolucion" role="tab"
                                                                                                     aria-controls="resolucion" aria-selected="false"> R-SAT
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $rsatPa->count() }}</span>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <a class="nav-link" id="tab-rtributa" data-bs-toggle="tab" href="#rtributa" role="tab"
-                                                                                                    aria-controls="rtributa" aria-selected="false"> R-Tributa
-                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $rtributaPa->count() }}</span>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <a class="nav-link" id="tab-nulidad" data-bs-toggle="tab" href="#nulidad" role="tab"
-                                                                                                    aria-controls="nulidad" aria-selected="false"> Nulidad
-                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $nulidadesPa->count() }}</span>
-                                                                                                </a>
-                                                                                            </li>
-                                                                                            <li class="nav-item" role="presentation">
-                                                                                                <a class="nav-link" id="tab-ec" data-bs-toggle="tab" href="#ec" role="tab"
-                                                                                                    aria-controls="ec" aria-selected="false"> EC
-                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $ecsPa->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
                                                                                             <li class="nav-item" role="presentation">
@@ -575,9 +601,103 @@
                                                                                                     <span class="badge rounded-pill primary ms-2">{{ $ampmrsPa->count() }}</span>
                                                                                                 </a>
                                                                                             </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-rtributa" data-bs-toggle="tab" href="#rtributa" role="tab"
+                                                                                                    aria-controls="rtributa" aria-selected="false"> R-Tributa
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $rtributaPa->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-nulidad" data-bs-toggle="tab" href="#nulidad" role="tab"
+                                                                                                    aria-controls="nulidad" aria-selected="false"> Nulidad
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $nulidadesPa->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
+                                                                                            <li class="nav-item" role="presentation">
+                                                                                                <a class="nav-link" id="tab-ec" data-bs-toggle="tab" href="#ec" role="tab"
+                                                                                                    aria-controls="ec" aria-selected="false"> EC
+                                                                                                    <span class="badge rounded-pill primary ms-2">{{ $ecsPa->count() }}</span>
+                                                                                                </a>
+                                                                                            </li>
                                                                                         </ul>
                                                                                         <div class="tab-content" id="customTabContent2">
-                                                                                            <div class="tab-pane fade show active" id="ev" role="tabpanel">
+                                                                                            <div class="tab-pane fade show active" id="aceptacion" role="tabpanel">
+                                                                                                <div class="row gx-3">
+
+                                                                                                    <h4>Aceptación</h4>
+                                                                                                    <hr>
+                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                                                                            data-bs-target="#addAceptacionPaModal">
+                                                                                                            <i class="bi bi-plus-square"></i> Agregar Aceptación
+                                                                                                        </button>
+                                                                                                    @endif
+
+                                                                                                    @include('empresa.expcaso.pa.aceptacion.addaceptacionmodal')
+
+                                                                                                    <br>
+                                                                                                    <div class="table-responsive">
+                                                                                                        <table class="table align-middle table-striped flex-column">
+                                                                                                            <thead>
+                                                                                                                <tr>
+                                                                                                                    <td align="center"><i class="bi bi-list-task"></i></td>
+                                                                                                                    <td>Fecha y Hora</td>
+                                                                                                                    <td>No. de Documento</td>
+                                                                                                                    <td># Folios</td>
+                                                                                                                    <td>Observaciones</td>
+                                                                                                                    <td>Oficina Presentación</td>
+                                                                                                                    <td>Archivo</td>
+                                                                                                                    <td>Usuario</td>
+                                                                                                                </tr>
+                                                                                                            </thead>
+                                                                                                            <tbody>
+                                                                                                                @foreach($aceptacionesPa as $aceptacionPa)
+                                                                                                                    <tr>
+                                                                                                                        <td>
+                                                                                                                            <div class="btn-group dropend">
+                                                                                                                                <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-bs-toggle="dropdown" data-bs-display="static" aria-expanded="false">
+                                                                                                                                    <i class="bi bi-list-task"></i>
+                                                                                                                                </button>
+                                                                                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-lg-start">
+                                                                                                                                    @if ($cuenta->estado == 1)
+                                                                                                                                        <li>
+                                                                                                                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editAceptacionPaModal"
+                                                                                                                                                data-id="{{ $aceptacionPa->id }}"
+                                                                                                                                                data-fecha_hora_presentacion="{{ $aceptacionPa->fecha_hora_presentacion }}"
+                                                                                                                                                data-numero_documento="{{ $aceptacionPa->numero_documento }}"
+                                                                                                                                                data-observaciones="{{ $aceptacionPa->observaciones }}"
+                                                                                                                                                data-oficina_presentacion="{{ $aceptacionPa->oficina_presentacion }}"
+                                                                                                                                                data-numero_folios="{{ $aceptacionPa->numero_folios }}"
+                                                                                                                                                data-archivo="{{ $aceptacionPa->archivo }}"
+                                                                                                                                                data-audiencia_pa_id="{{ $aceptacionPa->audiencia_pa_id }}"><i class="bi bi-pencil-square text-warning"></i> Editar</a>
+                                                                                                                                        </li>
+                                                                                                                                        <li>
+                                                                                                                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteAceptacionPaModal"
+                                                                                                                                                data-id="{{ $aceptacionPa->id }}"
+                                                                                                                                                data-numero_documento="{{ $aceptacionPa->numero_documento }}"
+                                                                                                                                                data-fecha_hora="{{ $aceptacionPa->fecha_hora_presentacion }}"><i class="bi bi-trash text-danger"></i> Eliminar</a>
+                                                                                                                                        </li>
+                                                                                                                                    @endif
+                                                                                                                                </ul>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                        <td>{{ \Carbon\Carbon::parse($aceptacionPa->fecha_hora_presentacion)->format('d/m/Y H:i') }}</td>
+                                                                                                                        <td>{{ $aceptacionPa->numero_documento }}</td>
+                                                                                                                        <td>{{ $aceptacionPa->numero_folios ?? 'N/A' }}</td>
+                                                                                                                        <td>{{ $aceptacionPa->observaciones ?? 'N/A' }}</td>
+                                                                                                                        <td>{{ $aceptacionPa->oficina_presentacion ?? 'N/A' }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/aceptacion/' . $aceptacionPa->archivo) }}" target="_blank"><strong class="text-primary">{{ $aceptacionPa->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $aceptacionPa->usuario->name ?? 'N/A' }}</td>
+                                                                                                                    </tr>
+                                                                                                                    @include('empresa.expcaso.pa.aceptacion.deleteaceptacionmodal')
+                                                                                                                    @include('empresa.expcaso.pa.aceptacion.editaceptacionmodal')
+                                                                                                                @endforeach
+                                                                                                            </tbody>
+                                                                                                        </table>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="tab-pane fade" id="ev" role="tabpanel">
                                                                                                 <div class="row gx-3">
 
                                                                                                     <h4>Evacuación  de Audiencia (EA)</h4>
@@ -602,6 +722,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
+                                                                                                                    <td>Oficina Presentación</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -643,9 +764,12 @@
                                                                                                                         <td>{{ $ev->numero_documento }}</td>
                                                                                                                         <td>{{ $ev->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ev->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/evacuaciones/'.$ev->archivo) }}" target="_blank"><strong class="text-primary">{{ $ev->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $ev->oficina_presentacion ?: 'N/A' }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/ev/'.$ev->archivo) }}" target="_blank"><strong class="text-primary">{{ $ev->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ev->usuario->name }}</td>
                                                                                                                     </tr>
+                                                                                                                @endforeach
+                                                                                                                @foreach($evacuacionesPa as $ev)
                                                                                                                     @include('empresa.expcaso.pa.ev.deleteevmodal')
                                                                                                                     @include('empresa.expcaso.pa.ev.addevmodal')
                                                                                                                     @include('empresa.expcaso.pa.ev.editevmodal')
@@ -680,6 +804,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
+                                                                                                                    <td>Oficina Presentación</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -715,13 +840,14 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($pp->fecha)) }}</strong>
-                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($pp->fecha)) }}</span>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($pp->fecha_hora_presentacion)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($pp->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
-                                                                                                                        <td>{{ $pp->numero_escrito }}</td>
+                                                                                                                        <td>{{ $pp->numero_documento }}</td>
                                                                                                                         <td>{{ $pp->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $pp->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/periodos/'.$pp->archivo) }}" target="_blank"><strong class="text-primary">{{ $pp->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $pp->oficina_presentacion ?: 'N/A' }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/ppacuaciones/'.$pp->archivo) }}" target="_blank"><strong class="text-primary">{{ $pp->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $pp->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.pp.deleteppmodal')
@@ -794,7 +920,7 @@
                                                                                                                         <td>{{ $dpmr->numero_resolucion }}</td>
                                                                                                                         <td>{{ $dpmr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $dpmr->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/dpmrs/'.$dpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $dpmr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/dpmr/'.$dpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $dpmr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $dpmr->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.dpmr.deletedpmrmodal')
@@ -827,6 +953,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
+                                                                                                                    <td>Oficina Presentación</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -858,13 +985,14 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($adpmr->fecha)) }}</strong>
-                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($adpmr->fecha)) }}</span>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($adpmr->fecha_hora_presentacion)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($adpmr->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
-                                                                                                                        <td>{{ $adpmr->numero_contestacion }}</td>
+                                                                                                                        <td>{{ $adpmr->numero_documento }}</td>
                                                                                                                         <td>{{ $adpmr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $adpmr->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/adpmrs/'.$adpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $adpmr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $adpmr->oficina_presentacion ?: 'N/A' }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/adpmr/'.$adpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $adpmr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $adpmr->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.adpmr.deleteadpmrmodal')
@@ -897,6 +1025,7 @@
                                                                                                                     <td>Fecha de Notificación</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Tipo de Resolución</td>
+                                                                                                                    <td>PpRR</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -944,13 +1073,26 @@
                                                                                                                                 <span class="badge bg-info">Nulidad</span>
                                                                                                                             @elseif($resolucion->tipo_resolucion == 'penal')
                                                                                                                                 <span class="badge bg-dark">Penal</span>
+                                                                                                                            @elseif($resolucion->tipo_resolucion == 'otro')
+                                                                                                                                <span class="badge bg-secondary">{{ $resolucion->tipo_resolucion_otro ?: 'Otro' }}</span>
                                                                                                                             @else
                                                                                                                                 <span class="badge bg-secondary">No definido</span>
                                                                                                                             @endif
                                                                                                                         </td>
+                                                                                                                        <td>
+                                                                                                                            @if($resolucion->plazo_revocatoria)
+                                                                                                                                @if($resolucion->plazo_revocatoria == 'otro')
+                                                                                                                                    <span class="badge bg-primary">{{ $resolucion->plazo_revocatoria_otro ?: 'Otro' }}</span>
+                                                                                                                                @else
+                                                                                                                                    <span class="badge bg-primary">{{ $resolucion->plazo_revocatoria }}</span>
+                                                                                                                                @endif
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>{{ $resolucion->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $resolucion->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/resoluciones/'.$resolucion->archivo) }}" target="_blank"><strong class="text-primary">{{ $resolucion->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/resolucion/'.$resolucion->archivo) }}" target="_blank"><strong class="text-primary">{{ $resolucion->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $resolucion->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.resolucion.deleteresolucionmodal')
@@ -984,6 +1126,8 @@
                                                                                                                     <td>Fecha de Notificación</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Tipo de Resolución</td>
+                                                                                                                    <td>Fecha de Resolución</td>
+                                                                                                                    <td>Plazo CAT</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -1017,7 +1161,11 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($rtributa->fecha)) }}</strong>
+                                                                                                                            @if($rtributa->fecha_hora_notificacion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y H:i', strtotime($rtributa->fecha_hora_notificacion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">No definida</span>
+                                                                                                                            @endif
                                                                                                                         </td>
                                                                                                                         <td>{{ $rtributa->numero_resolucion }}</td>
                                                                                                                         <td>
@@ -1031,15 +1179,35 @@
                                                                                                                                 <span class="badge bg-info">Nulidad</span>
                                                                                                                             @elseif($rtributa->tipo_resolucion == 'penal')
                                                                                                                                 <span class="badge bg-dark">Penal</span>
+                                                                                                                            @elseif($rtributa->tipo_resolucion == 'otro')
+                                                                                                                                <span class="badge bg-secondary text-white">{{ $rtributa->tipo_resolucion_otro ?: 'Otro (sin especificar)' }}</span>
                                                                                                                             @else
                                                                                                                                 <span class="badge bg-secondary">No definido</span>
                                                                                                                             @endif
                                                                                                                         </td>
+                                                                                                                        <td>
+                                                                                                                            @if($rtributa->fecha_resolucion)
+                                                                                                                                <strong class="text-info">{{ date('d/m/Y', strtotime($rtributa->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($rtributa->plazo_cat == 'otro')
+                                                                                                                                <span class="badge bg-warning text-dark">{{ $rtributa->plazo_cat_otro ?: 'Otro (sin especificar)' }}</span>
+                                                                                                                            @elseif($rtributa->plazo_cat)
+                                                                                                                                <span class="badge bg-primary">{{ $rtributa->plazo_cat }}</span>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>{{ $rtributa->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $rtributa->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/rtributas/'.$rtributa->archivo) }}" target="_blank"><strong class="text-primary">{{ $rtributa->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/rtributa/'.$rtributa->archivo) }}" target="_blank"><strong class="text-primary">{{ $rtributa->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $rtributa->usuario->name }}</td>
                                                                                                                     </tr>
+                                                                                                                @endforeach
+                                                                                                                @foreach($rtributaPa as $rtributa)
                                                                                                                     @include('empresa.expcaso.pa.rtributa.deletertributamodal')
                                                                                                                     @include('empresa.expcaso.pa.rtributa.editrtributamodal')
                                                                                                                 @endforeach
@@ -1068,8 +1236,9 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha de Notificación</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
                                                                                                                     <td>No. de Resolución</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>Tipo de Nulidad</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
@@ -1104,9 +1273,22 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($nulidad->fecha)) }}</strong>
+                                                                                                                            @if($nulidad->fecha_hora_notificacion)
+                                                                                                                                <strong class="text-secondary">
+                                                                                                                                    {{ $nulidad->fecha_hora_notificacion instanceof \Carbon\Carbon ? $nulidad->fecha_hora_notificacion->format('d/m/Y H:i') : date('d/m/Y H:i', strtotime($nulidad->fecha_hora_notificacion)) }}
+                                                                                                                                </strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">No especificada</span>
+                                                                                                                            @endif
                                                                                                                         </td>
                                                                                                                         <td>{{ $nulidad->numero_resolucion }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($nulidad->fecha_resolucion)
+                                                                                                                                <strong class="text-info">{{ date('d/m/Y', strtotime($nulidad->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>
                                                                                                                             @if($nulidad->tipo_nulidad == 'Absoluta')
                                                                                                                                 <span class="badge bg-danger">Absoluta</span>
@@ -1118,9 +1300,11 @@
                                                                                                                         </td>
                                                                                                                         <td>{{ $nulidad->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $nulidad->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/nulidades/'.$nulidad->archivo) }}" target="_blank"><strong class="text-primary">{{ $nulidad->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/nulidad/'.$nulidad->archivo) }}" target="_blank"><strong class="text-primary">{{ $nulidad->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $nulidad->usuario->name }}</td>
                                                                                                                     </tr>
+                                                                                                                @endforeach
+                                                                                                                @foreach($nulidadesPa as $nulidad)
                                                                                                                     @include('empresa.expcaso.pa.nulidad.deletenulidadmodal')
                                                                                                                     @include('empresa.expcaso.pa.nulidad.editnulidadmodal')
                                                                                                                 @endforeach
@@ -1150,6 +1334,10 @@
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Número de Resolución</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
+                                                                                                                    <td>Juzgado que Conoce</td>
+                                                                                                                    <td>Medidas Decretadas</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Usuario</td>
@@ -1188,6 +1376,39 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>{{ $ec->numero_resolucion }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($ec->fecha_hora_notificacion)
+                                                                                                                                <strong class="text-secondary">{{ $ec->fecha_hora_notificacion->format('d/m/Y H:i') }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($ec->fecha_resolucion)
+                                                                                                                                <strong class="text-secondary">{{ $ec->fecha_resolucion->format('d/m/Y') }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>{{ $ec->juzgado_que_conoce ?: 'N/A' }}</td>
+                                                                                                                        <td>
+                                                                                                                            @if($ec->medidas_decretadas && is_array($ec->medidas_decretadas) && count($ec->medidas_decretadas) > 0)
+                                                                                                                                @php
+                                                                                                                                    $medidas = $ec->medidas_decretadas;
+                                                                                                                                    $medidasTexto = [];
+                                                                                                                                    foreach($medidas as $medida) {
+                                                                                                                                        if($medida === 'Otro' && $ec->medidas_decretadas_otro) {
+                                                                                                                                            $medidasTexto[] = 'Otro: ' . $ec->medidas_decretadas_otro;
+                                                                                                                                        } else {
+                                                                                                                                            $medidasTexto[] = $medida;
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                @endphp
+                                                                                                                                <small class="text-secondary">{{ implode(', ', $medidasTexto) }}</small>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>{{ $ec->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ec->observaciones ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ec->usuario->name }}</td>
@@ -1195,6 +1416,8 @@
                                                                                                                             <strong class="text-secondary">{{ $ec->created_at->format('d/m/Y H:i') }}</strong>
                                                                                                                         </td>
                                                                                                                     </tr>
+                                                                                                                @endforeach
+                                                                                                                @foreach($ecsPa as $ec)
                                                                                                                     @include('empresa.expcaso.pa.ec.showecmodal')
                                                                                                                     @include('empresa.expcaso.pa.ec.editecmodal')
                                                                                                                     @include('empresa.expcaso.pa.ec.deleteecmodal')
@@ -1228,6 +1451,7 @@
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Documento</td>
+                                                                                                                    <td>Oficina/Agencia EA</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -1265,13 +1489,14 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($rr->fecha)) }}</strong>
-                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($rr->fecha)) }}</span>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($rr->fecha_hora_presentacion)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($rr->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
-                                                                                                                        <td>{{ $rr->numero_escrito }}</td>
+                                                                                                                        <td>{{ $rr->numero_documento }}</td>
+                                                                                                                        <td>{{ $rr->oficina_agencia_ea ?? 'N/A' }}</td>
                                                                                                                         <td>{{ $rr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $rr->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/rrs/'.$rr->archivo) }}" target="_blank"><strong class="text-primary">{{ $rr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/rr/'.$rr->archivo) }}" target="_blank"><strong class="text-primary">{{ $rr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $rr->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.rr.deleterrmodal')
@@ -1302,7 +1527,8 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha de Notificación</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
@@ -1337,12 +1563,15 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ntrr->fecha)) }}</strong>
+                                                                                                                            <strong class="text-secondary">{{ $ntrr->fecha_hora_notificacion ? \Carbon\Carbon::parse($ntrr->fecha_hora_notificacion)->format('d/m/Y H:i') : 'N/A' }}</strong>
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            <strong class="text-secondary">{{ $ntrr->fecha_resolucion ? \Carbon\Carbon::parse($ntrr->fecha_resolucion)->format('d/m/Y') : 'N/A' }}</strong>
                                                                                                                         </td>
                                                                                                                         <td>{{ $ntrr->numero_resolucion }}</td>
                                                                                                                         <td>{{ $ntrr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ntrr->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/ntrrs/'.$ntrr->archivo) }}" target="_blank"><strong class="text-primary">{{ $ntrr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/ntrr/'.$ntrr->archivo) }}" target="_blank"><strong class="text-primary">{{ $ntrr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ntrr->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.ntrr.deletentrrmodal')
@@ -1375,6 +1604,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
+                                                                                                                    <td>Oficina/Agencia EA</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -1406,13 +1636,14 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ocurso->fecha)) }}</strong>
-                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($ocurso->fecha)) }}</span>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ocurso->fecha_hora_presentacion)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($ocurso->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
-                                                                                                                        <td>{{ $ocurso->numero_escrito }}</td>
+                                                                                                                        <td>{{ $ocurso->numero_documento }}</td>
                                                                                                                         <td>{{ $ocurso->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ocurso->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/ocursos/'.$ocurso->archivo) }}" target="_blank"><strong class="text-primary">{{ $ocurso->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td>{{ $ocurso->oficina_agencia_ea ?: 'N/A' }}</td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/ocurso/'.$ocurso->archivo) }}" target="_blank"><strong class="text-primary">{{ $ocurso->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ocurso->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.ocurso.deleteocursomodal')
@@ -1441,7 +1672,9 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha</td>
+                                                                                                                    <td>Fecha (Original)</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Tipo de Resolución</td>
                                                                                                                     <td># Folios</td>
@@ -1479,6 +1712,21 @@
                                                                                                                         <td>
                                                                                                                             <strong class="text-secondary">{{ date('d/m/Y', strtotime($ro->fecha)) }}</strong>
                                                                                                                         </td>
+                                                                                                                        <td>
+                                                                                                                            @if($ro->fecha_notificacion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y', strtotime($ro->fecha_notificacion)) }}</strong>
+                                                                                                                                <span class="text-warning">{{ date('h:i A', strtotime($ro->fecha_notificacion)) }}</span>
+                                                                                                                            @else
+                                                                                                                                N/A
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($ro->fecha_resolucion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y', strtotime($ro->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                N/A
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>{{ $ro->numero_resolucion }}</td>
                                                                                                                         <td>
                                                                                                                             @if($ro->tipo_resolucion == 'Procede tramite')
@@ -1491,7 +1739,7 @@
                                                                                                                         </td>
                                                                                                                         <td>{{ $ro->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ro->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/ros/'.$ro->archivo) }}" target="_blank"><strong class="text-primary">{{ $ro->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/ro/'.$ro->archivo) }}" target="_blank"><strong class="text-primary">{{ $ro->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ro->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.ro.deleteromodal')
@@ -1520,7 +1768,8 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha y Hora</td>
+                                                                                                                    <td>Fecha y Hora de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
@@ -1558,10 +1807,17 @@
                                                                                                                             <strong class="text-secondary">{{ date('d/m/Y', strtotime($mpmr->fecha_hora)) }}</strong>
                                                                                                                             <span class="text-warning">{{ date('h:i A', strtotime($mpmr->fecha_hora)) }}</span>
                                                                                                                         </td>
+                                                                                                                        <td>
+                                                                                                                            @if($mpmr->fecha_resolucion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y', strtotime($mpmr->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                N/A
+                                                                                                                            @endif
+                                                                                                                        </td>
                                                                                                                         <td>{{ $mpmr->numero_resolucion }}</td>
                                                                                                                         <td>{{ $mpmr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $mpmr->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/mpmrs/'.$mpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $mpmr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/mpmr/'.$mpmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $mpmr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $mpmr->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.mpmr.deletempmrmodal')
@@ -1592,6 +1848,7 @@
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Documento</td>
+                                                                                                                    <td>Oficina EA</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -1625,13 +1882,14 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ampmr->fecha)) }}</strong>
-                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($ampmr->fecha)) }}</span>
+                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($ampmr->fecha_hora_presentacion)) }}</strong>
+                                                                                                                            <span class="text-warning">{{ date('h:i A', strtotime($ampmr->fecha_hora_presentacion)) }}</span>
                                                                                                                         </td>
-                                                                                                                        <td>{{ $ampmr->numero_contestacion }}</td>
+                                                                                                                        <td>{{ $ampmr->numero_documento }}</td>
+                                                                                                                        <td>{{ $ampmr->oficina_ea ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ampmr->numero_folios ?: 'N/A' }}</td>
                                                                                                                         <td>{{ $ampmr->observaciones }}</td>
-                                                                                                                        <td><a href="{{ asset('uploads/ampmrs/'.$ampmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $ampmr->tipo_archivo }}</strong></a></td>
+                                                                                                                        <td><a href="{{ asset('uploads/pa/ampmr/'.$ampmr->archivo) }}" target="_blank"><strong class="text-primary">{{ $ampmr->tipo_archivo }}</strong></a></td>
                                                                                                                         <td>{{ $ampmr->usuario->name }}</td>
                                                                                                                     </tr>
                                                                                                                     @include('empresa.expcaso.pa.ampmr.deleteampmrmodal')
@@ -1688,6 +1946,47 @@
                 bsAlert.close();
             });
         }, 5000);
+    });
+
+    // Script para manejar modales de Aceptación PA
+    $(document).on('show.bs.modal', '#editAceptacionPaModal', function(event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var fecha_hora = button.data('fecha_hora_presentacion');
+        var numero_documento = button.data('numero_documento');
+        var observaciones = button.data('observaciones');
+        var oficina_presentacion = button.data('oficina_presentacion');
+        var numero_folios = button.data('numero_folios');
+        var archivo = button.data('archivo');
+        var audiencia_pa_id = button.data('audiencia_pa_id');
+
+        var modal = $(this);
+        modal.find('#edit_fecha_hora_presentacion_pa').val(fecha_hora);
+        modal.find('#edit_numero_documento_pa').val(numero_documento);
+        modal.find('#edit_observaciones_pa').val(observaciones);
+        modal.find('#edit_oficina_presentacion_pa').val(oficina_presentacion);
+        modal.find('#edit_numero_folios_pa').val(numero_folios);
+        modal.find('#edit_audiencia_pa_id').val(audiencia_pa_id);
+        
+        if (archivo) {
+            modal.find('#current_archivo_pa').html('<small class="text-info">Archivo actual: ' + archivo + '</small>');
+        } else {
+            modal.find('#current_archivo_pa').html('');
+        }
+
+        modal.find('#editAceptacionPaForm').attr('action', '/update-aceptacion-pa/' + id);
+    });
+
+    $(document).on('show.bs.modal', '#deleteAceptacionPaModal', function(event) {
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var numero_documento = button.data('numero_documento');
+        var fecha_hora = button.data('fecha_hora');
+
+        var modal = $(this);
+        modal.find('#delete_numero_documento_pa').text(numero_documento);
+        modal.find('#delete_fecha_hora_pa').text(fecha_hora);
+        modal.find('#deleteAceptacionPaForm').attr('action', '/delete-aceptacion-pa/' + id);
     });
 </script>
 

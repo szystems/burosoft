@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="addOcursoModal" tabindex="-1" aria-labelledby="addOcursoModal" aria-hidden="true">
+<div class="modal fade" id="addOcursoVaModal" tabindex="-1" aria-labelledby="addOcursoVaModal" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addOcursoModal">
+                <h5 class="modal-title" id="addOcursoVaModalLabel">
                     <i class="bi bi-plus text-success"></i> Agregar Ocurso
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -36,6 +36,18 @@
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('numero_documento') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="oficina_agencia_ea" class="form-label">Oficina o agencia donde fue presentada la Evacuacion de Audiencia (EA)</label>
+                            <input type="text" name="oficina_agencia_ea" class="form-control" value="{{ old('oficina_agencia_ea') }}" maxlength="300">
+                            @if ($errors->has('oficina_agencia_ea'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_agencia_ea') }}</font>
                                     </strong>
                                 </span>
                             @endif

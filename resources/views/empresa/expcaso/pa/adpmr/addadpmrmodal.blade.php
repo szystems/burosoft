@@ -78,6 +78,18 @@
                             @endif
                         </div>
 
+                        <div class="col-md-6 mb-3">
+                            <label for="oficina_presentacion" class="form-label">Oficina o agencia donde fue presentada</label>
+                            <input type="text" name="oficina_presentacion" class="form-control" value="{{ old('oficina_presentacion') }}">
+                            @if ($errors->has('oficina_presentacion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_presentacion') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
                     </div>
                 </div>
                 <div class="modal-footer">

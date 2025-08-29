@@ -19,6 +19,7 @@ class EvPaController extends Controller
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'observaciones' => 'nullable|string',
             'numero_folios' => 'nullable|integer|min:1',
+            'oficina_presentacion' => 'nullable|string|max:255',
         ]);
 
         $evPa = new EvPa();
@@ -28,6 +29,7 @@ class EvPaController extends Controller
         $evPa->numero_documento = $request->numero_documento;
         $evPa->observaciones = $request->observaciones;
         $evPa->numero_folios = $request->numero_folios;
+        $evPa->oficina_presentacion = $request->oficina_presentacion;
 
         // Manejo de archivo
         if ($request->hasFile('archivo')) {
@@ -52,6 +54,7 @@ class EvPaController extends Controller
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'observaciones' => 'nullable|string',
             'numero_folios' => 'nullable|integer|min:1',
+            'oficina_presentacion' => 'nullable|string|max:255',
         ]);
 
         $evPa = EvPa::find($id);
@@ -59,6 +62,7 @@ class EvPaController extends Controller
         $evPa->numero_documento = $request->numero_documento;
         $evPa->observaciones = $request->observaciones;
         $evPa->numero_folios = $request->numero_folios;
+        $evPa->oficina_presentacion = $request->oficina_presentacion;
 
         // Manejo de archivo
         if ($request->hasFile('archivo')) {

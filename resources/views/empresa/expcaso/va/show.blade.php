@@ -264,7 +264,7 @@
                                                         </div>
                                                     </div> --}}
 
-                                                    Expediente Digital
+                                                    <h3><u>Expediente Digital</u></h3>
                                                     <hr>
                                                     @if ($cuenta->estado == 1)
 
@@ -371,8 +371,16 @@
                                                                         </a>
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
-                                                                        <a class="nav-link" id="tab-vp" data-bs-toggle="tab" href="#vp" role="tab"
-                                                                            aria-controls="vp" aria-selected="false">VP</a>
+                                                                        <a class="nav-link" href="#" onclick="alert('CAT - En desarrollo')">CAT</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CSJ - En desarrollo')">CSJ</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('CC - En desarrollo')">CC</a>
+                                                                    </li>
+                                                                    <li class="nav-item" role="presentation">
+                                                                        <a class="nav-link" href="#" onclick="alert('VP - En desarrollo')">VP</a>
                                                                     </li>
                                                                 </ul>
                                                                 <div class="tab-content" id="customTabContent">
@@ -421,6 +429,8 @@
                                                                                                 <td align="center">No.Audiencia</td>
                                                                                                 <td align="center">Tipo Audiencia</td>
                                                                                                 <td align="center">Monto</td>
+                                                                                                <td align="center">Fecha Notificación</td>
+                                                                                                <td align="center">Plazo Evacuar</td>
                                                                                                 <td align="center">Archivo</td>
                                                                                                 <td align="center">Usuario</td>
                                                                                             </tr>
@@ -475,6 +485,26 @@
                                                                                                     </td>
                                                                                                     <td align="center">
                                                                                                         <p>{{ $config->currency_simbol }}.{{ number_format($audiencia->impuestos,2, '.', ',') }}</p>
+                                                                                                    </td>
+                                                                                                    <td align="center">
+                                                                                                        @if($audiencia->fecha_notificacion)
+                                                                                                            <p class="text-secondary"><strong>
+                                                                                                                {{ $audiencia->fecha_notificacion instanceof \Carbon\Carbon ? $audiencia->fecha_notificacion->format('d/m/Y') : date('d/m/Y', strtotime($audiencia->fecha_notificacion)) }}
+                                                                                                            </strong></p>
+                                                                                                        @else
+                                                                                                            <span class="text-muted">-</span>
+                                                                                                        @endif
+                                                                                                    </td>
+                                                                                                    <td align="center">
+                                                                                                        @if($audiencia->plazo_evacuar)
+                                                                                                            @if($audiencia->plazo_evacuar == 'Otro' && $audiencia->plazo_evacuar_otro)
+                                                                                                                <span class="badge bg-primary">{{ $audiencia->plazo_evacuar_otro }}</span>
+                                                                                                            @else
+                                                                                                                <span class="badge bg-info">{{ $audiencia->plazo_evacuar }}</span>
+                                                                                                            @endif
+                                                                                                        @else
+                                                                                                            <span class="text-muted">-</span>
+                                                                                                        @endif
                                                                                                     </td>
                                                                                                     <td align="center">
                                                                                                         <p><strong><a href="{{ asset('uploads/va/audiencias/'.$audiencia->archivo) }}" target="_blank" class="text-blue">{{ $audiencia->tipo_archivo }}</a></strong></p>

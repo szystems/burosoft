@@ -15,14 +15,29 @@
                 <div class="modal-body">
                     <div class="row gx-3">
                         <!-- Campo oculto 'is_pa' eliminado -->
+                        <input type="hidden" name="fecha" value="{{ $ro->fecha ? \Carbon\Carbon::parse($ro->fecha)->format('Y-m-d') : '2025-01-01' }}">
 
                         <div class="col-md-6 mb-3">
-                            <label for="fecha" class="form-label">Fecha</label>
-                            <input type="date" name="fecha" class="form-control" value="{{ old('fecha', $ro->fecha ? \Carbon\Carbon::parse($ro->fecha)->format('Y-m-d') : '') }}" required>
-                            @if ($errors->has('fecha'))
+                            <label for="fecha_notificacion" class="form-label">Fecha y Hora de Notificación</label>
+                            <input type="datetime-local" name="fecha_notificacion" class="form-control" 
+                                   value="{{ old('fecha_notificacion', $ro->fecha_notificacion ? \Carbon\Carbon::parse($ro->fecha_notificacion)->format('Y-m-d\TH:i') : ($ro->fecha ? \Carbon\Carbon::parse($ro->fecha)->format('Y-m-d\TH:i') : '')) }}" required>
+                            @if ($errors->has('fecha_notificacion'))
                                 <span class="help-block opacity-7">
                                     <strong>
-                                        <font color="red">{{ $errors->first('fecha') }}</font>
+                                        <font color="red">{{ $errors->first('fecha_notificacion') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="fecha_resolucion" class="form-label">Fecha de Resolución</label>
+                            <input type="date" name="fecha_resolucion" class="form-control" 
+                                   value="{{ old('fecha_resolucion', $ro->fecha_resolucion ? \Carbon\Carbon::parse($ro->fecha_resolucion)->format('Y-m-d') : '') }}">
+                            @if ($errors->has('fecha_resolucion'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('fecha_resolucion') }}</font>
                                     </strong>
                                 </span>
                             @endif

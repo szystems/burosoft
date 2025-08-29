@@ -17,6 +17,12 @@ class EcPaController extends Controller
         $request->validate([
             'audiencia_pa_id' => 'required',
             'numero_resolucion' => 'required|string|max:1000',
+            'fecha_hora_notificacion' => 'nullable|date',
+            'fecha_resolucion' => 'nullable|date',
+            'juzgado_que_conoce' => 'nullable|string|max:500',
+            'medidas_decretadas' => 'nullable|array',
+            'medidas_decretadas.*' => 'nullable|string|in:Arraigo,Bloqueo de cuentas,Bloqueo de Vehiculos,Bloqueo de bienes inmuebles,Interventor,Otro',
+            'medidas_decretadas_otro' => 'nullable|string|max:500',
             'observaciones' => 'nullable|string|max:5000',
             'numero_folios' => 'nullable|integer|min:1',
         ]);
@@ -25,6 +31,11 @@ class EcPaController extends Controller
         $ecPa->audiencia_pa_id = $request->audiencia_pa_id;
         $ecPa->usuario_id = Auth::user()->id;
         $ecPa->numero_resolucion = $request->numero_resolucion;
+        $ecPa->fecha_hora_notificacion = $request->fecha_hora_notificacion;
+        $ecPa->fecha_resolucion = $request->fecha_resolucion;
+        $ecPa->juzgado_que_conoce = $request->juzgado_que_conoce;
+        $ecPa->medidas_decretadas = $request->medidas_decretadas;
+        $ecPa->medidas_decretadas_otro = $request->medidas_decretadas_otro;
         $ecPa->observaciones = $request->observaciones;
         $ecPa->numero_folios = $request->numero_folios;
 
@@ -49,6 +60,12 @@ class EcPaController extends Controller
     {
         $request->validate([
             'numero_resolucion' => 'required|string|max:1000',
+            'fecha_hora_notificacion' => 'nullable|date',
+            'fecha_resolucion' => 'nullable|date',
+            'juzgado_que_conoce' => 'nullable|string|max:500',
+            'medidas_decretadas' => 'nullable|array',
+            'medidas_decretadas.*' => 'nullable|string|in:Arraigo,Bloqueo de cuentas,Bloqueo de Vehiculos,Bloqueo de bienes inmuebles,Interventor,Otro',
+            'medidas_decretadas_otro' => 'nullable|string|max:500',
             'observaciones' => 'nullable|string|max:5000',
             'numero_folios' => 'nullable|integer|min:1',
         ]);
@@ -56,6 +73,11 @@ class EcPaController extends Controller
         $ecPa = EcPa::findOrFail($id);
         $ecPa->usuario_id = Auth::user()->id;
         $ecPa->numero_resolucion = $request->numero_resolucion;
+        $ecPa->fecha_hora_notificacion = $request->fecha_hora_notificacion;
+        $ecPa->fecha_resolucion = $request->fecha_resolucion;
+        $ecPa->juzgado_que_conoce = $request->juzgado_que_conoce;
+        $ecPa->medidas_decretadas = $request->medidas_decretadas;
+        $ecPa->medidas_decretadas_otro = $request->medidas_decretadas_otro;
         $ecPa->observaciones = $request->observaciones;
         $ecPa->numero_folios = $request->numero_folios;
 

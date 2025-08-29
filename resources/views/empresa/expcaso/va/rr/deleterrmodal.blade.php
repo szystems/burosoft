@@ -1,11 +1,11 @@
-<div class="modal fade" id="deleteRrModal-{{ $rr->id }}" tabindex="-1" aria-labelledby="deleteRrModal-{{ $rr->id }}" aria-hidden="true">
+<div class="modal fade" id="deleteRrVaModal-{{ $rr->id }}" tabindex="-1" aria-labelledby="deleteRrVaModal-{{ $rr->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-rr/'.$rr->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deleteRrModal-{{ $rr->id }}">
+                    <h5 class="modal-title h4" id="deleteRrVaModal-{{ $rr->id }}">
                         Eliminar Recurso de Revocatoria:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

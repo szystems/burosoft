@@ -24,8 +24,9 @@ class AmpmrFormRequest extends FormRequest
     public function rules()
     {
         return [
-            'fecha_hora_presentacion' => 'required|date',
+            'fecha_hora_presentacion' => 'required|date_format:Y-m-d\TH:i',
             'numero_documento'        => 'required|string',
+            'oficina_ea'              => 'nullable|string',
             'usuario_id'              => 'required|integer',
             'audiencia_id'            => 'required|integer',
             'observaciones'           => 'nullable|string',

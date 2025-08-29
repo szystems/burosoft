@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Empresa;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\OcursoPaFormRequest;
 use App\Models\OcursoPa;
 use App\Models\AudienciaPa;
 use App\Models\Bitacora;
@@ -12,35 +13,20 @@ use Illuminate\Support\Facades\File;
 
 class OcursoPaController extends Controller
 {
-    public function insert(Request $request)
+    public function insert(OcursoPaFormRequest $request)
     {
-        $request->validate([
-            'audiencia_pa_id' => 'required',
-            'fecha_hora_presentacion' => 'required|date',
-            'numero_documento' => 'required|string|max:255',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
+        $data = $request->validated();
+        $data['usuario_id'] = Auth::user()->id;
 
-        $ocursoPa = new OcursoPa();
-        $ocursoPa->audiencia_pa_id = $request->audiencia_pa_id;
-        $ocursoPa->usuario_id = Auth::user()->id;
-        $ocursoPa->fecha_hora_presentacion = $request->fecha_hora_presentacion;
-        $ocursoPa->numero_documento = $request->numero_documento;
-        $ocursoPa->observaciones = $request->observaciones;
-        $ocursoPa->numero_folios = $request->numero_folios;
-
-        // Manejo de archivo
         if ($request->hasFile('archivo')) {
             $file = $request->file('archivo');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/pa/ocurso'), $filename);
-            $ocursoPa->archivo = $filename;
-            $ocursoPa->tipo_archivo = $file->getClientOriginalExtension();
+            $data['archivo'] = $filename;
+            $data['tipo_archivo'] = $file->getClientOriginalExtension();
         }
 
-        $ocursoPa->save();
+        $ocursoPa = OcursoPa::create($data);
 
         // Insertar en Bitácora
         Bitacora::create([
@@ -57,24 +43,12 @@ class OcursoPaController extends Controller
         return redirect('show-audiencia-pa/' . $request->audiencia_pa_id)->with('status', 'Ocurso PA creado exitosamente');
     }
 
-    public function update(Request $request, $id)
+    public function update(OcursoPaFormRequest $request, $id)
     {
-        $request->validate([
-            'fecha_hora_presentacion' => 'required|date',
-            'numero_documento' => 'required|string|max:255',
-            'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
-            'observaciones' => 'nullable|string',
-            'numero_folios' => 'nullable|integer|min:1',
-        ]);
-
+        $data = $request->validated();
+        
         $ocursoPa = OcursoPa::findOrFail($id);
-        $ocursoPa->usuario_id = Auth::user()->id;
-        $ocursoPa->fecha_hora_presentacion = $request->fecha_hora_presentacion;
-        $ocursoPa->numero_documento = $request->numero_documento;
-        $ocursoPa->observaciones = $request->observaciones;
-        $ocursoPa->numero_folios = $request->numero_folios;
 
-        // Manejo de archivo
         if ($request->hasFile('archivo')) {
             // Eliminar archivo anterior si existe
             if ($ocursoPa->archivo && File::exists(public_path('uploads/pa/ocurso/' . $ocursoPa->archivo))) {
@@ -84,11 +58,11 @@ class OcursoPaController extends Controller
             $file = $request->file('archivo');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->move(public_path('uploads/pa/ocurso'), $filename);
-            $ocursoPa->archivo = $filename;
-            $ocursoPa->tipo_archivo = $file->getClientOriginalExtension();
+            $data['archivo'] = $filename;
+            $data['tipo_archivo'] = $file->getClientOriginalExtension();
         }
 
-        $ocursoPa->save();
+        $ocursoPa->update($data);
 
         // Insertar en Bitácora
         Bitacora::create([

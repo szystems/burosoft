@@ -12,8 +12,9 @@ class NtrrPa extends Model
     protected $table = 'ntrrs_pa';
 
     protected $fillable = [
-        'fecha',
+        'fecha_hora_notificacion',
         'numero_resolucion',
+        'fecha_resolucion',
         'usuario_id',
         'audiencia_pa_id',
         'archivo',
@@ -23,7 +24,8 @@ class NtrrPa extends Model
     ];
 
     protected $casts = [
-        'fecha' => 'date',
+        'fecha_hora_notificacion' => 'datetime',
+        'fecha_resolucion' => 'date',
     ];
 
     // Relación con AudienciaPa

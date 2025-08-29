@@ -17,10 +17,17 @@ class Audiencia extends Model
         'fecha',
         'impuestos',
         'archivo',
-        'tipo_archivo'
+        'tipo_archivo',
+        'fecha_notificacion',
+        'plazo_evacuar',
+        'plazo_evacuar_otro'
     ];
 
-    protected $dates = ['fecha'];
+    protected $casts = [
+        'fecha' => 'datetime',
+        'fecha_notificacion' => 'datetime',
+        'impuestos' => 'decimal:2',
+    ];
 
     public function usuario()
     {

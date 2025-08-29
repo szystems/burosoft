@@ -20,10 +20,14 @@ class AudienciaPa extends Model
         'impuestos',
         'archivo',
         'tipo_archivo',
+        'fecha_notificacion',
+        'plazo_evacuar',
+        'plazo_evacuar_otro'
     ];
 
     protected $casts = [
         'fecha' => 'datetime',
+        'fecha_notificacion' => 'datetime',
         'impuestos' => 'decimal:2',
     ];
 

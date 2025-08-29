@@ -1,9 +1,9 @@
 <!-- Modal -->
-<div class="modal fade" id="editRrModal-{{ $rr->id }}" tabindex="-1" aria-labelledby="editRrModal-{{ $rr->id }}" aria-hidden="true">
+<div class="modal fade" id="editRrVaModal-{{ $rr->id }}" tabindex="-1" aria-labelledby="editRrVaModal-{{ $rr->id }}" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editRrModal-{{ $rr->id }}">
+                <h5 class="modal-title" id="editRrVaModal-{{ $rr->id }}">
                     <i class="bi bi-pencil text-warning"></i> Editar Recurso de Revocatoria
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -33,6 +33,18 @@
                                 <span class="help-block opacity-7">
                                     <strong>
                                         <font color="red">{{ $errors->first('numero_documento') }}</font>
+                                    </strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label for="oficina_agencia_ea" class="form-label">Oficina o agencia donde fue presentada la Evacuación de Audiencia (EA)</label>
+                            <input type="text" name="oficina_agencia_ea" class="form-control" value="{{ $rr->oficina_agencia_ea }}" maxlength="300">
+                            @if ($errors->has('oficina_agencia_ea'))
+                                <span class="help-block opacity-7">
+                                    <strong>
+                                        <font color="red">{{ $errors->first('oficina_agencia_ea') }}</font>
                                     </strong>
                                 </span>
                             @endif

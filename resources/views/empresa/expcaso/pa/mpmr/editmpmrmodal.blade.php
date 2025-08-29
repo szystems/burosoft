@@ -15,11 +15,21 @@
                 <div class="modal-body">
                     <div class="row gx-3">
                         <div class="col-md-6 mb-3">
-                            <label for="fecha_hora_{{ $mpmr->id }}" class="form-label">Fecha y Hora <span class="text-danger">*</span></label>
+                            <label for="fecha_hora_{{ $mpmr->id }}" class="form-label">Fecha y Hora de Notificación <span class="text-danger">*</span></label>
                             <input type="datetime-local" class="form-control @error('fecha_hora') is-invalid @enderror" 
                                    id="fecha_hora_{{ $mpmr->id }}" name="fecha_hora" 
                                    value="{{ old('fecha_hora', date('Y-m-d\TH:i', strtotime($mpmr->fecha_hora))) }}" required>
                             @error('fecha_hora')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="fecha_resolucion_{{ $mpmr->id }}" class="form-label">Fecha de Resolución</label>
+                            <input type="date" class="form-control @error('fecha_resolucion') is-invalid @enderror" 
+                                   id="fecha_resolucion_{{ $mpmr->id }}" name="fecha_resolucion" 
+                                   value="{{ old('fecha_resolucion', $mpmr->fecha_resolucion ? $mpmr->fecha_resolucion->format('Y-m-d') : '') }}">
+                            @error('fecha_resolucion')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

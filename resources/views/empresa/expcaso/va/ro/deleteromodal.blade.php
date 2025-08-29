@@ -1,11 +1,11 @@
-<div class="modal fade" id="deleteRoModal-{{ $ro->id }}" tabindex="-1" aria-labelledby="deleteRoModal-{{ $ro->id }}" aria-hidden="true">
+<div class="modal fade" id="deleteRoVaModal-{{ $ro->id }}" tabindex="-1" aria-labelledby="deleteRoVaModal-{{ $ro->id }}" aria-hidden="true">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <form action="{{ url('delete-ro/'.$ro->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
                 <div class="modal-header">
-                    <h5 class="modal-title h4" id="deleteRoModal-{{ $ro->id }}">
+                    <h5 class="modal-title h4" id="deleteRoVaModal-{{ $ro->id }}">
                         Eliminar Resolución de Ocurso:
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
