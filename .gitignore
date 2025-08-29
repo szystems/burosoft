@@ -19,3 +19,19 @@ yarn-error.log
 /database/migrations_backup_*/
 *_OLD.php
 *_old.php
+
+# VS Code workspace files
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+
+# Archivos temporales y cache
+*.tmp
+*.temp
+*~
+.DS_Store
+Thumbs.db
+
+# Logs específicos del proyecto  
+storage/logs/*.log
+bootstrap/cache/*.php
