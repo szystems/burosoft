@@ -13,3 +13,9 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
+
+# Archivos de backup de migraciones
+/database/migrations/migrations_old_backup/
+/database/migrations_backup_*/
+*_OLD.php
+*_old.php
