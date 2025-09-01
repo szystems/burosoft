@@ -20,6 +20,10 @@ yarn-error.log
 *_OLD.php
 *_old.php
 
+# Prevenir archivos vacíos específicos problemáticos
+database/migrations/2025_08_21_114000_add_notificacion_fields_to_audiencias_table.php
+database/migrations/2025_*_*_add_notificacion_fields_*.php
+
 # VS Code workspace files
 .vscode/settings.json
 .vscode/launch.json
