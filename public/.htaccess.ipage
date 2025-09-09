@@ -1,0 +1,27 @@
+# .htaccess MINIMALISTA para servidores sin mod_rewrite
+# Compatible con iPage y servidores compartidos
+
+# Prevenir acceso a archivos sensibles
+<Files ~ "^\.">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files ~ "\.env$">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Redirigir todo a index.php si mod_rewrite NO está disponible
+# Esto manejará las rutas internamente en PHP
+DirectoryIndex index.php
+
+# Configuración PHP básica
+php_flag display_errors Off
+php_flag log_errors On
+
+# Headers de seguridad básicos
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options nosniff
+    Header set X-Frame-Options SAMEORIGIN
+</IfModule>

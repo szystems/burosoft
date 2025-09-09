@@ -1,0 +1,33 @@
+<?php
+// index.php SEGURO para debugging
+// Sin dependencias de Laravel - solo para diagnosticar
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+echo "<h1>🔧 INDEX.PHP DE EMERGENCIA</h1>";
+echo "<p>Este archivo funciona sin Laravel para diagnosticar problemas básicos.</p>";
+echo "<hr>";
+
+echo "<h2>✅ PHP FUNCIONANDO CORRECTAMENTE</h2>";
+echo "<strong>PHP Version:</strong> " . phpversion() . "<br>";
+echo "<strong>Servidor:</strong> " . $_SERVER['SERVER_SOFTWARE'] . "<br>";
+echo "<strong>Fecha:</strong> " . date('Y-m-d H:i:s') . "<br>";
+echo "<hr>";
+
+echo "<h2>🔗 HERRAMIENTAS DE DIAGNÓSTICO</h2>";
+echo "<a href='logs-debug.php' style='background:#007cba; color:white; padding:10px; text-decoration:none; margin:5px; display:inline-block;'>📊 DIAGNÓSTICO COMPLETO</a><br><br>";
+echo "<a href='show-logs.php' style='background:#dc3545; color:white; padding:10px; text-decoration:none; margin:5px; display:inline-block;'>📄 VER LOGS RÁPIDO</a><br><br>";
+echo "<a href='debug-server.php' style='background:#28a745; color:white; padding:10px; text-decoration:none; margin:5px; display:inline-block;'>🖥️ INFO SERVIDOR</a><br><br>";
+
+echo "<hr>";
+echo "<h2>📝 PASOS PARA SOLUCIONAR:</h2>";
+echo "<ol>";
+echo "<li>Hacer clic en <strong>VER LOGS RÁPIDO</strong> para ver errores</li>";
+echo "<li>Hacer clic en <strong>DIAGNÓSTICO COMPLETO</strong> para análisis detallado</li>";
+echo "<li>Una vez identificado el problema, restaurar index.php normal</li>";
+echo "</ol>";
+
+echo "<hr>";
+echo "<p><small>Este es un index.php temporal para debugging. Reemplazar por el original una vez solucionado.</small></p>";
+?>

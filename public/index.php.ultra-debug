@@ -1,0 +1,71 @@
+<?php
+// INDEX ULTRA BÁSICO - Solo para diagnosticar
+// NO usa Laravel, NO usa dependencias
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+echo "<h1>🔧 DIAGNÓSTICO ULTRA BÁSICO</h1>";
+echo "<p><strong>PHP Funciona:</strong> SÍ</p>";
+echo "<p><strong>Fecha:</strong> " . date('Y-m-d H:i:s') . "</p>";
+
+// Test de extensión ctype
+echo "<h2>🧪 Test ctype:</h2>";
+if (extension_loaded('ctype')) {
+    echo "✅ Extensión ctype: CARGADA<br>";
+} else {
+    echo "❌ Extensión ctype: NO CARGADA<br>";
+}
+
+// Test funciones ctype
+if (function_exists('ctype_alnum')) {
+    echo "✅ Función ctype_alnum: DISPONIBLE<br>";
+} else {
+    echo "❌ Función ctype_alnum: NO DISPONIBLE<br>";
+}
+
+// Cargar polyfill
+echo "<h2>🔄 Cargando polyfill:</h2>";
+try {
+    if (file_exists('./ctype-polyfill.php')) {
+        require_once './ctype-polyfill.php';
+        echo "✅ Polyfill cargado<br>";
+        
+        if (function_exists('ctype_alnum')) {
+            echo "✅ ctype_alnum funcionando: " . (ctype_alnum('abc123') ? 'SÍ' : 'NO') . "<br>";
+        }
+    } else {
+        echo "❌ ctype-polyfill.php NO ENCONTRADO<br>";
+    }
+} catch (Exception $e) {
+    echo "❌ Error cargando polyfill: " . $e->getMessage() . "<br>";
+}
+
+// Test archivos Laravel
+echo "<h2>📁 Test archivos Laravel:</h2>";
+$files = ['../vendor/autoload.php', '../bootstrap/app.php', '../.env'];
+foreach ($files as $file) {
+    if (file_exists($file)) {
+        echo "✅ $file: EXISTE<br>";
+    } else {
+        echo "❌ $file: NO ENCONTRADO<br>";
+    }
+}
+
+// Test carga de autoloader
+echo "<h2>🔄 Test Autoloader:</h2>";
+try {
+    if (file_exists('../vendor/autoload.php')) {
+        require_once '../vendor/autoload.php';
+        echo "✅ Autoloader cargado sin errores<br>";
+    }
+} catch (Exception $e) {
+    echo "❌ Error en autoloader: " . $e->getMessage() . "<br>";
+} catch (Error $e) {
+    echo "❌ Error fatal en autoloader: " . $e->getMessage() . "<br>";
+}
+
+echo "<hr>";
+echo "<p><a href='test-basic.php'>🧪 Test PHP básico</a></p>";
+echo "<p><small>Si este archivo funciona, PHP está OK y el problema es específico.</small></p>";
+?>

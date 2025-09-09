@@ -1,0 +1,98 @@
+<?php
+
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Request;
+
+define('LARAVEL_START', microtime(true));
+
+// Configurar reporte de errores para debugging
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+ini_set('log_errors', 1);
+
+try {
+    /*
+    |--------------------------------------------------------------------------
+    | Check If The Application Is Under Maintenance
+    |--------------------------------------------------------------------------
+    */
+    
+    if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+        require $maintenance;
+    }
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Register The Auto Loader
+    |--------------------------------------------------------------------------
+    */
+    
+    if (!file_exists(__DIR__.'/../vendor/autoload.php')) {
+        throw new Exception('Vendor autoload.php no encontrado. Ejecutar: composer install');
+    }
+    
+    require __DIR__.'/../vendor/autoload.php';
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Run The Application
+    |--------------------------------------------------------------------------
+    */
+    
+    if (!file_exists(__DIR__.'/../bootstrap/app.php')) {
+        throw new Exception('Bootstrap app.php no encontrado.');
+    }
+    
+    $app = require_once __DIR__.'/../bootstrap/app.php';
+    
+    if (!$app) {
+        throw new Exception('No se pudo cargar la aplicación Laravel.');
+    }
+    
+    $kernel = $app->make(Kernel::class);
+    
+    if (!$kernel) {
+        throw new Exception('No se pudo crear el kernel HTTP.');
+    }
+    
+    $response = $kernel->handle(
+        $request = Request::capture()
+    );
+    
+    if (!$response) {
+        throw new Exception('No se pudo generar respuesta HTTP.');
+    }
+    
+    $response->send();
+    $kernel->terminate($request, $response);
+    
+} catch (Error $e) {
+    // Error fatal de PHP
+    http_response_code(500);
+    echo "<h1>🚨 Error Fatal PHP</h1>";
+    echo "<p><strong>Error:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p><strong>Archivo:</strong> " . htmlspecialchars($e->getFile()) . "</p>";
+    echo "<p><strong>Línea:</strong> " . $e->getLine() . "</p>";
+    echo "<p><strong>Trace:</strong></p><pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    echo "<hr><p><a href='compare-config.php'>🔍 Diagnóstico completo</a></p>";
+    
+} catch (Exception $e) {
+    // Excepción de aplicación
+    http_response_code(500);
+    echo "<h1>🚨 Error de Aplicación</h1>";
+    echo "<p><strong>Error:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p><strong>Archivo:</strong> " . htmlspecialchars($e->getFile()) . "</p>";
+    echo "<p><strong>Línea:</strong> " . $e->getLine() . "</p>";
+    echo "<p><strong>Trace:</strong></p><pre>" . htmlspecialchars($e->getTraceAsString()) . "</pre>";
+    echo "<hr><p><a href='compare-config.php'>🔍 Diagnóstico completo</a></p>";
+    
+} catch (Throwable $e) {
+    // Cualquier otro error
+    http_response_code(500);
+    echo "<h1>🚨 Error Desconocido</h1>";
+    echo "<p><strong>Tipo:</strong> " . get_class($e) . "</p>";
+    echo "<p><strong>Error:</strong> " . htmlspecialchars($e->getMessage()) . "</p>";
+    echo "<p><strong>Archivo:</strong> " . htmlspecialchars($e->getFile()) . "</p>";
+    echo "<p><strong>Línea:</strong> " . $e->getLine() . "</p>";
+    echo "<hr><p><a href='compare-config.php'>🔍 Diagnóstico completo</a></p>";
+}

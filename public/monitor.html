@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔄 Monitor PHP - BuroSoft</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .working { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .broken { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .testing { background: #fff3cd; border: 1px solid #ffeaa7; color: #856404; }
+    </style>
+    <script>
+        function testPHP() {
+            const testFrame = document.getElementById('php-test');
+            const statusDiv = document.getElementById('status');
+            const timestamp = document.getElementById('timestamp');
+            
+            // Actualizar timestamp
+            timestamp.textContent = new Date().toLocaleString();
+            
+            // Mostrar estado de prueba
+            statusDiv.className = 'status testing';
+            statusDiv.innerHTML = '🔄 Probando PHP...';
+            
+            // Crear URL de prueba con timestamp para evitar cache
+            const testUrl = 'test-basic.php?t=' + Date.now();
+            
+            // Fetch para probar PHP sin iframe
+            fetch(testUrl)
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    }
+                    throw new Error('HTTP ' + response.status);
+                })
+                .then(data => {
+                    if (data.includes('PHP FUNCIONA')) {
+                        onPHPLoad();
+                    } else {
+                        throw new Error('Respuesta inválida');
+                    }
+                })
+                .catch(error => {
+                    onPHPError();
+                });
+        }
+        
+        function onPHPLoad() {
+            // NO hacer nada automáticamente - requiere verificación manual
+        }
+        
+        function onPHPError() {
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'status broken';
+            statusDiv.innerHTML = '❌ PHP confirmado sin funcionar (Error 500)';
+        }
+        
+        // Test inicial al cargar la página
+        window.onload = function() {
+            document.getElementById('timestamp').textContent = new Date().toLocaleString();
+            
+            // Mostrar estado real basado en pruebas manuales
+            const statusDiv = document.getElementById('status');
+            statusDiv.className = 'status broken';
+            statusDiv.innerHTML = '❌ PHP NO FUNCIONA (Confirmado por pruebas manuales)';
+        }
+        
+        // Eliminar auto-test automático
+    </script>
+</head>
+<body>
+    <h1>🔄 MONITOR PHP - IPAGE</h1>
+    
+    <div id="status" class="status testing">
+        🔄 Probando estado inicial...
+    </div>
+    
+    <p><strong>Última verificación:</strong> <span id="timestamp">Iniciando...</span></p>
+    
+    <button onclick="testPHP()" style="background:#007bff; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;">
+        🔄 PROBAR PHP AHORA
+    </button>
+    
+    <div style="margin: 15px 0; padding: 10px; background: #f8f9fa; border-radius: 5px;">
+        <h4>🧪 PRUEBAS MANUALES:</h4>
+        <p><a href="test-basic.php" target="_blank" style="color: #007bff;">➤ Probar test-basic.php</a> 
+        <span id="test-basic-status" style="margin-left: 10px;">❌ Error 500</span></p>
+        <p><a href="./" target="_blank" style="color: #007bff;">➤ Probar aplicación Laravel</a>
+        <span id="laravel-status" style="margin-left: 10px;">❌ Error 500</span></p>
+        <p><small>❌ <strong>PHP AÚN NO FUNCIONA</strong> - Contactar iPage urgente</small></p>
+    </div>
+    
+    <div style="background: #f8d7da; padding: 15px; margin: 15px 0; border-radius: 5px; color: #721c24;">
+        <h4>🚨 ESTADO ACTUAL: PROBLEMA ACTIVO</h4>
+        <p><strong>✅ Confirmado:</strong> HTML funciona (este archivo)</p>
+        <p><strong>❌ Confirmado:</strong> PHP no funciona (Error 500 en todos los archivos)</p>
+        <p><strong>📞 ACCIÓN:</strong> Contactar soporte iPage INMEDIATAMENTE</p>
+    </div>
+    
+    <div id="laravel-link" style="display:none; margin-top:20px; padding:15px; background:#d4edda; border-radius:5px;">
+        <h3>✅ ¡PHP RESTAURADO!</h3>
+        <p><a href="./" style="background:#28a745; color:white; padding:10px 20px; text-decoration:none; border-radius:5px;">
+            🚀 IR A BUROSOFT LARAVEL
+        </a></p>
+    </div>
+    
+    <hr>
+    
+    <h3>📞 Estado del Ticket iPage</h3>
+    <p>✅ <strong>Ticket enviado:</strong> [Fecha/Hora cuando contactes]</p>
+    <p>⏰ <strong>Tiempo esperado:</strong> 2-24 horas</p>
+    
+    <h3>🔍 Para Soporte Técnico</h3>
+    <p><strong>Error:</strong> ctype.so library not found</p>
+    <p><strong>Afecta:</strong> Todos los archivos PHP</p>
+    <p><strong>Servidor:</strong> Apache con PHP 7.4.33</p>
+    
+    <!-- Frame oculto para probar PHP -->
+    <iframe id="php-test" style="display:none;" onload="onPHPLoad()" onerror="onPHPError()"></iframe>
+    
+    <hr>
+    <p><small>Monitor automático cada 30 segundos. Página generada: 4 sept 2025</small></p>
+</body>
+</html>

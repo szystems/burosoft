@@ -1,0 +1,82 @@
+<?php
+
+use Illuminate\Contracts\Http\Kernel;
+use Illuminate\Http\Request;
+
+define('LARAVEL_START', microtime(true));
+
+/*
+|--------------------------------------------------------------------------
+| Cargar Polyfill para ctype (CRÍTICO para iPage)
+|--------------------------------------------------------------------------
+| iPage no tiene ctype.so configurado correctamente
+| Cargamos nuestro polyfill ANTES que cualquier cosa de Laravel
+|
+*/
+
+require_once __DIR__ . '/ctype-polyfill.php';
+
+/*
+|--------------------------------------------------------------------------
+| Manejo especial para servidores compartidos sin mod_rewrite
+|--------------------------------------------------------------------------
+*/
+
+// Capturar REQUEST_URI para manejar rutas manualmente
+$request_uri = $_SERVER['REQUEST_URI'] ?? '/';
+
+// Limpiar la URI removiendo el path base del proyecto
+$base_path = '/burosoftnuevo/public';
+if (strpos($request_uri, $base_path) === 0) {
+    $request_uri = substr($request_uri, strlen($base_path)) ?: '/';
+}
+
+// Establecer PATH_INFO para Laravel
+if ($request_uri !== '/' && $request_uri !== '') {
+    $_SERVER['PATH_INFO'] = $request_uri;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Check If The Application Is Under Maintenance
+|--------------------------------------------------------------------------
+*/
+
+if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+    require $maintenance;
+}
+
+/*
+|--------------------------------------------------------------------------
+| Register The Auto Loader
+|--------------------------------------------------------------------------
+*/
+
+require __DIR__.'/../vendor/autoload.php';
+
+/*
+|--------------------------------------------------------------------------
+| Run The Application
+|--------------------------------------------------------------------------
+*/
+
+$app = require_once __DIR__.'/../bootstrap/app.php';
+
+$kernel = $app->make(Kernel::class);
+
+try {
+    $response = $kernel->handle(
+        $request = Request::capture()
+    )->send();
+    
+    $kernel->terminate($request, $response);
+} catch (Exception $e) {
+    // Manejo básico de errores para servidores compartidos
+    if (app()->hasDebugModeEnabled()) {
+        throw $e;
+    }
+    
+    // Error genérico para producción
+    http_response_code(500);
+    echo "Application Error. Please try again later.";
+}
