@@ -6,10 +6,14 @@ Esta carpeta contiene **logs y registros históricos** de cambios importantes, a
 
 ## 📁 Contenido
 
-### 📄 **Logs de Actualizaciones**
-- **`ACTUALIZACION_DOCUMENTACION_SEPTIEMBRE_2025.md`** - Log detallado de actualizaciones de documentación del 9 Sep 2025
+### 📄 **Logs de Actualizaciones Recientes**
+- **`CAMBIOS_PA_RSAT_9_SEPTIEMBRE_2025.md`** - ⭐ **ÚLTIMO** - Corrección PA y mejoras R-SAT (9 Sep 2025)
+- **`REORGANIZACION_FINAL_COMPLETADA.md`** - Log de reorganización final del proyecto
 - **`REGISTRO_CAMBIOS_IMPORTANTES.md`** - Historial de cambios críticos del sistema
-- **`ORGANIZACION_FINAL_SEPTIEMBRE_2025.md`** - Log de reorganización de estructura de archivos
+
+### 📄 **Logs Históricos**
+- **`ACTUALIZACION_DOCUMENTACION_SEPTIEMBRE_2025.md`** - Log de actualizaciones de documentación
+- **`ORGANIZACION_FINAL_SEPTIEMBRE_2025.md`** - Log de reorganización de estructura inicial
 
 ## 🎯 **Cuándo Consultar Estos Archivos**
 
@@ -18,6 +22,7 @@ Esta carpeta contiene **logs y registros históricos** de cambios importantes, a
 - **Debugging**: Rastrear cuándo se implementaron cambios específicos
 - **Auditoría**: Revisar qué correcciones se aplicaron y cuándo
 - **Context AI**: Información adicional para agentes AI sobre historial
+- **Continuidad**: Comprender qué cambios se hicieron recientemente
 
 ### ❌ **NO Son Para**:
 - **Documentación principal**: Ver archivos en `docs/project/` (nivel superior)
@@ -27,7 +32,8 @@ Esta carpeta contiene **logs y registros históricos** de cambios importantes, a
 ## 🗂️ **Estructura Recomendada de Consulta**
 
 ### 1️⃣ **Para Estado Actual**: `docs/project/ESTADO_ACTUAL.md`
-### 2️⃣ **Para Especificaciones**: `docs/project/PRD.md`
+### 2️⃣ **Para Últimos Cambios**: `docs/project/logs/CAMBIOS_PA_RSAT_9_SEPTIEMBRE_2025.md`
+### 3️⃣ **Para Especificaciones**: `docs/project/PRD.md`
 ### 3️⃣ **Para Arquitectura**: `docs/project/ARCHITECTURE.md`
 ### 4️⃣ **Para Historial**: `docs/project/logs/` (esta carpeta)
 
