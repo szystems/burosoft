@@ -1,16 +1,18 @@
 # PRD - Product Requirements Document
 ## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 3.0  
-**Fecha**: 29 de agosto de 2025  
+**Versión**: 3.1 CORREGIDA  
+**Fecha**: 9 de septiembre de 2025  
 **Autor**: Equipo SZSystems  
-**Estado**: **IMPLEMENTACIÓN COMPLETA - SISTEMA FUNCIONAL**
+**Estado**: **IMPLEMENTACIÓN COMPLETA - AUDIENCIAS VA/PA CORREGIDAS**
 
 ---
 
 ## 1. Resumen Ejecutivo
 
 BUROSOFT es una plataforma SaaS multi-tenant **completamente funcional** diseñada para profesionales del derecho tributario y administrativo. El sistema gestiona múltiples empresas cliente con módulos especializados en **Vía Administrativa (VA)** y **Procedimiento Administrativo (PA)**, ambos completamente implementados y operativos.
+
+**ACTUALIZACIÓN CRÍTICA 9 SEP 2025**: Error 1265 de audiencias VA/PA completamente resuelto, tablas PA faltantes creadas, modelos corregidos.
 
 ### 1.1 Objetivos del Producto ✅ COMPLETADOS
 
@@ -20,16 +22,19 @@ BUROSOFT es una plataforma SaaS multi-tenant **completamente funcional** diseña
 - ✅ Facilitar el seguimiento detallado de audiencias y procedimientos
 - ✅ Generar reportes y documentación legal automatizada
 - ✅ Sistema de gestión de archivos y documentos integrado
+- ✅ **NUEVO**: Funcionalidad "Otro" en campos ENUM de audiencias
 
 ### 1.2 Estado Actual del Sistema
 
-| Módulo | Estado | Funcionalidad | Integración |
-|--------|--------|---------------|-------------|
-| **VA (Vía Administrativa)** | ✅ Completo | 100% | Base de datos sincronizada |
-| **PA (Procedimiento Administrativo)** | ✅ Completo | 100% | Base de datos sincronizada |
-| **PAT (Proc. Admin. Tributarios)** | ✅ Completo | 100% | Sistema de archivos implementado |
-| **Base de Datos** | ✅ Sincronizada | 100% | iPage producción operativa |
-| **JavaScript/Modales** | ✅ Sin conflictos | 100% | Naming único implementado |
+| Módulo | Estado | Funcionalidad | Issues Pendientes | Última Actualización |
+|--------|--------|---------------|-------------------|-------------------|
+| **VA (Vía Administrativa)** | ✅ Completo | 100% | Ninguno | **9 Sep 2025** |
+| **PA (Procedimiento Administrativo)** | ✅ Completo | 100% | Ninguno | **9 Sep 2025** |
+| **Audiencias VA/PA** | ✅ **CORREGIDO** | 100% | **Error 1265 RESUELTO** | **9 Sep 2025** |
+| **PAT (Proc. Admin. Tributarios)** | ✅ Completo | 100% | Ninguno | Ago 2025 |
+| **Base de Datos** | ✅ Consolidada | 100% | Ninguno | **9 Sep 2025** |
+| **Migraciones** | ✅ Optimizadas | 30 archivos | Ninguno | **9 Sep 2025** |
+| **JavaScript/Modales** | ✅ Sin conflictos | 100% | Ninguno | Ago 2025 |
 
 ---
 
@@ -48,6 +53,17 @@ BUROSOFT es una plataforma SaaS multi-tenant **completamente funcional** diseña
 - **Modales JavaScript**: Funciones únicas sin conflictos de naming
 
 #### ✅ **Módulo PA (Procedimiento Administrativo) - COMPLETO**  
+- **Sistema independiente de audiencias PA**: CRUD completo con campos ENUM corregidos
+- **Tablas PA completadas**: dpmrs_pa y aceptacions_pa creadas y funcionales (9 Sep 2025)
+- **Documentos EV (Escritos Varios)**: Con campo numero_documento especializado
+- **PP PA (Propuesta de Pruebas)**: Sistema independiente del VA
+- **ADPMR PA**: Gestión completa de documentación con archivos
+- **EC PA (Económico Coactivo)**: Campo medidas_decretadas (JSON)
+- **NTRRS PA**: Campos de fecha especializados para notificaciones
+- **Nulidades PA**: Con fecha_hora_notificacion específica
+- **R-SAT PA**: Modelo corregido, apunta a resolucions_pa correctamente
+- **Funcionalidad "Otro"**: Implementada en todos los campos relevantes
+- **Modales JavaScript**: Sistema único sin conflictos de naming
 - **Audiencias PA**: Sistema independiente de gestión de audiencias
 - **Documentos EV (Escritos Varios)**: Con numero_documento y gestión completa
 - **Documentos PP PA**: Sistema específico para procedimientos administrativos

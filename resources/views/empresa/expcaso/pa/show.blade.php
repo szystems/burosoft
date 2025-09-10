@@ -9,7 +9,7 @@
                 <div class="page-icon">
                     <i class="bi bi-folder2-open"></i>
                 </div>
-                <div class="p                                                                                    {{ $audienciasPa->links() }}ge-title">
+                <div class="page-title">
                     <h5>Exp/Caso</h5>
                 </div>
             </div>
@@ -480,7 +480,15 @@
                                                                                                     </td>
                                                                                                     <td align="center">
                                                                                                         <a class="dropdown-item" href="{{ url('show-audiencia-pa/'.$audienciaPa->id) }}">
-                                                                                                            <p class="text-primary"><strong>{{  $audienciaPa->tipo_audiencia }}</strong></p>
+                                                                                                            <p class="text-primary">
+                                                                                                                <strong>
+                                                                                                                    @if($audienciaPa->tipo_audiencia == 'Otro' && $audienciaPa->tipo_audiencia_otro)
+                                                                                                                        {{ $audienciaPa->tipo_audiencia_otro }}
+                                                                                                                    @else
+                                                                                                                        {{ $audienciaPa->tipo_audiencia }}
+                                                                                                                    @endif
+                                                                                                                </strong>
+                                                                                                            </p>
                                                                                                         </a>
                                                                                                     </td>
                                                                                                     <td align="center">

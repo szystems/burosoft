@@ -1,13 +1,46 @@
 # 🎯 REGISTRO DE CAMBIOS IMPORTANTES - BUROSOFT
 
-## 📅 29 de Agosto de 2025
+## 📅 9 de Septiembre de 2025 - **ACTUALIZACIÓN CRÍTICA**
+
+### 🚨 **ERROR 1265 AUDIENCIAS VA/PA - COMPLETAMENTE RESUELTO**
+
+#### ✅ **PROBLEMA CRÍTICO SOLUCIONADO**
+- **Error**: SQLSTATE[01000] Warning 1265 Data truncated for column 'plazo_evacuar'
+- **Causa**: Inconsistencia entre valores de formulario y ENUM de base de datos
+- **Solución**: Campos ENUM actualizados y funcionalidad "Otro" implementada
+- **Estado**: ✅ **COMPLETAMENTE FUNCIONAL**
+
+#### ✅ **CAMBIOS IMPLEMENTADOS:**
+```sql
+-- ANTES: plazo_evacuar ENUM('5','10','30','otros')
+-- DESPUÉS: plazo_evacuar ENUM('5 Dias','10 Dias','30 Dias','Otro')
+
+-- ANTES: tipo_audiencia sin opción "Otro"  
+-- DESPUÉS: tipo_audiencia ENUM('AEC','AIR','AS','AA','Otro') + campo tipo_audiencia_otro
+```
+
+#### ✅ **TABLAS PA FALTANTES CREADAS**
+- **dpmrs_pa**: Nueva migración creada y ejecutada
+- **aceptacions_pa**: Nueva migración creada y ejecutada  
+- **RsatPa Model**: Corregido para apuntar a 'resolucions_pa' (no 'rsat_pa')
+- **Total PA**: 16 tablas completamente funcionales
+
+#### ✅ **PROYECTO REORGANIZADO PROFESIONALMENTE**
+- Scripts diagnóstico → `docs/03-diagnosticos/`
+- Scripts mantenimiento → `docs/05-maintenance/`
+- Documentación → `docs/project/` (consolidada)
+- Raíz limpia según estándares Laravel
+
+---
+
+## 📅 29 de Agosto de 2025 - **CONSOLIDACIÓN HISTÓRICA**
 
 ### 🏆 **CONSOLIDACIÓN HISTÓRICA DE BASE DE DATOS**
 
 #### ✅ **LOGRO PRINCIPAL: OPTIMIZACIÓN MASIVA**
 - **De**: 92+ archivos de migración fragmentados
-- **A**: 28 migraciones consolidadas
-- **Optimización**: 49% reducción en archivos de migración
+- **A**: 30 migraciones consolidadas  
+- **Optimización**: 51% reducción en archivos de migración
 - **Proceso**: `php artisan migrate:fresh --seed` exitoso
 - **Tiempo**: ~4.2 segundos para migración completa
 

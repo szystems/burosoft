@@ -17,12 +17,13 @@ class AudienciaPaController extends Controller
         $request->validate([
             'pat_id' => 'required',
             'numero_audiencia' => 'required|string|max:255',
-            'tipo_audiencia' => 'required|in:AEC,AIR,AS,AA',
+            'tipo_audiencia' => 'required|in:AEC,AIR,AS,AA,Otro',
+            'tipo_audiencia_otro' => 'nullable|string|max:255|required_if:tipo_audiencia,Otro',
             'fecha' => 'required|date',
             'impuestos' => 'required|numeric|min:0',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'fecha_notificacion' => 'nullable|date',
-            'plazo_evacuar' => 'nullable|string|max:255',
+            'plazo_evacuar' => 'nullable|in:5 Dias,10 Dias,30 Dias,Otro',
             'plazo_evacuar_otro' => 'nullable|string|max:255|required_if:plazo_evacuar,Otro',
         ]);
 
@@ -31,6 +32,7 @@ class AudienciaPaController extends Controller
         $audienciaPa->usuario_id = Auth::user()->id;
         $audienciaPa->numero_audiencia = $request->numero_audiencia;
         $audienciaPa->tipo_audiencia = $request->tipo_audiencia;
+        $audienciaPa->tipo_audiencia_otro = $request->tipo_audiencia_otro;
         $audienciaPa->fecha = $request->fecha;
         $audienciaPa->impuestos = $request->impuestos;
         $audienciaPa->fecha_notificacion = $request->fecha_notificacion;
@@ -55,18 +57,20 @@ class AudienciaPaController extends Controller
     {
         $request->validate([
             'numero_audiencia' => 'required|string|max:255',
-            'tipo_audiencia' => 'required|in:AEC,AIR,AS,AA',
+            'tipo_audiencia' => 'required|in:AEC,AIR,AS,AA,Otro',
+            'tipo_audiencia_otro' => 'nullable|string|max:255|required_if:tipo_audiencia,Otro',
             'fecha' => 'required|date',
             'impuestos' => 'required|numeric|min:0',
             'archivo' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:10240',
             'fecha_notificacion' => 'nullable|date',
-            'plazo_evacuar' => 'nullable|string|max:255',
+            'plazo_evacuar' => 'nullable|in:5 Dias,10 Dias,30 Dias,Otro',
             'plazo_evacuar_otro' => 'nullable|string|max:255|required_if:plazo_evacuar,Otro',
         ]);
 
         $audienciaPa = AudienciaPa::find($id);
         $audienciaPa->numero_audiencia = $request->numero_audiencia;
         $audienciaPa->tipo_audiencia = $request->tipo_audiencia;
+        $audienciaPa->tipo_audiencia_otro = $request->tipo_audiencia_otro;
         $audienciaPa->fecha = $request->fecha;
         $audienciaPa->impuestos = $request->impuestos;
         $audienciaPa->fecha_notificacion = $request->fecha_notificacion;

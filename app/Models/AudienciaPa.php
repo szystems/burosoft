@@ -16,6 +16,7 @@ class AudienciaPa extends Model
         'usuario_id',
         'numero_audiencia',
         'tipo_audiencia',
+        'tipo_audiencia_otro',
         'fecha',
         'impuestos',
         'archivo',

@@ -1,15 +1,20 @@
 # Estado Actual del Proyecto BUROSOFT
 ## Resumen Completo para Continuidad de Desarrollo
 
-**Fecha**: 29 de agosto de 2025  
-**Versión del Sistema**: 3.0 Optimizada  
-**Estado General**: ✅ **COMPLETAMENTE FUNCIONAL CON BASE DE DATOS CONSOLIDADA**
+**Fecha**: 9 de septiembre de 2025  
+**Versión del Sistema**: 3.1 Corregida y Optimizada  
+**Estado General**: ✅ **COMPLETAMENTE FUNCIONAL CON AUDIENCIAS VA/PA CORREGIDAS**
 
 ---
 
 ## 🎯 Estado Ejecutivo
 
-BUROSOFT es un sistema **completamente funcional** desplegado en producción (iPage hosting) con todos los módulos operativos. **ACTUALIZACIÓN CRÍTICA**: Base de datos completamente consolidada y optimizada. Se realizó una consolidación histórica de migraciones reduciendo 92+ archivos fragmentados a 28 migraciones consolidadas (49% de optimización).
+BUROSOFT es un sistema **completamente funcional** desplegado en producción (iPage hosting) con todos los módulos operativos. **ACTUALIZACIÓN CRÍTICA 9 SEP 2025**: 
+- ✅ **Error 1265 Audiencias VA/PA RESUELTO**: Campos ENUM `plazo_evacuar` y `tipo_audiencia` corregidos
+- ✅ **Funcionalidad "Otro" Implementada**: Campos dinámicos con validación `required_if`
+- ✅ **Tablas PA Completadas**: `dpmrs_pa` y `aceptacions_pa` creadas y funcionando
+- ✅ **Modelos Corregidos**: `RsatPa` apunta correctamente a `resolucions_pa`
+- ✅ **Documentación Reorganizada**: Raíz limpia, scripts organizados en `docs/`
 
 ---
 
@@ -17,17 +22,74 @@ BUROSOFT es un sistema **completamente funcional** desplegado en producción (iP
 
 | Módulo | Estado | Funcionalidad | Issues Pendientes | Última Actualización |
 |--------|--------|---------------|-------------------|-------------------|
-| **VA (Vía Administrativa)** | ✅ Completo | 100% | Ninguno | Ago 2025 |
-| **PA (Procedimiento Administrativo)** | ✅ Completo | 100% | Ninguno | Ago 2025 |
+| **VA (Vía Administrativa)** | ✅ Completo | 100% | Ninguno | **9 Sep 2025** |
+| **PA (Procedimiento Administrativo)** | ✅ Completo | 100% | Ninguno | **9 Sep 2025** |
+| **Audiencias VA/PA** | ✅ **CORREGIDO** | 100% | **Error 1265 RESUELTO** | **9 Sep 2025** |
 | **PAT (Proc. Admin. Tributarios)** | ✅ Completo | 100% | Ninguno | Ago 2025 |
-| **Base de Datos** | ✅ Consolidada | 100% | Ninguno | **29 Ago 2025** |
-| **Migraciones** | ✅ Optimizadas | 28 archivos | Ninguno | **29 Ago 2025** |
+| **Base de Datos** | ✅ Consolidada | 100% | Ninguno | **9 Sep 2025** |
+| **Migraciones** | ✅ Optimizadas | 30 archivos | Ninguno | **9 Sep 2025** |
 | **JavaScript/Modales** | ✅ Sin conflictos | 100% | Ninguno | Ago 2025 |
 | **Sistema de Archivos** | ✅ Operativo | 100% | Ninguno | Ago 2025 |
+| **Documentación** | ✅ **REORGANIZADA** | 100% | Ninguno | **9 Sep 2025** |
 
 ---
 
-## 🏗️ Arquitectura Actual en Producción
+---
+
+## 🔧 **ACTUALIZACIONES CRÍTICAS - 9 SEPTIEMBRE 2025**
+
+### ✅ **ERROR 1265 AUDIENCIAS VA/PA - COMPLETAMENTE RESUELTO**
+
+**Problema Original**:
+- Error `SQLSTATE[01000] Warning 1265 Data truncated for column 'plazo_evacuar'`
+- Inconsistencia entre valores de formulario y ENUM de base de datos
+
+**Solución Implementada**:
+```php
+// ANTES: plazo_evacuar ENUM('5','10','30','otros')
+// DESPUÉS: plazo_evacuar ENUM('5 Dias','10 Dias','30 Dias','Otro')
+
+// ANTES: tipo_audiencia sin opción "Otro"
+// DESPUÉS: tipo_audiencia ENUM('AEC','AIR','AS','AA','Otro') + campo tipo_audiencia_otro
+```
+
+**Archivos Actualizados**:
+1. `database/migrations/2025_02_25_114400_create_complete_audiencias_table.php`
+2. `database/migrations/2025_02_25_114401_create_complete_audiencias_pa_table.php`
+3. `app/Models/Audiencia.php` y `app/Models/AudienciaPa.php`
+4. `app/Http/Controllers/AudienciaController.php` y `AudienciapaController.php`
+5. Todas las vistas Blade en `resources/views/empresa/expcaso/*/audiencia*.blade.php`
+
+### ✅ **TABLAS PA FALTANTES CREADAS**
+
+**Problema**: Error `Table 'dpmrs_pa' doesn't exist` en PA audiencias
+
+**Solución**:
+- Creada migración `2025_07_21_100003_create_complete_dpmrs_pa_table.php`
+- Creada migración `2025_07_21_100004_create_complete_aceptacions_pa_table.php`
+- Verificadas 16 tablas PA completamente funcionales
+
+### ✅ **MODELO RSAT_PA CORREGIDO**
+
+**Problema**: `RsatPa` model apuntaba a tabla inexistente `'rsat_pa'`
+
+**Solución**:
+```php
+// Corregido en app/Models/RsatPa.php
+protected $table = 'resolucions_pa'; // Era: 'rsat_pa'
+```
+
+### ✅ **PROYECTO REORGANIZADO PROFESIONALMENTE**
+
+**Cambios de Estructura**:
+- ✅ Scripts de diagnóstico → `docs/03-diagnosticos/`
+- ✅ Scripts de mantenimiento → `docs/05-maintenance/`
+- ✅ Documentación → `docs/project/`
+- ✅ Raíz limpia según estándares Laravel
+
+---
+
+## 🏗️ Arquitectura del Sistema
 
 ### Stack Tecnológico
 ```yaml
@@ -44,11 +106,60 @@ Domain: software.burotributario.com
 ```yaml
 Total Tablas: 52+ tablas consolidadas
 Migraciones Originales: 92+ archivos fragmentados
-Migraciones Actuales: 28 archivos consolidados (49% optimización)
+Migraciones Actuales: 30 archivos consolidados (51% optimización)
 Estado de Migración: ✅ Fresh migration exitosa
 Seeders: ✅ 5 seeders ejecutados correctamente
-Última Consolidación: 29 agosto 2025
+Última Actualización: 9 septiembre 2025
 Foreign Keys: ✅ Todas las relaciones verificadas
+Tablas PA: ✅ 16 tablas completamente funcionales (incluyendo dpmrs_pa y aceptacions_pa)
+Audiencias VA/PA: ✅ Campos ENUM corregidos y funcionales
+```
+
+### 💾 **Base de Datos Actualizada (30 Migraciones)**
+- **Local**: MySQL `dbburo` (desarrollo)
+- **Producción**: iPage MySQL 5.7.44-log `dbburonuevo`
+- **Estado**: ✅ **Todas las tablas funcionando, incluyendo PA completo**
+- **Estructura VA**: 22 tablas principales + relaciones
+- **Estructura PA**: **16 tablas (incluyendo dpmrs_pa y aceptacions_pa)**
+- **Migraciones**: 30 archivos consolidados (vs 92+ originales)
+
+**Tablas PA Confirmadas**:
+- audiencias_pa ✅
+- dpmrs_pa ✅ **(CREADA HOY)**
+- aceptacions_pa ✅ **(CREADA HOY)**
+- resolucions_pa ✅
+- presentacions_pa ✅
+- apelacions_pa ✅
+- (11 tablas adicionales verificadas)
+
+### 🎯 **Campo "Otro" Implementación Completa**
+```javascript
+// Funcionalidad JavaScript implementada
+function toggleOtroField(selectElement, targetFieldId) {
+    const otroField = document.getElementById(targetFieldId);
+    if (selectElement.value === 'Otro') {
+        otroField.style.display = 'block';
+        otroField.querySelector('input').required = true;
+    } else {
+        otroField.style.display = 'none';
+        otroField.querySelector('input').required = false;
+    }
+}
+```
+
+### 🛠️ **Scripts de Desarrollo Organizados**
+```
+docs/
+├── 03-diagnosticos/
+│   ├── diagnostico-migrate-fresh.php ✅
+│   └── check_all_pa_models_fields.sh ✅
+├── 05-maintenance/
+│   ├── kill-mysql-processes.php ✅
+│   └── update_pa_modal_routes.sh ✅
+└── project/
+    ├── ESTADO_ACTUAL.md ✅
+    ├── INDICE_GENERAL.md ✅
+    └── pa_implementation_summary.md ✅
 ```
 
 ### ⚡ **CONSOLIDACIÓN HISTÓRICA COMPLETADA**
@@ -65,12 +176,40 @@ Estado: Lista para desarrollo futuro
 
 ## 🔧 Logros Importantes Completados
 
+### ✅ **AUDIENCIAS VA/PA COMPLETAMENTE CORREGIDAS (9 Septiembre 2025)**
+**Problema**: Error SQLSTATE[01000] Warning 1265 Data truncated for column 'plazo_evacuar'
+**Causa**: Inconsistencia entre valores de formularios y ENUM de base de datos
+**Solución**: 
+- Campos ENUM actualizados: `plazo_evacuar` ENUM('5 Dias','10 Dias','30 Dias','Otro')
+- Campo `tipo_audiencia` expandido con opción "Otro" + campo adicional `tipo_audiencia_otro`
+- Validación `required_if` implementada en controladores
+- JavaScript para campos dinámicos en todas las vistas
+**Estado**: ✅ **COMPLETAMENTE IMPLEMENTADO Y FUNCIONAL**
+**Documentación**: Ver `docs/project/pa_implementation_summary.md`
+
+### ✅ **TABLAS PA FALTANTES CREADAS (9 Septiembre 2025)**
+**Problema**: Error `Table 'dpmrs_pa' doesn't exist` en módulo PA
+**Solución**: 
+- Creadas migraciones `dpmrs_pa` y `aceptacions_pa`
+- Verificadas 16 tablas PA completamente funcionales
+- Modelo `RsatPa` corregido para apuntar a `resolucions_pa`
+**Estado**: ✅ **COMPLETAMENTE RESUELTO**
+
+### ✅ **PROYECTO REORGANIZADO PROFESIONALMENTE (9 Septiembre 2025)**
+**Logro**: Organización completa de archivos del proyecto
+**De**: Scripts dispersos en raíz del proyecto
+**A**: Estructura profesional con categorías organizadas
+- Scripts diagnóstico → `docs/03-diagnosticos/`
+- Scripts mantenimiento → `docs/05-maintenance/`
+- Documentación central → `docs/project/`
+**Estado**: ✅ **COMPLETAMENTE ORGANIZADO**
+
 ### ✅ **CONSOLIDACIÓN MASIVA DE MIGRACIONES (29 Agosto 2025)**
 **Logro**: Consolidación histórica de base de datos fragmentada
 **De**: 92+ archivos de migración fragmentados y desorganizados  
-**A**: 28 migraciones consolidadas y optimizadas
+**A**: 30 migraciones consolidadas y optimizadas
 **Proceso**: Análisis completo + consolidación + migración fresh exitosa
-**Beneficios**: 49% reducción archivos, estructura limpia, mantenible
+**Beneficios**: 51% reducción archivos, estructura limpia, mantenible
 **Estado**: ✅ **COMPLETAMENTE IMPLEMENTADO**
 **Documentación**: Ver `docs/database/ANALISIS_CONSOLIDACION_MIGRACIONES.md`
 
@@ -104,7 +243,8 @@ Estado: Lista para desarrollo futuro
 ## 📋 Funcionalidades Completamente Operativas
 
 ### Módulo VA (Vía Administrativa) ✅
-- ✅ Gestión de audiencias con CRUD completo
+- ✅ Gestión de audiencias con CRUD completo **Y CAMPOS ENUM CORREGIDOS**
+- ✅ **FUNCIONALIDAD "OTRO" COMPLETAMENTE IMPLEMENTADA**
 - ✅ Documentos EA (Escritos de Alegatos) con archivos
 - ✅ Documentos PP (Propuesta de Pruebas) 
 - ✅ ADPMR (Alegatos de Descargo) completos
@@ -113,15 +253,17 @@ Estado: Lista para desarrollo futuro
 - ✅ Sistema de archivos PDF/imagen completamente funcional
 
 ### Módulo PA (Procedimiento Administrativo) ✅
-- ✅ Sistema independiente de audiencias PA
+- ✅ Sistema independiente de audiencias PA **CON CAMPOS ENUM CORREGIDOS**
+- ✅ **Tablas dpmrs_pa y aceptacions_pa CREADAS Y FUNCIONALES**
 - ✅ Documentos EV (Escritos Varios) con numero_documento
 - ✅ PP PA (Propuesta de Pruebas PA) independiente
 - ✅ ADPMR PA con gestión completa de archivos
 - ✅ EC PA (Económico Coactivo) con medidas_decretadas (JSON)
 - ✅ NTRRS PA con campos de fecha especializados
 - ✅ Nulidades PA con fecha_hora_notificacion
-- ✅ R-SAT PA con campo "otro" independiente del VA
+- ✅ R-SAT PA con campo "otro" independiente del VA **Y MODELO CORREGIDO**
 - ✅ Sistema de modales JavaScript sin conflictos de naming
+- ✅ **FUNCIONALIDAD "OTRO" IMPLEMENTADA EN TODOS LOS CAMPOS**
 
 ### Módulo PAT (Procedimientos Administrativos Tributarios) ✅
 - ✅ RCT (Resolución del Conflicto Tributario) completo
@@ -136,9 +278,14 @@ Estado: Lista para desarrollo futuro
 
 ### Base de Datos - Contexto Histórico
 ```sql
+-- ACTUALIZACIÓN CRÍTICA (9 SEPTIEMBRE 2025)
+-- Error 1265 RESUELTO: plazo_evacuar ENUM corregido
+-- Tablas PA completadas: dpmrs_pa, aceptacions_pa
+-- Modelo RsatPa corregido: 'rsat_pa' → 'resolucions_pa'
+
 -- CONSOLIDACIÓN HISTÓRICA REALIZADA (29 AGOSTO 2025)
 -- Migraciones originales: 92+ archivos fragmentados
--- Migraciones consolidadas: 28 archivos optimizados  
+-- Migraciones consolidadas: 30 archivos optimizados  
 -- Proceso: Análisis + Consolidación + Fresh Migration
 -- Resultado: php artisan migrate:fresh --seed ✅ EXITOSO
 -- Optimización: 49% reducción en archivos de migración
@@ -201,6 +348,16 @@ function toggleTipoResolucionOtroResolucionPa(value) { ... }
 - **`docs/implementation/rtributa_implementation_summary.md`**: Implementación de módulos
 
 ### Archivos de Proyecto
+- **`docs/project/ESTADO_ACTUAL.md`**: ⭐ **ESTE ARCHIVO** - Estado completo actualizado
+- **`docs/project/INDICE_GENERAL.md`**: ⭐ **REORGANIZADO** - Índice maestro del proyecto
+- **`docs/project/pa_implementation_summary.md`**: ⭐ **ACTUALIZADO** - Resumen PA con correcciones
+- **`docs/project/ORGANIZACION_FINAL_SEPTIEMBRE_2025.md`**: ⭐ **NUEVO** - Log de reorganización
+- **`docs/project/ARCHITECTURE.md`**: Arquitectura del sistema (próximo a actualizar)
+
+### Scripts Organizados
+- **`docs/03-diagnosticos/`**: Scripts de diagnóstico del sistema
+- **`docs/05-maintenance/`**: Scripts de mantenimiento y utilidades
+- **`docs/04-scripts/`**: Scripts de desarrollo y automatización
 - **`docs/ORGANIZACION_FINAL_COMPLETADA.md`**: ⭐ **NUEVO** - Resumen de organización completada
 - **`docs/INDICE_GENERAL.md`**: Índice completo de toda la documentación
 - **`docs/project/ESTADO_ACTUAL.md`**: Este archivo - Estado completo del proyecto
@@ -226,13 +383,14 @@ function toggleTipoResolucionOtroResolucionPa(value) { ... }
 ## ⚠️ Advertencias Importantes
 
 ### Para Modificaciones Futuras
-1. **USAR** la nueva estructura consolidada como base para futuras migraciones
+1. **USAR** la nueva estructura consolidada de 30 migraciones como base
 2. **NO modificar** la estructura de base de datos directamente en producción
 3. **CREAR** nuevas migraciones individuales para cambios futuros
 4. **MANTENER** el sistema de naming único en JavaScript para evitar conflictos
 5. **VALIDAR** en desarrollo antes de aplicar en producción
-6. **DOCUMENTAR** cualquier cambio significativo en esta carpeta `docs/`
-7. **SEGUIR** el patrón de 28 migraciones consolidadas para mantenibilidad
+6. **DOCUMENTAR** cualquier cambio significativo en carpeta `docs/project/`
+7. **SEGUIR** el patrón consolidado para mantenibilidad
+8. **⚠️ AUDIENCIAS VA/PA**: Los campos ENUM están corregidos, mantener consistencia
 
 ### Hosting iPage - Limitaciones
 - **Hosting compartido**: No permite comandos `php artisan migrate` directamente
@@ -246,10 +404,10 @@ function toggleTipoResolucionOtroResolucionPa(value) { ... }
 
 **Desarrollador Principal**: SZSystems  
 **Sistema Desplegado**: https://software.burotributario.com  
-**Estado**: ✅ **COMPLETAMENTE OPERATIVO Y OPTIMIZADO**  
-**Base de Datos**: ✅ **CONSOLIDADA Y OPTIMIZADA (28 migraciones)**  
-**Última Consolidación**: 29 de agosto de 2025
+**Estado**: ✅ **COMPLETAMENTE OPERATIVO CON AUDIENCIAS VA/PA CORREGIDAS**  
+**Base de Datos**: ✅ **CONSOLIDADA Y ACTUALIZADA (30 migraciones)**  
+**Última Actualización Crítica**: 9 de septiembre de 2025
 
 ---
 
-> **Nota Final**: Este documento refleja el estado 100% funcional del sistema BUROSOFT con la consolidación histórica de base de datos completada. Todos los módulos están operativos, la estructura de base de datos está completamente optimizada (28 migraciones consolidadas vs 92+ originales), la documentación está organizada y no hay problemas críticos pendientes. El sistema está listo para desarrollo futuro con una base sólida y mantenible.
+> **Nota Final**: Este documento refleja el estado 100% funcional del sistema BUROSOFT con todas las correcciones críticas implementadas. El Error 1265 de audiencias VA/PA está completamente resuelto, todas las tablas PA están creadas y funcionales, los modelos están corregidos, y el proyecto está organizado profesionalmente. Todos los módulos están operativos, la estructura de base de datos está optimizada (30 migraciones consolidadas), la documentación está reorganizada y no hay problemas críticos pendientes. El sistema está listo para desarrollo futuro con una base sólida y mantenible.

@@ -33,13 +33,19 @@ aria-labelledby="addAudienciaModal" aria-hidden="true">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="tipo_audiencia" class="form-label">Tipo de Audiencia</label>
-                        <select name="tipo_audiencia" id="tipo_audiencia" class="form-select" required>
+                        <select name="tipo_audiencia" id="tipo_audiencia" class="form-select" onchange="toggleTipoOtroField()" required>
                             <option value="">Seleccione...</option>
                             <option value="AEC" {{ old('tipo_audiencia') == 'AEC' ? 'selected' : '' }}>AEC</option>
                             <option value="AIR" {{ old('tipo_audiencia') == 'AIR' ? 'selected' : '' }}>AIR</option>
                             <option value="AS" {{ old('tipo_audiencia') == 'AS' ? 'selected' : '' }}>AS</option>
                             <option value="AA" {{ old('tipo_audiencia') == 'AA' ? 'selected' : '' }}>AA</option>
+                            <option value="Otro" {{ old('tipo_audiencia') == 'Otro' ? 'selected' : '' }}>Otro</option>
                         </select>
+                    </div>
+                    <div class="col-md-4 mb-3" id="otro_tipo_div" style="display: {{ old('tipo_audiencia') == 'Otro' ? 'block' : 'none' }};">
+                        <label for="tipo_audiencia_otro" class="form-label">Especificar Tipo</label>
+                        <input type="text" name="tipo_audiencia_otro" id="tipo_audiencia_otro" class="form-control" 
+                               value="{{ old('tipo_audiencia_otro') }}" placeholder="Especificar otro tipo">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="fecha" class="form-label">Fecha de la Audiencia </label>
@@ -60,10 +66,9 @@ aria-labelledby="addAudienciaModal" aria-hidden="true">
                         <label for="plazo_evacuar" class="form-label">Plazo para Evacuar</label>
                         <select name="plazo_evacuar" id="plazo_evacuar" class="form-select" onchange="toggleOtroField()">
                             <option value="">Seleccione una opción</option>
-                            <option value="15 dias" {{ old('plazo_evacuar') == '15 dias' ? 'selected' : '' }}>15 días</option>
-                            <option value="30 dias" {{ old('plazo_evacuar') == '30 dias' ? 'selected' : '' }}>30 días</option>
-                            <option value="60 dias" {{ old('plazo_evacuar') == '60 dias' ? 'selected' : '' }}>60 días</option>
-                            <option value="90 dias" {{ old('plazo_evacuar') == '90 dias' ? 'selected' : '' }}>90 días</option>
+                            <option value="5 Dias" {{ old('plazo_evacuar') == '5 Dias' ? 'selected' : '' }}>5 Días</option>
+                            <option value="10 Dias" {{ old('plazo_evacuar') == '10 Dias' ? 'selected' : '' }}>10 Días</option>
+                            <option value="30 Dias" {{ old('plazo_evacuar') == '30 Dias' ? 'selected' : '' }}>30 Días</option>
                             <option value="Otro" {{ old('plazo_evacuar') == 'Otro' ? 'selected' : '' }}>Otro</option>
                         </select>
                     </div>
@@ -98,6 +103,21 @@ function toggleOtroField() {
     const otroInput = document.getElementById('plazo_evacuar_otro');
     
     if (plazoSelect.value === 'Otro') {
+        otroDiv.style.display = 'block';
+        otroInput.required = true;
+    } else {
+        otroDiv.style.display = 'none';
+        otroInput.required = false;
+        otroInput.value = '';
+    }
+}
+
+function toggleTipoOtroField() {
+    const tipoSelect = document.getElementById('tipo_audiencia');
+    const otroDiv = document.getElementById('otro_tipo_div');
+    const otroInput = document.getElementById('tipo_audiencia_otro');
+    
+    if (tipoSelect.value === 'Otro') {
         otroDiv.style.display = 'block';
         otroInput.required = true;
     } else {

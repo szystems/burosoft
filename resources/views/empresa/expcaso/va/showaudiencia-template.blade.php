@@ -980,6 +980,7 @@
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha de Notificación</td>
+                                                                                                                    <td>Fecha de Resolución</td>
                                                                                                                     <td>No. de Resolución</td>
                                                                                                                     <td>Tipo de Resolución</td>
                                                                                                                     <td>PpRR</td>
@@ -1016,7 +1017,18 @@
                                                                                                                             </div>
                                                                                                                         </td>
                                                                                                                         <td>
-                                                                                                                            <strong class="text-secondary">{{ date('d/m/Y', strtotime($resolucion->fecha)) }}</strong>
+                                                                                                                            @if($resolucion->fecha_notificacion)
+                                                                                                                                <strong class="text-secondary">{{ date('d/m/Y H:i', strtotime($resolucion->fecha_notificacion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
+                                                                                                                        </td>
+                                                                                                                        <td>
+                                                                                                                            @if($resolucion->fecha_resolucion)
+                                                                                                                                <strong class="text-primary">{{ date('d/m/Y', strtotime($resolucion->fecha_resolucion)) }}</strong>
+                                                                                                                            @else
+                                                                                                                                <span class="text-muted">N/A</span>
+                                                                                                                            @endif
                                                                                                                         </td>
                                                                                                                         <td>{{ $resolucion->numero_resolucion }}</td>
                                                                                                                         <td>

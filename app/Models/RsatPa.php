@@ -9,10 +9,11 @@ class RsatPa extends Model
 {
     use HasFactory;
 
-    protected $table = 'rsat_pa';
+    protected $table = 'resolucions_pa';
 
     protected $fillable = [
         'numero_resolucion',
+        'fecha_hora',
         'fecha',
         'fecha_notificacion',
         'fecha_resolucion',

@@ -1,10 +1,10 @@
 # API - Documentación de Endpoints
 ## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 3.0  
-**Fecha**: 29 de agosto de 2025  
+**Versión**: 3.1 CORREGIDA  
+**Fecha**: 9 de septiembre de 2025  
 **Autor**: Equipo SZSystems  
-**Estado**: **ENDPOINTS COMPLETAMENTE FUNCIONALES**
+**Estado**: **ENDPOINTS COMPLETAMENTE FUNCIONALES - AUDIENCIAS VA/PA CORREGIDAS**
 
 ---
 
@@ -40,14 +40,20 @@ Producción: https://software.burotributario.com (✅ OPERATIVO)
 
 ---
 
-## 2. Módulo VA (Vía Administrativa) ✅ COMPLETO
+## 2. Módulo VA (Vía Administrativa) ✅ COMPLETO CON CORRECCIONES
 
-### 2.1 Gestión de Audiencias VA
+### 2.1 Gestión de Audiencias VA - **CORREGIDAS 9 SEP 2025**
 
-| Método | Endpoint | Descripción | Estado |
-|--------|----------|-------------|---------|
-| GET | `/audiencia-va/{id}` | Mostrar audiencia VA | ✅ Funcional |
-| POST | `/insert-audiencia-va` | Crear nueva audiencia VA | ✅ Funcional |
+| Método | Endpoint | Descripción | Estado | Correcciones |
+|--------|----------|-------------|---------|------------|
+| GET | `/audiencia-va/{id}` | Mostrar audiencia VA | ✅ Funcional | Campos ENUM corregidos |
+| POST | `/insert-audiencia-va` | Crear nueva audiencia VA | ✅ Funcional | Error 1265 resuelto |
+| PUT | `/update-audiencia-va/{id}` | Actualizar audiencia VA | ✅ Funcional | Validación "Otro" |
+| DELETE | `/delete-audiencia-va/{id}` | Eliminar audiencia VA | ✅ Funcional | Sin cambios |
+
+**Campos ENUM Corregidos**:
+- `plazo_evacuar`: '5 Dias', '10 Dias', '30 Dias', 'Otro'
+- `tipo_audiencia`: 'AEC', 'AIR', 'AS', 'AA', 'Otro' + campo `tipo_audiencia_otro`
 | PUT | `/update-audiencia-va/{id}` | Actualizar audiencia VA | ✅ Funcional |
 | DELETE | `/delete-audiencia-va/{id}` | Eliminar audiencia VA | ✅ Funcional |
 
@@ -70,16 +76,25 @@ Producción: https://software.burotributario.com (✅ OPERATIVO)
 
 ---
 
-## 3. Módulo PA (Procedimiento Administrativo) ✅ COMPLETO
+## 3. Módulo PA (Procedimiento Administrativo) ✅ COMPLETO CON CORRECCIONES
 
-### 3.1 Gestión de Audiencias PA
+### 3.1 Gestión de Audiencias PA - **CORREGIDAS 9 SEP 2025**
 
-| Método | Endpoint | Descripción | Estado |
-|--------|----------|-------------|---------|
-| GET | `/audiencia-pa/{id}` | Mostrar audiencia PA | ✅ Funcional |
-| POST | `/insert-audiencia-pa` | Crear nueva audiencia PA | ✅ Funcional |
-| PUT | `/update-audiencia-pa/{id}` | Actualizar audiencia PA | ✅ Funcional |
-| DELETE | `/delete-audiencia-pa/{id}` | Eliminar audiencia PA | ✅ Funcional |
+| Método | Endpoint | Descripción | Estado | Correcciones |
+|--------|----------|-------------|---------|------------|
+| GET | `/audiencia-pa/{id}` | Mostrar audiencia PA | ✅ Funcional | Campos ENUM corregidos |
+| POST | `/insert-audiencia-pa` | Crear nueva audiencia PA | ✅ Funcional | Error 1265 resuelto |
+| PUT | `/update-audiencia-pa/{id}` | Actualizar audiencia PA | ✅ Funcional | Validación "Otro" |
+| DELETE | `/delete-audiencia-pa/{id}` | Eliminar audiencia PA | ✅ Funcional | Sin cambios |
+
+**Tablas PA Completadas 9 SEP 2025**:
+- ✅ `dpmrs_pa` - Nueva tabla creada y funcional
+- ✅ `aceptacions_pa` - Nueva tabla creada y funcional  
+- ✅ `resolucions_pa` - Modelo RsatPa corregido para usar esta tabla
+
+**Campos ENUM Corregidos**:
+- `plazo_evacuar`: '5 Dias', '10 Dias', '30 Dias', 'Otro'
+- `tipo_audiencia`: 'AEC', 'AIR', 'AS', 'AA', 'Otro' + campo `tipo_audiencia_otro`
 
 ### 3.2 Documentos EV PA (Escritos Varios) ✅
 

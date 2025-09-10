@@ -480,7 +480,15 @@
                                                                                                     </td>
                                                                                                     <td align="center">
                                                                                                         <a class="dropdown-item" href="{{ url('show-audiencia/'.$audiencia->id) }}">
-                                                                                                            <p class="text-primary"><strong>{{  $audiencia->tipo_audiencia }}</strong></p>
+                                                                                                            <p class="text-primary">
+                                                                                                                <strong>
+                                                                                                                    @if($audiencia->tipo_audiencia == 'Otro' && $audiencia->tipo_audiencia_otro)
+                                                                                                                        {{ $audiencia->tipo_audiencia_otro }}
+                                                                                                                    @else
+                                                                                                                        {{ $audiencia->tipo_audiencia }}
+                                                                                                                    @endif
+                                                                                                                </strong>
+                                                                                                            </p>
                                                                                                         </a>
                                                                                                     </td>
                                                                                                     <td align="center">

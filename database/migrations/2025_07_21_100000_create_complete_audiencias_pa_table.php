@@ -22,14 +22,15 @@ class CreateCompleteAudienciasPaTable extends Migration
             $table->unsignedBigInteger('pat_id');
             $table->unsignedBigInteger('usuario_id');
             $table->string('numero_audiencia');
-            $table->enum('tipo_audiencia', ['AEC', 'AIR', 'AS', 'AA']);
+            $table->enum('tipo_audiencia', ['AEC', 'AIR', 'AS', 'AA', 'Otro']);
+            $table->string('tipo_audiencia_otro')->nullable(); // Si tipo_audiencia es "Otro"
             $table->dateTime('fecha');
             $table->decimal('impuestos', 15, 2);
             $table->string('archivo')->nullable();
             $table->string('tipo_archivo')->nullable();
             // Campos de notificación consolidados
             $table->date('fecha_notificacion')->nullable();
-            $table->string('plazo_evacuar')->nullable(); // 5 D.H., 10 D.H., 30 D.H., Otro
+            $table->enum('plazo_evacuar', ['5 Dias', '10 Dias', '30 Dias', 'Otro'])->nullable();
             $table->string('plazo_evacuar_otro')->nullable(); // Si es "Otro"
             $table->timestamps();
 

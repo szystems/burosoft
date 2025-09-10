@@ -34,13 +34,19 @@ aria-labelledby="editAudienciaModal-{{ $audiencia->id }}" aria-hidden="true">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="tipo_audiencia" class="form-label">Tipo de Audiencia</label>
-                        <select name="tipo_audiencia" id="tipo_audiencia" class="form-select" required>
+                        <select name="tipo_audiencia" id="tipo_audiencia_edit_{{ $audiencia->id }}" class="form-select" onchange="toggleTipoOtroFieldEdit({{ $audiencia->id }})" required>
                             <option value="">Seleccione...</option>
                             <option value="AEC" {{ $audiencia->tipo_audiencia == 'AEC' ? 'selected' : '' }}>AEC</option>
                             <option value="AIR" {{ $audiencia->tipo_audiencia == 'AIR' ? 'selected' : '' }}>AIR</option>
                             <option value="AS" {{ $audiencia->tipo_audiencia == 'AS' ? 'selected' : '' }}>AS</option>
                             <option value="AA" {{ $audiencia->tipo_audiencia == 'AA' ? 'selected' : '' }}>AA</option>
+                            <option value="Otro" {{ $audiencia->tipo_audiencia == 'Otro' ? 'selected' : '' }}>Otro</option>
                         </select>
+                    </div>
+                    <div class="col-md-4 mb-3" id="tipo_otro_div_edit_{{ $audiencia->id }}" style="display: {{ $audiencia->tipo_audiencia == 'Otro' ? 'block' : 'none' }};">
+                        <label for="tipo_audiencia_otro" class="form-label">Especificar Tipo</label>
+                        <input type="text" name="tipo_audiencia_otro" id="tipo_audiencia_otro_edit_{{ $audiencia->id }}" class="form-control" 
+                               value="{{ $audiencia->tipo_audiencia_otro }}" placeholder="Especificar tipo de audiencia">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="fecha" class="form-label">Fecha de la Audiencia </label>
@@ -61,18 +67,17 @@ aria-labelledby="editAudienciaModal-{{ $audiencia->id }}" aria-hidden="true">
                     </div>
                     <div class="col-md-4 mb-3">
                         <label for="plazo_evacuar" class="form-label">Plazo para Evacuar</label>
-                        <select name="plazo_evacuar" id="plazo_evacuar_{{ $audiencia->id }}" class="form-select" onchange="toggleOtroFieldEdit({{ $audiencia->id }})">
+                        <select name="plazo_evacuar" id="plazo_evacuar_edit_{{ $audiencia->id }}" class="form-select" onchange="togglePlazoOtroFieldEdit({{ $audiencia->id }})">
                             <option value="">Seleccione una opción</option>
-                            <option value="15 dias" {{ $audiencia->plazo_evacuar == '15 dias' ? 'selected' : '' }}>15 días</option>
-                            <option value="30 dias" {{ $audiencia->plazo_evacuar == '30 dias' ? 'selected' : '' }}>30 días</option>
-                            <option value="60 dias" {{ $audiencia->plazo_evacuar == '60 dias' ? 'selected' : '' }}>60 días</option>
-                            <option value="90 dias" {{ $audiencia->plazo_evacuar == '90 dias' ? 'selected' : '' }}>90 días</option>
+                            <option value="5 Dias" {{ $audiencia->plazo_evacuar == '5 Dias' ? 'selected' : '' }}>5 Días</option>
+                            <option value="10 Dias" {{ $audiencia->plazo_evacuar == '10 Dias' ? 'selected' : '' }}>10 Días</option>
+                            <option value="30 Dias" {{ $audiencia->plazo_evacuar == '30 Dias' ? 'selected' : '' }}>30 Días</option>
                             <option value="Otro" {{ $audiencia->plazo_evacuar == 'Otro' ? 'selected' : '' }}>Otro</option>
                         </select>
                     </div>
-                    <div class="col-md-4 mb-3" id="otro_plazo_div_{{ $audiencia->id }}" style="display: {{ $audiencia->plazo_evacuar == 'Otro' ? 'block' : 'none' }};">
+                    <div class="col-md-4 mb-3" id="plazo_otro_div_edit_{{ $audiencia->id }}" style="display: {{ $audiencia->plazo_evacuar == 'Otro' ? 'block' : 'none' }};">
                         <label for="plazo_evacuar_otro" class="form-label">Especificar Plazo</label>
-                        <input type="text" name="plazo_evacuar_otro" id="plazo_evacuar_otro_{{ $audiencia->id }}" class="form-control" 
+                        <input type="text" name="plazo_evacuar_otro" id="plazo_evacuar_otro_edit_{{ $audiencia->id }}" class="form-control" 
                                value="{{ $audiencia->plazo_evacuar_otro }}" placeholder="Especificar otro plazo">
                     </div>
                     <div class="col-md-8 mb-3">
@@ -95,22 +100,55 @@ aria-labelledby="editAudienciaModal-{{ $audiencia->id }}" aria-hidden="true">
 </div>
 
 <script>
-function toggleOtroFieldEdit(audienciaId) {
-    const plazoSelect = document.getElementById('plazo_evacuar_' + audienciaId);
-    const otroDiv = document.getElementById('otro_plazo_div_' + audienciaId);
-    const otroInput = document.getElementById('plazo_evacuar_otro_' + audienciaId);
+function toggleTipoOtroFieldEdit(audienciaId) {
+    const tipoSelect = document.getElementById('tipo_audiencia_edit_' + audienciaId);
+    const tipoOtroDiv = document.getElementById('tipo_otro_div_edit_' + audienciaId);
+    const tipoOtroInput = document.getElementById('tipo_audiencia_otro_edit_' + audienciaId);
     
-    if (plazoSelect.value === 'Otro') {
-        otroDiv.style.display = 'block';
-        otroInput.required = true;
+    if (tipoSelect.value === 'Otro') {
+        tipoOtroDiv.style.display = 'block';
+        tipoOtroInput.required = true;
     } else {
-        otroDiv.style.display = 'none';
-        otroInput.required = false;
-        if (plazoSelect.value !== 'Otro') {
-            otroInput.value = '';
+        tipoOtroDiv.style.display = 'none';
+        tipoOtroInput.required = false;
+        if (tipoSelect.value !== 'Otro') {
+            tipoOtroInput.value = '';
         }
     }
 }
+
+function togglePlazoOtroFieldEdit(audienciaId) {
+    const plazoSelect = document.getElementById('plazo_evacuar_edit_' + audienciaId);
+    const plazoOtroDiv = document.getElementById('plazo_otro_div_edit_' + audienciaId);
+    const plazoOtroInput = document.getElementById('plazo_evacuar_otro_edit_' + audienciaId);
+    
+    if (plazoSelect.value === 'Otro') {
+        plazoOtroDiv.style.display = 'block';
+        plazoOtroInput.required = true;
+    } else {
+        plazoOtroDiv.style.display = 'none';
+        plazoOtroInput.required = false;
+        if (plazoSelect.value !== 'Otro') {
+            plazoOtroInput.value = '';
+        }
+    }
+}
+
+// Inicializar campos al cargar el modal
+document.addEventListener('DOMContentLoaded', function() {
+    // Para audiencias que ya tienen "Otro" seleccionado, mostrar los campos
+    const audienciaId = {{ $audiencia->id }};
+    
+    const tipoSelect = document.getElementById('tipo_audiencia_edit_' + audienciaId);
+    if (tipoSelect && tipoSelect.value === 'Otro') {
+        toggleTipoOtroFieldEdit(audienciaId);
+    }
+    
+    const plazoSelect = document.getElementById('plazo_evacuar_edit_' + audienciaId);
+    if (plazoSelect && plazoSelect.value === 'Otro') {
+        togglePlazoOtroFieldEdit(audienciaId);
+    }
+});
 </script>
 
 
