@@ -97,6 +97,9 @@
                             <li class="{{ Request::is('expcaso','show-expcaso/*','add-expcaso','edit-expcaso/*') ? 'active-page-link':''  }}">
                                 <a href="{{ url('expcaso') }}"><i class="bi bi-folder2-open"></i> Exp/Caso</a>
                             </li>
+                            <li class="{{ Request::is('resumen-expedientes','resumen-expedientes/*') ? 'active-page-link':''  }}">
+                                <a href="{{ url('resumen-expedientes') }}"><i class="bi bi-file-bar-graph"></i> Resumen</a>
+                            </li>
                         </ul>
                         {{-- <ul>
                             <li class="{{ Request::is('movimientos','show-movimiento/*','edit-movimiento/*') ? 'active-page-link':''  }}">

@@ -1,10 +1,10 @@
 # PRD - Product Requirements Document
 ## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 3.2 - PA COMPLETAMENTE FUNCIONAL  
-**Fecha**: 9 de septiembre de 2025  
+**Versión**: 3.3 - Módulo Resumen Expedientes  
+**Fecha**: 22 de septiembre de 2025  
 **Autor**: Equipo SZSystems  
-**Estado**: **PA Y VA COMPLETAMENTE OPERATIVOS - R-SAT CORREGIDO**
+**Estado**: **PA/VA/RESUMEN EXPEDIENTES COMPLETAMENTE OPERATIVOS**
 
 ---
 
@@ -46,6 +46,17 @@ BUROSOFT es una plataforma SaaS multi-tenant **completamente funcional** diseña
 ## 2. Alcance y Límites del Sistema
 
 ### 2.1 Módulos Implementados y Operativos
+
+#### ✅ **Módulo Resumen de Expedientes - NUEVO 22 SEP 2025**
+- **Dashboard Principal**: Cards con estadísticas totales (activos, cerrados, archivo)
+- **Filtros Avanzados**: Por estado, rango de fechas, cuenta y número de expediente
+- **Búsqueda Inteligente**: Datalist nativo para filtro por cuenta empresarial
+- **Vista de Estadísticas**: Gráficos Chart.js interactivos con distribución por estado
+- **Exportación PDF**: Formato horizontal con logo empresarial integrado
+- **Responsive Design**: Compatible con dispositivos móviles Bootstrap 5
+- **Integración Completa**: Modelos Pat y Cuenta existentes reutilizados
+- **Seguridad Multi-tenant**: Filtrado automático por empresa_id del usuario
+- **Layout Actualizado**: @stack('scripts') agregado para soporte de librerías JS
 
 #### ✅ **Módulo VA (Vía Administrativa) - COMPLETO**
 - **Gestión de Audiencias**: Sistema completo de programación y seguimiento

@@ -155,9 +155,9 @@
                             <div class="sale-details">
                                 <h6 class="text-light">Jurídico</h6>
                                 <a href="{{ url('expcaso') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-folder2-open"></i> <u>Exp/Caso</u></a>
-                                {{-- <br>
-                                <a href="{{ url('movimientos') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-cash-stack"></i> <u>Movimientos</u></a>
                                 <br>
+                                <a href="{{ url('resumen-expedientes') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-file-bar-graph"></i> <u>Resumen de Expedientes</u></a>
+                                {{-- <br>
                                 <a href="{{ url('rsi') }}" class="text-primary"><i class="bi bi-chevron-compact-right"></i> <i class="bi bi-file-text"></i> <u>RSI</u></a> --}}
                             </div>
                             {{-- <div class="tile-count d-flex align-items-center justify-content-center flex-column fw-bold green">

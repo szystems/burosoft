@@ -181,6 +181,9 @@
             // Actualiza la hora y la fecha cada segundo
             setInterval(actualizarReloj, 1000);
         </script>
+
+        <!-- Scripts adicionales -->
+        @stack('scripts')
 	</body>
 
 </html>

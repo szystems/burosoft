@@ -1,36 +1,38 @@
 # ARCHITECTURE - Arquitectura del Sistema
 ## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 3.1 CORREGIDA  
-**Fecha**: 9 de septiembre de 2025  
+**Versión**: 3.3 - Módulo Resumen Expedientes  
+**Fecha**: 22 de septiembre de 2025  
 **Autor**: Equipo SZSystems  
-**Estado**: **SISTEMA EN PRODUCCIÓN - AUDIENCIAS VA/PA CORREGIDAS**
+**Estado**: **SISTEMA EN PRODUCCIÓN - NUEVO MÓDULO JURÍDICO INTEGRADO**
 
 ---
 
 ## 1. Resumen Arquitectónico
 
-BUROSOFT está construido como una aplicación web monolítica multi-tenant **completamente operativa** utilizando Laravel 8, con arquitectura MVC robusta, base de datos sincronizada entre desarrollo y producción, y sistema de modales JavaScript sin conflictos. **ACTUALIZACIÓN CRÍTICA**: Error 1265 audiencias resuelto, tablas PA completadas.
+BUROSOFT está construido como una aplicación web monolítica multi-tenant **completamente operativa** utilizando Laravel 8, con arquitectura MVC robusta, base de datos sincronizada entre desarrollo y producción, y sistema de modales JavaScript sin conflictos. **ACTUALIZACIÓN CRÍTICA 22 SEP 2025**: Nuevo módulo de Resumen de Expedientes con Chart.js integrado, layout actualizado con @stack('scripts').
 
 ### 1.1 Principios Arquitectónicos Implementados ✅
 
 - ✅ **Separación de Responsabilidades**: Cada capa con responsabilidad específica
 - ✅ **Multi-tenancy**: Aislamiento completo de datos entre empresas
-- ✅ **Modularidad**: Organización por módulos VA/PA/PAT completamente funcionales
+- ✅ **Modularidad**: Organización por módulos VA/PA/PAT/Expedientes completamente funcionales
 - ✅ **Reutilización**: Traits, Services y Helpers implementados
 - ✅ **Seguridad**: Middleware y validación en cada capa operativa
 - ✅ **Escalabilidad**: Sistema preparado para crecimiento en iPage hosting
 - ✅ **Integridad de Datos**: Campos ENUM corregidos y validados
+- ✅ **Frontend Moderno**: Chart.js y Bootstrap 5 integrados correctamente
 
 ### 1.2 Estado de Despliegue Actual
 
 | Entorno | Estado | Base de Datos | Funcionalidad | Última Actualización |
 |---------|--------|---------------|---------------|-------------------|
-| **Desarrollo Local** | ✅ Operativo | 30 migraciones consolidadas | 100% funcional | 9 Sep 2025 |
-| **Producción iPage** | ✅ Desplegado | Sincronizada | 100% funcional | 9 Sep 2025 |
+| **Desarrollo Local** | ✅ Operativo | 30 migraciones consolidadas | 100% funcional | 22 Sep 2025 |
+| **Producción iPage** | ✅ Desplegado | Sincronizada | 100% funcional | 22 Sep 2025 |
 | **Sistema VA** | ✅ Completo | Audiencias corregidas | Sin problemas | 9 Sep 2025 |
 | **Sistema PA** | ✅ Completo | Tablas dpmrs_pa/aceptacions_pa | Sin problemas | 9 Sep 2025 |
-| **JavaScript/Modales** | ✅ Sin conflictos | - | Naming único | 9 Sep 2025 |
+| **Resumen Expedientes** | ✅ **NUEVO** | Integrado con Pat/Cuenta | Chart.js funcional | **22 Sep 2025** |
+| **JavaScript/Modales** | ✅ Sin conflictos | - | Naming único + @stack | 22 Sep 2025 |
 
 ---
 
@@ -177,8 +179,17 @@ bitacora -> morphTo(auditable) // Polimórfica
 ```php
 // Separación clara de responsabilidades
 app/Http/Controllers/     # Controladores
+├── Empresa/
+│   ├── ResumenExpedientesController.php  # 🆕 NUEVO - 22 Sep 2025
+│   ├── MovimientoController.php
+│   ├── PatController.php
+│   └── CuentaController.php
 app/Models/               # Modelos Eloquent
 resources/views/          # Vistas Blade
+├── empresa/juridico/resumen-expedientes/  # 🆕 NUEVO - 22 Sep 2025
+│   ├── index.blade.php
+│   ├── estadisticas.blade.php
+│   └── pdf.blade.php
 ```
 
 ### 4.2 **Repository Pattern (Implícito)**

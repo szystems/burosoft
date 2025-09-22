@@ -71,6 +71,7 @@ use App\Http\Controllers\Empresa\NulidadController;
 use App\Http\Controllers\Empresa\EcController;
 use App\Http\Controllers\Empresa\RrController;
 use App\Http\Controllers\Empresa\BitacoraController;
+use App\Http\Controllers\Empresa\ResumenExpedientesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -350,6 +351,12 @@ Route::middleware(['auth'])->group(function () {
 
     //Usuarios Empresa
     Route::get('bitacoras', [BitacoraController::class, 'index']);
+
+    //Resumen de Expedientes
+    Route::get('resumen-expedientes', [ResumenExpedientesController::class, 'index']);
+    Route::get('resumen-expedientes/estadisticas', [ResumenExpedientesController::class, 'estadisticas']);
+    Route::get('resumen-expedientes/exportar-pdf', [ResumenExpedientesController::class, 'exportarPdf']);
+    Route::get('resumen-expedientes/exportar-excel', [ResumenExpedientesController::class, 'exportarExcel']);
     Route::get('show-bitacora/{id}', [BitacoraController::class, 'show']);
 
     //Financiero Rubros

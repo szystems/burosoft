@@ -1,10 +1,10 @@
 # API - Documentación de Endpoints
 ## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 3.1 CORREGIDA  
-**Fecha**: 9 de septiembre de 2025  
+**Versión**: 3.3 - Módulo Resumen Expedientes  
+**Fecha**: 22 de septiembre de 2025  
 **Autor**: Equipo SZSystems  
-**Estado**: **ENDPOINTS COMPLETAMENTE FUNCIONALES - AUDIENCIAS VA/PA CORREGIDAS**
+**Estado**: **ENDPOINTS COMPLETAMENTE FUNCIONALES - NUEVO MÓDULO JURÍDICO AGREGADO**
 
 ---
 
@@ -241,9 +241,61 @@ Set-Cookie: success_message=Mensaje enviado correctamente
 
 ---
 
-## 5. Sistema PAT (Proceso Administrativo Tributario)
+## 5. Módulo Resumen de Expedientes ✅ **NUEVO - 22 SEP 2025**
 
-### 5.1 Gestión de PATs
+### 5.1 Dashboard de Expedientes
+
+| Método | Endpoint | Descripción | Parámetros |
+|--------|----------|-------------|------------|
+| GET | `/resumen-expedientes` | Dashboard principal | `estado`, `fecha_inicio`, `fecha_fin`, `cuenta`, `no_expediente` |
+| GET | `/resumen-expedientes/estadisticas` | Vista de estadísticas con gráficos | `estado`, `fecha_inicio`, `fecha_fin` |
+| GET | `/resumen-expedientes/exportar-pdf` | Exportar PDF horizontal | Todos los filtros |
+
+#### Filtros Disponibles:
+- **Estado**: `activo`, `cerrado`, `archivo`
+- **Rango de fechas**: `fecha_inicio`, `fecha_fin`
+- **Cuenta**: Búsqueda por nombre de cuenta (datalist)
+- **Número expediente**: Búsqueda parcial
+
+#### Respuesta Dashboard JSON:
+```json
+{
+    "estadisticas": {
+        "expedientes_activos": 45,
+        "expedientes_cerrados": 23,
+        "expedientes_archivo": 12,
+        "total_expedientes": 80
+    },
+    "expedientes": [
+        {
+            "id": 1,
+            "no_expediente": "EXP-2025-001",
+            "cuenta": "Empresa ABC S.A.",
+            "estado": "activo",
+            "fecha_creacion": "2025-01-15",
+            "user_creador": "Juan Pérez"
+        }
+    ]
+}
+```
+
+#### Funcionalidades Chart.js:
+- **Gráfico Doughnut**: Distribución por estado
+- **Responsive**: Adaptable a dispositivos móviles
+- **Interactivo**: Tooltips con porcentajes
+- **Exportable**: PDF con gráficos incluidos
+
+#### Características PDF:
+- **Orientación**: Horizontal (landscape)
+- **Logo**: Empresa integrado desde tabla configs
+- **Filtros aplicados**: Mostrados en el reporte
+- **Diseño profesional**: Tablas optimizadas
+
+---
+
+## 6. Sistema PAT (Proceso Administrativo Tributario)
+
+### 6.1 Gestión de PATs
 
 | Método | Endpoint | Descripción | Parámetros |
 |--------|----------|-------------|------------|
