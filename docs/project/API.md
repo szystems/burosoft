@@ -1,10 +1,10 @@
 # API - Documentación de Endpoints
 ## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 3.3 - Módulo Resumen Expedientes  
-**Fecha**: 22 de septiembre de 2025  
+**Versión**: 3.4 - UI/UX Optimizada y Validaciones Mejoradas  
+**Fecha**: 13 de octubre de 2025  
 **Autor**: Equipo SZSystems  
-**Estado**: **ENDPOINTS COMPLETAMENTE FUNCIONALES - NUEVO MÓDULO JURÍDICO AGREGADO**
+**Estado**: **ENDPOINTS COMPLETAMENTE FUNCIONALES - VALIDACIONES MEJORADAS**
 
 ---
 

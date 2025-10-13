@@ -56,7 +56,7 @@ aria-labelledby="editAudienciaModal-{{ $audienciaPa->id }}" aria-hidden="true">
                     <div class="col-md-4 mb-3">
                         <label for="impuestos" class="form-label">Monto</label>
                         <div class="input-group">
-                            <span class="input-group-text">{{ $config->currency_simbol }}</span>
+                            <span class="input-group-text">{{ $config->currency_simbol ?? 'Q' }}</span>
                             <input type="number" step="0.01" name="impuestos" id="impuestos" class="form-control" value="{{ $audienciaPa->impuestos }}" required>
                         </div>
                     </div>

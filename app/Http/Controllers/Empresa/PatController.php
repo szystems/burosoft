@@ -74,9 +74,24 @@ class PatController extends Controller
 
     public function show($id)
     {
-        $pat = Pat::find($id);
-        $cuenta = Cuenta::find($pat->cuenta_id);
-        $config = Config::where('empresa_id', $pat->cuenta_id)->first();
+        // Buscar el expediente con filtrado por empresa del usuario autenticado
+        $pat = Pat::whereHas('cuenta', function($query) {
+            $query->where('empresa_id', auth()->user()->empresa_id);
+        })->find($id);
+        
+        // Verificar si el expediente existe y pertenece a la empresa del usuario
+        if (!$pat) {
+            return redirect()->back()->with('error', 'Expediente no encontrado o no tiene permisos para acceder.');
+        }
+        
+        $cuenta = $pat->cuenta; // Usar relación en lugar de find
+        
+        // Verificar si la cuenta existe
+        if (!$cuenta) {
+            return redirect()->back()->with('error', 'Cuenta no encontrada para este expediente.');
+        }
+        
+        $config = Config::where('empresa_id', $cuenta->empresa_id)->first();
         $nombramientos = PatNombramiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $notificaciones = PatNotificacion::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
         $requerimientos = PatRequerimiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
@@ -121,6 +136,12 @@ class PatController extends Controller
     public function update(PatFormRequest $request, $id)
     {
         $pat = Pat::find($id);
+        
+        // Verificar si el expediente existe
+        if (!$pat) {
+            return redirect()->back()->with('error', 'Expediente no encontrado.');
+        }
+        
         $pat->no_expediente = $request->input('no_expediente');
         $pat->no_programa = $request->input('no_programa');
         $pat->gerencia = $request->input('gerencia');
@@ -144,7 +165,18 @@ class PatController extends Controller
     public function destroy($id)
     {
         $pat = Pat::find($id);
+        
+        // Verificar si el expediente existe
+        if (!$pat) {
+            return redirect()->back()->with('error', 'Expediente no encontrado.');
+        }
+        
         $cuenta = Cuenta::find($pat->cuenta_id);
+        
+        // Verificar si la cuenta existe
+        if (!$cuenta) {
+            return redirect()->back()->with('error', 'Cuenta no encontrada para este expediente.');
+        }
         $PatNombramientos = PatNombramiento::where('pat_id', $pat->id)->delete();
         $PatNotificaciones = PatNotificacion::where('pat_id', $pat->id)->delete();
         $PatRequerimientos = PatRequerimiento::where('pat_id', $pat->id)->delete();
@@ -178,7 +210,18 @@ class PatController extends Controller
 
             //Consultas
             $pat = Pat::find($request->input('ffpat_id'));
+            
+            // Verificar si el expediente existe
+            if (!$pat) {
+                return redirect()->back()->with('error', 'Expediente no encontrado.');
+            }
+            
             $cuenta = Cuenta::find($pat->cuenta_id);
+            
+            // Verificar si la cuenta existe
+            if (!$cuenta) {
+                return redirect()->back()->with('error', 'Cuenta no encontrada para este expediente.');
+            }
             $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             $nombramientos = PatNombramiento::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();
             $notificaciones = PatNotificacion::where('pat_id', $pat->id)->orderBy('created_at','desc')->get();

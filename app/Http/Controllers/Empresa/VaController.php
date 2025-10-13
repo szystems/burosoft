@@ -38,9 +38,24 @@ class VaController extends Controller
 {
     public function show($id)
     {
-        $pat = Pat::find($id);
-        $cuenta = Cuenta::find($pat->cuenta_id);
-        $config = Config::where('empresa_id', $pat->cuenta_id)->first();
+        // Buscar el expediente con filtrado por empresa del usuario autenticado
+        $pat = Pat::whereHas('cuenta', function($query) {
+            $query->where('empresa_id', auth()->user()->empresa_id);
+        })->find($id);
+        
+        // Verificar si el expediente existe y pertenece a la empresa del usuario
+        if (!$pat) {
+            return redirect()->back()->with('error', 'Expediente no encontrado o no tiene permisos para acceder.');
+        }
+        
+        $cuenta = $pat->cuenta; // Usar relación en lugar de find
+        
+        // Verificar si la cuenta existe
+        if (!$cuenta) {
+            return redirect()->back()->with('error', 'Cuenta no encontrada para este expediente.');
+        }
+        
+        $config = Config::where('empresa_id', $cuenta->empresa_id)->first();
         $patscount = Pat::where('cuenta_id', $cuenta->id)->count();
         $audiencias = Audiencia::where('pat_id', $id)->paginate(10);
         $audienciasVaCount = Audiencia::where('pat_id', $id)->count();
@@ -51,10 +66,20 @@ class VaController extends Controller
 
     public function showaudiencia($id)
     {
-        $audiencia = Audiencia::find($id);
-        $pat = Pat::find($audiencia->pat_id);
-        $cuenta = Cuenta::find($pat->cuenta_id);
-        $config = Config::where('empresa_id', $pat->cuenta_id)->first();
+        // Buscar audiencia que pertenezca a la empresa del usuario
+        $audiencia = Audiencia::whereHas('pat.cuenta', function($query) {
+            $query->where('empresa_id', auth()->user()->empresa_id);
+        })->find($id);
+        
+        // Verificar si la audiencia existe y pertenece a la empresa
+        if (!$audiencia) {
+            return redirect()->back()->with('error', 'Audiencia no encontrada o no tiene permisos para acceder.');
+        }
+        
+        $pat = $audiencia->pat; // Usar relación
+        $cuenta = $pat->cuenta; // Usar relación
+        
+        $config = Config::where('empresa_id', $cuenta->empresa_id)->first();
         $patscount = Pat::where('cuenta_id', $cuenta->id)->count();
         $audiencias = Audiencia::where('pat_id', $pat->id)->paginate(10);
         $evacuaciones = Ev::where('audiencia_id', $audiencia->id)->get();

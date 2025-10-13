@@ -86,11 +86,12 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="plazo_revocatoria" class="form-label">Plazo para Revocatoria</label>
+                            <label for="plazo_revocatoria" class="form-label">Plazo para recurso de revocatoria (PpRR)</label>
                             <select name="plazo_revocatoria" id="plazo_revocatoria_pa_add" class="form-control" required>
                                 <option value="" selected disabled>Seleccione el plazo</option>
-                                <option value="15 días" {{ old('plazo_revocatoria') == '15 días' ? 'selected' : '' }}>15 días</option>
-                                <option value="30 días" {{ old('plazo_revocatoria') == '30 días' ? 'selected' : '' }}>30 días</option>
+                                <option value="5 D.H." {{ old('plazo_revocatoria') == '5 D.H.' ? 'selected' : '' }}>5 D.H.</option>
+                                <option value="10 D.H." {{ old('plazo_revocatoria') == '10 D.H.' ? 'selected' : '' }}>10 D.H.</option>
+                                <option value="30 D.H." {{ old('plazo_revocatoria') == '30 D.H.' ? 'selected' : '' }}>30 D.H.</option>
                                 <option value="otro" {{ old('plazo_revocatoria') == 'otro' ? 'selected' : '' }}>Otro</option>
                             </select>
                             @if ($errors->has('plazo_revocatoria'))

@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="oficina_agencia_ea" class="form-label">Oficina o agencia donde fue presentada la Evacuacion de Audiencia (EA)</label>
+                            <label for="oficina_agencia_ea" class="form-label">Oficina o agencia donde fue presentado el Ocurso</label>
                             <input type="text" name="oficina_agencia_ea" class="form-control" value="{{ old('oficina_agencia_ea') }}" maxlength="300">
                             @if ($errors->has('oficina_agencia_ea'))
                                 <span class="help-block opacity-7">

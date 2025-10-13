@@ -18,7 +18,7 @@
                         <input type="hidden" name="usuario_id" value="{{ Auth::user()->id }}">
 
                         <div class="col-md-6 mb-3">
-                            <label for="fecha_hora_presentacion" class="form-label">Fecha y Hora de Presentación</label>
+                            <label for="fecha_hora_presentacion" class="form-label">Fecha de Notificación</label>
                             <input type="datetime-local" name="fecha_hora_presentacion" class="form-control" value="{{ old('fecha_hora_presentacion') }}" required>
                             @if ($errors->has('fecha_hora_presentacion'))
                                 <span class="help-block opacity-7">
@@ -42,7 +42,7 @@
                         </div>
 
                         <div class="col-md-6 mb-3">
-                            <label for="oficina_ea" class="form-label">Oficina o agencia donde fue presentada la Evacuación de Audiencia (EA)</label>
+                            <label for="oficina_ea" class="form-label">Oficina o agencia donde fue atendida la Medida Para Mejor Resolver</label>
                             <input type="text" name="oficina_ea" class="form-control" value="{{ old('oficina_ea') }}">
                             @if ($errors->has('oficina_ea'))
                                 <span class="help-block opacity-7">

@@ -1,21 +1,22 @@
 # Estado Actual del Proyecto BUROSOFT
 ## Resumen Completo para Continuidad de Desarrollo
 
-**Fecha**: 22 de septiembre de 2025  
-**Versión del Sistema**: 3.3 - Módulo Resumen Expedientes Implementado  
-**Estado General**: ✅ **SISTEMA COMPLETAMENTE OPERATIVO CON NUEVO MÓDULO JURÍDICO**
+**Fecha**: 13 de octubre de 2025  
+**Versión del Sistema**: 3.4 - Correcciones UI/UX y Validaciones Actualizadas  
+**Estado General**: ✅ **SISTEMA COMPLETAMENTE OPERATIVO CON MEJORAS DE INTERFAZ**
 
 ---
 
 ## 🎯 Estado Ejecutivo
 
-BUROSOFT es un sistema **completamente funcional** desplegado en producción (iPage hosting) con todos los módulos operativos. **ACTUALIZACIÓN CRÍTICA 22 SEP 2025**: 
-- ✅ **NUEVO MÓDULO**: Resumen de Expedientes Activos y no Activos completamente implementado
-- ✅ **Sección Jurídico**: Ampliada con funcionalidad de estadísticas y reportes
-- ✅ **Integración Chart.js**: Gráficos interactivos funcionando correctamente
-- ✅ **PDF Mejorado**: Exportación horizontal con logo empresarial
-- ✅ **PA/VA**: Manteniendo funcionalidad completa previa
-- ✅ **Layout Actualizado**: @stack('scripts') agregado para soporte de librerías JS
+BUROSOFT es un sistema **completamente funcional** desplegado en producción (iPage hosting) con todos los módulos operativos. **ACTUALIZACIÓN CRÍTICA 13 OCT 2025**: 
+- ✅ **CORRECCIONES UI/UX**: Símbolos de moneda, etiquetas AMPMR/Ocurso, R-Tributa mejorados
+- ✅ **VALIDACIONES**: FormRequests actualizados para mejor manejo de campos condicionales
+- ✅ **NUEVA OPCIÓN**: "3 meses" agregada al campo Plazo CAT en R-Tributa
+- ✅ **MIGRACIONES**: ENUMs de base de datos actualizados correctamente
+- ✅ **CONSISTENCIA**: Uniformidad entre módulos VA y PA garantizada
+- ✅ **RESUMEN EXPEDIENTES**: Módulo jurídico completamente operativo
+- ✅ **SISTEMA ESTABLE**: Todas las funcionalidades principales verificadas
 
 ---
 
@@ -23,21 +24,77 @@ BUROSOFT es un sistema **completamente funcional** desplegado en producción (iP
 
 | Módulo | Estado | Funcionalidad | Issues Pendientes | Última Actualización |
 |--------|--------|---------------|-------------------|-------------------|
-| **Resumen Expedientes** | ✅ **NUEVO** | 100% | **Ninguno** | **22 Sep 2025** |
-| **PA (Procedimiento Ampliado)** | ✅ **COMPLETO** | 100% | **Ninguno** | **9 Sep 2025** |
-| **PA R-SAT** | ✅ **CORREGIDO** | 100% | **Vistas mejoradas** | **9 Sep 2025** |
-| **VA (Vía Administrativa)** | ✅ Completo | 100% | Ninguno | **9 Sep 2025** |
-| **VA R-SAT** | ✅ **CORREGIDO** | 100% | **Vistas mejoradas** | **9 Sep 2025** |
-| **Base de Datos PA** | ✅ **SINCRONIZADA** | 100% | **Tabla renombrada** | **9 Sep 2025** |
+| **UI/UX y Validaciones** | ✅ **MEJORADO** | 100% | **Ninguno** | **13 Oct 2025** |
+| **R-Tributa (VA/PA)** | ✅ **ACTUALIZADO** | 100% | **"3 meses" agregado** | **13 Oct 2025** |
+| **AMPMR/Ocurso Labels** | ✅ **CORREGIDO** | 100% | **Etiquetas uniformes** | **13 Oct 2025** |
+| **Símbolos de Moneda** | ✅ **CORREGIDO** | 100% | **Config query fix** | **13 Oct 2025** |
+| **Resumen Expedientes** | ✅ Completo | 100% | Ninguno | **22 Sep 2025** |
+| **PA (Procedimiento Ampliado)** | ✅ **COMPLETO** | 100% | **Ninguno** | **13 Oct 2025** |
+| **VA (Vía Administrativa)** | ✅ **COMPLETO** | 100% | **Ninguno** | **13 Oct 2025** |
+| **Base de Datos** | ✅ **SINCRONIZADA** | 100% | **ENUMs actualizados** | **13 Oct 2025** |
 | **PAT (Proc. Admin. Tributarios)** | ✅ Completo | 100% | Ninguno | Ago 2025 |
-| **Migraciones** | ✅ Optimizadas | 30 archivos | Ninguno | **9 Sep 2025** |
-| **JavaScript/Chart.js** | ✅ **ACTUALIZADO** | 100% | **Soporte completo** | **22 Sep 2025** |
+| **Migraciones** | ✅ **ACTUALIZADO** | 100% | **Nueva migración** | **13 Oct 2025** |
+| **JavaScript/Chart.js** | ✅ Completo | 100% | Ninguno | **22 Sep 2025** |
 | **Sistema de Archivos** | ✅ Operativo | 100% | Ninguno | Ago 2025 |
-| **Documentación** | ✅ **ACTUALIZADA** | 100% | Ninguno | **22 Sep 2025** |
+| **Documentación** | ✅ **ACTUALIZADA** | 100% | **Contexto actualizado** | **13 Oct 2025** |
 
 ---
 
-## 🆕 **NUEVA FUNCIONALIDAD - 22 SEPTIEMBRE 2025**
+## 🆕 **ÚLTIMAS CORRECCIONES - 13 OCTUBRE 2025**
+
+### ✅ **CORRECCIONES DE INTERFAZ Y VALIDACIONES - COMPLETAMENTE IMPLEMENTADAS**
+
+**Problemas Resueltos**:
+- ❌ **Error currency_symbol**: Consulta Config incorrecta → ✅ **CORREGIDO** (VaController.php y PaController.php)
+- ❌ **Moneda por defecto '$'**: Inconsistente → ✅ **CAMBIADO** a 'Q' (Quetzal guatemalteco)
+- ❌ **Etiquetas AMPMR**: "Fecha y Hora de Presentación" → ✅ **ACTUALIZADO** a "Fecha de Notificación" + "Medida Para Mejor Resolver"
+- ❌ **Etiquetas Ocurso**: "Evacuación de Audiencia" → ✅ **ACTUALIZADO** a "presentado el Ocurso"
+- ❌ **Plazo CAT limitado**: Solo hasta 60 días → ✅ **AGREGADO** opción "3 meses"
+- ❌ **Validaciones strict**: Campos condicionales requerían string → ✅ **CORREGIDO** con nullable
+
+**Archivos Modificados**:
+
+**Controllers:**
+- ✅ `app/Http/Controllers/Empresa/VaController.php` - Fix Config query
+- ✅ `app/Http/Controllers/Empresa/PaController.php` - Fix Config query
+
+**Validaciones:**
+- ✅ `app/Http/Requests/RtributaFormRequest.php` - Plazo CAT + nullable fields
+- ✅ `app/Http/Requests/RtributaPaFormRequest.php` - Plazo CAT + nullable fields
+
+**Modales VA:**
+- ✅ `resources/views/empresa/expcaso/va/ampmr/addampmrmodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/va/ampmr/editampmrmodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/va/ocurso/addocursomodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/va/ocurso/editocursomodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/va/rtributa/addrtributamodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/va/rtributa/editrtributamodal.blade.php`
+
+**Modales PA:**
+- ✅ `resources/views/empresa/expcaso/pa/ampmr/addampmrmodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/pa/ampmr/editampmrmodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/pa/ocurso/addocursomodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/pa/ocurso/editocursomodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/pa/rtributa/addrtributamodal.blade.php`
+- ✅ `resources/views/empresa/expcaso/pa/rtributa/editrtributamodal.blade.php`
+
+**Tablas:**
+- ✅ `resources/views/empresa/expcaso/va/showaudiencia.blade.php`
+- ✅ `resources/views/empresa/expcaso/pa/showaudiencia.blade.php`
+
+**Base de Datos:**
+- ✅ `database/migrations/2025_10_13_130111_add_3_meses_to_rtributa_plazo_cat_enums.php`
+
+**Resultados**:
+- ✅ **Símbolos de moneda**: Mostrados correctamente con 'Q' por defecto
+- ✅ **Etiquetas uniformes**: Terminología consistente entre VA/PA
+- ✅ **Validaciones flexibles**: Campos condicionales funcionan perfectamente
+- ✅ **Nueva opción temporal**: "3 meses" disponible en Plazo CAT
+- ✅ **Experiencia mejorada**: Interfaces más claras y consistentes
+
+---
+
+## 🆕 **FUNCIONALIDAD PREVIA - 22 SEPTIEMBRE 2025**
 
 ### ✅ **MÓDULO RESUMEN DE EXPEDIENTES - COMPLETAMENTE IMPLEMENTADO**
 

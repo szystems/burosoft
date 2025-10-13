@@ -1,16 +1,18 @@
 # ARCHITECTURE - Arquitectura del Sistema
 ## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 3.3 - Módulo Resumen Expedientes  
-**Fecha**: 22 de septiembre de 2025  
+**Versión**: 3.4 - UI/UX Optimizada y Validaciones Mejoradas  
+**Fecha**: 13 de octubre de 2025  
 **Autor**: Equipo SZSystems  
-**Estado**: **SISTEMA EN PRODUCCIÓN - NUEVO MÓDULO JURÍDICO INTEGRADO**
+**Estado**: **SISTEMA EN PRODUCCIÓN - INTERFAZ OPTIMIZADA**
 
 ---
 
 ## 1. Resumen Arquitectónico
 
-BUROSOFT está construido como una aplicación web monolítica multi-tenant **completamente operativa** utilizando Laravel 8, con arquitectura MVC robusta, base de datos sincronizada entre desarrollo y producción, y sistema de modales JavaScript sin conflictos. **ACTUALIZACIÓN CRÍTICA 22 SEP 2025**: Nuevo módulo de Resumen de Expedientes con Chart.js integrado, layout actualizado con @stack('scripts').
+BUROSOFT está construido como una aplicación web monolítica multi-tenant **completamente operativa** utilizando Laravel 8, con arquitectura MVC robusta, base de datos sincronizada entre desarrollo y producción, y sistema de modales JavaScript sin conflictos. 
+
+**ACTUALIZACIÓN CRÍTICA 13 OCT 2025**: Mejoras de UI/UX implementadas incluyendo corrección de símbolos de moneda, etiquetas uniformes en AMPMR/Ocurso, validaciones flexibles, nueva opción "3 meses" en Plazo CAT R-Tributa, y consistencia total entre módulos VA/PA.
 
 ### 1.1 Principios Arquitectónicos Implementados ✅
 
@@ -27,7 +29,7 @@ BUROSOFT está construido como una aplicación web monolítica multi-tenant **co
 
 | Entorno | Estado | Base de Datos | Funcionalidad | Última Actualización |
 |---------|--------|---------------|---------------|-------------------|
-| **Desarrollo Local** | ✅ Operativo | 30 migraciones consolidadas | 100% funcional | 22 Sep 2025 |
+| **Desarrollo Local** | ✅ Operativo | 31 migraciones consolidadas | 100% funcional | 13 Oct 2025 |
 | **Producción iPage** | ✅ Desplegado | Sincronizada | 100% funcional | 22 Sep 2025 |
 | **Sistema VA** | ✅ Completo | Audiencias corregidas | Sin problemas | 9 Sep 2025 |
 | **Sistema PA** | ✅ Completo | Tablas dpmrs_pa/aceptacions_pa | Sin problemas | 9 Sep 2025 |

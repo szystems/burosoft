@@ -1,10 +1,10 @@
 # PRD - Product Requirements Document
 ## BUROSOFT Sistema de Gestión Tributaria y Administrativa
 
-**Versión**: 3.3 - Módulo Resumen Expedientes  
-**Fecha**: 22 de septiembre de 2025  
+**Versión**: 3.4 - UI/UX Optimizada y Validaciones Mejoradas  
+**Fecha**: 13 de octubre de 2025  
 **Autor**: Equipo SZSystems  
-**Estado**: **PA/VA/RESUMEN EXPEDIENTES COMPLETAMENTE OPERATIVOS**
+**Estado**: **SISTEMA COMPLETO CON INTERFAZ OPTIMIZADA**
 
 ---
 
@@ -12,7 +12,7 @@
 
 BUROSOFT es una plataforma SaaS multi-tenant **completamente funcional** diseñada para profesionales del derecho tributario y administrativo. El sistema gestiona múltiples empresas cliente con módulos especializados en **Vía Administrativa (VA)** y **Procedimiento Ampliado (PA)**, ambos completamente implementados y operativos.
 
-**ACTUALIZACIÓN CRÍTICA 9 SEP 2025**: Error 500 PA resuelto, tabla `resolucions_pa` sincronizada, vistas R-SAT mejoradas con fecha+hora, proyecto completamente funcional.
+**ACTUALIZACIÓN CRÍTICA 13 OCT 2025**: Mejoras de UI/UX implementadas incluyendo corrección de símbolos de moneda, etiquetas uniformes AMPMR/Ocurso, validaciones flexibles, nueva opción "3 meses" en Plazo CAT R-Tributa, y consistencia total VA/PA.
 
 ### 1.1 Objetivos del Producto ✅ COMPLETADOS
 
@@ -22,23 +22,25 @@ BUROSOFT es una plataforma SaaS multi-tenant **completamente funcional** diseña
 - ✅ Facilitar el seguimiento detallado de audiencias y procedimientos
 - ✅ Generar reportes y documentación legal automatizada
 - ✅ Sistema de gestión de archivos y documentos integrado
-- ✅ **NUEVO**: Vistas R-SAT mejoradas con fecha de notificación CON HORA
-- ✅ **NUEVO**: Nueva columna "Fecha de Resolución" en listados R-SAT
+- ✅ **MEJORADO**: Símbolos de moneda corregidos ('Q' por defecto)
+- ✅ **MEJORADO**: Etiquetas uniformes AMPMR/Ocurso entre VA/PA
+- ✅ **NUEVO**: Opción "3 meses" en Plazo CAT R-Tributa
+- ✅ **MEJORADO**: Validaciones flexibles con campos condicionales
 
 ### 1.2 Estado Actual del Sistema
 
 | Módulo | Estado | Funcionalidad | Issues Pendientes | Última Actualización |
 |--------|--------|---------------|-------------------|-------------------|
-| **PA (Procedimiento Ampliado)** | ✅ **COMPLETO** | 100% | **Ninguno** | **9 Sep 2025** |
-| **PA R-SAT** | ✅ **CORREGIDO** | 100% | **Vistas mejoradas** | **9 Sep 2025** |
-| **VA (Vía Administrativa)** | ✅ **COMPLETO** | 100% | **Ninguno** | **9 Sep 2025** |
-| **VA R-SAT** | ✅ **MEJORADO** | 100% | **Vistas mejoradas** | **9 Sep 2025** |
-| **VA (Vía Administrativa)** | ✅ Completo | 100% | Ninguno | **9 Sep 2025** |
-| **PA (Procedimiento Administrativo)** | ✅ Completo | 100% | Ninguno | **9 Sep 2025** |
-| **Audiencias VA/PA** | ✅ **CORREGIDO** | 100% | **Error 1265 RESUELTO** | **9 Sep 2025** |
+| **UI/UX y Validaciones** | ✅ **MEJORADO** | 100% | **Ninguno** | **13 Oct 2025** |
+| **R-Tributa (VA/PA)** | ✅ **ACTUALIZADO** | 100% | **"3 meses" agregado** | **13 Oct 2025** |
+| **AMPMR/Ocurso Labels** | ✅ **UNIFORME** | 100% | **Terminología consistente** | **13 Oct 2025** |
+| **Símbolos de Moneda** | ✅ **CORREGIDO** | 100% | **Config query fix** | **13 Oct 2025** |
+| **PA (Procedimiento Ampliado)** | ✅ **COMPLETO** | 100% | **Ninguno** | **13 Oct 2025** |
+| **VA (Vía Administrativa)** | ✅ **COMPLETO** | 100% | **Ninguno** | **13 Oct 2025** |
+| **Resumen Expedientes** | ✅ Completo | 100% | Ninguno | **22 Sep 2025** |
 | **PAT (Proc. Admin. Tributarios)** | ✅ Completo | 100% | Ninguno | Ago 2025 |
-| **Base de Datos** | ✅ Consolidada | 100% | Ninguno | **9 Sep 2025** |
-| **Migraciones** | ✅ Optimizadas | 30 archivos | Ninguno | **9 Sep 2025** |
+| **Base de Datos** | ✅ **ACTUALIZADA** | 100% | **ENUMs actualizados** | **13 Oct 2025** |
+| **Migraciones** | ✅ **ACTUALIZADO** | 100% | **31 archivos** | **13 Oct 2025** |
 | **JavaScript/Modales** | ✅ Sin conflictos | 100% | Ninguno | Ago 2025 |
 
 ---

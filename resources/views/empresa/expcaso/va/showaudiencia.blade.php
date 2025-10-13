@@ -366,7 +366,7 @@
                                                                         </a>
                                                                     </li>
                                                                     <li class="nav-item" role="presentation">
-                                                                        <a class="nav-link" href="{{ url('show-pa/'.$cuenta->id) }}">PA
+                                                                        <a class="nav-link" href="{{ url('show-pa/'.$pat->id) }}">PA
                                                                             <span class="badge rounded-pill green ms-2">{{ $audienciasPaCount }}</span>
                                                                         </a>
                                                                     </li>
@@ -1446,7 +1446,7 @@
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
                                                                                                                     <td>Fecha y Hora</td>
                                                                                                                     <td>No. de Documento</td>
-                                                                                                                    <td>Oficina/Agencia EA</td>
+                                                                                                                    <td>Oficina/Agencia</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>
@@ -1598,7 +1598,7 @@
                                                                                                                     <td>No. de Documento</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
-                                                                                                                    <td>Oficina/Agencia EA</td>
+                                                                                                                    <td>Oficina/Agencia</td>
                                                                                                                     <td>Archivo</td>
                                                                                                                     <td>Usuario</td>
                                                                                                                 </tr>
@@ -1840,9 +1840,9 @@
                                                                                                             <thead>
                                                                                                                 <tr>
                                                                                                                     <td align="center"><i class="bi bi-list-task"></i></td>
-                                                                                                                    <td>Fecha y Hora</td>
+                                                                                                                    <td>Fecha/Hora Notificación</td>
                                                                                                                     <td>No. de Documento</td>
-                                                                                                                    <td>Oficina EA</td>
+                                                                                                                    <td>Oficina</td>
                                                                                                                     <td># Folios</td>
                                                                                                                     <td>Observaciones</td>
                                                                                                                     <td>Archivo</td>

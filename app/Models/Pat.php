@@ -25,7 +25,7 @@ class Pat extends Model
         return $this->belongsTo(User::class, 'usuario_id');
     }
 
-    public function Cuenta()
+    public function cuenta()
     {
         return $this->belongsTo(Cuenta::class, 'cuenta_id');
     }

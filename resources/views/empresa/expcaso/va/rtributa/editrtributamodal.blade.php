@@ -80,6 +80,7 @@
                                 <option value="30 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '30 días' ? 'selected' : '' }}>30 días</option>
                                 <option value="45 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '45 días' ? 'selected' : '' }}>45 días</option>
                                 <option value="60 días" {{ old('plazo_cat', $rtributa->plazo_cat) == '60 días' ? 'selected' : '' }}>60 días</option>
+                                <option value="3 meses" {{ old('plazo_cat', $rtributa->plazo_cat) == '3 meses' ? 'selected' : '' }}>3 meses</option>
                                 <option value="otro" {{ old('plazo_cat', $rtributa->plazo_cat) == 'otro' ? 'selected' : '' }}>Otro</option>
                             </select>
                             @error('plazo_cat')
