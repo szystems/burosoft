@@ -11,6 +11,8 @@ class CreateCompleteResolucionsPaTable extends Migration
      * 
      * Esta migración consolida las siguientes migraciones fragmentadas de resolucions_pa:
      * - 2025_07_21_100005_create_resolucions_pa_table.php (estructura base)
+     * - 2025_10_13_000000_update_plazo_revocatoria_values.php (plazo_revocatoria corregido)
+     * - 2025_10_13_000001_fix_tipo_resolucion_enum_values.php (tipo_resolucion corregido)
      * - migraciones adicionales para campos tipo_resolucion, fechas, etc.
      *
      * @return void

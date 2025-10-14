@@ -13,6 +13,7 @@ class CreateCompleteRtributasTable extends Migration
      * - 2025_05_26_000000_create_rtributas_table.php (estructura base)
      * - 2025_08_22_102000_update_rtributas_table_add_new_fields.php (campos adicionales + datetime)
      * - 2025_08_22_232600_fix_rtributas_va_plazo_cat_enum.php (fix del enum plazo_cat)
+     * - 2025_10_13_130111_add_3_meses_to_rtributa_plazo_cat_enums.php (opción "3 meses" agregada)
      *
      * @return void
      */
@@ -42,6 +43,7 @@ class CreateCompleteRtributasTable extends Migration
                 '30 días', 
                 '45 días', 
                 '60 días', 
+                '3 meses',
                 'otro'
             ])->nullable();
             $table->string('plazo_cat_otro')->nullable();

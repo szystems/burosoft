@@ -153,7 +153,12 @@ Error: "debe ser una cadena de caracteres" cuando campos estaban vacíos
 **Solución**: Nueva migración para actualizar ENUMs
 
 **Archivo creado**:
-- ✅ `database/migrations/2025_10_13_130111_add_3_meses_to_rtributa_plazo_cat_enums.php`
+- ✅ `database/migrations/2025_10_13_130111_add_3_meses_to_rtributa_plazo_cat_enums.php` (posteriormente unificada)
+
+**ACTUALIZACIÓN**: Esta migración fue posteriormente unificada con las migraciones base para mantener la consistencia:
+- Unificada en `2025_05_26_000000_create_complete_rtributas_table.php`
+- Unificada en `2025_07_21_100006_create_complete_rtributas_pa_table.php`
+- Unificada en `2025_07_21_100005_create_complete_resolucions_pa_table.php`
 
 **Consultas SQL ejecutadas**:
 ```sql
@@ -193,8 +198,12 @@ ALTER TABLE rtributas_pa MODIFY COLUMN plazo_cat ENUM('5 días', '10 días', '15
 17. `resources/views/empresa/expcaso/va/showaudiencia.blade.php`
 18. `resources/views/empresa/expcaso/pa/showaudiencia.blade.php`
 
-### **Migraciones (1 archivo)**
-19. `database/migrations/2025_10_13_130111_add_3_meses_to_rtributa_plazo_cat_enums.php`
+### **Migraciones (3 archivos creados y posteriormente unificados)**
+19. `database/migrations/2025_10_13_000000_update_plazo_revocatoria_values.php` (unificada)
+20. `database/migrations/2025_10_13_000001_fix_tipo_resolucion_enum_values.php` (unificada)  
+21. `database/migrations/2025_10_13_130111_add_3_meses_to_rtributa_plazo_cat_enums.php` (unificada)
+
+**NOTA**: Las 3 migraciones separadas fueron posteriormente unificadas con sus migraciones base correspondientes para mantener la consistencia y evitar fragmentación innecesaria.
 
 **TOTAL**: **19 archivos modificados/creados**
 
