@@ -261,7 +261,8 @@ class CuentaController extends Controller
 
             // Devolver el PDF según el tipo solicitado
             if ($pdfarchivo == "download") {
-                return $pdf->download('Cuentas_'.$nompdf.'.pdf');
+                $filename = 'Cuentas_'.str_replace(['/', '\\', ':'], '_', $nompdf).'.pdf';
+                return $pdf->download($filename);
             } else {
                 return $pdf->stream('Cuentas_'.$nompdf.'.pdf');
             }

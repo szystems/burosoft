@@ -22,12 +22,15 @@ class Nulidad extends Model
         'numero_folios',
     ];
 
-    protected $dates = [
-        'fecha_hora_notificacion',
-        'fecha_resolucion',
-        'created_at',
-        'updated_at',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'fecha_hora_notificacion' => 'datetime',
+            'fecha_resolucion' => 'datetime',
+            'created_at' => 'datetime',
+            'updated_at' => 'datetime',
+        ];
+    }
 
     // Relación con Audiencia
     public function audiencia()

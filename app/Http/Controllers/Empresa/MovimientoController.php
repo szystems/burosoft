@@ -373,7 +373,7 @@ class MovimientoController extends Controller
                     ->toArray();
             }
 
-            $nompdf = date('m/d/Y g:ia');
+            $nompdf = date('Y-m-d_H-i-s');
             $path = public_path('assets/uploads/');
             $currency = $config->currency_simbol;
 
@@ -412,9 +412,9 @@ class MovimientoController extends Controller
 
                 // Devolver el PDF según el tipo solicitado
                 if ($pdfarchivo == "download") {
-                    return $pdf->download('Reporte Movimientos: '.$nompdf.'.pdf');
+                    return $pdf->download('Reporte_Movimientos_'.$nompdf.'.pdf');
                 } else {
-                    return $pdf->stream('Reporte Movimientos: '.$nompdf.'.pdf');
+                    return $pdf->stream('Reporte_Movimientos_'.$nompdf.'.pdf');
                 }
             }
         }
@@ -432,7 +432,7 @@ class MovimientoController extends Controller
             $totalAbonadoQ = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->where('estado', 1)->sum('monto_q');
             $totalAbonadoD = MovimientoPago::where('movimiento_id', $request->input('fmovimiento_id'))->where('estado', 1)->sum('monto_d');
 
-            $nompdf = date('m/d/Y g:ia');
+            $nompdf = date('Y-m-d_H-i-s');
             $path = public_path('assets/uploads/');
 
             $currency = $config->currency_simbol;
@@ -473,7 +473,7 @@ class MovimientoController extends Controller
         if ($request)
         {
             $verpdf = "Browser";
-            $nompdf = date('m/d/Y g:ia');
+            $nompdf = date('Y-m-d_H-i-s');
             $path = public_path('assets/uploads/');
 
             $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();

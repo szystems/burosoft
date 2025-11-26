@@ -235,7 +235,7 @@ class PatController extends Controller
 
             // dd($request->input('ffpat_id'));
 
-            $nompdf = date('m/d/Y g:ia');
+            $nompdf = date('Y-m-d_H-i-s');
             $path = public_path('assets/uploads/');
 
             $currency = $config->currency_simbol;

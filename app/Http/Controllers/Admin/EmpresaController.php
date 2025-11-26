@@ -140,7 +140,7 @@ class EmpresaController extends Controller
 
             $empresas = Empresa::where('estado',1)->orderBy('nombre','asc')->get();
             $verpdf = "Browser";
-            $nompdf = date('m/d/Y g:ia');
+            $nompdf = date('Y-m-d_H-i-s');
             $path = public_path('assets/uploads/');
 
             $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();

@@ -104,13 +104,12 @@
 		</div>
 		<!-- Page wrapper end -->
 
-		<!-- Required JavaScript Files -->
+        <!-- Required JavaScript Files -->
         <!-- Bootstrap Bundle JS -->
         <script src="{{ asset('dashboardtemplate/design/assets/js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('dashboardtemplate/design/assets/js/modernizr.js') }}"></script>
-        <script src="{{ asset('dashboardtemplate/design/assets/js/moment.js') }}"></script>
-
-        <!-- Vendor Js Files -->
+        {{-- Modernizr deshabilitado: causa problemas con Tracking Prevention --}}
+        {{-- <script src="{{ asset('dashboardtemplate/design/assets/js/modernizr.js') }}"></script> --}}
+        <script src="{{ asset('dashboardtemplate/design/assets/js/moment.js') }}"></script>        <!-- Vendor Js Files -->
         <!-- Overlay Scroll JS -->
         <script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js') }}"></script>
         <script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/custom-scrollbar.js') }}"></script>

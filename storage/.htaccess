@@ -1,0 +1,8 @@
+# Proteger directorio storage
+Order allow,deny
+Deny from all
+
+# Prevenir acceso directo a archivos en storage
+<FilesMatch ".*">
+    Deny from all
+</FilesMatch>

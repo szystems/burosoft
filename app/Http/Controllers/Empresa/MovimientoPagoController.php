@@ -162,7 +162,7 @@ class MovimientoPagoController extends Controller
         if ($request)
         {
             $verpdf = "Browser";
-            $nompdf = date('m/d/Y g:ia');
+            $nompdf = date('Y-m-d_H-i-s');
             $path = public_path('assets/uploads/');
 
             $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();

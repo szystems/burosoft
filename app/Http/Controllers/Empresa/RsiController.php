@@ -164,7 +164,8 @@ class RsiController extends Controller
             
             // Devolver el PDF según el tipo solicitado
             if ($pdfarchivo == "download") {
-                return $pdf->download('RSI_'.$nompdf.'.pdf');
+                $filename = 'RSI_'.str_replace(['/', '\\', ':'], '_', $nompdf).'.pdf';
+                return $pdf->download($filename);
             } else {
                 return $pdf->stream('RSI_'.$nompdf.'.pdf');
             }
