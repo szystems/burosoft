@@ -36,7 +36,7 @@ class EmpresaUsuarioController extends Controller
             })
             ->orderBy('name','asc')
             ->paginate(20);
-            $filterUsers = User::where('empresa_id', Auth::user()->empresa_id);
+            $filterUsers = User::where('empresa_id', Auth::user()->empresa_id)->get();
             $config = $config = Config::where('empresa_id', Auth::user()->empresa_id)->first();
             return view('empresa.usuario.index', compact('users','queryUser','filterUsers','config'));
         }

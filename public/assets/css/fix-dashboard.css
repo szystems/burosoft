@@ -1,0 +1,75 @@
+/* ====================================================================
+   FIX PARA DASHBOARD INVISIBLE - OverlayScrollbars
+   ==================================================================== */
+
+/* Fix para OverlayScrollbars - Forzar visibilidad del contenido */
+.os-content {
+    min-height: 100vh !important;
+    height: auto !important;
+}
+
+.content-wrapper-scroll {
+    overflow: visible !important;
+    position: relative !important;
+}
+
+.content-wrapper {
+    min-height: 500px !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    position: relative !important;
+}
+
+/* ====================================================================
+   FIX PARA SIDEBAR SCROLL SIN OverlayScrollbars
+   ==================================================================== */
+
+/* Fix Sidebar Scroll - Permitir scroll cuando hay muchos módulos */
+.sidebar-wrapper {
+    position: fixed !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+.sidebar-menu {
+    height: calc(100vh - 80px) !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+}
+
+.sidebarMenuScroll {
+    height: 100% !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    /* Forzar el scroll nativo del navegador */
+    -webkit-overflow-scrolling: touch !important;
+}
+
+/* Estilo del scrollbar del sidebar */
+.sidebar-wrapper::-webkit-scrollbar,
+.sidebar-menu::-webkit-scrollbar,
+.sidebarMenuScroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-track,
+.sidebar-menu::-webkit-scrollbar-track,
+.sidebarMenuScroll::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb,
+.sidebar-menu::-webkit-scrollbar-thumb,
+.sidebarMenuScroll::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.sidebar-wrapper::-webkit-scrollbar-thumb:hover,
+.sidebar-menu::-webkit-scrollbar-thumb:hover,
+.sidebarMenuScroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}

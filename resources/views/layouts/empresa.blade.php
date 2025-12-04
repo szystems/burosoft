@@ -32,6 +32,9 @@
         <!-- Main css -->
         <link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/css/main.min.css') }}" />
 
+        <!-- CSS Fix para Dashboard Invisible y Sidebar Scroll -->
+        <link rel="stylesheet" href="{{ asset('assets/css/fix-dashboard.css') }}" />
+
         <!-- Vendor Css Files -->
         <!-- Scrollbar CSS -->
         <link rel="stylesheet" href="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/OverlayScrollbars.min.css') }}" />
@@ -112,7 +115,8 @@
         <script src="{{ asset('dashboardtemplate/design/assets/js/moment.js') }}"></script>        <!-- Vendor Js Files -->
         <!-- Overlay Scroll JS -->
         <script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/jquery.overlayScrollbars.min.js') }}"></script>
-        <script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/custom-scrollbar.js') }}"></script>
+        {{-- Script de scrollbar deshabilitado: causa que el contenido desaparezca --}}
+        {{-- <script src="{{ asset('dashboardtemplate/design/assets/vendor/overlay-scroll/custom-scrollbar.js') }}"></script> --}}
 
         <!-- News ticker -->
         <script src="{{ asset('dashboardtemplate/design/assets/vendor/newsticker/newsTicker.min.js') }}"></script>
@@ -179,6 +183,29 @@
 
             // Actualiza la hora y la fecha cada segundo
             setInterval(actualizarReloj, 1000);
+        </script>
+
+        <!-- Fix para Dashboard Invisible -->
+        <script>
+            // Forzar visibilidad del contenido del dashboard
+            $(document).ready(function() {
+                // Esperar un momento para que el DOM esté completamente listo
+                setTimeout(function() {
+                    // Forzar visibilidad de todos los elementos principales
+                    $('.content-wrapper, .content-wrapper-scroll, .os-content, .os-viewport').css({
+                        'opacity': '1 !important',
+                        'visibility': 'visible !important',
+                        'display': 'block !important',
+                        'height': 'auto !important',
+                        'min-height': '100vh'
+                    });
+                    
+                    // Remover cualquier clase que oculte el contenido
+                    $('.content-wrapper-scroll').removeClass('os-host os-host-overflow os-host-overflow-y os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition');
+                    
+                    console.log('✅ Visibilidad del dashboard empresa forzada correctamente');
+                }, 100);
+            });
         </script>
 
         <!-- Scripts adicionales -->
