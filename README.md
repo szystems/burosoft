@@ -1,11 +1,12 @@
 # BuroSoft - Multi-Tenant Legal Practice Management (SaaS)
 
-[![Laravel](https://img.shields.io/badge/Laravel-8.x-red.svg)](https://laravel.com/)
-[![PHP](https://img.shields.io/badge/PHP-7.3%2B%7C8.0%2B-blue.svg)](https://php.net/)
-[![MySQL](https://img.shields.io/badge/MySQL-5.7%2B-orange.svg)](https://mysql.com)
+[![Laravel](https://img.shields.io/badge/Laravel-12-red.svg)](https://laravel.com/)
+[![PHP](https://img.shields.io/badge/PHP-8.2%2B-blue.svg)](https://php.net/)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0%2B-orange.svg)](https://mysql.com)
+[![PHPUnit](https://img.shields.io/badge/PHPUnit-11-green.svg)](https://phpunit.de/)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**BuroSoft** is a multi-tenant SaaS platform for legal and accounting practice management, built with **Laravel 8**. It enables law firms and accounting offices to manage multiple client companies, track financial movements, and handle administrative and legal proceedings from a single, centralized dashboard.
+**BuroSoft** is a multi-tenant SaaS platform for legal and accounting practice management, built with **Laravel 12**. It enables law firms and accounting offices to manage multiple client companies, track financial movements, and handle administrative and legal proceedings from a single, centralized dashboard.
 
 ## Key Features
 
@@ -17,6 +18,7 @@
 - **Resolution Tracking** — Document generation and lifecycle management for legal resolutions.
 - **Activity Logging** — Complete system audit trail for compliance and accountability.
 - **Document Generation** — Automated PDF and Excel export for reports, invoices, and legal documents.
+- **Device Detection** — Adaptive UI based on device type (jenssegers/agent).
 - **Admin Dashboard** — Comprehensive analytics panel for system administrators and firm managers.
 
 ## Technical Architecture
@@ -24,11 +26,13 @@
 ### Tech Stack
 | Layer | Technology |
 |---|---|
-| **Backend** | PHP 8.0+, Laravel 8 (Eloquent ORM, Service Layer, Traits) |
-| **Database** | MySQL 5.7+ (54+ migrations, Normalized Schema) |
+| **Backend** | PHP 8.2+, Laravel 12 |
+| **Database** | MySQL 8.0+ (54+ migrations, Normalized Schema) |
 | **Frontend** | Blade Templates, Bootstrap 5, Vue.js, jQuery |
-| **PDF/Excel** | DomPDF, Laravel Excel |
-| **Authentication** | Laravel Sanctum + Laravel UI |
+| **PDF/Excel** | DomPDF 3.0, Maatwebsite/Excel 3.1 |
+| **Authentication** | Laravel Sanctum 4.0 + Laravel UI |
+| **Testing** | PHPUnit 11 |
+| **Performance** | Laravel Boost |
 
 ### Architecture Highlights
 - **Service Layer Pattern** — Business logic isolated in dedicated Service classes, keeping Controllers thin and testable.
@@ -58,10 +62,10 @@ burosoft/
 ## Getting Started
 
 ### Requirements
-- PHP 7.3+ (8.0+ recommended)
+- PHP 8.2+
 - Composer 2.0+
-- Node.js 14+
-- MySQL 5.7+ or MariaDB 10.3+
+- Node.js 16+
+- MySQL 8.0+ or MariaDB 10.5+
 
 ### Installation
 ```bash
@@ -101,8 +105,8 @@ The application will be available at `http://localhost:8000`.
 ## Testing
 
 ```bash
-./vendor/bin/phpunit
-./vendor/bin/phpunit --filter SpecificTestName
+php artisan test
+php artisan test --filter SpecificTestName
 ```
 
 ## License
